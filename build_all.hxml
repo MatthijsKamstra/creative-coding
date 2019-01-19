@@ -1,0 +1,19 @@
+# Clean up
+# -cmd echo '\n----- Cleaning -----'
+# -cmd rm -rf bin_test
+# -cmd rm -rf bin_release
+
+# Uncomment (#) more build scripts if you need more
+-cmd echo '\n----- build all (projectname: example_javascript) -----'
+-cmd echo '> build target js (build.hxml)'
+-cmd haxe build.hxml
+
+# Add an other target (for example JavaScript)
+#-cmd echo '> build target js (build_js.hxml)'
+#-cmd haxe build_js.hxml
+
+# Create a release and/or debug build
+#-cmd echo '> build target js (build_release.hxml)'
+#-cmd haxe build_release.hxml --no-traces
+#-cmd echo '> build target js (build_debug.hxml)'
+#-cmd haxe build_debug.hxml
