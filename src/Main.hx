@@ -1,67 +1,50 @@
 package;
 
 import js.Browser.*;
-import js.Browser;
 import js.html.*;
+
+import Sketch;
+import art.*;
+import art.CC000;
+import art.CC001;
+import art.CC002;
 
 import model.constants.App;
 
+using StringTools;
+
 /**
  * @author Matthijs Kamstra aka [mck]
- * MIT
- * 
  */
 class Main {
-	
-	var container : js.html.DivElement;
 
 	public function new () {
-		trace( "Hello 'Example Javascript'" );
-	}
-	
-	function init() {
 		document.addEventListener("DOMContentLoaded", function(event) {
-			console.log('${App.NAME} Dom ready :: build: ${App.BUILD} ');
+			// DOM ready
+			console.log('${App.NAME} :: build: ${App.BUILD}');
 
-			// var container = document.getElementById("prop");
-			// container.innerHTML = 'html';
+			// setup canvas
+			var ctx : CanvasRenderingContext2D = Sketch.create("creative_code_mck");
 
-			initHTML();
-			loadData();
-		});
-	}
+			// get hash from url
+			var hash = js.Browser.location.hash;
+			hash = hash.replace('#', '');
+			switch (hash) {
+				case 'CC000': new CC000(ctx);
+				case 'CC001': new CC001(ctx);
+				case 'CC002': new CC002(ctx);
+				default :
+					trace ("case '"+hash+"': new "+hash+"(ctx);");
+					location.hash = 'CC000';
+					new CC000(ctx);
 
-	function initHTML () {
-		container = document.createDivElement();
-		container.id = "example_javascript";
-		container.className = "container";
-		document.body.appendChild(container);
-
-		var h1 = document.createElement('h1');
-		h1.innerText = "Example Javascript";
-		container.appendChild(h1);
-	}
-
-	function loadData(){
-		var url = 'http://ip.jsontest.com/';
-		var req = new haxe.Http(url);
-		// req.setHeader('Content-Type', 'application/json');
-		// req.setHeader('auth', '${App.TOKEN}');
-		req.onData = function (data : String) {
-			try {
-				var json = haxe.Json.parse(data);
-				trace (json);
-			} catch (e:Dynamic){
-				trace(e);
 			}
-		}
-		req.onError = function (error : String) {
-			trace('error: $error');
-		}
-		req.onStatus = function (status : Int) {
-			trace('status: $status');
-		}
-		req.request(true);  // false=GET, true=POST
+
+			// make sure the browser updates after chang hash
+			window.addEventListener("hashchange", function (){
+				location.reload();
+			} , false);
+		});
 	}
 
 	static public function main () {

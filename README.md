@@ -4,7 +4,20 @@
 
 Let's see if I can use Haxe/JavaScript for creative coding.
 
+
+bla bla, current page: <https://matthijskamstra.github.io/creative-coding/>
+
 Check out my previous attempt: <http://matthijskamstra.github.io/gen-art/>
+
+## Inspiration
+
+After reading the article of [George Gally](https://hackernoon.com/creative-coding-basics-4d623af1c647) it got me thinking.
+Yes, I liked the way Flash worked as well. And all the stuff that Flash can do, modern browsers can do as wel.
+
+So why not give it a try...
+
+
+- https://github.com/GeorgeGally/creative_coding
 
 
 ### Haxe
