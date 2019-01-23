@@ -24,6 +24,24 @@ So why not give it a try...
 
 This is a [Haxe](http://www.haxe.org) project, read more about it in the [README_HAXE.MD](README_HAXE.MD)!
 
+### TODO
+
+liveserver `https`
+
+- https://github.com/webisora/vscode-liveserver-https
+- https://www.akadia.com/services/ssh_test_certificate.html
+- https://webisora.com/blog/how-to-enable-https-on-live-server-visual-studio-code/
+
+creative code
+
+- https://github.com/terkelg/awesome-creative-coding
+- https://github.com/sebleedelisle/CreativeJSLibs/blob/master/src/creative.js
+- https://github.com/soulwire/sketch.js/wiki/API
+
+dude!
+
+- https://medium.com/@radarboy3000
+- https://hackernoon.com/creative-coding-using-the-microphone-to-make-sound-reactive-art-part1-164fd3d972f3
 
 
 ### Sources:

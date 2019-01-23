@@ -5,7 +5,6 @@ import js.html.*;
 
 import Global.*;
 
-@:keep
 class CC001 extends CCBase implements ICCBase {
 
 	public function new(ctx:CanvasRenderingContext2D) {

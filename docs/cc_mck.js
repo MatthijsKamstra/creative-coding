@@ -34,6 +34,26 @@ CC.__name__ = ["CC"];
 CC.prototype = {
 	__class__: CC
 };
+var CanvasTools = function() { };
+CanvasTools.__name__ = ["CanvasTools"];
+CanvasTools.square = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = width;
+	}
+	ctx.fillRect(x,y,width,height);
+};
+CanvasTools.centreStrokeRect = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = width;
+	}
+	ctx.strokeRect(x - width / 2,y - height / 2,width,height);
+};
+CanvasTools.centreFillRect = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = width;
+	}
+	ctx.fillRect(x - width / 2,y - height / 2,width,height);
+};
 Math.__name__ = ["Math"];
 var Global = function() { };
 Global.__name__ = ["Global"];
@@ -181,6 +201,8 @@ art_ICCBase.prototype = {
 	__class__: art_ICCBase
 };
 var art_CC000 = function(ctx) {
+	this.size = 10;
+	this.rotate = 0;
 	this.ypos = 10;
 	this.xpos = 10;
 	art_CCBase.call(this,ctx);
@@ -191,10 +213,16 @@ art_CC000.__super__ = art_CCBase;
 art_CC000.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		this.xpos++;
-		this.ypos++;
-		this.p.square(this.xpos,this.ypos,100);
-		this.pause();
+		this.rotate++;
+		this.size++;
+		this.ctx.save();
+		this.ctx.translate(Global.w / 2,Global.h / 2);
+		this.ctx.rotate(this.rotate);
+		CanvasTools.centreStrokeRect(this.ctx,0,0,this.size);
+		this.ctx.restore();
+		if(this.size >= 1000) {
+			this.pause();
+		}
 	}
 	,__class__: art_CC000
 });
@@ -261,30 +289,116 @@ var util_DrawUtil = function(ctx) {
 util_DrawUtil.__name__ = ["util","DrawUtil"];
 util_DrawUtil.__super__ = CanvasRenderingContext2D;
 util_DrawUtil.prototype = $extend(CanvasRenderingContext2D.prototype,{
-	square: function(x,y,width,height) {
-		if(height == null) {
-			height = width;
+	colour: function(r,g,b,a) {
+		var c = this.getColour(r,g,b,a);
+		this.ctx.fillStyle = c;
+	}
+	,lineColour: function(r,g,b,a) {
+		window.console.log(r);
+		this.ctx.strokeStyle = this.getColour(r,g,b,a);
+	}
+	,colourName: function(c) {
+		this.ctx.fillStyle = c;
+	}
+	,getColour: function(r,g,b,a) {
+		var c;
+		if(g == null) {
+			c = this.rgb(r,r,r);
+		} else if(b == null && a == null) {
+			c = this.rgba(r,r,r,g);
+		} else if(a == null) {
+			c = this.rgb(r,g,b);
+		} else {
+			c = this.rgba(r,g,b,a);
 		}
-		this.ctx.fillRect(x,y,width,height);
+		return c;
 	}
 	,makeCircle: function(x,y,radius) {
 		this.ctx.beginPath();
-		this.ctx.arc(x,y,radius / 2,0,Math.PI * 2,true);
+		this.arc(x,y,radius / 2,0,Math.PI * 2,true);
 	}
 	,circle: function(x,y,radius) {
 		this.makeCircle(x,y,radius);
-		this.ctx.fill();
+		this.fill();
 		this.ctx.closePath();
 	}
 	,fillCircle: function(x,y,radius) {
 		this.makeCircle(x,y,radius);
-		this.ctx.fill();
+		this.fill();
 		this.ctx.closePath();
 	}
 	,strokeCircle: function(x,y,radius) {
 		this.makeCircle(x,y,radius);
 		this.ctx.stroke();
 		this.ctx.closePath();
+	}
+	,fillEllipse: function(x,y,width,height) {
+		if(height == null) {
+			height = width;
+		}
+		this.ellipse(x,y,width,height,0,0,0,true);
+		this.fill();
+		this.ctx.beginPath();
+	}
+	,strokeEllipse: function(x,y,width,height) {
+		if(height == null) {
+			height = width;
+		}
+		this.ellipse(x,y,width,height,0,0,0,false);
+		this.ctx.stroke();
+		this.ctx.beginPath();
+	}
+	,square: function(x,y,width,height) {
+		if(height == null) {
+			height = width;
+		}
+		this.ctx.fillRect(x,y,width,height);
+	}
+	,centreStrokeRect: function(x,y,width,height) {
+		if(height == null) {
+			height = width;
+		}
+		this.ctx.strokeRect(x - width / 2,y - height / 2,width,height);
+	}
+	,centreFillRect: function(x,y,width,height) {
+		if(height == null) {
+			height = width;
+		}
+		this.ctx.fillRect(x - width / 2,y - height / 2,width,height);
+	}
+	,line: function(x1,y1,x2,y2) {
+		this.ctx.beginPath();
+		this.ctx.moveTo(x1,y1);
+		this.ctx.lineTo(x2,y2);
+		this.ctx.stroke();
+		this.ctx.beginPath();
+	}
+	,strokePolygon: function(x,y,sides,size) {
+		this.polygon(x,y,sides,size);
+		this.ctx.stroke();
+	}
+	,fillPolygon: function(x,y,sides,size) {
+		this.polygon(x,y,sides,size);
+		this.fill();
+	}
+	,outlinedPolygon: function(_x,_y,_sides,_size,_fill,_stroke) {
+		this.ctx.fillStyle = _fill;
+		this.fillPolygon(_x,_y,_sides,_size);
+		this.ctx.strokeStyle = _stroke;
+		this.strokePolygon(_x,_y,_sides,_size);
+	}
+	,polygon: function(_x,_y,sides,size) {
+		this.ctx.beginPath();
+		this.ctx.moveTo(_x + size * Math.cos(0),_y + size * Math.sin(0));
+		var _g1 = 0;
+		var _g = sides;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.ctx.lineTo(_x + size * Math.cos(i * 2 * Math.PI / sides),_y + size * Math.sin(i * 2 * Math.PI / sides));
+		}
+	}
+	,strokeWeight: function(j) {
+		this.ctx.lineWidth = j;
 	}
 	,triangle: function(x1,y1,x2,y2,x3,y3) {
 		this.ctx.beginPath();
@@ -294,6 +408,184 @@ util_DrawUtil.prototype = $extend(CanvasRenderingContext2D.prototype,{
 		this.ctx.lineTo(x1,y1);
 		this.ctx.stroke();
 		this.ctx.closePath();
+	}
+	,strokeTriangle: function(x1,y1,x2,y2,x3,y3) {
+		this.ctx.beginPath();
+		this.ctx.moveTo(x1,y1);
+		this.ctx.lineTo(x2,y2);
+		this.ctx.lineTo(x3,y3);
+		this.ctx.lineTo(x1,y1);
+		this.ctx.stroke();
+		this.ctx.closePath();
+	}
+	,fillTriangle: function(x1,y1,x2,y2,x3,y3) {
+		this.ctx.beginPath();
+		this.ctx.moveTo(x1,y1);
+		this.ctx.lineTo(x2,y2);
+		this.ctx.lineTo(x3,y3);
+		this.ctx.lineTo(x1,y1);
+		this.fill();
+		this.ctx.closePath();
+	}
+	,eqDownFillTriangle: function(x,y,sz,down) {
+		this.translate(x,y);
+		this.rotate(this.radians(180));
+		this.fillTriangle(0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
+		this.rotate(this.radians(-180));
+		this.translate(-x,-y);
+	}
+	,eqDownTriangle: function(x,y,sz,down) {
+		this.translate(x,y);
+		this.rotate(this.radians(180));
+		this.triangle(0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
+		this.rotate(this.radians(-180));
+		this.translate(-x,-y);
+	}
+	,eqFillTriangle: function(x,y,sz,down) {
+		this.fillTriangle(x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
+	}
+	,eqTriangle: function(x,y,sz,down) {
+		this.triangle(x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
+	}
+	,background: function(r,g,b,a) {
+		if(g == null) {
+			this.ctx.fillStyle = this.rgb(r,r,r);
+		} else if(b == null && a == null) {
+			this.ctx.fillStyle = this.rgba(r,r,r,g);
+		} else if(a == null) {
+			this.ctx.fillStyle = this.rgb(r,g,b);
+		} else {
+			this.ctx.fillStyle = this.rgba(r,g,b,a);
+		}
+		this.ctx.fillRect(0,0,Global.w,Global.h);
+	}
+	,rotateDegrees: function(deg) {
+		this.rotate(this.radians(deg));
+	}
+	,rotateDeg: function(deg) {
+		this.rotate(this.radians(deg));
+	}
+	,radians: function(deg) {
+		return deg * Math.PI / 180;
+	}
+	,degrees: function(rad) {
+		return rad * 180 / Math.PI;
+	}
+	,degreesToPoint: function(deg,diameter) {
+		var rad = Math.PI * deg / 180;
+		var r = diameter / 2;
+		return { x : r * Math.cos(rad), y : r * Math.sin(rad)};
+	}
+	,distributeAngles: function(me,total) {
+		return me / total * 360;
+	}
+	,rgb: function(r,g,b) {
+		if(g == null) {
+			g = r;
+		}
+		if(b == null) {
+			b = r;
+		}
+		return "rgb(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(g),0,255) + ", " + this.clamp(Math.round(b),0,255) + ")";
+	}
+	,rgba: function(r,g,b,a) {
+		if(g == null) {
+			return "rgb(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ")";
+		} else if(b == null) {
+			return "rgba(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ", " + this.clamp(g,0,1) + ")";
+		} else if(a == null) {
+			return "rgba(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(g),0,255) + ", " + this.clamp(Math.round(b),0,255) + ", 1)";
+		} else {
+			return "rgba(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(g),0,255) + ", " + this.clamp(Math.round(b),0,255) + ", " + this.clamp(a,0,1) + ")";
+		}
+	}
+	,map: function(value,min1,max1,min2,max2,clampResult) {
+		var returnvalue = (value - min1) / (max1 - min1) * (max2 - min2) + min2;
+		if(clampResult) {
+			return this.clamp(returnvalue,min2,max2);
+		} else {
+			return returnvalue;
+		}
+	}
+	,log: function(val) {
+		window.console.log(val);
+	}
+	,clamp: function(value,min,max) {
+		return Math.min(Math.max(value,Math.min(min,max)),Math.max(min,max));
+	}
+	,dist: function(x1,y1,x2,y2) {
+		x2 -= x1;
+		y2 -= y1;
+		return Math.sqrt(x2 * x2 + y2 * y2);
+	}
+	,random: function(min,max) {
+		if(min == null) {
+			min = 0;
+			max = 1;
+		} else if(max == null) {
+			max = min;
+			min = 0;
+		}
+		return Math.random() * (max - min) + min;
+	}
+	,randomP: function(min,max) {
+		if(min == null) {
+			min = 0.1;
+			max = 1;
+		} else if(max == null) {
+			max = min;
+			min = 0.1;
+		}
+		return Math.random() * (max - min) + min;
+	}
+	,randomInt: function(min,max) {
+		if(max == null) {
+			max = min;
+			min = 0;
+		}
+		return Math.floor(Math.random() * (max + 1 - min)) + min;
+	}
+	,randomColour: function() {
+		var r = this.randomInt(255);
+		var g = this.randomInt(255);
+		var b = this.randomInt(255);
+		return this.rgb(r,g,b);
+	}
+	,tween: function(pos,target,speed) {
+		if(speed == null) {
+			speed = 20;
+		}
+		pos += (target - pos) / speed;
+		return pos;
+	}
+	,chance: function(value) {
+		return this.random(value) > value - 1;
+	}
+	,posNeg: function() {
+		return this.randomInt(0,1) * 2 - 1;
+	}
+	,angle: function(cx,cy,ex,ey) {
+		var dy = ey - cy;
+		var dx = ex - cx;
+		var theta = Math.atan2(dy,dx);
+		theta *= 180 / Math.PI;
+		if(theta < 0) {
+			theta = 360 + theta;
+		}
+		if(theta == 360) {
+			theta = 0;
+		}
+		return theta;
+	}
+	,bounce: function(num,min,max,sz) {
+		if(sz == null) {
+			sz = 0;
+		}
+		if(num >= max - sz / 2 || num - sz / 2 <= min) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 	,__class__: util_DrawUtil
 });
@@ -307,7 +599,7 @@ Global.mouseReleased = 0;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-23 15:00:31";
+model_constants_App.BUILD = "2019-01-23 20:59:39";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
