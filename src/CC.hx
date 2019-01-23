@@ -22,8 +22,6 @@ class CC {
 	public function new() {
 		// trace('cc');
 
-
-
 		window.addEventListener(MOUSE_MOVE, function(e:MouseEvent) {
 			mouseX = e.clientX;
 			mouseY = e.clientY;

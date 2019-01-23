@@ -54,6 +54,27 @@ CanvasTools.centreFillRect = function(ctx,x,y,width,height) {
 	}
 	ctx.fillRect(x - width / 2,y - height / 2,width,height);
 };
+CanvasTools.circle = function(ctx,x,y,radius) {
+	ctx.beginPath();
+	ctx.arc(x,y,radius,0,Math.PI * 2,true);
+};
+CanvasTools.fillCircle = function(ctx,x,y,radius) {
+	CanvasTools.circle(ctx,x,y,radius);
+	ctx.fill();
+	ctx.beginPath();
+};
+CanvasTools.strokeCircle = function(ctx,x,y,radius) {
+	CanvasTools.circle(ctx,x,y,radius);
+	ctx.stroke();
+	ctx.beginPath();
+};
+CanvasTools.line = function(ctx,x1,y1,x2,y2) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.stroke();
+	ctx.beginPath();
+};
 Math.__name__ = ["Math"];
 var Global = function() { };
 Global.__name__ = ["Global"];
@@ -599,7 +620,7 @@ Global.mouseReleased = 0;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-23 20:59:39";
+model_constants_App.BUILD = "2019-01-23 21:41:13";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
