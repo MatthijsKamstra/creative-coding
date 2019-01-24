@@ -12,58 +12,6 @@ class DrawUtil extends CanvasRenderingContext2D {
 		this.ctx = ctx;
 	}
 
-
-	public function colour(r, g, b, a) {
-		var c = this.getColour(r, g, b, a);
-		this.ctx.fillStyle = c;
-	};
-
-	public function lineColour(r, g, b, a) {
-		console.log(r);
-		this.ctx.strokeStyle = this.getColour(r, g, b, a);
-	};
-
-	public function colourName(c) {
-		this.ctx.fillStyle = c;
-	};
-
-	public function getColour(r, g, b, a) {
-		var c;
-		if (g == null) {
-			c = rgb(r, r, r);
-		} else if (b == null && a == null) {
-			c = rgba(r, r, r, g);
-		} else if (a == null) {
-			c = rgb(r, g, b);
-		} else {
-			c = rgba(r, g, b, a);
-		}
-		return (c);
-	};
-
-	public function makeCircle(x, y, radius) {
-		this.ctx.beginPath();
-		this.arc(x, y, radius / 2, 0, Math.PI * 2, true);
-	};
-
-	public function circle(x, y, radius) {
-		this.makeCircle(x, y, radius);
-		this.fill();
-		this.ctx.closePath();
-	};
-
-	public function fillCircle(x, y, radius) {
-		this.makeCircle(x, y, radius);
-		this.fill();
-		this.ctx.closePath();
-	};
-
-	public function strokeCircle(x, y, radius) {
-		this.makeCircle(x, y, radius);
-		this.ctx.stroke();
-		this.ctx.closePath();
-	};
-
 	// public function circleH(x, y, width, height) {
 	// 	if (height == null) {
 	// 		height = width;
@@ -122,20 +70,8 @@ class DrawUtil extends CanvasRenderingContext2D {
 	// 	this.ctx.beginPath();
 	// };
 
-	public function square(x:Float, y:Float, width:Float, ?height:Float) {
-		if (height == null) height = width;
-		this.ctx.fillRect(x, y, width, height);
-	};
 
-	public function centreStrokeRect(x:Float, y:Float, width:Float, ?height:Float) {
-		if (height == null) height = width;
-		this.ctx.strokeRect(x - width / 2, y - height / 2, width, height);
-	};
 
-	public function centreFillRect(x:Float, y:Float, width:Float, ?height:Float) {
-		if (height == null) height = width;
-		this.ctx.fillRect(x - width / 2, y - height / 2, width, height);
-	};
 
 	// public function roundRect(_x, _y, _width, _height, _radius, _fill, _stroke) {
 	// 	_fill = _fill || true;
@@ -173,13 +109,6 @@ class DrawUtil extends CanvasRenderingContext2D {
 	// 	}
 	// }
 
-	public function line(x1, y1, x2, y2) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1, y1);
-		this.ctx.lineTo(x2, y2);
-		this.ctx.stroke();
-		this.ctx.beginPath();
-	};
 
 	public function strokePolygon(x, y, sides, size) {
 		this.polygon(x, y, sides, size);
@@ -207,39 +136,10 @@ class DrawUtil extends CanvasRenderingContext2D {
 			this.ctx.lineTo (_x + size * Math.cos(i * 2 * Math.PI / sides), _y + size * Math.sin(i * 2 * Math.PI / sides));
 		}
 	}
-	public function strokeWeight(j) {
-		this.ctx.lineWidth = j;
-	}
 
-	public function triangle(x1, y1, x2, y2, x3, y3) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1, y1);
-		this.ctx.lineTo(x2, y2);
-		this.ctx.lineTo(x3, y3);
-		this.ctx.lineTo(x1, y1);
-		this.ctx.stroke();
-		this.ctx.closePath();
-	};
 
-	public function strokeTriangle(x1, y1, x2, y2, x3, y3) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1, y1);
-		this.ctx.lineTo(x2, y2);
-		this.ctx.lineTo(x3, y3);
-		this.ctx.lineTo(x1, y1);
-		this.ctx.stroke();
-		this.ctx.closePath();
-	}
 
-	public function fillTriangle(x1, y1, x2, y2, x3, y3) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1, y1);
-		this.ctx.lineTo(x2, y2);
-		this.ctx.lineTo(x3, y3);
-		this.ctx.lineTo(x1, y1);
-		this.fill();
-		this.ctx.closePath();
-	};
+
 
 	public function eqDownFillTriangle(x, y, sz, down) {
 		this.translate(x, y);
@@ -265,44 +165,15 @@ class DrawUtil extends CanvasRenderingContext2D {
 		this.triangle(x, y - sz, x + sz, y + sz / 2, x - sz, y + sz / 2);
 	}
 
-	public function background(r, g, b, a) {
-		if (g == null) {
-			this.ctx.fillStyle = rgb(r, r, r);
-		} else if (b == null && a == null) {
-			this.ctx.fillStyle = rgba(r, r, r, g);
-		} else if (a == null) {
-			this.ctx.fillStyle = rgb(r, g, b);
-		} else {
-			this.ctx.fillStyle = rgba(r, g, b, a);
-		}
-		this.ctx.fillRect(0, 0, w, h);
-	};
 
-	public function rotateDegrees(deg) {
-		this.rotate(radians(deg));
-	}
 
-	public function rotateDeg(deg) {
-		this.rotate(radians(deg));
-	}
 
-	function radians(deg) {
-		return deg * Math.PI / 180;
-	};
 
-	function degrees(rad) {
-		return rad * 180 / Math.PI;
-	};
 
-	function degreesToPoint(deg, diameter) {
-		var rad = Math.PI * deg / 180;
-		var r = diameter / 2;
-		return {x: r * Math.cos(rad), y: r * Math.sin(rad)};
-	}
 
-	function distributeAngles(me, total) {
-		return me / total * 360;
-	}
+
+
+
 
 	// function xyz(px, py, pz, pitch, roll, yaw) {
 	// 	var cosa = Math.cos(yaw);
@@ -333,27 +204,9 @@ class DrawUtil extends CanvasRenderingContext2D {
 	// 	return {x: x, y: y, z: z};
 	// }
 
-	function rgb(r, g, b) {
-		if (g == null)
-			g = r;
-		if (b == null)
-			b = r;
-		return 'rgb(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(g), 0, 255) + ', ' + clamp(Math.round(b), 0, 255) + ')';
-	};
 
-	function rgba(r, ?g, ?b, ?a) {
-		if (g == null) {
-			return 'rgb(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(r), 0, 255) + ')';
-		} else if (b == null) {
-			return 'rgba(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(r), 0, 255) + ', ' + clamp(g, 0, 1) +
-				')';
-		} else if (a == null) {
-			return 'rgba(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(g), 0, 255) + ', ' + clamp(Math.round(b), 0, 255) + ', 1)';
-		} else {
-			return 'rgba(' + clamp(Math.round(r), 0, 255) + ', ' + clamp(Math.round(g), 0, 255) + ', ' + clamp(Math.round(b), 0, 255) + ', ' + clamp(a, 0, 1) +
-				')';
-		}
-	};
+
+
 
 	// function hsl(h, s, l) {
 	// 	return 'hsl(' + h + ', ' + clamp(s, 0, 100) + '%, ' + clamp(l, 0, 100) + '%)';
@@ -429,107 +282,24 @@ class DrawUtil extends CanvasRenderingContext2D {
 	// 	return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 	// }
 
-	function map(value, min1, max1, min2, max2, clampResult) {
-		var returnvalue = ((value - min1) / (max1 - min1) * (max2 - min2)) + min2;
-		if (clampResult) {
-			return clamp(returnvalue, min2, max2);
-		} else {
-			return returnvalue;
-		};
-	};
+
 
 	function log(val) {
 		console.log(val);
 	}
 
-	function clamp(value, min, max) {
-		return Math.min(Math.max(value, Math.min(min, max)), Math.max(min, max));
-	}
 
 	// function inRange(value) {
 	// 	return value >= Math.min(min, max) && value <= Math.max(min, max);
 	// }
 
-	function dist(x1, y1, x2, y2) {
-		x2 -= x1;
-		y2 -= y1;
-		return Math.sqrt((x2 * x2) + (y2 * y2));
-	}
 
-	function random(?min, ?max) {
-		if (min == null) {
-			min = 0;
-			max = 1;
-		} else if (max == null) {
-			max = min;
-			min = 0;
-		}
-		return (Math.random() * (max - min)) + min;
-	};
 
-	function randomP(?min:Float, ?max:Float) {
-		if (min == null) {
-			min = 0.1;
-			max = 1;
-		} else if (max == null) {
-			max = min;
-			min = 0.1;
-		}
-		return (Math.random() * (max - min)) + min;
-	};
 
-	function randomInt(min, ?max) {
-		if (max == null) {
-			max = min;
-			min = 0;
-		}
-		return Math.floor(Math.random() * (max + 1 - min)) + min;
-	}
 
-	function randomColour() {
-		var r = randomInt(255);
-		var g = randomInt(255);
-		var b = randomInt(255);
-		return rgb(r, g, b);
-	}
 
-	function tween(pos:Float, target, ?speed) {
-		if (speed == null) speed = 20;
-		pos += (target - pos) / speed;
-		return pos;
-	}
 
-	function chance(value) {
-		return (random(value) > value - 1);
-	}
 
-	function posNeg() {
-		return randomInt(0, 1) * 2 - 1;
-	}
-
-	function angle(cx, cy, ex, ey) {
-		var dy = ey - cy;
-		var dx = ex - cx;
-		var theta = Math.atan2(dy, dx); // range (-PI, PI]
-		theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
-		if (theta < 0)
-			theta = 360 + theta; // range [0, 360);
-		if (theta == 360)
-			theta = 0;
-		return theta;
-	}
-
-	function bounce(num, min, max, sz) {
-		if (sz == null) {
-			sz = 0;
-		}
-		if (num >= max - sz / 2 || num - sz / 2 <= min) {
-			return 1;
-		} else {
-			return 0;
-		}
-		// return num > max ? -1 : num < min ? -1 : 1
-	}
 
 	// // Adapted from https://github.com/psalaets/line-intersect/
 	// function checkIntersection( x1, y1, x2, y2, x3, y3, x4, y4 ) {

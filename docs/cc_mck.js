@@ -6,34 +6,6 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
-var CC = function() {
-	this.KEY_UP = "keyup";
-	this.KEY_DOWN = "keydown";
-	this.MOUSE_MOVE = "mousemove";
-	this.MOUSE_UP = "mouseup";
-	this.MOUSE_DOWN = "mousedown";
-	this.document = window.document;
-	this.window = window;
-	this.window.addEventListener(this.MOUSE_MOVE,function(e) {
-		Global.mouseX = e.clientX;
-		Global.mouseY = e.clientY;
-		Global.mouseMoved = true;
-	});
-	this.window.addEventListener(this.MOUSE_DOWN,function(e1) {
-		Global.mouseDown = true;
-	});
-	this.window.addEventListener(this.MOUSE_UP,function(e2) {
-		Global.mouseDown = false;
-	});
-	this.window.addEventListener(this.KEY_DOWN,function(e3) {
-	});
-	this.window.addEventListener(this.KEY_UP,function(e4) {
-	});
-};
-CC.__name__ = ["CC"];
-CC.prototype = {
-	__class__: CC
-};
 var CanvasTools = function() { };
 CanvasTools.__name__ = ["CanvasTools"];
 CanvasTools.square = function(ctx,x,y,width,height) {
@@ -54,19 +26,43 @@ CanvasTools.centreFillRect = function(ctx,x,y,width,height) {
 	}
 	ctx.fillRect(x - width / 2,y - height / 2,width,height);
 };
-CanvasTools.circle = function(ctx,x,y,radius) {
+CanvasTools.makeCircle = function(ctx,x,y,radius) {
 	ctx.beginPath();
 	ctx.arc(x,y,radius,0,Math.PI * 2,true);
 };
-CanvasTools.fillCircle = function(ctx,x,y,radius) {
-	CanvasTools.circle(ctx,x,y,radius);
+CanvasTools.circle = function(ctx,x,y,radius) {
+	CanvasTools.makeCircle(ctx,x,y,radius);
 	ctx.fill();
-	ctx.beginPath();
+	ctx.closePath();
+};
+CanvasTools.fillCircle = function(ctx,x,y,radius) {
+	CanvasTools.makeCircle(ctx,x,y,radius);
+	ctx.fill();
+	ctx.closePath();
 };
 CanvasTools.strokeCircle = function(ctx,x,y,radius) {
-	CanvasTools.circle(ctx,x,y,radius);
+	CanvasTools.makeCircle(ctx,x,y,radius);
 	ctx.stroke();
+	ctx.closePath();
+};
+CanvasTools.eellipse = function(ctx,x,y,width,height) {
 	ctx.beginPath();
+	var i = 0;
+	while(i < Math.PI * 2) {
+		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
+		i += Math.PI / 16;
+	}
+	ctx.closePath();
+};
+CanvasTools.fillEllipse = function(ctx,x,y,width,height) {
+	ctx.beginPath();
+	ctx.ellipse(x,y,width,height,0,0,2 * Math.PI);
+	ctx.fill();
+};
+CanvasTools.strokeEllipse = function(ctx,x,y,width,height) {
+	ctx.beginPath();
+	ctx.ellipse(x,y,width,height,0,0,2 * Math.PI);
+	ctx.stroke();
 };
 CanvasTools.line = function(ctx,x1,y1,x2,y2) {
 	ctx.beginPath();
@@ -74,6 +70,64 @@ CanvasTools.line = function(ctx,x1,y1,x2,y2) {
 	ctx.lineTo(x2,y2);
 	ctx.stroke();
 	ctx.beginPath();
+};
+CanvasTools.triangle = function(ctx,x1,y1,x2,y2,x3,y3) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.lineTo(x3,y3);
+	ctx.lineTo(x1,y1);
+	ctx.stroke();
+	ctx.closePath();
+};
+CanvasTools.strokeTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.lineTo(x3,y3);
+	ctx.lineTo(x1,y1);
+	ctx.stroke();
+	ctx.closePath();
+};
+CanvasTools.fillTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.lineTo(x3,y3);
+	ctx.lineTo(x1,y1);
+	ctx.fill();
+	ctx.closePath();
+};
+CanvasTools.strokeWeight = function(ctx,inPx) {
+	ctx.lineWidth = inPx;
+};
+CanvasTools.fillColour = function(ctx,r,g,b,a) {
+	CanvasTools.colour(ctx,r,g,b,a);
+};
+CanvasTools.colour = function(ctx,r,g,b,a) {
+	var c = util_ColorUtil.getColour(r,g,b,a);
+	ctx.fillStyle = c;
+};
+CanvasTools.strokeColour = function(ctx,r,g,b,a) {
+	CanvasTools.lineColour(ctx,r,g,b,a);
+};
+CanvasTools.lineColour = function(ctx,r,g,b,a) {
+	ctx.strokeStyle = util_ColorUtil.getColour(r,g,b,a);
+};
+CanvasTools.colourName = function(ctx,name) {
+	ctx.fillStyle = name;
+};
+CanvasTools.background = function(ctx,r,g,b,a) {
+	if(g == null) {
+		ctx.fillStyle = util_ColorUtil.rgb(r,r,r);
+	} else if(b == null && a == null) {
+		ctx.fillStyle = util_ColorUtil.rgba(r,r,r,g);
+	} else if(a == null) {
+		ctx.fillStyle = util_ColorUtil.rgb(r,g,b);
+	} else {
+		ctx.fillStyle = util_ColorUtil.rgba(r,g,b,a);
+	}
+	ctx.fillRect(0,0,Global.w,Global.h);
 };
 Math.__name__ = ["Math"];
 var Global = function() { };
@@ -112,13 +166,20 @@ Main.prototype = {
 	__class__: Main
 };
 var Sketch = function() {
+	this.KEY_UP = "keyup";
+	this.KEY_DOWN = "keydown";
+	this.MOUSE_MOVE = "mousemove";
+	this.MOUSE_UP = "mouseup";
+	this.MOUSE_DOWN = "mousedown";
+	this.document = window.document;
+	this.window = window;
 };
 Sketch.__name__ = ["Sketch"];
 Sketch.create = function(name,type) {
 	if(type == null) {
 		type = "2d";
 	}
-	var cc = new CC();
+	new Sketch().init();
 	if(type == "2d") {
 		return new Sketch().createCanvas(name);
 	} else {
@@ -127,8 +188,8 @@ Sketch.create = function(name,type) {
 };
 Sketch.prototype = {
 	createCanvas: function(canvas_name) {
-		this.canvas = window.document.createElement("canvas");
-		var body = window.document.querySelector("body");
+		this.canvas = this.document.createElement("canvas");
+		var body = this.document.querySelector("body");
 		this.canvas.setAttribute("id",canvas_name);
 		this.canvas.style.position = "absolute";
 		this.canvas.style.left = "0px";
@@ -136,12 +197,12 @@ Sketch.prototype = {
 		body.appendChild(this.canvas);
 		var ctx = this.canvas.getContext("2d");
 		this.resize();
-		window.addEventListener("resize",$bind(this,this.resize),false);
+		this.window.addEventListener("resize",$bind(this,this.resize),false);
 		return ctx;
 	}
 	,createGLCanvas: function(canvas_name) {
-		this.canvas = window.document.createElement("canvas");
-		var body = window.document.querySelector("body");
+		this.canvas = this.document.createElement("canvas");
+		var body = this.document.querySelector("body");
 		this.canvas.setAttribute("id",canvas_name);
 		this.canvas.style.position = "absolute";
 		this.canvas.style.left = "0px";
@@ -152,13 +213,13 @@ Sketch.prototype = {
 			var gl1 = this.canvas.getContext("experimental-webgl");
 		}
 		this.resize();
-		window.addEventListener("resize",$bind(this,this.resize),false);
+		this.window.addEventListener("resize",$bind(this,this.resize),false);
 		return gl;
 	}
 	,resize: function() {
-		var c = window.document.getElementsByTagName("canvas");
-		Global.width = Global.w = window.innerWidth;
-		Global.height = Global.h = window.innerHeight;
+		var c = this.document.getElementsByTagName("canvas");
+		Global.width = Global.w = this.window.innerWidth;
+		Global.height = Global.h = this.window.innerHeight;
 		var _g1 = 0;
 		var _g = c.length;
 		while(_g1 < _g) {
@@ -173,6 +234,23 @@ Sketch.prototype = {
 		var ctx = this.createCanvas(canvas_name);
 		this.canvas.style.left = -Global.w + "px";
 		return ctx;
+	}
+	,init: function() {
+		this.window.addEventListener(this.MOUSE_MOVE,function(e) {
+			Global.mouseX = e.clientX;
+			Global.mouseY = e.clientY;
+			Global.mouseMoved = true;
+		});
+		this.window.addEventListener(this.MOUSE_DOWN,function(e1) {
+			Global.mouseDown = true;
+		});
+		this.window.addEventListener(this.MOUSE_UP,function(e2) {
+			Global.mouseDown = false;
+		});
+		this.window.addEventListener(this.KEY_DOWN,function(e3) {
+		});
+		this.window.addEventListener(this.KEY_UP,function(e4) {
+		});
 	}
 	,__class__: Sketch
 };
@@ -193,7 +271,6 @@ Type.getClassName = function(c) {
 var art_CCBase = function(ctx) {
 	this.isDrawActive = true;
 	this.ctx = ctx;
-	this.p = new util_DrawUtil(ctx);
 	this._draw();
 };
 art_CCBase.__name__ = ["art","CCBase"];
@@ -208,7 +285,13 @@ art_CCBase.prototype = {
 		console.log("override public function draw()");
 	}
 	,pause: function() {
+		this.isDrawActive = !this.isDrawActive;
+	}
+	,stop: function() {
 		this.isDrawActive = false;
+	}
+	,play: function() {
+		this.isDrawActive = true;
 	}
 	,toString: function() {
 		var className = Type.getClassName(js_Boot.getClass(this));
@@ -256,7 +339,9 @@ art_CC001.__super__ = art_CCBase;
 art_CC001.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		this.p.circle(100,100,100);
+		CanvasTools.background(this.ctx,0,0,0);
+		CanvasTools.fillColour(this.ctx,255,255,255);
+		CanvasTools.fillCircle(this.ctx,Global.w / 2,Global.h / 2,100);
 		this.pause();
 	}
 	,__class__: art_CC001
@@ -270,7 +355,8 @@ art_CC002.__super__ = art_CCBase;
 art_CC002.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		this.p.triangle(Math.floor(Global.w / 2),100,Math.floor(Global.w / 3),300,Math.floor(Global.w / 3) * 2,300);
+		CanvasTools.fillColour(this.ctx,util_ColorUtil.RED.red,util_ColorUtil.RED.green,util_ColorUtil.RED.blue);
+		CanvasTools.fillEllipse(this.ctx,Global.w / 2,Global.h / 2,100,200);
 		this.pause();
 	}
 	,__class__: art_CC002
@@ -304,312 +390,148 @@ js_Boot.__resolveNativeClass = function(name) {
 };
 var model_constants_App = function() { };
 model_constants_App.__name__ = ["model","constants","App"];
-var util_DrawUtil = function(ctx) {
-	this.ctx = ctx;
+var util_ColorUtil = function() {
 };
-util_DrawUtil.__name__ = ["util","DrawUtil"];
-util_DrawUtil.__super__ = CanvasRenderingContext2D;
-util_DrawUtil.prototype = $extend(CanvasRenderingContext2D.prototype,{
-	colour: function(r,g,b,a) {
-		var c = this.getColour(r,g,b,a);
-		this.ctx.fillStyle = c;
+util_ColorUtil.__name__ = ["util","ColorUtil"];
+util_ColorUtil.getColour = function(r,g,b,a) {
+	var c;
+	if(g == null) {
+		c = util_ColorUtil.rgb(r,r,r);
+	} else if(b == null && a == null) {
+		c = util_ColorUtil.rgba(r,r,r,g);
+	} else if(a == null) {
+		c = util_ColorUtil.rgb(r,g,b);
+	} else {
+		c = util_ColorUtil.rgba(r,g,b,a);
 	}
-	,lineColour: function(r,g,b,a) {
-		window.console.log(r);
-		this.ctx.strokeStyle = this.getColour(r,g,b,a);
+	return c;
+};
+util_ColorUtil.rgb = function(r,g,b) {
+	if(g == null) {
+		g = r;
 	}
-	,colourName: function(c) {
-		this.ctx.fillStyle = c;
+	if(b == null) {
+		b = r;
 	}
-	,getColour: function(r,g,b,a) {
-		var c;
-		if(g == null) {
-			c = this.rgb(r,r,r);
-		} else if(b == null && a == null) {
-			c = this.rgba(r,r,r,g);
-		} else if(a == null) {
-			c = this.rgb(r,g,b);
-		} else {
-			c = this.rgba(r,g,b,a);
-		}
-		return c;
+	return "rgb(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(g),0,255) + ", " + util_MathUtil.clamp(Math.round(b),0,255) + ")";
+};
+util_ColorUtil.rgba = function(r,g,b,a) {
+	if(g == null) {
+		return "rgb(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ")";
+	} else if(b == null) {
+		return "rgba(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(g,0,1) + ")";
+	} else if(a == null) {
+		return "rgba(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(g),0,255) + ", " + util_MathUtil.clamp(Math.round(b),0,255) + ", 1)";
+	} else {
+		return "rgba(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(g),0,255) + ", " + util_MathUtil.clamp(Math.round(b),0,255) + ", " + util_MathUtil.clamp(a,0,1) + ")";
 	}
-	,makeCircle: function(x,y,radius) {
-		this.ctx.beginPath();
-		this.arc(x,y,radius / 2,0,Math.PI * 2,true);
+};
+util_ColorUtil.rgb2hex = function(r,g,b,a) {
+	if(a == null) {
+		a = 255;
 	}
-	,circle: function(x,y,radius) {
-		this.makeCircle(x,y,radius);
-		this.fill();
-		this.ctx.closePath();
+	return a << 24 | r << 16 | g << 8 | b;
+};
+util_ColorUtil.toRGB = function($int) {
+	return { red : Math.round($int >> 16 & 255), green : Math.round($int >> 8 & 255), blue : Math.round($int & 255)};
+};
+util_ColorUtil.ttoRGB = function($int) {
+	return { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+};
+util_ColorUtil.prototype = {
+	__class__: util_ColorUtil
+};
+var util_MathUtil = function() { };
+util_MathUtil.__name__ = ["util","MathUtil"];
+util_MathUtil.radians = function(deg) {
+	return deg * Math.PI / 180;
+};
+util_MathUtil.degrees = function(rad) {
+	return rad * 180 / Math.PI;
+};
+util_MathUtil.degreesToPoint = function(deg,diameter) {
+	var rad = Math.PI * deg / 180;
+	var r = diameter / 2;
+	return { x : r * Math.cos(rad), y : r * Math.sin(rad)};
+};
+util_MathUtil.distributeAngles = function(me,total) {
+	return me / total * 360;
+};
+util_MathUtil.dist = function(x1,y1,x2,y2) {
+	x2 -= x1;
+	y2 -= y1;
+	return Math.sqrt(x2 * x2 + y2 * y2);
+};
+util_MathUtil.randomInteger = function(min,max) {
+	if(max == null) {
+		max = min;
+		min = 0;
 	}
-	,fillCircle: function(x,y,radius) {
-		this.makeCircle(x,y,radius);
-		this.fill();
-		this.ctx.closePath();
+	return Math.floor(Math.random() * (max + 1 - min)) + min;
+};
+util_MathUtil.random = function(min,max) {
+	if(min == null) {
+		min = 0;
+		max = 1;
+	} else if(max == null) {
+		max = min;
+		min = 0;
 	}
-	,strokeCircle: function(x,y,radius) {
-		this.makeCircle(x,y,radius);
-		this.ctx.stroke();
-		this.ctx.closePath();
+	return Math.random() * (max - min) + min;
+};
+util_MathUtil.randomP = function(min,max) {
+	if(min == null) {
+		min = 0.1;
+		max = 1;
+	} else if(max == null) {
+		max = min;
+		min = 0.1;
 	}
-	,fillEllipse: function(x,y,width,height) {
-		if(height == null) {
-			height = width;
-		}
-		this.ellipse(x,y,width,height,0,0,0,true);
-		this.fill();
-		this.ctx.beginPath();
+	return Math.random() * (max - min) + min;
+};
+util_MathUtil.randomInt = function(min,max) {
+	if(max == null) {
+		max = min;
+		min = 0;
 	}
-	,strokeEllipse: function(x,y,width,height) {
-		if(height == null) {
-			height = width;
-		}
-		this.ellipse(x,y,width,height,0,0,0,false);
-		this.ctx.stroke();
-		this.ctx.beginPath();
+	return Math.floor(Math.random() * (max + 1 - min)) + min;
+};
+util_MathUtil.randomColour = function() {
+	var r = util_MathUtil.randomInt(255);
+	var g = util_MathUtil.randomInt(255);
+	var b = util_MathUtil.randomInt(255);
+	return util_ColorUtil.rgb(r,g,b);
+};
+util_MathUtil.chance = function(value) {
+	return util_MathUtil.random(value) > value - 1;
+};
+util_MathUtil.posNeg = function() {
+	return util_MathUtil.randomInt(0,1) * 2 - 1;
+};
+util_MathUtil.angle = function(cx,cy,ex,ey) {
+	var dy = ey - cy;
+	var dx = ex - cx;
+	var theta = Math.atan2(dy,dx);
+	theta *= 180 / Math.PI;
+	if(theta < 0) {
+		theta = 360 + theta;
 	}
-	,square: function(x,y,width,height) {
-		if(height == null) {
-			height = width;
-		}
-		this.ctx.fillRect(x,y,width,height);
+	if(theta == 360) {
+		theta = 0;
 	}
-	,centreStrokeRect: function(x,y,width,height) {
-		if(height == null) {
-			height = width;
-		}
-		this.ctx.strokeRect(x - width / 2,y - height / 2,width,height);
+	return theta;
+};
+util_MathUtil.map = function(value,min1,max1,min2,max2,clampResult) {
+	var returnvalue = (value - min1) / (max1 - min1) * (max2 - min2) + min2;
+	if(clampResult) {
+		return util_MathUtil.clamp(returnvalue,min2,max2);
+	} else {
+		return returnvalue;
 	}
-	,centreFillRect: function(x,y,width,height) {
-		if(height == null) {
-			height = width;
-		}
-		this.ctx.fillRect(x - width / 2,y - height / 2,width,height);
-	}
-	,line: function(x1,y1,x2,y2) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1,y1);
-		this.ctx.lineTo(x2,y2);
-		this.ctx.stroke();
-		this.ctx.beginPath();
-	}
-	,strokePolygon: function(x,y,sides,size) {
-		this.polygon(x,y,sides,size);
-		this.ctx.stroke();
-	}
-	,fillPolygon: function(x,y,sides,size) {
-		this.polygon(x,y,sides,size);
-		this.fill();
-	}
-	,outlinedPolygon: function(_x,_y,_sides,_size,_fill,_stroke) {
-		this.ctx.fillStyle = _fill;
-		this.fillPolygon(_x,_y,_sides,_size);
-		this.ctx.strokeStyle = _stroke;
-		this.strokePolygon(_x,_y,_sides,_size);
-	}
-	,polygon: function(_x,_y,sides,size) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(_x + size * Math.cos(0),_y + size * Math.sin(0));
-		var _g1 = 0;
-		var _g = sides;
-		while(_g1 < _g) {
-			var i = _g1++;
-			this.ctx.lineTo(_x + size * Math.cos(i * 2 * Math.PI / sides),_y + size * Math.sin(i * 2 * Math.PI / sides));
-		}
-	}
-	,strokeWeight: function(j) {
-		this.ctx.lineWidth = j;
-	}
-	,triangle: function(x1,y1,x2,y2,x3,y3) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1,y1);
-		this.ctx.lineTo(x2,y2);
-		this.ctx.lineTo(x3,y3);
-		this.ctx.lineTo(x1,y1);
-		this.ctx.stroke();
-		this.ctx.closePath();
-	}
-	,strokeTriangle: function(x1,y1,x2,y2,x3,y3) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1,y1);
-		this.ctx.lineTo(x2,y2);
-		this.ctx.lineTo(x3,y3);
-		this.ctx.lineTo(x1,y1);
-		this.ctx.stroke();
-		this.ctx.closePath();
-	}
-	,fillTriangle: function(x1,y1,x2,y2,x3,y3) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x1,y1);
-		this.ctx.lineTo(x2,y2);
-		this.ctx.lineTo(x3,y3);
-		this.ctx.lineTo(x1,y1);
-		this.fill();
-		this.ctx.closePath();
-	}
-	,eqDownFillTriangle: function(x,y,sz,down) {
-		this.translate(x,y);
-		this.rotate(this.radians(180));
-		this.fillTriangle(0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
-		this.rotate(this.radians(-180));
-		this.translate(-x,-y);
-	}
-	,eqDownTriangle: function(x,y,sz,down) {
-		this.translate(x,y);
-		this.rotate(this.radians(180));
-		this.triangle(0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
-		this.rotate(this.radians(-180));
-		this.translate(-x,-y);
-	}
-	,eqFillTriangle: function(x,y,sz,down) {
-		this.fillTriangle(x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
-	}
-	,eqTriangle: function(x,y,sz,down) {
-		this.triangle(x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
-	}
-	,background: function(r,g,b,a) {
-		if(g == null) {
-			this.ctx.fillStyle = this.rgb(r,r,r);
-		} else if(b == null && a == null) {
-			this.ctx.fillStyle = this.rgba(r,r,r,g);
-		} else if(a == null) {
-			this.ctx.fillStyle = this.rgb(r,g,b);
-		} else {
-			this.ctx.fillStyle = this.rgba(r,g,b,a);
-		}
-		this.ctx.fillRect(0,0,Global.w,Global.h);
-	}
-	,rotateDegrees: function(deg) {
-		this.rotate(this.radians(deg));
-	}
-	,rotateDeg: function(deg) {
-		this.rotate(this.radians(deg));
-	}
-	,radians: function(deg) {
-		return deg * Math.PI / 180;
-	}
-	,degrees: function(rad) {
-		return rad * 180 / Math.PI;
-	}
-	,degreesToPoint: function(deg,diameter) {
-		var rad = Math.PI * deg / 180;
-		var r = diameter / 2;
-		return { x : r * Math.cos(rad), y : r * Math.sin(rad)};
-	}
-	,distributeAngles: function(me,total) {
-		return me / total * 360;
-	}
-	,rgb: function(r,g,b) {
-		if(g == null) {
-			g = r;
-		}
-		if(b == null) {
-			b = r;
-		}
-		return "rgb(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(g),0,255) + ", " + this.clamp(Math.round(b),0,255) + ")";
-	}
-	,rgba: function(r,g,b,a) {
-		if(g == null) {
-			return "rgb(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ")";
-		} else if(b == null) {
-			return "rgba(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(r),0,255) + ", " + this.clamp(g,0,1) + ")";
-		} else if(a == null) {
-			return "rgba(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(g),0,255) + ", " + this.clamp(Math.round(b),0,255) + ", 1)";
-		} else {
-			return "rgba(" + this.clamp(Math.round(r),0,255) + ", " + this.clamp(Math.round(g),0,255) + ", " + this.clamp(Math.round(b),0,255) + ", " + this.clamp(a,0,1) + ")";
-		}
-	}
-	,map: function(value,min1,max1,min2,max2,clampResult) {
-		var returnvalue = (value - min1) / (max1 - min1) * (max2 - min2) + min2;
-		if(clampResult) {
-			return this.clamp(returnvalue,min2,max2);
-		} else {
-			return returnvalue;
-		}
-	}
-	,log: function(val) {
-		window.console.log(val);
-	}
-	,clamp: function(value,min,max) {
-		return Math.min(Math.max(value,Math.min(min,max)),Math.max(min,max));
-	}
-	,dist: function(x1,y1,x2,y2) {
-		x2 -= x1;
-		y2 -= y1;
-		return Math.sqrt(x2 * x2 + y2 * y2);
-	}
-	,random: function(min,max) {
-		if(min == null) {
-			min = 0;
-			max = 1;
-		} else if(max == null) {
-			max = min;
-			min = 0;
-		}
-		return Math.random() * (max - min) + min;
-	}
-	,randomP: function(min,max) {
-		if(min == null) {
-			min = 0.1;
-			max = 1;
-		} else if(max == null) {
-			max = min;
-			min = 0.1;
-		}
-		return Math.random() * (max - min) + min;
-	}
-	,randomInt: function(min,max) {
-		if(max == null) {
-			max = min;
-			min = 0;
-		}
-		return Math.floor(Math.random() * (max + 1 - min)) + min;
-	}
-	,randomColour: function() {
-		var r = this.randomInt(255);
-		var g = this.randomInt(255);
-		var b = this.randomInt(255);
-		return this.rgb(r,g,b);
-	}
-	,tween: function(pos,target,speed) {
-		if(speed == null) {
-			speed = 20;
-		}
-		pos += (target - pos) / speed;
-		return pos;
-	}
-	,chance: function(value) {
-		return this.random(value) > value - 1;
-	}
-	,posNeg: function() {
-		return this.randomInt(0,1) * 2 - 1;
-	}
-	,angle: function(cx,cy,ex,ey) {
-		var dy = ey - cy;
-		var dx = ex - cx;
-		var theta = Math.atan2(dy,dx);
-		theta *= 180 / Math.PI;
-		if(theta < 0) {
-			theta = 360 + theta;
-		}
-		if(theta == 360) {
-			theta = 0;
-		}
-		return theta;
-	}
-	,bounce: function(num,min,max,sz) {
-		if(sz == null) {
-			sz = 0;
-		}
-		if(num >= max - sz / 2 || num - sz / 2 <= min) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
-	,__class__: util_DrawUtil
-});
+};
+util_MathUtil.clamp = function(value,min,max) {
+	return Math.min(Math.max(value,Math.min(min,max)),Math.max(min,max));
+};
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 String.prototype.__class__ = String;
@@ -620,7 +542,24 @@ Global.mouseReleased = 0;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-23 21:41:13";
+model_constants_App.BUILD = "2019-01-24 23:08:50";
+util_ColorUtil.NAVY = { red : Math.round(0), green : Math.round(31), blue : Math.round(63)};
+util_ColorUtil.BLUE = { red : Math.round(0), green : Math.round(116), blue : Math.round(217)};
+util_ColorUtil.AQUA = { red : Math.round(127), green : Math.round(219), blue : Math.round(255)};
+util_ColorUtil.TEAL = { red : Math.round(57), green : Math.round(204), blue : Math.round(204)};
+util_ColorUtil.OLIVE = { red : Math.round(61), green : Math.round(153), blue : Math.round(112)};
+util_ColorUtil.GREEN = { red : Math.round(46), green : Math.round(204), blue : Math.round(64)};
+util_ColorUtil.LIME = { red : Math.round(1), green : Math.round(255), blue : Math.round(112)};
+util_ColorUtil.YELLOW = { red : Math.round(255), green : Math.round(220), blue : Math.round(0)};
+util_ColorUtil.ORANGE = { red : Math.round(255), green : Math.round(133), blue : Math.round(27)};
+util_ColorUtil.RED = { red : Math.round(255), green : Math.round(65), blue : Math.round(54)};
+util_ColorUtil.MAROON = { red : Math.round(133), green : Math.round(20), blue : Math.round(75)};
+util_ColorUtil.FUCHSIA = { red : Math.round(240), green : Math.round(18), blue : Math.round(190)};
+util_ColorUtil.PURPLE = { red : Math.round(177), green : Math.round(13), blue : Math.round(201)};
+util_ColorUtil.BLACK = { red : Math.round(17), green : Math.round(17), blue : Math.round(17)};
+util_ColorUtil.GRAY = { red : Math.round(170), green : Math.round(170), blue : Math.round(170)};
+util_ColorUtil.SILVER = { red : Math.round(221), green : Math.round(221), blue : Math.round(221)};
+util_ColorUtil.WHITE = { red : Math.round(255), green : Math.round(255), blue : Math.round(255)};
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 

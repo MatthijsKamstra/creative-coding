@@ -23,8 +23,6 @@ class Global {
 
 	public static var TWO_PI : Float = Math.PI * 2;
 
-
-
 	// allows me global access to canvas and it’s width and height properties
 	public static var w : Int;
 	public static var width : Int;

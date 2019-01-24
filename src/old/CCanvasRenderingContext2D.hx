@@ -1,4 +1,4 @@
-package;
+package old;
 
 import js.html.CanvasRenderingContext2D;
 
