@@ -110,9 +110,7 @@ typedef RGBObject = {
 	var blue : Int;
 };
 typedef RGB = {
-	// @:optional var _id : Int;
 	var r : Float;
-	@:optional var g : Float;
-	@:optional var b : Float;
-	// @:optional var a : Int;
+	var g : Float;
+	var b : Float;
 };
