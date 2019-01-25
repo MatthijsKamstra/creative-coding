@@ -6,6 +6,8 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
+var AST = function() { };
+AST.__name__ = ["AST"];
 var CanvasTools = function() { };
 CanvasTools.__name__ = ["CanvasTools"];
 CanvasTools.square = function(ctx,x,y,width,height) {
@@ -148,10 +150,16 @@ var Main = function() {
 		case "CC002":
 			new art_CC002(ctx);
 			break;
+		case "CC003":
+			new art_CC003(ctx);
+			break;
+		case "CC004":
+			new art_CC004(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC000";
-			new art_CC000(ctx);
+			window.location.hash = "CC004";
+			new art_CC004(ctx);
 		}
 		window.addEventListener("hashchange",function() {
 			window.location.reload();
@@ -271,18 +279,21 @@ Type.getClassName = function(c) {
 var art_CCBase = function(ctx) {
 	this.isDrawActive = true;
 	this.ctx = ctx;
+	this.init();
 	this._draw();
 };
 art_CCBase.__name__ = ["art","CCBase"];
 art_CCBase.prototype = {
-	_draw: function(timestamp) {
+	init: function() {
+	}
+	,_draw: function(timestamp) {
 		this.draw();
 		if(this.isDrawActive) {
 			window.requestAnimationFrame($bind(this,this._draw));
 		}
 	}
 	,draw: function() {
-		console.log("override public function draw()");
+		console.log("" + this.toString() + " :: override public function draw()");
 	}
 	,pause: function() {
 		this.isDrawActive = !this.isDrawActive;
@@ -355,11 +366,126 @@ art_CC002.__super__ = art_CCBase;
 art_CC002.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		CanvasTools.fillColour(this.ctx,util_ColorUtil.RED.red,util_ColorUtil.RED.green,util_ColorUtil.RED.blue);
+		CanvasTools.fillColour(this.ctx,util_ColorUtil.LIME.red,util_ColorUtil.LIME.green,util_ColorUtil.LIME.blue);
 		CanvasTools.fillEllipse(this.ctx,Global.w / 2,Global.h / 2,100,200);
 		this.pause();
 	}
 	,__class__: art_CC002
+});
+var art_CC003 = function(ctx) {
+	this.ballArray = [];
+	this.sizeBall = 20;
+	this.maxBalls = 10;
+	art_CCBase.call(this,ctx);
+};
+art_CC003.__name__ = ["art","CC003"];
+art_CC003.__interfaces__ = [art_ICCBase];
+art_CC003.__super__ = art_CCBase;
+art_CC003.prototype = $extend(art_CCBase.prototype,{
+	init: function() {
+		console.log("init: " + this.toString());
+		CanvasTools.background(this.ctx,255,255,255,0.2);
+		var _g1 = 0;
+		var _g = this.maxBalls;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.ballArray.push(this.createBall());
+		}
+	}
+	,draw: function() {
+		this.moveBall();
+		this.drawBall();
+	}
+	,createBall: function() {
+		var ball = { x : util_MathUtil.random(this.sizeBall / 2,Global.w - this.sizeBall / 2), y : util_MathUtil.random(this.sizeBall / 2,Global.h - this.sizeBall / 2), speed_x : util_MathUtil.random(-5,5), speed_y : util_MathUtil.random(-5,5), size : this.sizeBall, colour : util_ColorUtil.rgb(util_MathUtil.randomInt(55),util_MathUtil.randomInt(255),0)};
+		return ball;
+	}
+	,moveBall: function() {
+		var _g1 = 0;
+		var _g = this.ballArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var b = this.ballArray[i];
+			b.x += b.speed_x;
+			b.y += b.speed_y;
+			if(util_AnimateUtil.bounce(b.x,0,Global.w,b.size)) {
+				b.speed_x *= -1;
+				b.colour = util_ColorUtil.rgb(util_MathUtil.randomInt(55),util_MathUtil.randomInt(255),0);
+			}
+			if(util_AnimateUtil.bounce(b.y,0,Global.h,b.size)) {
+				b.speed_y *= -1;
+				b.colour = util_ColorUtil.rgb(0,util_MathUtil.randomInt(255),util_MathUtil.randomInt(55));
+			}
+		}
+	}
+	,drawBall: function() {
+		var _g1 = 0;
+		var _g = this.ballArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var b = this.ballArray[i];
+			this.ctx.fillStyle = b.colour;
+			CanvasTools.fillCircle(this.ctx,b.x,b.y,b.size);
+		}
+	}
+	,__class__: art_CC003
+});
+var art_CC004 = function(ctx) {
+	this.ballArray = [];
+	this.sizeBall = 3;
+	this.maxBalls = 200;
+	art_CCBase.call(this,ctx);
+};
+art_CC004.__name__ = ["art","CC004"];
+art_CC004.__interfaces__ = [art_ICCBase];
+art_CC004.__super__ = art_CCBase;
+art_CC004.prototype = $extend(art_CCBase.prototype,{
+	init: function() {
+		console.log("" + this.toString() + " :: init()");
+		var _g1 = 0;
+		var _g = this.maxBalls;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.ballArray.push(this.createBall());
+		}
+	}
+	,draw: function() {
+		this.moveBall();
+		this.ctx.clearRect(0,0,Global.width,Global.height);
+		CanvasTools.background(this.ctx,0,0,0);
+		this.drawBall();
+	}
+	,createBall: function() {
+		var ball = { x : util_MathUtil.random(this.sizeBall / 2,Global.w - this.sizeBall / 2), y : util_MathUtil.random(this.sizeBall / 2,Global.h - this.sizeBall / 2), speed_x : util_MathUtil.random(-0.5,0.5), speed_y : util_MathUtil.random(-0.5,0.5), size : this.sizeBall, colour : util_ColorUtil.rgb(255,255,255)};
+		return ball;
+	}
+	,moveBall: function() {
+		var _g1 = 0;
+		var _g = this.ballArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var b = this.ballArray[i];
+			b.x += b.speed_x;
+			b.y += b.speed_y;
+			if(util_AnimateUtil.bounce(b.x,0,Global.w,b.size)) {
+				b.speed_x *= -1;
+			}
+			if(util_AnimateUtil.bounce(b.y,0,Global.h,b.size)) {
+				b.speed_y *= -1;
+			}
+		}
+	}
+	,drawBall: function() {
+		var _g1 = 0;
+		var _g = this.ballArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var b = this.ballArray[i];
+			this.ctx.fillStyle = b.colour;
+			CanvasTools.fillCircle(this.ctx,b.x,b.y,b.size);
+		}
+	}
+	,__class__: art_CC004
 });
 var js_Boot = function() { };
 js_Boot.__name__ = ["js","Boot"];
@@ -390,6 +516,29 @@ js_Boot.__resolveNativeClass = function(name) {
 };
 var model_constants_App = function() { };
 model_constants_App.__name__ = ["model","constants","App"];
+var util_AnimateUtil = function() {
+};
+util_AnimateUtil.__name__ = ["util","AnimateUtil"];
+util_AnimateUtil.tween = function(pos,target,speed) {
+	if(speed == null) {
+		speed = 20;
+	}
+	pos += (target - pos) / speed;
+	return pos;
+};
+util_AnimateUtil.bounce = function(num,min,max,sz) {
+	if(sz == null) {
+		sz = 0;
+	}
+	if(num >= max - sz / 2 || num - sz / 2 <= min) {
+		return true;
+	} else {
+		return false;
+	}
+};
+util_AnimateUtil.prototype = {
+	__class__: util_AnimateUtil
+};
 var util_ColorUtil = function() {
 };
 util_ColorUtil.__name__ = ["util","ColorUtil"];
@@ -542,7 +691,7 @@ Global.mouseReleased = 0;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-24 23:08:50";
+model_constants_App.BUILD = "2019-01-25 12:09:16";
 util_ColorUtil.NAVY = { red : Math.round(0), green : Math.round(31), blue : Math.round(63)};
 util_ColorUtil.BLUE = { red : Math.round(0), green : Math.round(116), blue : Math.round(217)};
 util_ColorUtil.AQUA = { red : Math.round(127), green : Math.round(219), blue : Math.round(255)};

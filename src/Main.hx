@@ -5,10 +5,6 @@ import js.html.*;
 
 import Sketch;
 import art.*;
-import art.CC000;
-import art.CC001;
-import art.CC002;
-
 import model.constants.App;
 
 using StringTools;
@@ -33,10 +29,12 @@ class Main {
 				case 'CC000': new CC000(ctx);
 				case 'CC001': new CC001(ctx);
 				case 'CC002': new CC002(ctx);
+				case 'CC003': new CC003(ctx);
+				case 'CC004': new CC004(ctx);
 				default :
 					trace ("case '"+hash+"': new "+hash+"(ctx);");
-					location.hash = 'CC000';
-					new CC000(ctx);
+					location.hash = 'CC004';
+					new CC004(ctx);
 
 			}
 

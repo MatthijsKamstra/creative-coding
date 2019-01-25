@@ -20,7 +20,9 @@
 - [ ] "hidden" menu
 - [ ] branding
 - [x] last sketch default
-- [ ] ...
+- [ ] draw vs animation?
+- [ ] ....
+
 
 
 

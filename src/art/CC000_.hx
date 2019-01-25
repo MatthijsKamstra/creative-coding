@@ -10,10 +10,15 @@ import Global.*;
 import util.MathUtil.*;
 import util.ColorUtil.*;
 import util.AnimateUtil.*;
+// easy access to typedef
+import AST;
 
 // syntactic sugar to extend CanvasRenderingContext2D
 using CanvasTools;
 
+/**
+ * short description what this does
+ */
 class CC000 extends CCBase implements ICCBase {
 
 	public function new(ctx:CanvasRenderingContext2D) {

@@ -18,24 +18,21 @@ using CanvasTools;
 
 
 /**
- * maximum nr balls bouncing around and changing color when bounce, with trail
+ * a lot of balls bouncin of the walls, no trail
+ * draw lines beteen
  */
-class CC003 extends CCBase implements ICCBase {
+class CC004 extends CCBase implements ICCBase {
 
-	var maxBalls = 10;
-	var sizeBall = 20;
+	var maxBalls = 200;
+	var sizeBall = 3;
 	var ballArray : Array<Ball> = [];
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 	}
 
-	/**
-	 * create balls that bounce of the border of the canvas
-	 */
-	override public function init(){
-		trace('init: ${toString()}');
-		ctx.background(255,255,255, 0.2);
+	override function init(){
+		trace('${toString()} :: init()');
 		for (i in 0...maxBalls){
 			ballArray.push( createBall() );
 		}
@@ -43,6 +40,8 @@ class CC003 extends CCBase implements ICCBase {
 
 	override function draw(){
 		moveBall();
+		ctx.clearRect(0, 0, width, height);
+		ctx.background(0,0,0);
 		drawBall();
 	}
 
@@ -50,10 +49,10 @@ class CC003 extends CCBase implements ICCBase {
 		var ball : Ball = {
 			x: random(sizeBall/2, w-(sizeBall/2)),
 			y: random(sizeBall/2, h-(sizeBall/2)),
-			speed_x: random(-5, 5),
-			speed_y: random(-5, 5),
+			speed_x: random(-0.5, 0.5),
+			speed_y: random(-0.5, 0.5),
 			size: sizeBall,
-			colour: rgb(randomInt(55),randomInt(255),0)
+			colour: rgb(255,255,255),
 		}
 		return ball;
 	}
@@ -65,11 +64,11 @@ class CC003 extends CCBase implements ICCBase {
 			b.y = b.y + b.speed_y;
 			if (bounce(b.x, 0, w, b.size)) {
 				b.speed_x *=-1;
-				b.colour = rgb(randomInt(55),randomInt(255),0);
+				// b.colour = rgb(randomInt(55),randomInt(255),0);
 			}
 			if (bounce(b.y, 0 ,h, b.size)) {
 				b.speed_y *=-1;
-				b.colour = rgb(0, randomInt(255),randomInt(55));
+				// b.colour = rgb(0, randomInt(255),randomInt(55));
 			}
 		}
 	}
