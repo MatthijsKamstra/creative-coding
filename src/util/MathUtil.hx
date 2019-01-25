@@ -1,5 +1,6 @@
 package util;
 
+
 /**
  * Math related stuff is found here
  * 		- radians & convertions
@@ -41,7 +42,15 @@ class MathUtil {
 		return me / total * 360;
 	}
 
-	static public function dist(x1, y1, x2, y2) {
+	/**
+	 * calculate distance between two point (x,y)
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 */
+	static public function distance(x1:Float, y1:Float, x2:Float, y2:Float) : Float { return dist (x1, y1, x2, y2);}
+	static public function dist(x1:Float, y1:Float, x2:Float, y2:Float) {
 		x2-=x1;
 		y2-=y1;
 		return Math.sqrt((x2*x2) + (y2*y2));
