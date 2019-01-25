@@ -17,7 +17,13 @@ class ColorUtil {
 		return (c);
 	};
 
-	static public function rgb(r, g, b) {
+	/**
+	 * use RGB values to create color
+	 * @param r red (max:255, min:0)
+	 * @param g green (max:255, min:0)
+	 * @param b blue (max:255, min:0)
+	 */
+	static public function rgb(r:Int, ?g:Int, ?b:Int) {
 		if (g == null)
 			g = r;
 		if (b == null)
