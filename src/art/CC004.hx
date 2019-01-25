@@ -23,6 +23,7 @@ using CanvasTools;
  */
 class CC004 extends CCBase implements ICCBase {
 
+	var maxDistance = 100;
 	var maxBalls = 200;
 	var sizeBall = 3;
 	var ballArray : Array<Ball> = [];
@@ -74,11 +75,25 @@ class CC004 extends CCBase implements ICCBase {
 	}
 
 	function drawBall(){
+
 		for ( i in 0 ... ballArray.length ) {
-			var b = ballArray[i];
-			ctx.fillStyle = b.colour;
-			ctx.fillCircle(b.x, b.y, b.size);
-			// ctx.fillEllipse(b.x, b.y, b.size, b.size);
+			var b1 = ballArray[i];
+			ctx.fillStyle = b1.colour;
+			ctx.fillCircle(b1.x, b1.y, b1.size);
+
+			for ( j in 0 ... ballArray.length ) {
+				var b2 = ballArray[j];
+				if(b1 == b2) continue;
+				var _dist = distance(b1.x, b1.y, b2.x, b2.y);
+				// trace('-----\n ${b1} / ${b2} -- ${_dist}');
+				if(_dist < maxDistance){
+					var alpha : Float = 0.8 - (_dist/maxDistance); // 0.5
+					// trace(alpha);
+
+					ctx.lineColour(WHITE.r,WHITE.g,WHITE.b,alpha);
+					ctx.line(b1.x, b1.y, b2.x, b2.y);
+				}
+			}
 		}
 	}
 
