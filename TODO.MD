@@ -21,6 +21,7 @@
 - [ ] branding
 - [x] last sketch default
 - [ ] draw vs animation?
+- [ ] resize and redraw
 - [ ] ....
 
 

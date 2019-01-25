@@ -251,16 +251,24 @@ Sketch.prototype = {
 		});
 		this.window.addEventListener(this.MOUSE_DOWN,function(e1) {
 			Global.mouseDown = true;
+			console.log("" + Std.string(Global.mouseDown));
 		});
 		this.window.addEventListener(this.MOUSE_UP,function(e2) {
 			Global.mouseDown = false;
+			console.log("" + Std.string(Global.mouseDown));
 		});
 		this.window.addEventListener(this.KEY_DOWN,function(e3) {
+			Global.keyDown = e3;
 		});
 		this.window.addEventListener(this.KEY_UP,function(e4) {
 		});
 	}
 	,__class__: Sketch
+};
+var Std = function() { };
+Std.__name__ = ["Std"];
+Std.string = function(s) {
+	return js_Boot.__string_rec(s,"");
 };
 var StringTools = function() { };
 StringTools.__name__ = ["StringTools"];
@@ -366,7 +374,7 @@ art_CC002.__super__ = art_CCBase;
 art_CC002.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		CanvasTools.fillColour(this.ctx,util_ColorUtil.LIME.red,util_ColorUtil.LIME.green,util_ColorUtil.LIME.blue);
+		CanvasTools.fillColour(this.ctx,util_ColorUtil.LIME.r,util_ColorUtil.LIME.g,util_ColorUtil.LIME.b);
 		CanvasTools.fillEllipse(this.ctx,Global.w / 2,Global.h / 2,100,200);
 		this.pause();
 	}
@@ -434,6 +442,7 @@ var art_CC004 = function(ctx) {
 	this.ballArray = [];
 	this.sizeBall = 3;
 	this.maxBalls = 200;
+	this.maxDistance = 100;
 	art_CCBase.call(this,ctx);
 };
 art_CC004.__name__ = ["art","CC004"];
@@ -480,9 +489,24 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 		var _g = this.ballArray.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			var b = this.ballArray[i];
-			this.ctx.fillStyle = b.colour;
-			CanvasTools.fillCircle(this.ctx,b.x,b.y,b.size);
+			var b1 = this.ballArray[i];
+			this.ctx.fillStyle = b1.colour;
+			CanvasTools.fillCircle(this.ctx,b1.x,b1.y,b1.size);
+			var _g3 = 0;
+			var _g2 = this.ballArray.length;
+			while(_g3 < _g2) {
+				var j = _g3++;
+				var b2 = this.ballArray[j];
+				if(b1 == b2) {
+					continue;
+				}
+				var _dist = util_MathUtil.distance(b1.x,b1.y,b2.x,b2.y);
+				if(_dist < this.maxDistance) {
+					var alpha = 0.8 - _dist / this.maxDistance;
+					CanvasTools.lineColour(this.ctx,util_ColorUtil.WHITE.r,util_ColorUtil.WHITE.g,util_ColorUtil.WHITE.b,alpha);
+					CanvasTools.line(this.ctx,b1.x,b1.y,b2.x,b2.y);
+				}
+			}
 		}
 	}
 	,__class__: art_CC004
@@ -502,6 +526,90 @@ js_Boot.getClass = function(o) {
 			return js_Boot.__resolveNativeClass(name);
 		}
 		return null;
+	}
+};
+js_Boot.__string_rec = function(o,s) {
+	if(o == null) {
+		return "null";
+	}
+	if(s.length >= 5) {
+		return "<...>";
+	}
+	var t = typeof(o);
+	if(t == "function" && (o.__name__ || o.__ename__)) {
+		t = "object";
+	}
+	switch(t) {
+	case "function":
+		return "<function>";
+	case "object":
+		if(o instanceof Array) {
+			if(o.__enum__) {
+				if(o.length == 2) {
+					return o[0];
+				}
+				var str = o[0] + "(";
+				s += "\t";
+				var _g1 = 2;
+				var _g = o.length;
+				while(_g1 < _g) {
+					var i = _g1++;
+					if(i != 2) {
+						str += "," + js_Boot.__string_rec(o[i],s);
+					} else {
+						str += js_Boot.__string_rec(o[i],s);
+					}
+				}
+				return str + ")";
+			}
+			var l = o.length;
+			var i1;
+			var str1 = "[";
+			s += "\t";
+			var _g11 = 0;
+			var _g2 = l;
+			while(_g11 < _g2) {
+				var i2 = _g11++;
+				str1 += (i2 > 0 ? "," : "") + js_Boot.__string_rec(o[i2],s);
+			}
+			str1 += "]";
+			return str1;
+		}
+		var tostr;
+		try {
+			tostr = o.toString;
+		} catch( e ) {
+			return "???";
+		}
+		if(tostr != null && tostr != Object.toString && typeof(tostr) == "function") {
+			var s2 = o.toString();
+			if(s2 != "[object Object]") {
+				return s2;
+			}
+		}
+		var k = null;
+		var str2 = "{\n";
+		s += "\t";
+		var hasp = o.hasOwnProperty != null;
+		for( var k in o ) {
+		if(hasp && !o.hasOwnProperty(k)) {
+			continue;
+		}
+		if(k == "prototype" || k == "__class__" || k == "__super__" || k == "__interfaces__" || k == "__properties__") {
+			continue;
+		}
+		if(str2.length != 2) {
+			str2 += ", \n";
+		}
+		str2 += s + k + " : " + js_Boot.__string_rec(o[k],s);
+		}
+		s = s.substring(1);
+		str2 += "\n" + s + "}";
+		return str2;
+	case "string":
+		return o;
+	default:
+		return String(o);
 	}
 };
 js_Boot.__nativeClassName = function(o) {
@@ -582,7 +690,7 @@ util_ColorUtil.rgb2hex = function(r,g,b,a) {
 	return a << 24 | r << 16 | g << 8 | b;
 };
 util_ColorUtil.toRGB = function($int) {
-	return { red : Math.round($int >> 16 & 255), green : Math.round($int >> 8 & 255), blue : Math.round($int & 255)};
+	return { r : Math.round($int >> 16 & 255), g : Math.round($int >> 8 & 255), b : Math.round($int & 255)};
 };
 util_ColorUtil.ttoRGB = function($int) {
 	return { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -605,6 +713,9 @@ util_MathUtil.degreesToPoint = function(deg,diameter) {
 };
 util_MathUtil.distributeAngles = function(me,total) {
 	return me / total * 360;
+};
+util_MathUtil.distance = function(x1,y1,x2,y2) {
+	return util_MathUtil.dist(x1,y1,x2,y2);
 };
 util_MathUtil.dist = function(x1,y1,x2,y2) {
 	x2 -= x1;
@@ -691,24 +802,27 @@ Global.mouseReleased = 0;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-25 12:10:16";
-util_ColorUtil.NAVY = { red : Math.round(0), green : Math.round(31), blue : Math.round(63)};
-util_ColorUtil.BLUE = { red : Math.round(0), green : Math.round(116), blue : Math.round(217)};
-util_ColorUtil.AQUA = { red : Math.round(127), green : Math.round(219), blue : Math.round(255)};
-util_ColorUtil.TEAL = { red : Math.round(57), green : Math.round(204), blue : Math.round(204)};
-util_ColorUtil.OLIVE = { red : Math.round(61), green : Math.round(153), blue : Math.round(112)};
-util_ColorUtil.GREEN = { red : Math.round(46), green : Math.round(204), blue : Math.round(64)};
-util_ColorUtil.LIME = { red : Math.round(1), green : Math.round(255), blue : Math.round(112)};
-util_ColorUtil.YELLOW = { red : Math.round(255), green : Math.round(220), blue : Math.round(0)};
-util_ColorUtil.ORANGE = { red : Math.round(255), green : Math.round(133), blue : Math.round(27)};
-util_ColorUtil.RED = { red : Math.round(255), green : Math.round(65), blue : Math.round(54)};
-util_ColorUtil.MAROON = { red : Math.round(133), green : Math.round(20), blue : Math.round(75)};
-util_ColorUtil.FUCHSIA = { red : Math.round(240), green : Math.round(18), blue : Math.round(190)};
-util_ColorUtil.PURPLE = { red : Math.round(177), green : Math.round(13), blue : Math.round(201)};
-util_ColorUtil.BLACK = { red : Math.round(17), green : Math.round(17), blue : Math.round(17)};
-util_ColorUtil.GRAY = { red : Math.round(170), green : Math.round(170), blue : Math.round(170)};
-util_ColorUtil.SILVER = { red : Math.round(221), green : Math.round(221), blue : Math.round(221)};
-util_ColorUtil.WHITE = { red : Math.round(255), green : Math.round(255), blue : Math.round(255)};
+model_constants_App.BUILD = "2019-01-25 14:29:22";
+util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
+util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
+util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
+util_ColorUtil.TEAL = { r : Math.round(57), g : Math.round(204), b : Math.round(204)};
+util_ColorUtil.OLIVE = { r : Math.round(61), g : Math.round(153), b : Math.round(112)};
+util_ColorUtil.GREEN = { r : Math.round(46), g : Math.round(204), b : Math.round(64)};
+util_ColorUtil.LIME = { r : Math.round(1), g : Math.round(255), b : Math.round(112)};
+util_ColorUtil.YELLOW = { r : Math.round(255), g : Math.round(220), b : Math.round(0)};
+util_ColorUtil.ORANGE = { r : Math.round(255), g : Math.round(133), b : Math.round(27)};
+util_ColorUtil.RED = { r : Math.round(255), g : Math.round(65), b : Math.round(54)};
+util_ColorUtil.MAROON = { r : Math.round(133), g : Math.round(20), b : Math.round(75)};
+util_ColorUtil.FUCHSIA = { r : Math.round(240), g : Math.round(18), b : Math.round(190)};
+util_ColorUtil.PURPLE = { r : Math.round(177), g : Math.round(13), b : Math.round(201)};
+util_ColorUtil.BLACK = { r : Math.round(17), g : Math.round(17), b : Math.round(17)};
+util_ColorUtil.GRAY = { r : Math.round(170), g : Math.round(170), b : Math.round(170)};
+util_ColorUtil.SILVER = { r : Math.round(221), g : Math.round(221), b : Math.round(221)};
+util_ColorUtil.WHITE = { r : Math.round(255), g : Math.round(255), b : Math.round(255)};
+util_ColorUtil.PINK = { r : Math.round(255), g : Math.round(20), b : Math.round(147)};
+util_ColorUtil.PINK_DEEP = { r : Math.round(255), g : Math.round(20), b : Math.round(147)};
+util_ColorUtil.PINK_HOT = { r : Math.round(255), g : Math.round(105), b : Math.round(180)};
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
