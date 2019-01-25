@@ -18,6 +18,7 @@ class CC001 extends CCBase implements ICCBase {
 
 	override function draw(){
 		trace('draw: ${toString()}');
+		// create black background with white circle
 		ctx.background(0,0,0);
 		ctx.fillColour(255,255,255);
 		ctx.fillCircle(w/2, h/2, 100);
