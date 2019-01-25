@@ -3,12 +3,6 @@ package art;
 import js.html.CanvasRenderingContext2D;
 import js.Browser.window;
 
-import js.Browser.*;
-import js.Browser;
-import js.html.*;
-
-import Global.*;
-
 class CCBase {
 
 	public var ctx : CanvasRenderingContext2D;
@@ -17,11 +11,16 @@ class CCBase {
 
 	public function new (ctx:CanvasRenderingContext2D){
 		this.ctx = ctx;
+		init();
 		_draw(); // start draw loop
 	}
 
+	public function init(){
+		// trace('override public function init()');
+	}
+
 	/**
-	 * wrapper around the real draw class, which is normally overriden
+	 * wrapper around the real `draw` class
 	 * @param timestamp
 	 */
 	function _draw (?timestamp:Float){
@@ -30,10 +29,10 @@ class CCBase {
 	}
 
 	/**
-	 * the magic happens here
+	 * the magic happens here, every class should have a `draw` function
 	 */
 	public function draw(){
-		trace('override public function draw()');
+		trace('${toString()} :: override public function draw()');
 	}
 
 	/**
@@ -57,7 +56,8 @@ class CCBase {
 
 	/**
 	 * Get name of class, with package
-	 * example: this file would be "art.CCBase"
+	 *
+	 * @example: trace(toString()); // this file would be "art.CCBase"
 	 */
 	public function toString(){
 		var className = Type.getClassName(Type.getClass(this));
