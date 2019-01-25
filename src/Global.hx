@@ -18,6 +18,11 @@ class Global {
 	public static var mouseMoved : Bool;
 	public static var mouseDown : Bool;
 
+	public static var keyDown : Int;
+	public static var keyUp : Int;
+
+
+
 	public static var mousePressed : Int = 0;
 	public static var mouseReleased : Int = 0;
 

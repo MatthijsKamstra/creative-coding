@@ -100,16 +100,21 @@ class Sketch {
 		});
 
 		window.addEventListener(MOUSE_DOWN, function(e){
+
 			mouseDown = true;
+
+			trace('${mouseDown}');
 			// if(typeof onMouseDown == 'function') onMouseDown();
 		});
 
 		window.addEventListener(MOUSE_UP, function(e){
 			mouseDown = false;
+			trace('${mouseDown}');
 			// if(typeof onMouseUp == 'function') onMouseUp();
 		});
 
 		window.addEventListener(KEY_DOWN, function(e){
+			keyDown = e;
 			// if(typeof onKeyDown == 'function') onKeyDown(e);
 		});
 
