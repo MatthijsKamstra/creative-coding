@@ -150,7 +150,7 @@ class CanvasTools {
 	 * @param b	(optional) blue
 	 * @param a	(optional) alpha
 	 */
-	static public function background(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
+	static public function background(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		if (g == null) {
 			ctx.fillStyle = ColorUtil.rgb(r, r, r);
 		} else if (b == null && a == null) {
