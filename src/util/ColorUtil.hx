@@ -3,7 +3,7 @@ package util;
 class ColorUtil {
 	public function new() {	}
 
-	static public function getColour(r:Int, ?g:Int, ?b:Int, ?a:Int) {
+	static public function getColour(r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		var c;
 		if (g == null) {
 			c = rgb(r, r, r);
@@ -70,9 +70,9 @@ class ColorUtil {
 	// http://old.haxe.org/doc/snip/colorconverter
 	public static inline function toRGB(int:Int) : RGBObject {
         return {
-            red: Math.round(((int >> 16) & 255)),
-            green: Math.round(((int >> 8) & 255)),
-            blue: Math.round((int & 255)),
+            r: Math.round(((int >> 16) & 255)),
+            g: Math.round(((int >> 8) & 255)),
+            b: Math.round((int & 255)),
         }
     }
 
@@ -108,12 +108,17 @@ class ColorUtil {
 	public static var SILVER : RGBObject = toRGB (0xDDDDDD);
 	public static var WHITE : RGBObject = toRGB (0xFFFFFF);
 
+	// [mck] my favourite debug color
+	public static var PINK : RGBObject = toRGB (0xFF1493); // deeppink
+	public static var PINK_DEEP : RGBObject = toRGB (0xFF1493); // deeppink
+	public static var PINK_HOT : RGBObject = toRGB (0xff69B4); // hotpink
+
 
 }
 typedef RGBObject = {
-	var red : Int;
-	var green : Int;
-	var blue : Int;
+	var r : Int;
+	var g : Int;
+	var b : Int;
 };
 typedef RGB = {
 	var r : Float;
