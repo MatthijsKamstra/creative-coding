@@ -1,10 +1,27 @@
 package util;
 
+/**
+ * Math related stuff is found here
+ * 		- radians & convertions
+ * 		- degree & convertions
+ * 		- etc
+ *
+ * @example
+ * ```
+ * import util.MathUtil;
+ * MathUtil.random (10);
+ *
+ * // or
+ *
+ * import util.MathUtil.*;
+ * random(10); // make it easier to read
+ * ```
+ *
+ */
 class MathUtil {
 
-
-	static public function radians(deg) {return deg*Math.PI/180;};
-	static public function degrees(rad) {return rad*180/Math.PI;};
+	static public function radians(deg:Float) {return deg*Math.PI/180;};
+	static public function degrees(rad:Float) {return rad*180/Math.PI;};
 
 	// public function rotateDegrees(deg) {
 	// 	this.rotate(radians(deg));
@@ -30,16 +47,28 @@ class MathUtil {
 		return Math.sqrt((x2*x2) + (y2*y2));
 	}
 
+	/**
+	 * random
+	 */
 
-	static public function randomInteger(min, max) {
+	static public function randomInteger(min:Int, ?max:Int) : Int {
 		if(max == null) {
 			max = min;
 			min = 0;
 		}
-		return Math.floor(Math.random() * (max+1-min)) +min;
+		return Math.floor(Math.random() * (max+1-min)) + min;
 	}
 
-	static public function random(?min, ?max) {
+	/**
+	 * Get a random number between `min` and `max`
+	 *
+	 * @example		util.MathUtil.random(10,100); // producess an number between 10 and 100
+	 *
+	 * @param min 	minimum value
+	 * @param max 	maximum value
+	 * @return Float	number between `min` and `max`
+	 */
+	static public function random(?min:Float, ?max:Float):Float {
 		if (min == null) {
 			min = 0;
 			max = 1;
