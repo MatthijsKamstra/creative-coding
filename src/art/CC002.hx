@@ -20,7 +20,7 @@ class CC002 extends CCBase implements ICCBase {
 	override function draw(){
 		trace('draw: ${toString()}');
 		// ctx.triangle(Math.floor(w/2), 100, Math.floor(w/3), 300, Math.floor(w/3)*2, 300);
-		ctx.fillColour(LIME.red, LIME.green, LIME.blue);
+		ctx.fillColour(LIME.r, LIME.g, LIME.b);
 		// ctx.fillColour(255,255,255);
 		ctx.fillEllipse(w/2,h/2,100,200);
 		pause();
