@@ -128,14 +128,14 @@ class CanvasTools {
 	static public function fillColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
 		colour(ctx, r, g, b, a);
 	};
-	static public function colour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
+	static public function colour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		var c = ColorUtil.getColour(r, g, b, a);
 		ctx.fillStyle = c;
 	};
-	static public function strokeColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
+	static public function strokeColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		lineColour(ctx, r, g, b, a);
 	};
-	static public function lineColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
+	static public function lineColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		ctx.strokeStyle = ColorUtil.getColour(r, g, b, a);
 	};
 	static public function colourName(ctx:CanvasRenderingContext2D, name:String) {
