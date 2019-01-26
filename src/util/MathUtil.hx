@@ -146,4 +146,36 @@ class MathUtil {
 		return Math.min(Math.max(value, Math.min(min, max)), Math.max(min, max));
 	}
 
+/**
+function xyz(px, py, pz, pitch, roll, yaw) {
+
+    var cosa = Math.cos(yaw);
+    var sina = Math.sin(yaw);
+
+    var cosb = Math.cos(pitch);
+    var sinb = Math.sin(pitch);
+
+    var cosc = Math.cos(roll);
+    var sinc = Math.sin(roll);
+
+    var Axx = cosa*cosb;
+    var Axy = cosa*sinb*sinc - sina*cosc;
+    var Axz = cosa*sinb*cosc + sina*sinc;
+
+    var Ayx = sina*cosb;
+    var Ayy = sina*sinb*sinc + cosa*cosc;
+    var Ayz = sina*sinb*cosc - cosa*sinc;
+
+    var Azx = -sinb;
+    var Azy = cosb*sinc;
+    var Azz = cosb*cosc;
+
+    x = Axx*px + Axy*py + Axz*pz;
+    y = Ayx*px + Ayy*py + Ayz*pz;
+    z = Azx*px + Azy*py + Azz*pz;
+
+    return {x:x, y:y, z:z};
+}
+ */
+
 }
