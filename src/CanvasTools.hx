@@ -1,62 +1,131 @@
 package;
 
-/**
- * using CanvasTools;
- **/
-
 import util.*;
 import js.html.CanvasRenderingContext2D;
-
 import Global.*;
 
+/**
+ * using CanvasTools;
+**/
 class CanvasTools {
-
 	/**
 	 * rectangles
 	 */
 	static public function square(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, ?height:Float) {
-		if (height == null) height = width;
+		if (height == null)
+			height = width;
 		ctx.fillRect(x, y, width, height);
 	};
+
 	static public function centreStrokeRect(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, ?height:Float) {
-		if (height == null) height = width;
+		if (height == null)
+			height = width;
 		ctx.strokeRect(x - width / 2, y - height / 2, width, height);
 	};
+
 	static public function centreFillRect(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, ?height:Float) {
-		if (height == null) height = width;
+		if (height == null)
+			height = width;
 		ctx.fillRect(x - width / 2, y - height / 2, width, height);
 	};
+
+	static public function roundRect(ctx:CanvasRenderingContext2D, _x:Float, _y:Float, _width, _height, _radius:Float = 5, ?_fill:Bool = true, ?_stroke:Bool = false) {
+		_width = Math.abs(_width);
+		_height = Math.abs(_height);
+		_x = _x - _width / 2;
+		_y = _y - _height / 2;
+		// if (_width < radius) radius = _width;
+		var radius = {
+			tl: _radius,
+			tr: _radius,
+			br: _radius,
+			bl: _radius
+		};
+		ctx.beginPath();
+		ctx.moveTo(_x + radius.tl, _y);
+		ctx.lineTo(_x + _width - radius.tr, _y);
+		ctx.quadraticCurveTo(_x + _width, _y, _x + _width, _y + radius.tr);
+		ctx.lineTo(_x + _width, _y + _height - radius.br);
+		ctx.quadraticCurveTo(_x + _width, _y + _height, _x + _width - radius.br, _y + _height);
+		ctx.lineTo(_x + radius.bl, _y + _height);
+		ctx.quadraticCurveTo(_x, _y + _height, _x, _y + _height - radius.bl);
+		ctx.lineTo(_x, _y + radius.tl);
+		ctx.quadraticCurveTo(_x, _y, _x + radius.tl, _y);
+		ctx.closePath();
+		if (_fill) {
+			ctx.fill();
+		}
+		if (_stroke) {
+			ctx.stroke();
+		}
+	}
+
 	/**
 	 * circles
 	 */
 	static public function makeCircle(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
 		ctx.beginPath();
-		ctx.arc(x, y, radius, 0, Math.PI*2, true);
+		ctx.arc(x, y, radius, 0, Math.PI * 2, true);
 	};
+
 	static public function circle(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
 		makeCircle(ctx, x, y, radius);
 		ctx.fill();
 		ctx.closePath();
 	};
+
 	static public function fillCircle(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
 		makeCircle(ctx, x, y, radius);
 		ctx.fill();
 		ctx.closePath();
 	};
+
 	static public function strokeCircle(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
 		makeCircle(ctx, x, y, radius);
 		ctx.stroke();
 		ctx.closePath();
 	};
 
+	/**
+	 * polygon
+	 */
+	static public function strokePolygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, sides, size) {
+		polygon(ctx, x, y, sides, size);
+		ctx.stroke();
+	}
 
+	static public function fillPolygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, sides, size) {
+		polygon(ctx, x, y, sides, size);
+		ctx.fill();
+	}
+
+	static public function outlinedPolygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, _sides, _size, _fill, _stroke) {
+		ctx.fillStyle = _fill;
+		fillPolygon(ctx, x, y, _sides, _size);
+		ctx.strokeStyle = _stroke;
+		strokePolygon(ctx, x, y, _sides, _size);
+	}
+
+	static public function polygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, sides, size) {
+		ctx.beginPath();
+		ctx.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+		for (i in 0...sides) {
+			ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides), y + size * Math.sin(i * 2 * Math.PI / sides));
+		}
+	}
+
+	/**
+	 * elipse
+	 */
 	static public function eellipse(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) {
 		ctx.beginPath();
 		var i:Float = 0;
-		while (i<Math.PI*2) {
-			// your code
-			ctx.lineTo(x+(Math.cos(i)*width/2), y+(Math.sin(i)*height/2));
-			i+=Math.PI/16;
+		var counter = 0;
+		while (i < Math.PI * 2) {
+			trace('$counter. - $i < ${Math.PI * 2}');
+			ctx.lineTo(x + (Math.cos(i) * width / 2), y + (Math.sin(i) * height / 2));
+			i += Math.PI / 16;
+			counter++;
 		}
 
 		// for(var i=0;i<Math.PI*2;i+=Math.PI/16) {
@@ -64,25 +133,26 @@ class CanvasTools {
 		// }
 		ctx.closePath();
 	};
+
 	static public function fillEllipse(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) {
 		ctx.beginPath();
 		ctx.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
 		ctx.fill();
 	};
+
 	static public function strokeEllipse(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) {
 		ctx.beginPath();
 		ctx.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
 		ctx.stroke();
 	};
 
-
 	/**
 	 * lines
 	 */
-	static public function line (ctx:CanvasRenderingContext2D, x1:Float, y1:Float, x2:Float, y2:Float){
+	static public function line(ctx:CanvasRenderingContext2D, x1:Float, y1:Float, x2:Float, y2:Float) {
 		ctx.beginPath();
-		ctx.moveTo(x1,y1);
-		ctx.lineTo(x2,y2);
+		ctx.moveTo(x1, y1);
+		ctx.lineTo(x2, y2);
 		ctx.stroke();
 		ctx.beginPath();
 	};
@@ -99,6 +169,7 @@ class CanvasTools {
 		ctx.stroke();
 		ctx.closePath();
 	};
+
 	static public function strokeTriangle(ctx:CanvasRenderingContext2D, x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float) {
 		ctx.beginPath();
 		ctx.moveTo(x1, y1);
@@ -108,6 +179,7 @@ class CanvasTools {
 		ctx.stroke();
 		ctx.closePath();
 	}
+
 	static public function fillTriangle(ctx:CanvasRenderingContext2D, x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float) {
 		ctx.beginPath();
 		ctx.moveTo(x1, y1);
@@ -118,26 +190,54 @@ class CanvasTools {
 		ctx.closePath();
 	};
 
+	static public function eqDownFillTriangle(ctx:CanvasRenderingContext2D, x:Float, y:Float, sz:Float) {
+		ctx.translate(x, y);
+		ctx.rotate(util.MathUtil.radians(180));
+		fillTriangle(ctx, 0, 0 - sz, 0 + sz, 0 + sz / 2, 0 - sz, 0 + sz / 2);
+		ctx.rotate(util.MathUtil.radians(-180));
+		ctx.translate(-x, -y);
+	}
+
+	static public function eqDownTriangle(ctx:CanvasRenderingContext2D, x:Float, y:Float, sz:Float) {
+		ctx.translate(x, y);
+		ctx.rotate(util.MathUtil.radians(180));
+		triangle(ctx, 0, 0 - sz, 0 + sz, 0 + sz / 2, 0 - sz, 0 + sz / 2);
+		ctx.rotate(util.MathUtil.radians(-180));
+		ctx.translate(-x, -y);
+	}
+
+	static public function eqFillTriangle(ctx:CanvasRenderingContext2D, x:Float, y:Float, sz:Float) {
+		fillTriangle(ctx, x, y - sz, x + sz, y + sz / 2, x - sz, y + sz / 2);
+	}
+
+	static public function eqTriangle(ctx:CanvasRenderingContext2D, x:Float, y:Float, sz:Float) {
+		triangle(ctx, x, y - sz, x + sz, y + sz / 2, x - sz, y + sz / 2);
+	}
 
 	/**
 	 * change appairance
 	 */
 	static public function strokeWeight(ctx:CanvasRenderingContext2D, inPx:Int) {
-		ctx.lineWidth = inPx; //px
+		ctx.lineWidth = inPx; // px
 	}
+
 	static public function fillColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
 		colour(ctx, r, g, b, a);
 	};
+
 	static public function colour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		var c = ColorUtil.getColour(r, g, b, a);
 		ctx.fillStyle = c;
 	};
+
 	static public function strokeColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		lineColour(ctx, r, g, b, a);
 	};
+
 	static public function lineColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		ctx.strokeStyle = ColorUtil.getColour(r, g, b, a);
 	};
+
 	static public function colourName(ctx:CanvasRenderingContext2D, name:String) {
 		ctx.fillStyle = name;
 	};
@@ -162,6 +262,4 @@ class CanvasTools {
 		}
 		ctx.fillRect(0, 0, w, h);
 	};
-
-
 }
