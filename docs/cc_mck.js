@@ -174,11 +174,6 @@ Main.prototype = {
 	__class__: Main
 };
 var Sketch = function() {
-	this.KEY_UP = "keyup";
-	this.KEY_DOWN = "keydown";
-	this.MOUSE_MOVE = "mousemove";
-	this.MOUSE_UP = "mouseup";
-	this.MOUSE_DOWN = "mousedown";
 	this.document = window.document;
 	this.window = window;
 };
@@ -205,7 +200,7 @@ Sketch.prototype = {
 		body.appendChild(this.canvas);
 		var ctx = this.canvas.getContext("2d");
 		this.resize();
-		this.window.addEventListener("resize",$bind(this,this.resize),false);
+		this.window.addEventListener(Global.RESIZE,$bind(this,this.resize),false);
 		return ctx;
 	}
 	,createGLCanvas: function(canvas_name) {
@@ -221,7 +216,7 @@ Sketch.prototype = {
 			var gl1 = this.canvas.getContext("experimental-webgl");
 		}
 		this.resize();
-		this.window.addEventListener("resize",$bind(this,this.resize),false);
+		this.window.addEventListener(Global.RESIZE,$bind(this,this.resize),false);
 		return gl;
 	}
 	,resize: function() {
@@ -244,31 +239,54 @@ Sketch.prototype = {
 		return ctx;
 	}
 	,init: function() {
-		this.window.addEventListener(this.MOUSE_MOVE,function(e) {
+		var _gthis = this;
+		this.window.addEventListener(Global.MOUSE_MOVE,function(e) {
 			Global.mouseX = e.clientX;
 			Global.mouseY = e.clientY;
 			Global.mouseMoved = true;
 		});
-		this.window.addEventListener(this.MOUSE_DOWN,function(e1) {
+		this.window.addEventListener(Global.MOUSE_DOWN,function(e1) {
 			Global.mouseDown = true;
-			console.log("" + Std.string(Global.mouseDown));
 		});
-		this.window.addEventListener(this.MOUSE_UP,function(e2) {
+		this.window.addEventListener(Global.MOUSE_UP,function(e2) {
 			Global.mouseDown = false;
-			console.log("" + Std.string(Global.mouseDown));
 		});
-		this.window.addEventListener(this.KEY_DOWN,function(e3) {
-			Global.keyDown = e3;
-		});
-		this.window.addEventListener(this.KEY_UP,function(e4) {
-		});
+		this.window.addEventListener(Global.KEY_DOWN,function(e3) {
+			if(e3.metaKey == true && e3.key == "f") {
+				if(!Global.isFullscreen) {
+					_gthis.openFullscreen();
+					Global.isFullscreen = true;
+				} else {
+					_gthis.closeFullscreen();
+					Global.isFullscreen = false;
+				}
+			}
+		},false);
+	}
+	,openFullscreen: function() {
+		var elem = this.document.documentElement;
+		if($bind(elem,elem.requestFullscreen) != null) {
+			elem.requestFullscreen();
+		} else if(elem.mozRequestFullScreen) {
+			elem.mozRequestFullScreen();
+		} else if(elem.webkitRequestFullscreen) {
+			elem.webkitRequestFullscreen();
+		} else if(elem.msRequestFullscreen) {
+			elem.msRequestFullscreen();
+		}
+	}
+	,closeFullscreen: function() {
+		if(($_=this.document,$bind($_,$_.exitFullscreen)) != null) {
+			this.document.exitFullscreen();
+		} else if(this.document.mozCancelFullScreen) {
+			this.document.mozCancelFullScreen();
+		} else if(this.document.webkitExitFullscreen) {
+			this.document.webkitExitFullscreen();
+		} else if(this.document.msExitFullscreen) {
+			this.document.msExitFullscreen();
+		}
 	}
 	,__class__: Sketch
-};
-var Std = function() { };
-Std.__name__ = ["Std"];
-Std.string = function(s) {
-	return js_Boot.__string_rec(s,"");
 };
 var StringTools = function() { };
 StringTools.__name__ = ["StringTools"];
@@ -287,18 +305,29 @@ Type.getClassName = function(c) {
 var art_CCBase = function(ctx) {
 	this.isDrawActive = true;
 	this.ctx = ctx;
+	window.addEventListener(Global.RESIZE,$bind(this,this._reset),false);
+	window.addEventListener(Global.KEY_DOWN,$bind(this,this._keyDown),false);
+	window.addEventListener(Global.KEY_UP,$bind(this,this._keyUp),false);
 	this.init();
 	this._draw();
 };
 art_CCBase.__name__ = ["art","CCBase"];
 art_CCBase.prototype = {
-	init: function() {
+	_keyDown: function(e) {
+	}
+	,_keyUp: function(e) {
+	}
+	,_reset: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		this.init();
 	}
 	,_draw: function(timestamp) {
 		this.draw();
 		if(this.isDrawActive) {
 			window.requestAnimationFrame($bind(this,this._draw));
 		}
+	}
+	,init: function() {
 	}
 	,draw: function() {
 		console.log("" + this.toString() + " :: override public function draw()");
@@ -451,6 +480,7 @@ art_CC004.__super__ = art_CCBase;
 art_CC004.prototype = $extend(art_CCBase.prototype,{
 	init: function() {
 		console.log("" + this.toString() + " :: init()");
+		this.ballArray = [];
 		var _g1 = 0;
 		var _g = this.maxBalls;
 		while(_g1 < _g) {
@@ -526,90 +556,6 @@ js_Boot.getClass = function(o) {
 			return js_Boot.__resolveNativeClass(name);
 		}
 		return null;
-	}
-};
-js_Boot.__string_rec = function(o,s) {
-	if(o == null) {
-		return "null";
-	}
-	if(s.length >= 5) {
-		return "<...>";
-	}
-	var t = typeof(o);
-	if(t == "function" && (o.__name__ || o.__ename__)) {
-		t = "object";
-	}
-	switch(t) {
-	case "function":
-		return "<function>";
-	case "object":
-		if(o instanceof Array) {
-			if(o.__enum__) {
-				if(o.length == 2) {
-					return o[0];
-				}
-				var str = o[0] + "(";
-				s += "\t";
-				var _g1 = 2;
-				var _g = o.length;
-				while(_g1 < _g) {
-					var i = _g1++;
-					if(i != 2) {
-						str += "," + js_Boot.__string_rec(o[i],s);
-					} else {
-						str += js_Boot.__string_rec(o[i],s);
-					}
-				}
-				return str + ")";
-			}
-			var l = o.length;
-			var i1;
-			var str1 = "[";
-			s += "\t";
-			var _g11 = 0;
-			var _g2 = l;
-			while(_g11 < _g2) {
-				var i2 = _g11++;
-				str1 += (i2 > 0 ? "," : "") + js_Boot.__string_rec(o[i2],s);
-			}
-			str1 += "]";
-			return str1;
-		}
-		var tostr;
-		try {
-			tostr = o.toString;
-		} catch( e ) {
-			return "???";
-		}
-		if(tostr != null && tostr != Object.toString && typeof(tostr) == "function") {
-			var s2 = o.toString();
-			if(s2 != "[object Object]") {
-				return s2;
-			}
-		}
-		var k = null;
-		var str2 = "{\n";
-		s += "\t";
-		var hasp = o.hasOwnProperty != null;
-		for( var k in o ) {
-		if(hasp && !o.hasOwnProperty(k)) {
-			continue;
-		}
-		if(k == "prototype" || k == "__class__" || k == "__super__" || k == "__interfaces__" || k == "__properties__") {
-			continue;
-		}
-		if(str2.length != 2) {
-			str2 += ", \n";
-		}
-		str2 += s + k + " : " + js_Boot.__string_rec(o[k],s);
-		}
-		s = s.substring(1);
-		str2 += "\n" + s + "}";
-		return str2;
-	case "string":
-		return o;
-	default:
-		return String(o);
 	}
 };
 js_Boot.__nativeClassName = function(o) {
@@ -797,12 +743,19 @@ function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id
 String.prototype.__class__ = String;
 String.__name__ = ["String"];
 Array.__name__ = ["Array"];
+Global.MOUSE_DOWN = "mousedown";
+Global.MOUSE_UP = "mouseup";
+Global.MOUSE_MOVE = "mousemove";
+Global.KEY_DOWN = "keydown";
+Global.KEY_UP = "keyup";
+Global.RESIZE = "resize";
 Global.mousePressed = 0;
 Global.mouseReleased = 0;
+Global.isFullscreen = false;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-25 14:29:22";
+model_constants_App.BUILD = "2019-01-26 22:11:16";
 util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

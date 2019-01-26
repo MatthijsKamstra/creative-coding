@@ -2,12 +2,13 @@
 
 ![](icon.jpg)
 
-Let's see if I can use Haxe/JavaScript for creative coding.
+Creative code with [Haxe](http://www.haxe.org) (currently only JavaScript target). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
 
+Most work is inspired by George Gally, Seb Lee-Delisle, Matt DesLauriers (and probably many more) but in a dynamic language. So my start is a little bit slow converting everything to Haxe a stricly typed language, but in the end this will help me to work faster.
 
-bla bla, current page: <https://matthijskamstra.github.io/creative-coding/>
+You can seen my progress on this page: <https://matthijskamstra.github.io/creative-coding/>.
 
-Check out my previous attempt: <http://matthijskamstra.github.io/gen-art/>
+This is not my first attempt, so if you want to check out my previous attempt: <http://matthijskamstra.github.io/gen-art/>. This attempt was to create pattern in svg.
 
 ## Inspiration
 
@@ -16,13 +17,9 @@ Yes, I liked the way Flash worked as well. And all the stuff that Flash can do, 
 
 So why not give it a try...
 
+Read more <https://github.com/GeorgeGally/creative_coding>
 
-- https://github.com/GeorgeGally/creative_coding
 
-
-### Haxe
-
-This is a [Haxe](http://www.haxe.org) project, read more about it in the [README_HAXE.MD](README_HAXE.MD)!
 
 ### TODO
 

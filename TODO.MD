@@ -6,7 +6,7 @@
 - [ ] lets.go animation lib?
 - [ ] choose color vs colour
 - [ ] nav between sketches (css)
-- [ ] fullscreen
+- [x] fullscreen
 - [ ] add controle settings (quick settings)
 - [ ] default nav, description, etc css
 - [ ] add color lib
@@ -21,7 +21,7 @@
 - [ ] branding
 - [x] last sketch default
 - [ ] draw vs animation?
-- [ ] resize and redraw
+- [x] resize and redraw
 - [ ] ....
 
 
