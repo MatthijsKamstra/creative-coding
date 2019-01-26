@@ -36,7 +36,7 @@ class Global {
 
 	// allows me global access to canvas and it’s width and height properties
 	public static var w:Int;
-	public static var width:Int;
 	public static var h:Int;
-	public static var height:Int;
+	// public static var width:Int;
+	// public static var height:Int;
 }
