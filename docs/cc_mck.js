@@ -28,6 +28,46 @@ CanvasTools.centreFillRect = function(ctx,x,y,width,height) {
 	}
 	ctx.fillRect(x - width / 2,y - height / 2,width,height);
 };
+CanvasTools.roundRect = function(ctx,_x,_y,_width,_height,_radius,_fill,_stroke) {
+	if(_stroke == null) {
+		_stroke = false;
+	}
+	if(_fill == null) {
+		_fill = true;
+	}
+	if(_radius == null) {
+		_radius = 5;
+	}
+	_width = Math.abs(_width);
+	_height = Math.abs(_height);
+	_x -= _width / 2;
+	_y -= _height / 2;
+	var radius_tr;
+	var radius_tl;
+	var radius_br;
+	var radius_bl;
+	radius_tl = _radius;
+	radius_tr = _radius;
+	radius_br = _radius;
+	radius_bl = _radius;
+	ctx.beginPath();
+	ctx.moveTo(_x + radius_tl,_y);
+	ctx.lineTo(_x + _width - radius_tr,_y);
+	ctx.quadraticCurveTo(_x + _width,_y,_x + _width,_y + radius_tr);
+	ctx.lineTo(_x + _width,_y + _height - radius_br);
+	ctx.quadraticCurveTo(_x + _width,_y + _height,_x + _width - radius_br,_y + _height);
+	ctx.lineTo(_x + radius_bl,_y + _height);
+	ctx.quadraticCurveTo(_x,_y + _height,_x,_y + _height - radius_bl);
+	ctx.lineTo(_x,_y + radius_tl);
+	ctx.quadraticCurveTo(_x,_y,_x + radius_tl,_y);
+	ctx.closePath();
+	if(_fill) {
+		ctx.fill();
+	}
+	if(_stroke) {
+		ctx.stroke();
+	}
+};
 CanvasTools.makeCircle = function(ctx,x,y,radius) {
 	ctx.beginPath();
 	ctx.arc(x,y,radius,0,Math.PI * 2,true);
@@ -47,12 +87,39 @@ CanvasTools.strokeCircle = function(ctx,x,y,radius) {
 	ctx.stroke();
 	ctx.closePath();
 };
+CanvasTools.strokePolygon = function(ctx,x,y,sides,size) {
+	CanvasTools.polygon(ctx,x,y,sides,size);
+	ctx.stroke();
+};
+CanvasTools.fillPolygon = function(ctx,x,y,sides,size) {
+	CanvasTools.polygon(ctx,x,y,sides,size);
+	ctx.fill();
+};
+CanvasTools.outlinedPolygon = function(ctx,x,y,_sides,_size,_fill,_stroke) {
+	ctx.fillStyle = _fill;
+	CanvasTools.fillPolygon(ctx,x,y,_sides,_size);
+	ctx.strokeStyle = _stroke;
+	CanvasTools.strokePolygon(ctx,x,y,_sides,_size);
+};
+CanvasTools.polygon = function(ctx,x,y,sides,size) {
+	ctx.beginPath();
+	ctx.moveTo(x + size * Math.cos(0),y + size * Math.sin(0));
+	var _g1 = 0;
+	var _g = sides;
+	while(_g1 < _g) {
+		var i = _g1++;
+		ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides),y + size * Math.sin(i * 2 * Math.PI / sides));
+	}
+};
 CanvasTools.eellipse = function(ctx,x,y,width,height) {
 	ctx.beginPath();
 	var i = 0;
+	var counter = 0;
 	while(i < Math.PI * 2) {
+		console.log("" + counter + ". - " + i + " < " + Math.PI * 2);
 		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
 		i += Math.PI / 16;
+		++counter;
 	}
 	ctx.closePath();
 };
@@ -99,6 +166,26 @@ CanvasTools.fillTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
 	ctx.lineTo(x1,y1);
 	ctx.fill();
 	ctx.closePath();
+};
+CanvasTools.eqDownFillTriangle = function(ctx,x,y,sz) {
+	ctx.translate(x,y);
+	ctx.rotate(util_MathUtil.radians(180));
+	CanvasTools.fillTriangle(ctx,0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
+	ctx.rotate(util_MathUtil.radians(-180));
+	ctx.translate(-x,-y);
+};
+CanvasTools.eqDownTriangle = function(ctx,x,y,sz) {
+	ctx.translate(x,y);
+	ctx.rotate(util_MathUtil.radians(180));
+	CanvasTools.triangle(ctx,0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
+	ctx.rotate(util_MathUtil.radians(-180));
+	ctx.translate(-x,-y);
+};
+CanvasTools.eqFillTriangle = function(ctx,x,y,sz) {
+	CanvasTools.fillTriangle(ctx,x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
+};
+CanvasTools.eqTriangle = function(ctx,x,y,sz) {
+	CanvasTools.triangle(ctx,x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
 };
 CanvasTools.strokeWeight = function(ctx,inPx) {
 	ctx.lineWidth = inPx;
@@ -156,10 +243,13 @@ var Main = function() {
 		case "CC004":
 			new art_CC004(ctx);
 			break;
+		case "CC005":
+			new art_CC005(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC004";
-			new art_CC004(ctx);
+			window.location.hash = "CC005";
+			new art_CC005(ctx);
 		}
 		window.addEventListener("hashchange",function() {
 			window.location.reload();
@@ -221,15 +311,15 @@ Sketch.prototype = {
 	}
 	,resize: function() {
 		var c = this.document.getElementsByTagName("canvas");
-		Global.width = Global.w = this.window.innerWidth;
-		Global.height = Global.h = this.window.innerHeight;
+		Global.w = this.window.innerWidth;
+		Global.h = this.window.innerHeight;
 		var _g1 = 0;
 		var _g = c.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			var _c = c[i];
-			_c.width = Global.width;
-			_c.height = Global.height;
+			_c.width = Global.w;
+			_c.height = Global.h;
 		}
 		window.console.log("resize: " + Global.w + ":" + Global.h);
 	}
@@ -490,7 +580,7 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 	}
 	,draw: function() {
 		this.moveBall();
-		this.ctx.clearRect(0,0,Global.width,Global.height);
+		this.ctx.clearRect(0,0,Global.w,Global.h);
 		CanvasTools.background(this.ctx,0,0,0);
 		this.drawBall();
 	}
@@ -540,6 +630,55 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,__class__: art_CC004
+});
+var art_CC005 = function(ctx) {
+	art_CCBase.call(this,ctx);
+};
+art_CC005.__name__ = ["art","CC005"];
+art_CC005.__interfaces__ = [art_ICCBase];
+art_CC005.__super__ = art_CCBase;
+art_CC005.prototype = $extend(art_CCBase.prototype,{
+	init: function() {
+		console.log("init: " + this.toString());
+		var padding = 100;
+		var arr = util_GridUtil.create(padding,padding,Global.w - 2 * padding,Global.h - 2 * padding,3,4);
+		var _g1 = 0;
+		var _g = arr.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = arr[i];
+			util_ShapeUtil.registerPoint(this.ctx,point.x,point.y);
+		}
+		var _size = 50;
+		var _width = _size;
+		var _height = 25;
+		CanvasTools.colour(this.ctx,util_ColorUtil.NAVY.r,util_ColorUtil.NAVY.g,util_ColorUtil.NAVY.b,0.5);
+		var point1 = arr[0];
+		CanvasTools.centreFillRect(this.ctx,point1.x,point1.y,_size,_size);
+		var point2 = arr[1];
+		CanvasTools.circle(this.ctx,point2.x,point2.y,_size);
+		var point3 = arr[2];
+		CanvasTools.fillEllipse(this.ctx,point3.x,point3.y,_width,_height);
+		var point4 = arr[3];
+		CanvasTools.lineColour(this.ctx,util_ColorUtil.NAVY.r,util_ColorUtil.NAVY.g,util_ColorUtil.NAVY.b,0.5);
+		CanvasTools.line(this.ctx,point4.x,point4.y,point4.x + _width,point4.y + _height);
+		var point5 = arr[4];
+		CanvasTools.fillTriangle(this.ctx,point5.x,point5.y - _height,point5.x - _width,point5.y - _height,point5.x + _width,point5.y + _height);
+		var point6 = arr[5];
+		CanvasTools.fillPolygon(this.ctx,point6.x,point6.y,8,_size);
+		var point7 = arr[6];
+		CanvasTools.fillPolygon(this.ctx,point7.x,point7.y,3,_size);
+		var point8 = arr[7];
+		CanvasTools.eqDownFillTriangle(this.ctx,point8.x,point8.y,_size);
+		var point9 = arr[8];
+		CanvasTools.eqDownTriangle(this.ctx,point9.x,point9.y,_size);
+		var point10 = arr[9];
+		CanvasTools.roundRect(this.ctx,point10.x,point10.y,100,100,10);
+	}
+	,draw: function() {
+		this.stop();
+	}
+	,__class__: art_CC005
 });
 var js_Boot = function() { };
 js_Boot.__name__ = ["js","Boot"];
@@ -644,6 +783,39 @@ util_ColorUtil.ttoRGB = function($int) {
 util_ColorUtil.prototype = {
 	__class__: util_ColorUtil
 };
+var util_GridUtil = function() {
+};
+util_GridUtil.__name__ = ["util","GridUtil"];
+util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
+	if(numVer == null) {
+		numVer = 1;
+	}
+	if(numHor == null) {
+		numHor = 1;
+	}
+	var gridW = width / (numHor - 1);
+	var gridH = height / (numVer - 1);
+	var total = numHor * numVer;
+	var xpos = 0;
+	var ypos = 0;
+	var arr = [];
+	var _g1 = 0;
+	var _g = total;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var point = { x : x + xpos * gridW, y : y + ypos * gridH};
+		arr.push(point);
+		++xpos;
+		if(xpos >= numHor) {
+			xpos = 0;
+			++ypos;
+		}
+	}
+	return arr;
+};
+util_GridUtil.prototype = {
+	__class__: util_GridUtil
+};
 var util_MathUtil = function() { };
 util_MathUtil.__name__ = ["util","MathUtil"];
 util_MathUtil.radians = function(deg) {
@@ -738,6 +910,35 @@ util_MathUtil.map = function(value,min1,max1,min2,max2,clampResult) {
 util_MathUtil.clamp = function(value,min,max) {
 	return Math.min(Math.max(value,Math.min(min,max)),Math.max(min,max));
 };
+var util_ShapeUtil = function() { };
+util_ShapeUtil.__name__ = ["util","ShapeUtil"];
+util_ShapeUtil.cross = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = 60;
+	}
+	if(width == null) {
+		width = 20;
+	}
+	ctx.fillRect(x - width / 2,y - height / 2,width,height);
+	ctx.fillRect(x - height / 2,y - width / 2,height,width);
+};
+util_ShapeUtil.registerPoint = function(ctx,x,y) {
+	var _w = 10;
+	var _h = 10;
+	var _d = 2;
+	CanvasTools.colour(ctx,util_ColorUtil.PINK.r,util_ColorUtil.PINK.g,util_ColorUtil.PINK.b,1);
+	ctx.fillRect(x - _w / 2,y - _d / 2,_w,_d);
+	ctx.fillRect(x - _d / 2,y - _h / 2,_d,_h);
+};
+util_ShapeUtil.xcross = function(ctx,x,y,size) {
+	if(size == null) {
+		size = 200;
+	}
+	var size1 = 200;
+	CanvasTools.strokeWeight(ctx,100);
+	CanvasTools.line(ctx,x - size1 / 2,y - size1 / 2,x - size1 / 2 + size1,y - size1 / 2 + size1);
+	CanvasTools.line(ctx,x + size1 - size1 / 2,y - size1 / 2,x - size1 / 2,y + size1 - size1 / 2);
+};
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 String.prototype.__class__ = String;
@@ -755,7 +956,7 @@ Global.isFullscreen = false;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-26 22:11:16";
+model_constants_App.BUILD = "2019-01-27 00:39:26";
 util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

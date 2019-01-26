@@ -2,15 +2,18 @@
 
 > a journey of a thousand miles begins with a single step
 
+- [x] last sketch default
+- [x] fullscreen
+- [x] resize and redraw
 - [ ] check svg classes for color classes
 - [ ] lets.go animation lib?
 - [ ] choose color vs colour
 - [ ] nav between sketches (css)
-- [x] fullscreen
 - [ ] add controle settings (quick settings)
 - [ ] default nav, description, etc css
 - [ ] add color lib
 - [ ] add animition lib
+- [ ] add signals lib
 - [ ] loading music
 - [ ] loading colors
 - [ ] exporting images
@@ -19,9 +22,7 @@
 - [ ] website state
 - [ ] "hidden" menu
 - [ ] branding
-- [x] last sketch default
 - [ ] draw vs animation?
-- [x] resize and redraw
 - [ ] ....
 
 
