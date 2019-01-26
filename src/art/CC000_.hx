@@ -15,6 +15,7 @@ import AST;
 
 // syntactic sugar to extend CanvasRenderingContext2D
 using CanvasTools;
+using util.ShapeUtil;
 
 /**
  * short description what this does
@@ -26,6 +27,7 @@ class CC000 extends CCBase implements ICCBase {
 	}
 
 	override function init(){
+		trace('init: ${toString()}');
 		var w03 = w*0.3;
 		var h03 = h*0.3;
 		var size = 200;
@@ -37,5 +39,6 @@ class CC000 extends CCBase implements ICCBase {
 
 	override function draw(){
 		trace('draw: ${toString()}');
+		stop();
 	}
 }

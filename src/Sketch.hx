@@ -63,12 +63,12 @@ class Sketch {
 
 	function resize() {
 		var c:Array<CanvasElement> = cast document.getElementsByTagName('canvas');
-		width = w = window.innerWidth;
-		height = h = window.innerHeight;
+		w = window.innerWidth;
+		h = window.innerHeight;
 		for (i in 0...c.length) {
 			var _c = c[i];
-			_c.width = width;
-			_c.height = height;
+			_c.width = w;
+			_c.height = h;
 		}
 		console.log("resize: " + w + ":" + h);
 	}

@@ -43,7 +43,7 @@ class CC004 extends CCBase implements ICCBase {
 
 	override function draw(){
 		moveBall();
-		ctx.clearRect(0, 0, width, height);
+		ctx.clearRect(0, 0, w, h);
 		ctx.background(0,0,0);
 		drawBall();
 	}
