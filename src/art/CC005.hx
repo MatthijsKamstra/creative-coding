@@ -16,6 +16,7 @@ import AST;
 // syntactic sugar to extend CanvasRenderingContext2D
 using CanvasTools;
 using util.ShapeUtil;
+using util.FontUtil;
 
 /**
  * create grid, show all version illustration
@@ -71,6 +72,20 @@ class CC005 extends CCBase implements ICCBase {
 
 		var point = arr[9];
 		ctx.roundRect(point.x, point.y,100, 100, 10);
+
+		// text
+		ctx.embedFillText('Matthijs Kamstra aka [mck]', padding/2, padding/2, 'Unica+One');
+		ctx.embedFillText('Matthijs Kamstra aka [mck]', padding/2, padding*2, 'Nova+Mono');
+
+		// var link = document.createLinkElement();
+		// link.href = "https://fonts.googleapis.com/css?family=Nova+Mono";
+		// link.rel = "stylesheet";
+		// link.id = "";
+		// document.body.appendChild(link);
+
+		// ctx.font = '20px "Nova Mono, monospace"';
+		// ctx.fillText('Matthijs Kamstra aka [mck]', padding/2, padding/2);
+
 	}
 
 	override function draw() {
