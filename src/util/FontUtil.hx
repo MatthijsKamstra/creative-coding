@@ -10,6 +10,11 @@ using StringTools;
 class FontUtil {
 	public function new() {}
 
+	// TODO:
+	//		2 fonts in one <link>
+	// 		resize window and not end up with multiple <links>
+	//		chaining? `ctx.embedFillText().color().multiline()`
+
 	/**
 	 * make sure to use Google fonts for this
 	 * @param ctx
@@ -21,6 +26,7 @@ class FontUtil {
 	 */
 	public static function embedFillText(ctx:CanvasRenderingContext2D, text:String, x:Float, y:Float, ?family:String = "Unica+One", ?fontFamily:String) {
 		var cleanFamily = family.replace('+', ' ');
+
 
 		var link = document.createLinkElement();
 		link.href = 'https://fonts.googleapis.com/css?family=${family}';
