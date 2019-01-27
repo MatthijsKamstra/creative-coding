@@ -23,6 +23,10 @@
 - [ ] "hidden" menu
 - [ ] branding
 - [ ] draw vs animation?
+- [ ] resize and font injection
+- [ ] key to download canvas as file
+- [ ] `esc`-button to return to normal
+- [ ] save images as `.jpg` for instagram
 - [ ] ....
 
 
