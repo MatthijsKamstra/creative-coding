@@ -674,6 +674,8 @@ art_CC005.prototype = $extend(art_CCBase.prototype,{
 		CanvasTools.eqDownTriangle(this.ctx,point9.x,point9.y,_size);
 		var point10 = arr[9];
 		CanvasTools.roundRect(this.ctx,point10.x,point10.y,100,100,10);
+		util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
+		util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
 	}
 	,draw: function() {
 		this.stop();
@@ -782,6 +784,27 @@ util_ColorUtil.ttoRGB = function($int) {
 };
 util_ColorUtil.prototype = {
 	__class__: util_ColorUtil
+};
+var util_FontUtil = function() {
+};
+util_FontUtil.__name__ = ["util","FontUtil"];
+util_FontUtil.embedFillText = function(ctx,text,x,y,family,fontFamily) {
+	if(family == null) {
+		family = "Unica+One";
+	}
+	var cleanFamily = StringTools.replace(family,"+"," ");
+	var link = window.document.createElement("link");
+	link.href = "https://fonts.googleapis.com/css?family=" + family;
+	link.rel = "stylesheet";
+	link.id = cleanFamily;
+	window.document.body.appendChild(link);
+	window.addEventListener("load",function(e) {
+		ctx.font = "20px \"" + cleanFamily + "\"";
+		ctx.fillText(text,x,y);
+	});
+};
+util_FontUtil.prototype = {
+	__class__: util_FontUtil
 };
 var util_GridUtil = function() {
 };
@@ -956,7 +979,7 @@ Global.isFullscreen = false;
 Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
 model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-27 00:39:26";
+model_constants_App.BUILD = "2019-01-27 13:30:35";
 util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

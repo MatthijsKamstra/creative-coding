@@ -27,6 +27,18 @@
 
 
 
+test with fonts
+
+**Display**
+
+`<link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">`
+`font-family: 'Unica One', cursive;`
+
+**Monospace**
+
+`<link href="https://fonts.googleapis.com/css?family=Nova+Mono" rel="stylesheet">`
+
+`font-family: 'Nova Mono', monospace;`
 
 
 
