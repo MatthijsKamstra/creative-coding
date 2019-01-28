@@ -8,6 +8,7 @@ import Global.*;
 class CCBase {
 	public var ctx:CanvasRenderingContext2D;
 	public var isDrawActive:Bool = true;
+	public var isDebug:Bool = false;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		this.ctx = ctx;
