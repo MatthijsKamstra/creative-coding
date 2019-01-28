@@ -1,3 +1,6 @@
+-lib hxquicksettings
+-lib thx.color
+-lib lets.go
 -cp src
 -main Main
 -js docs/cc_mck.js
