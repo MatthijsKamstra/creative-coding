@@ -23,7 +23,7 @@ class ColorUtil {
 	 * @param g green (max:255, min:0)
 	 * @param b blue (max:255, min:0)
 	 */
-	static public function rgb(r:Int, ?g:Int, ?b:Int) {
+	static public function rgb(r:Int, ?g:Int, ?b:Int):String {
 		if (g == null)
 			g = r;
 		if (b == null)
@@ -45,6 +45,18 @@ class ColorUtil {
 
 	public static function rgb2hex(r : Int, g : Int, b : Int, a : Int = 255) : Int {
 		return (a << 24) | (r << 16) | (g << 8) | b;
+	}
+
+
+	/**
+	 * get a random rgb color
+	 * @return String
+	 */
+	static public function randomColour():String {
+		var r = util.MathUtil.randomInt(255);
+		var g = util.MathUtil.randomInt(255);
+		var b = util.MathUtil.randomInt(255);
+		return ColorUtil.rgb(r, g, b);
 	}
 
 	// public static function hex2css( color : Int ) : String {

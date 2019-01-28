@@ -107,12 +107,7 @@ class MathUtil {
 		return Math.floor(Math.random() * (max + 1 - min)) + min;
 	}
 
-	static public function randomColour() {
-		var r = randomInt(255);
-		var g = randomInt(255);
-		var b = randomInt(255);
-		return ColorUtil.rgb(r, g, b);
-	}
+
 
 
 	static public function chance(value) {
