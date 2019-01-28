@@ -20,7 +20,9 @@ So why not give it a try...
 Read more <https://github.com/GeorgeGally/creative_coding>
 
 
+## WIP
 
+I am focusing on getting it to work on Chrome... just giving you an headsup!
 
 
 

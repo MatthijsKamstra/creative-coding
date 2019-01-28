@@ -5,14 +5,16 @@
 - [x] last sketch default
 - [x] fullscreen
 - [x] resize and redraw
+- [x] lets.go animation lib?
+- [x] add color lib
+- [x] add animition lib
+- [x] add quicksettings lib
+- [x] resize and font injection
 - [ ] check svg classes for color classes
-- [ ] lets.go animation lib?
 - [ ] choose color vs colour
 - [ ] nav between sketches (css)
 - [ ] add controle settings (quick settings)
 - [ ] default nav, description, etc css
-- [ ] add color lib
-- [ ] add animition lib
 - [ ] add signals lib
 - [ ] loading music
 - [ ] loading colors
@@ -23,10 +25,12 @@
 - [ ] "hidden" menu
 - [ ] branding
 - [ ] draw vs animation?
-- [ ] resize and font injection
 - [ ] key to download canvas as file
 - [ ] `esc`-button to return to normal
-- [ ] save images as `.jpg` for instagram
+- [ ] save images as `.jpg` for instagram (`cmd`+`s`) & use `cmd`+`shift`+`s` to save a `.png`
+- [ ] check for usefull stuff: https://github.com/soulwire/sketch.js/wiki/API
+- [ ] get classes form gen-js-art
+- [ ] snack bar added to page (see fonk-onepressforhappiness)
 - [ ] ....
 
 
