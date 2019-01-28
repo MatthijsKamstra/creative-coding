@@ -23,6 +23,14 @@ class CanvasTools {
 		ctx.strokeRect(x - width / 2, y - height / 2, width, height);
 	};
 
+	/**
+	 * create a rectangle with center point (x,y)
+	 * @param ctx
+	 * @param x			center point x
+	 * @param y			center point y
+	 * @param width		width of rectangle (if no height is given also the height)
+	 * @param height	(optional) height of rectangle
+	 */
 	static public function centreFillRect(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, ?height:Float) {
 		if (height == null)
 			height = width;
