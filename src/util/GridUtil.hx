@@ -8,12 +8,12 @@ class GridUtil {
 
 	/**
 	 * [Description]
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param numHor
-	 * @param numVer
+	 * @param x			start position x
+	 * @param y			start postion y
+	 * @param width		width of grid
+	 * @param height	height of grid
+	 * @param numHor	number of items horizontal
+	 * @param numVer	number of itmes vertical
 	 */
 	static public function create(x:Float, y:Float, width:Float, height:Float, numHor:Int = 1, numVer:Int = 1):Array<Point> {
 		// trace( x, y, width, height, numHor, numVer);
