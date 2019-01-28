@@ -3,6 +3,7 @@ package util;
 import js.html.CanvasRenderingContext2D;
 import Global.*;
 import util.ColorUtil.*;
+import AST;
 
 // syntactic sugar to extend CanvasRenderingContext2D
 using CanvasTools;
@@ -44,12 +45,23 @@ class ShapeUtil {
 	 * @param y
 	 * @param size
 	 */
-	public static function xcross(ctx:CanvasRenderingContext2D, x, y, ?size:Float = 200){
-		var size = 200;
-
+	public static function xcross(ctx:CanvasRenderingContext2D, x:Float, y:Float, ?size:Float = 200){
 		ctx.strokeWeight(100);
 		ctx.line(x - size / 2, y - size / 2, x - size / 2+size, y - size / 2+size);
 		ctx.line(x+size - size / 2, y - size / 2, x - size / 2, y+size - size / 2);
+	}
+
+	/**
+	 * use with de data of GridUtil
+	 * @example
+	 * 			var arr:Array<Point> = GridUtil.create(0, 0, w, h, 3, 4);
+	 * 			util.ShapeUtil.gridRegister(ctx, arr);
+	 */
+	public static function gridRegister(ctx:CanvasRenderingContext2D, arr:Array<Point>){
+		for (i in 0...arr.length) {
+			var point:Point = arr[i];
+			registerPoint(ctx, point.x, point.y);
+		}
 	}
 
 }
