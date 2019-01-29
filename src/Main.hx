@@ -6,6 +6,8 @@ import js.html.*;
 import Sketch;
 import art.*;
 import lib.model.constants.App;
+import lib.Global.*;
+
 
 using StringTools;
 
@@ -33,17 +35,31 @@ class Main {
 				case 'CC004': new CC004(ctx);
 				case 'CC005': new CC005(ctx);
 				case 'CC006': new CC006(ctx);
+				case 'CC007': new CC007(ctx);
 				default :
 					trace ("case '"+hash+"': new "+hash+"(ctx);");
-					location.hash = 'CC006';
-					new CC006(ctx);
+					location.hash = 'CC007';
+					new CC007(ctx);
 
 			}
 
-			// make sure the browser updates after chang hash
+			var count = Std.parseInt(hash.toLowerCase().replace('cc',''));
+
+			// make sure the browser updates after changing the hash
 			window.addEventListener("hashchange", function (){
 				location.reload();
 			} , false);
+
+			// use cursor key lef and right to switch sketches
+			window.addEventListener(KEY_DOWN, function (e:js.html.KeyboardEvent){
+				switch (e.key) {
+					case 'ArrowRight': count++;
+					case 'ArrowLeft': count--;
+					// default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
+				}
+				location.hash = 'CC' + Std.string(count).lpad('0',3);
+			}, false);
+
 		});
 	}
 
