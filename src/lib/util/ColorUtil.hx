@@ -59,6 +59,17 @@ class ColorUtil {
 		return ColorUtil.rgb(r, g, b);
 	}
 
+	static public function randomColourObject():RGB {
+		var r = MathUtil.randomInt(255);
+		var g = MathUtil.randomInt(255);
+		var b = MathUtil.randomInt(255);
+		return {
+			r:r,
+			g:g,
+			b:b
+		};
+	}
+
 	// public static function hex2css( color : Int ) : String {
 	// 	return "#" + color.toString(16);
 	// }
@@ -133,7 +144,7 @@ typedef RGBObject = {
 	var b : Int;
 };
 typedef RGB = {
-	var r : Float;
-	var g : Float;
-	var b : Float;
+	var r : Int;
+	var g : Int;
+	var b : Int;
 };
