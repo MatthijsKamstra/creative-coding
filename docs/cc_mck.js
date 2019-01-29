@@ -6,6 +6,42 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
+var HxOverrides = function() { };
+HxOverrides.__name__ = ["HxOverrides"];
+HxOverrides.cca = function(s,index) {
+	var x = s.charCodeAt(index);
+	if(x != x) {
+		return undefined;
+	}
+	return x;
+};
+HxOverrides.remove = function(a,obj) {
+	var i = a.indexOf(obj);
+	if(i == -1) {
+		return false;
+	}
+	a.splice(i,1);
+	return true;
+};
+HxOverrides.iter = function(a) {
+	return { cur : 0, arr : a, hasNext : function() {
+		return this.cur < this.arr.length;
+	}, next : function() {
+		return this.arr[this.cur++];
+	}};
+};
+var Lambda = function() { };
+Lambda.__name__ = ["Lambda"];
+Lambda.has = function(it,elt) {
+	var x = $iterator(it)();
+	while(x.hasNext()) {
+		var x1 = x.next();
+		if(x1 == elt) {
+			return true;
+		}
+	}
+	return false;
+};
 var Main = function() {
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -34,13 +70,30 @@ var Main = function() {
 		case "CC006":
 			new art_CC006(ctx);
 			break;
+		case "CC007":
+			new art_CC007(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC006";
-			new art_CC006(ctx);
+			window.location.hash = "CC007";
+			new art_CC007(ctx);
 		}
+		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
 		window.addEventListener("hashchange",function() {
 			window.location.reload();
+		},false);
+		window.addEventListener(lib_Global.KEY_DOWN,function(e) {
+			var _g = e.key;
+			switch(_g) {
+			case "ArrowLeft":
+				count -= 1;
+				break;
+			case "ArrowRight":
+				count += 1;
+				break;
+			}
+			var tmp = StringTools.lpad(count == null ? "null" : "" + count,"0",3);
+			window.location.hash = "CC" + tmp;
 		},false);
 	});
 };
@@ -52,6 +105,49 @@ Main.prototype = {
 	__class__: Main
 };
 Math.__name__ = ["Math"];
+var Reflect = function() { };
+Reflect.__name__ = ["Reflect"];
+Reflect.getProperty = function(o,field) {
+	var tmp;
+	if(o == null) {
+		return null;
+	} else {
+		var tmp1;
+		if(o.__properties__) {
+			tmp = o.__properties__["get_" + field];
+			tmp1 = tmp;
+		} else {
+			tmp1 = false;
+		}
+		if(tmp1) {
+			return o[tmp]();
+		} else {
+			return o[field];
+		}
+	}
+};
+Reflect.setProperty = function(o,field,value) {
+	var tmp;
+	var tmp1;
+	if(o.__properties__) {
+		tmp = o.__properties__["set_" + field];
+		tmp1 = tmp;
+	} else {
+		tmp1 = false;
+	}
+	if(tmp1) {
+		o[tmp](value);
+	} else {
+		o[field] = value;
+	}
+};
+Reflect.isFunction = function(f) {
+	if(typeof(f) == "function") {
+		return !(f.__name__ || f.__ename__);
+	} else {
+		return false;
+	}
+};
 var Sketch = function() {
 	this.document = window.document;
 	this.window = window;
@@ -167,8 +263,27 @@ Sketch.prototype = {
 	}
 	,__class__: Sketch
 };
+var Std = function() { };
+Std.__name__ = ["Std"];
+Std.parseInt = function(x) {
+	var v = parseInt(x,10);
+	if(v == 0 && (HxOverrides.cca(x,1) == 120 || HxOverrides.cca(x,1) == 88)) {
+		v = parseInt(x);
+	}
+	if(isNaN(v)) {
+		return null;
+	}
+	return v;
+};
 var StringTools = function() { };
 StringTools.__name__ = ["StringTools"];
+StringTools.lpad = function(s,c,l) {
+	if(c.length <= 0) {
+		return s;
+	}
+	while(s.length < l) s = c + s;
+	return s;
+};
 StringTools.replace = function(s,sub,by) {
 	return s.split(sub).join(by);
 };
@@ -514,6 +629,189 @@ art_CC006.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC006
 });
+var art_CC007 = function(ctx) {
+	this.ballArray = [];
+	this.sizeBall = 10;
+	this.maxBalls = 100;
+	this.maxDistance = 100;
+	art_CCBase.call(this,ctx);
+};
+art_CC007.__name__ = ["art","CC007"];
+art_CC007.__interfaces__ = [art_ICCBase];
+art_CC007.__super__ = art_CCBase;
+art_CC007.prototype = $extend(art_CCBase.prototype,{
+	testTimer: function() {
+		this.startTime = new Date().getTime() / 1000;
+		this.startDate = new Date().getTime();
+		this.onCompleteHandler(null);
+		var GoJs = new lets_GoJs({ },1);
+		var _this = GoJs;
+		_this._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this._options.onCompleteParams = [1];
+		var GoJs1 = new lets_GoJs({ },2);
+		var _this1 = GoJs1;
+		_this1._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this1._options.onCompleteParams = [2];
+		var GoJs2 = new lets_GoJs({ },5);
+		var _this2 = GoJs2;
+		_this2._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this2._options.onCompleteParams = [5];
+		var GoJs3 = new lets_GoJs({ },1.5);
+		var _this3 = GoJs3;
+		_this3._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this3._options.onCompleteParams = [1.5];
+		var GoJs4 = new lets_GoJs({ },2);
+		var _this4 = GoJs4;
+		_this4._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this4._options.onCompleteParams = [2];
+		var GoJs5 = new lets_GoJs({ },4);
+		var _this5 = GoJs5;
+		_this5._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this5._options.onCompleteParams = [4];
+		var GoJs6 = new lets_GoJs({ },8);
+		var _this6 = GoJs6;
+		_this6._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this6._options.onCompleteParams = [8];
+	}
+	,onCompleteHandler: function(value) {
+		var totalTime = new Date().getTime() / 1000 - this.startTime;
+		var totalDate = (new Date().getTime() - this.startDate) / 1000;
+		console.log("done: " + value + " seconds - date: " + totalDate + " , time: " + totalTime);
+	}
+	,init: function() {
+		console.log("init: " + this.toString());
+		var rgb = lib_util_ColorUtil.randomColourObject();
+		lib_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
+		lib_util_ShapeUtil.xcross(this.ctx,lib_Global.w / 2,lib_Global.h / 2,200);
+		this.ballArray = [];
+		var _g1 = 0;
+		var _g = this.maxBalls;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var ball = this.createBall();
+			this.ballArray.push(ball);
+			this.ballA(ball);
+		}
+	}
+	,ballA: function(ball) {
+		var GoJs = new lets_GoJs(ball,lib_util_MathUtil.random(1,10));
+		GoJs._isFrom = false;
+		var _this = GoJs;
+		var value = lib_util_MathUtil.random(0,lib_Global.w);
+		var objValue = Reflect.getProperty(_this._target,"x");
+		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("x",_range);
+		var _this1 = _this;
+		var value1 = lib_util_MathUtil.random(0,lib_Global.h);
+		var objValue1 = Reflect.getProperty(_this1._target,"y");
+		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
+		_this1._props.set("y",_range1);
+		var _this2 = _this1;
+		_this2._options.onComplete = $bind(this,this.ballA);
+		_this2._options.onCompleteParams = [ball];
+		var _this3 = _this2;
+		_this3._easing = lets_Easing.back;
+	}
+	,createBall: function() {
+		var ball = { x : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.w - this.sizeBall / 2), y : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.h - this.sizeBall / 2), size : lib_util_MathUtil.random(this.sizeBall,this.sizeBall * 4), color : lib_util_ColorUtil.randomColour()};
+		return ball;
+	}
+	,drawBall: function() {
+		var _g1 = 0;
+		var _g = this.ballArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var b1 = this.ballArray[i];
+			this.ctx.fillStyle = b1.color;
+			lib_CanvasTools.fillCircle(this.ctx,b1.x,b1.y,b1.size);
+		}
+	}
+	,draw: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.background(this.ctx,lib_util_ColorUtil.WHITE.r,lib_util_ColorUtil.WHITE.g,lib_util_ColorUtil.WHITE.b);
+		this.drawBall();
+	}
+	,__class__: art_CC007
+});
+var haxe_IMap = function() { };
+haxe_IMap.__name__ = ["haxe","IMap"];
+haxe_IMap.prototype = {
+	__class__: haxe_IMap
+};
+var haxe_Timer = function(time_ms) {
+	var me = this;
+	this.id = setInterval(function() {
+		me.run();
+	},time_ms);
+};
+haxe_Timer.__name__ = ["haxe","Timer"];
+haxe_Timer.delay = function(f,time_ms) {
+	var t = new haxe_Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+};
+haxe_Timer.prototype = {
+	stop: function() {
+		if(this.id == null) {
+			return;
+		}
+		clearInterval(this.id);
+		this.id = null;
+	}
+	,run: function() {
+	}
+	,__class__: haxe_Timer
+};
+var haxe_ds_StringMap = function() {
+	this.h = { };
+};
+haxe_ds_StringMap.__name__ = ["haxe","ds","StringMap"];
+haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
+haxe_ds_StringMap.prototype = {
+	set: function(key,value) {
+		if(__map_reserved[key] != null) {
+			this.setReserved(key,value);
+		} else {
+			this.h[key] = value;
+		}
+	}
+	,setReserved: function(key,value) {
+		if(this.rh == null) {
+			this.rh = { };
+		}
+		this.rh["$" + key] = value;
+	}
+	,getReserved: function(key) {
+		if(this.rh == null) {
+			return null;
+		} else {
+			return this.rh["$" + key];
+		}
+	}
+	,keys: function() {
+		return HxOverrides.iter(this.arrayKeys());
+	}
+	,arrayKeys: function() {
+		var out = [];
+		for( var key in this.h ) {
+		if(this.h.hasOwnProperty(key)) {
+			out.push(key);
+		}
+		}
+		if(this.rh != null) {
+			for( var key in this.rh ) {
+			if(key.charCodeAt(0) == 36) {
+				out.push(key.substr(1));
+			}
+			}
+		}
+		return out;
+	}
+	,__class__: haxe_ds_StringMap
+};
 var js_Boot = function() { };
 js_Boot.__name__ = ["js","Boot"];
 js_Boot.getClass = function(o) {
@@ -540,6 +838,298 @@ js_Boot.__nativeClassName = function(o) {
 };
 js_Boot.__resolveNativeClass = function(name) {
 	return $global[name];
+};
+var lets_Easing = function() { };
+lets_Easing.__name__ = ["lets","Easing"];
+lets_Easing.linear = function(v) {
+	return v;
+};
+lets_Easing.quad = function(v) {
+	return v * v;
+};
+lets_Easing.cubic = function(v) {
+	return v * v * v;
+};
+lets_Easing.quart = function(v) {
+	return v * v * v;
+};
+lets_Easing.quint = function(v) {
+	return v * v * v;
+};
+lets_Easing.sine = function(v) {
+	return 1 - Math.cos(v * Math.PI / 2);
+};
+lets_Easing.circ = function(v) {
+	return 1 - Math.sqrt(1 - v * v);
+};
+lets_Easing.expo = function(v) {
+	if(v == 0) {
+		return 0;
+	} else {
+		return Math.pow(2,10 * (v - 1));
+	}
+};
+lets_Easing.back = function(v) {
+	var s = 1.70158;
+	return v * v * ((s + 1) * v - s);
+};
+lets_Easing.bounce = function(v) {
+	v = 1 - v;
+	return 1 - (v < 0.363636363636363646 ? 7.5625 * v * v : v < 0.727272727272727293 ? 7.5625 * (v -= 0.545454545454545414) * v + .75 : v < 0.909090909090909061 ? 7.5625 * (v -= 0.818181818181818232) * v + .9375 : 7.5625 * (v -= 0.954545454545454586) * v + .984375);
+};
+lets_Easing.elastic = function(v) {
+	if(v == 0) {
+		return 0;
+	}
+	if(v == 1) {
+		return 1;
+	}
+	var p = .3;
+	var s = p / 4;
+	return -(Math.pow(2,10 * --v) * Math.sin((v - 0.075) * (2 * Math.PI) / 0.3));
+};
+lets_Easing.reverse = function(f) {
+	return function(v) {
+		return 1 - f(1 - v);
+	};
+};
+lets_Easing.reflect = function(f) {
+	return function(v) {
+		if(v < 0.5) {
+			return f(v * 2) / 2;
+		} else {
+			return 1 - f(2 - v * 2) / 2;
+		}
+	};
+};
+var lets_GoJs = function(target,duration) {
+	this.DEBUG = false;
+	this.FRAME_RATE = 60;
+	this._seconds = 0;
+	this._delay = 0;
+	this._initTime = 0;
+	this._isTimeBased = false;
+	this._isYoyo = false;
+	this._isFrom = false;
+	this._props = new haxe_ds_StringMap();
+	this._options = { };
+	this._easing = lets_Easing.linear;
+	this._id = "[lets.Go]" + new Date().getTime();
+	this._seconds = duration;
+	this._target = target;
+	if(this._isTimeBased) {
+		this._duration = duration * 1000 | 0;
+		this._initTime = this.getTimer();
+	} else {
+		this._duration = duration * this.FRAME_RATE | 0;
+		this._initTime = this._duration;
+	}
+	lets_GoJs._tweens.push(this);
+	if(this.DEBUG) {
+		window.console.log("New GoJs - _id: \"" + this._id + "\" / _duration: " + this._duration + " / _initTime: " + this._initTime + " / _tweens.length: " + lets_GoJs._tweens.length);
+	}
+	haxe_Timer.delay($bind(this,this.init),1);
+};
+lets_GoJs.__name__ = ["lets","GoJs"];
+lets_GoJs.to = function(target,duration) {
+	var GoJs = new lets_GoJs(target,duration);
+	GoJs._isFrom = false;
+	return GoJs;
+};
+lets_GoJs.from = function(target,duration) {
+	var GoJs = new lets_GoJs(target,duration);
+	GoJs._isFrom = true;
+	return GoJs;
+};
+lets_GoJs.timer = function(duration) {
+	var GoJs = new lets_GoJs({ },duration);
+	return GoJs;
+};
+lets_GoJs.prototype = {
+	isTimeBased: function(isTimeBased) {
+		if(isTimeBased == null) {
+			isTimeBased = true;
+		}
+		this._isTimeBased = isTimeBased;
+		this._duration = this._duration / this.FRAME_RATE | 0;
+		return this;
+	}
+	,x: function(value) {
+		var objValue = Reflect.getProperty(this._target,"x");
+		var _range = { key : "x", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("x",_range);
+		return this;
+	}
+	,y: function(value) {
+		var objValue = Reflect.getProperty(this._target,"y");
+		var _range = { key : "y", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("y",_range);
+		return this;
+	}
+	,rotation: function(value) {
+		var objValue = Reflect.getProperty(this._target,"rotation");
+		var _range = { key : "rotation", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("rotation",_range);
+		return this;
+	}
+	,alpha: function(value) {
+		var objValue = Reflect.getProperty(this._target,"alpha");
+		var _range = { key : "alpha", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("alpha",_range);
+		return this;
+	}
+	,scale: function(value) {
+		var objValue = Reflect.getProperty(this._target,"scaleX");
+		var _range = { key : "scaleX", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("scaleX",_range);
+		var objValue1 = Reflect.getProperty(this._target,"scaleY");
+		var _range1 = { key : "scaleY", from : this._isFrom ? value : objValue1, to : !this._isFrom ? value : objValue1};
+		this._props.set("scaleY",_range1);
+		return this;
+	}
+	,yoyo: function() {
+		this._isYoyo = true;
+		return this;
+	}
+	,delay: function(value) {
+		console.log("FIXME");
+		this._delay = value * 1000 | 0;
+		return this;
+	}
+	,prop: function(key,value) {
+		var objValue = Reflect.getProperty(this._target,key);
+		var _range = { key : key, from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		var _this = this._props;
+		if(__map_reserved[key] != null) {
+			_this.setReserved(key,_range);
+		} else {
+			_this.h[key] = _range;
+		}
+		return this;
+	}
+	,onComplete: function(func,arr) {
+		this._options.onComplete = func;
+		this._options.onCompleteParams = arr;
+		return this;
+	}
+	,onUpdate: function(func,arr) {
+		this._options.onUpdate = func;
+		this._options.onUpdateParams = arr;
+		return this;
+	}
+	,ease: function(easing) {
+		this._easing = easing;
+		return this;
+	}
+	,stop: function() {
+		this.destroy();
+	}
+	,init: function() {
+		if(this._isTimeBased) {
+			console.log("TODO: build timebased animation");
+		} else if(lets_GoJs._requestId == null) {
+			lets_GoJs._requestId = window.requestAnimationFrame($bind(this,this.onEnterFrameHandler));
+		}
+	}
+	,onEnterFrameHandler: function(time) {
+		if(lets_GoJs._tweens.length <= 0) {
+			if(!this._isTimeBased) {
+				window.cancelAnimationFrame(lets_GoJs._requestId);
+				return;
+			}
+		} else {
+			var _g1 = 0;
+			var _g = lets_GoJs._tweens.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				if(lets_GoJs._tweens[i] != null) {
+					lets_GoJs._tweens[i].update();
+				}
+			}
+		}
+		lets_GoJs._requestId = window.requestAnimationFrame($bind(this,this.onEnterFrameHandler));
+	}
+	,update: function() {
+		if(this._delay > 0) {
+			console.log("delay doesn't work at this moment");
+		}
+		this._initTime--;
+		var progressed = this._duration - this._initTime;
+		if(this._isTimeBased) {
+			progressed = this.getTimer() - this._initTime;
+		}
+		if(progressed >= this._duration) {
+			this.updateProperties(this._duration);
+			this.complete();
+		} else {
+			this.updateProperties(progressed);
+		}
+	}
+	,updateProperties: function(time) {
+		if(Reflect.isFunction(this._options.onUpdate)) {
+			var func = this._options.onUpdate;
+			var arr = this._options.onUpdateParams != null ? this._options.onUpdateParams : [];
+			func.apply(func,arr);
+		}
+		var n = this._props.keys();
+		while(n.hasNext()) {
+			var n1 = n.next();
+			var _this = this._props;
+			var range = __map_reserved[n1] != null ? _this.getReserved(n1) : _this.h[n1];
+			Reflect.setProperty(this._target,n1,this._easing(time / this._duration) * (range.to - range.from) + range.from);
+		}
+	}
+	,complete: function() {
+		if(this.DEBUG) {
+			console.log("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + lets_GoJs._tweens.length);
+		}
+		if(this._isYoyo) {
+			var n = this._props.keys();
+			while(n.hasNext()) {
+				var n1 = n.next();
+				var _this = this._props;
+				var range = __map_reserved[n1] != null ? _this.getReserved(n1) : _this.h[n1];
+				var _rangeReverse = { key : n1, from : range.to, to : range.from};
+				var _this1 = this._props;
+				if(__map_reserved[n1] != null) {
+					_this1.setReserved(n1,_rangeReverse);
+				} else {
+					_this1.h[n1] = _rangeReverse;
+				}
+			}
+			if(this._isTimeBased) {
+				this._initTime = this.getTimer();
+			} else {
+				this._initTime = 0;
+			}
+			this._isYoyo = false;
+			return;
+		}
+		var func = this._options.onComplete;
+		var arr = this._options.onCompleteParams != null ? this._options.onCompleteParams : [];
+		this.destroy();
+		if(Reflect.isFunction(func)) {
+			func.apply(func,arr);
+		}
+	}
+	,getTimer: function() {
+		return new Date().getTime() | 0;
+	}
+	,destroy: function() {
+		if(Lambda.has(lets_GoJs._tweens,this)) {
+			HxOverrides.remove(lets_GoJs._tweens,this);
+		}
+		if(this._options) {
+			this._easing = lets_Easing.linear;
+			this._options = { };
+			this._target = null;
+			this._props = null;
+			this._duration = 0;
+			this._initTime = 0;
+			this._delay = 0;
+		}
+	}
+	,__class__: lets_GoJs
 };
 var lib_AST = function() { };
 lib_AST.__name__ = ["lib","AST"];
@@ -828,6 +1418,12 @@ lib_util_ColorUtil.randomColour = function() {
 	var b = lib_util_MathUtil.randomInt(255);
 	return lib_util_ColorUtil.rgb(r,g,b);
 };
+lib_util_ColorUtil.randomColourObject = function() {
+	var r = lib_util_MathUtil.randomInt(255);
+	var g = lib_util_MathUtil.randomInt(255);
+	var b = lib_util_MathUtil.randomInt(255);
+	return { r : r, g : g, b : b};
+};
 lib_util_ColorUtil.toRGB = function($int) {
 	return { r : Math.round($int >> 16 & 255), g : Math.round($int >> 8 & 255), b : Math.round($int & 255)};
 };
@@ -1016,12 +1612,17 @@ lib_util_ShapeUtil.gridRegister = function(ctx,arr) {
 		lib_util_ShapeUtil.registerPoint(ctx,point.x,point.y);
 	}
 };
+function $iterator(o) { if( o instanceof Array ) return function() { return HxOverrides.iter(o); }; return typeof(o.iterator) == 'function' ? $bind(o,o.iterator) : o.iterator; }
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 String.prototype.__class__ = String;
 String.__name__ = ["String"];
 Array.__name__ = ["Array"];
+Date.prototype.__class__ = Date;
+Date.__name__ = ["Date"];
+var __map_reserved = {};
 js_Boot.__toStr = ({ }).toString;
+lets_GoJs._tweens = [];
 lib_Global.MOUSE_DOWN = "mousedown";
 lib_Global.MOUSE_UP = "mouseup";
 lib_Global.MOUSE_MOVE = "mousemove";
@@ -1033,7 +1634,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-29 10:39:11";
+lib_model_constants_App.BUILD = "2019-01-29 20:58:06";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

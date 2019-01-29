@@ -10,18 +10,20 @@
 - [x] add animition lib
 - [x] add quicksettings lib
 - [x] resize and font injection
+- [x] check out Haxe import class.... might make the classes somewhat more readable
 - [ ] check svg classes for color classes
 - [ ] choose color vs colour
 - [ ] nav between sketches (css)
 - [ ] add controle settings (quick settings)
 - [ ] default nav, description, etc css
-- [ ] add signals lib
+- [ ] add signals lib ?
 - [ ] loading music
 - [ ] loading colors
 - [ ] exporting images
 - [ ] exporting video
 - [ ] record state canvas,
 - [ ] website state
+- [ ] cursor for next/previous
 - [ ] "hidden" menu
 - [ ] branding
 - [ ] draw vs animation?
