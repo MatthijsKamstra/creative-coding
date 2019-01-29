@@ -1,4 +1,4 @@
-package util;
+package lib.util;
 
 
 /**
@@ -9,12 +9,12 @@ package util;
  *
  * @example
  * ```
- * import util.MathUtil;
- * MathUtil.random (10);
+ * import lib.util.MathUtil;
+ * Mathlib.util.random (10);
  *
  * // or
  *
- * import util.MathUtil.*;
+ * import lib.util.MathUtil.*;
  * random(10); // make it easier to read
  * ```
  *
@@ -71,7 +71,7 @@ class MathUtil {
 	/**
 	 * Get a random number between `min` and `max`
 	 *
-	 * @example		util.MathUtil.random(10,100); // producess an number between 10 and 100
+	 * @example		lib.util.MathUtil.random(10,100); // producess an number between 10 and 100
 	 *
 	 * @param min 	minimum value
 	 * @param max 	maximum value

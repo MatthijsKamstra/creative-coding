@@ -1,4 +1,4 @@
-package util;
+package lib.util;
 
 class ColorUtil {
 	public function new() {	}
@@ -53,9 +53,9 @@ class ColorUtil {
 	 * @return String
 	 */
 	static public function randomColour():String {
-		var r = util.MathUtil.randomInt(255);
-		var g = util.MathUtil.randomInt(255);
-		var b = util.MathUtil.randomInt(255);
+		var r = MathUtil.randomInt(255);
+		var g = MathUtil.randomInt(255);
+		var b = MathUtil.randomInt(255);
 		return ColorUtil.rgb(r, g, b);
 	}
 

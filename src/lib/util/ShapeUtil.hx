@@ -1,17 +1,17 @@
-package util;
+package lib.util;
 
 import js.html.CanvasRenderingContext2D;
-import Global.*;
-import util.ColorUtil.*;
-import AST;
+import lib.Global.*;
+import lib.util.ColorUtil.*;
+import lib.AST;
 
 // syntactic sugar to extend CanvasRenderingContext2D
-using CanvasTools;
+using lib.CanvasTools;
 
 /**
  * predefined shapes that are every useful
  * @example:
- * 		using CanvasTools;
+ * 		using lib.CanvasTools;
  */
 class ShapeUtil {
 
@@ -55,7 +55,7 @@ class ShapeUtil {
 	 * use with de data of GridUtil
 	 * @example
 	 * 			var arr:Array<Point> = GridUtil.create(0, 0, w, h, 3, 4);
-	 * 			util.ShapeUtil.gridRegister(ctx, arr);
+	 * 			lib.util.ShapeUtil.gridRegister(ctx, arr);
 	 */
 	public static function gridRegister(ctx:CanvasRenderingContext2D, arr:Array<Point>){
 		for (i in 0...arr.length) {

@@ -6,7 +6,7 @@ import js.html.*;
 import js.html.MouseEvent;
 import js.html.Event;
 import js.html.CanvasElement;
-import Global.*;
+import lib.Global.*;
 
 /**
  * inspired by George Gally, which was inpired by Seb Lee

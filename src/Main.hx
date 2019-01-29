@@ -5,7 +5,7 @@ import js.html.*;
 
 import Sketch;
 import art.*;
-import model.constants.App;
+import lib.model.constants.App;
 
 using StringTools;
 

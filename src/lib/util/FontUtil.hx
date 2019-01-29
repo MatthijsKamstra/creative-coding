@@ -1,9 +1,9 @@
-package util;
+package lib.util;
 
 import js.html.CanvasRenderingContext2D;
 import js.Browser.document;
 import js.Browser.window;
-import Global.*;
+import lib.Global.*;
 
 using StringTools;
 

@@ -3,7 +3,7 @@ package art;
 import js.html.CanvasRenderingContext2D;
 import js.Browser.window;
 import js.Browser.document;
-import Global.*;
+import lib.Global.*;
 
 class CCBase {
 	public var ctx:CanvasRenderingContext2D;

@@ -1,7 +1,7 @@
-package util;
+package lib.util;
 
-import Global.*;
-import AST;
+import lib.Global.*;
+import lib.AST;
 
 class GridUtil {
 	public function new() {}

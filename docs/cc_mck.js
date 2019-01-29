@@ -6,224 +6,9 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
-var AST = function() { };
-AST.__name__ = ["AST"];
-var CanvasTools = function() { };
-CanvasTools.__name__ = ["CanvasTools"];
-CanvasTools.square = function(ctx,x,y,width,height) {
-	if(height == null) {
-		height = width;
-	}
-	ctx.fillRect(x,y,width,height);
-};
-CanvasTools.centreStrokeRect = function(ctx,x,y,width,height) {
-	if(height == null) {
-		height = width;
-	}
-	ctx.strokeRect(x - width / 2,y - height / 2,width,height);
-};
-CanvasTools.centreFillRect = function(ctx,x,y,width,height) {
-	if(height == null) {
-		height = width;
-	}
-	ctx.fillRect(x - width / 2,y - height / 2,width,height);
-};
-CanvasTools.roundRect = function(ctx,_x,_y,_width,_height,_radius,_fill,_stroke) {
-	if(_stroke == null) {
-		_stroke = false;
-	}
-	if(_fill == null) {
-		_fill = true;
-	}
-	if(_radius == null) {
-		_radius = 5;
-	}
-	_width = Math.abs(_width);
-	_height = Math.abs(_height);
-	_x -= _width / 2;
-	_y -= _height / 2;
-	var radius_tr;
-	var radius_tl;
-	var radius_br;
-	var radius_bl;
-	radius_tl = _radius;
-	radius_tr = _radius;
-	radius_br = _radius;
-	radius_bl = _radius;
-	ctx.beginPath();
-	ctx.moveTo(_x + radius_tl,_y);
-	ctx.lineTo(_x + _width - radius_tr,_y);
-	ctx.quadraticCurveTo(_x + _width,_y,_x + _width,_y + radius_tr);
-	ctx.lineTo(_x + _width,_y + _height - radius_br);
-	ctx.quadraticCurveTo(_x + _width,_y + _height,_x + _width - radius_br,_y + _height);
-	ctx.lineTo(_x + radius_bl,_y + _height);
-	ctx.quadraticCurveTo(_x,_y + _height,_x,_y + _height - radius_bl);
-	ctx.lineTo(_x,_y + radius_tl);
-	ctx.quadraticCurveTo(_x,_y,_x + radius_tl,_y);
-	ctx.closePath();
-	if(_fill) {
-		ctx.fill();
-	}
-	if(_stroke) {
-		ctx.stroke();
-	}
-};
-CanvasTools.makeCircle = function(ctx,x,y,radius) {
-	ctx.beginPath();
-	ctx.arc(x,y,radius,0,Math.PI * 2,true);
-};
-CanvasTools.circle = function(ctx,x,y,radius) {
-	CanvasTools.makeCircle(ctx,x,y,radius);
-	ctx.fill();
-	ctx.closePath();
-};
-CanvasTools.fillCircle = function(ctx,x,y,radius) {
-	CanvasTools.makeCircle(ctx,x,y,radius);
-	ctx.fill();
-	ctx.closePath();
-};
-CanvasTools.strokeCircle = function(ctx,x,y,radius) {
-	CanvasTools.makeCircle(ctx,x,y,radius);
-	ctx.stroke();
-	ctx.closePath();
-};
-CanvasTools.strokePolygon = function(ctx,x,y,sides,size) {
-	CanvasTools.polygon(ctx,x,y,sides,size);
-	ctx.stroke();
-};
-CanvasTools.fillPolygon = function(ctx,x,y,sides,size) {
-	CanvasTools.polygon(ctx,x,y,sides,size);
-	ctx.fill();
-};
-CanvasTools.outlinedPolygon = function(ctx,x,y,_sides,_size,_fill,_stroke) {
-	ctx.fillStyle = _fill;
-	CanvasTools.fillPolygon(ctx,x,y,_sides,_size);
-	ctx.strokeStyle = _stroke;
-	CanvasTools.strokePolygon(ctx,x,y,_sides,_size);
-};
-CanvasTools.polygon = function(ctx,x,y,sides,size) {
-	ctx.beginPath();
-	ctx.moveTo(x + size * Math.cos(0),y + size * Math.sin(0));
-	var _g1 = 0;
-	var _g = sides;
-	while(_g1 < _g) {
-		var i = _g1++;
-		ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides),y + size * Math.sin(i * 2 * Math.PI / sides));
-	}
-};
-CanvasTools.eellipse = function(ctx,x,y,width,height) {
-	ctx.beginPath();
-	var i = 0;
-	var counter = 0;
-	while(i < Math.PI * 2) {
-		console.log("" + counter + ". - " + i + " < " + Math.PI * 2);
-		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
-		i += Math.PI / 16;
-		++counter;
-	}
-	ctx.closePath();
-};
-CanvasTools.fillEllipse = function(ctx,x,y,width,height) {
-	ctx.beginPath();
-	ctx.ellipse(x,y,width,height,0,0,2 * Math.PI);
-	ctx.fill();
-};
-CanvasTools.strokeEllipse = function(ctx,x,y,width,height) {
-	ctx.beginPath();
-	ctx.ellipse(x,y,width,height,0,0,2 * Math.PI);
-	ctx.stroke();
-};
-CanvasTools.line = function(ctx,x1,y1,x2,y2) {
-	ctx.beginPath();
-	ctx.moveTo(x1,y1);
-	ctx.lineTo(x2,y2);
-	ctx.stroke();
-	ctx.beginPath();
-};
-CanvasTools.triangle = function(ctx,x1,y1,x2,y2,x3,y3) {
-	ctx.beginPath();
-	ctx.moveTo(x1,y1);
-	ctx.lineTo(x2,y2);
-	ctx.lineTo(x3,y3);
-	ctx.lineTo(x1,y1);
-	ctx.stroke();
-	ctx.closePath();
-};
-CanvasTools.strokeTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
-	ctx.beginPath();
-	ctx.moveTo(x1,y1);
-	ctx.lineTo(x2,y2);
-	ctx.lineTo(x3,y3);
-	ctx.lineTo(x1,y1);
-	ctx.stroke();
-	ctx.closePath();
-};
-CanvasTools.fillTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
-	ctx.beginPath();
-	ctx.moveTo(x1,y1);
-	ctx.lineTo(x2,y2);
-	ctx.lineTo(x3,y3);
-	ctx.lineTo(x1,y1);
-	ctx.fill();
-	ctx.closePath();
-};
-CanvasTools.eqDownFillTriangle = function(ctx,x,y,sz) {
-	ctx.translate(x,y);
-	ctx.rotate(util_MathUtil.radians(180));
-	CanvasTools.fillTriangle(ctx,0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
-	ctx.rotate(util_MathUtil.radians(-180));
-	ctx.translate(-x,-y);
-};
-CanvasTools.eqDownTriangle = function(ctx,x,y,sz) {
-	ctx.translate(x,y);
-	ctx.rotate(util_MathUtil.radians(180));
-	CanvasTools.triangle(ctx,0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
-	ctx.rotate(util_MathUtil.radians(-180));
-	ctx.translate(-x,-y);
-};
-CanvasTools.eqFillTriangle = function(ctx,x,y,sz) {
-	CanvasTools.fillTriangle(ctx,x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
-};
-CanvasTools.eqTriangle = function(ctx,x,y,sz) {
-	CanvasTools.triangle(ctx,x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
-};
-CanvasTools.strokeWeight = function(ctx,inPx) {
-	ctx.lineWidth = inPx;
-};
-CanvasTools.fillColour = function(ctx,r,g,b,a) {
-	CanvasTools.colour(ctx,r,g,b,a);
-};
-CanvasTools.colour = function(ctx,r,g,b,a) {
-	var c = util_ColorUtil.getColour(r,g,b,a);
-	ctx.fillStyle = c;
-};
-CanvasTools.strokeColour = function(ctx,r,g,b,a) {
-	CanvasTools.lineColour(ctx,r,g,b,a);
-};
-CanvasTools.lineColour = function(ctx,r,g,b,a) {
-	ctx.strokeStyle = util_ColorUtil.getColour(r,g,b,a);
-};
-CanvasTools.colourName = function(ctx,name) {
-	ctx.fillStyle = name;
-};
-CanvasTools.background = function(ctx,r,g,b,a) {
-	if(g == null) {
-		ctx.fillStyle = util_ColorUtil.rgb(r,r,r);
-	} else if(b == null && a == null) {
-		ctx.fillStyle = util_ColorUtil.rgba(r,r,r,g);
-	} else if(a == null) {
-		ctx.fillStyle = util_ColorUtil.rgb(r,g,b);
-	} else {
-		ctx.fillStyle = util_ColorUtil.rgba(r,g,b,a);
-	}
-	ctx.fillRect(0,0,Global.w,Global.h);
-};
-Math.__name__ = ["Math"];
-var Global = function() { };
-Global.__name__ = ["Global"];
 var Main = function() {
 	window.document.addEventListener("DOMContentLoaded",function(event) {
-		window.console.log("" + model_constants_App.NAME + " :: build: " + model_constants_App.BUILD);
+		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
 		var ctx = Sketch.create("creative_code_mck");
 		var hash = window.location.hash;
 		hash = StringTools.replace(hash,"#","");
@@ -266,6 +51,7 @@ Main.main = function() {
 Main.prototype = {
 	__class__: Main
 };
+Math.__name__ = ["Math"];
 var Sketch = function() {
 	this.document = window.document;
 	this.window = window;
@@ -293,7 +79,7 @@ Sketch.prototype = {
 		body.appendChild(this.canvas);
 		var ctx = this.canvas.getContext("2d");
 		this.resize();
-		this.window.addEventListener(Global.RESIZE,$bind(this,this.resize),false);
+		this.window.addEventListener(lib_Global.RESIZE,$bind(this,this.resize),false);
 		return ctx;
 	}
 	,createGLCanvas: function(canvas_name) {
@@ -309,49 +95,49 @@ Sketch.prototype = {
 			var gl1 = this.canvas.getContext("experimental-webgl");
 		}
 		this.resize();
-		this.window.addEventListener(Global.RESIZE,$bind(this,this.resize),false);
+		this.window.addEventListener(lib_Global.RESIZE,$bind(this,this.resize),false);
 		return gl;
 	}
 	,resize: function() {
 		var c = this.document.getElementsByTagName("canvas");
-		Global.w = this.window.innerWidth;
-		Global.h = this.window.innerHeight;
+		lib_Global.w = this.window.innerWidth;
+		lib_Global.h = this.window.innerHeight;
 		var _g1 = 0;
 		var _g = c.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			var _c = c[i];
-			_c.width = Global.w;
-			_c.height = Global.h;
+			_c.width = lib_Global.w;
+			_c.height = lib_Global.h;
 		}
-		window.console.log("resize: " + Global.w + ":" + Global.h);
+		window.console.log("resize: " + lib_Global.w + ":" + lib_Global.h);
 	}
 	,createHiddenCanvas: function(canvas_name) {
 		var ctx = this.createCanvas(canvas_name);
-		this.canvas.style.left = -Global.w + "px";
+		this.canvas.style.left = -lib_Global.w + "px";
 		return ctx;
 	}
 	,init: function() {
 		var _gthis = this;
-		this.window.addEventListener(Global.MOUSE_MOVE,function(e) {
-			Global.mouseX = e.clientX;
-			Global.mouseY = e.clientY;
-			Global.mouseMoved = true;
+		this.window.addEventListener(lib_Global.MOUSE_MOVE,function(e) {
+			lib_Global.mouseX = e.clientX;
+			lib_Global.mouseY = e.clientY;
+			lib_Global.mouseMoved = true;
 		});
-		this.window.addEventListener(Global.MOUSE_DOWN,function(e1) {
-			Global.mouseDown = true;
+		this.window.addEventListener(lib_Global.MOUSE_DOWN,function(e1) {
+			lib_Global.mouseDown = true;
 		});
-		this.window.addEventListener(Global.MOUSE_UP,function(e2) {
-			Global.mouseDown = false;
+		this.window.addEventListener(lib_Global.MOUSE_UP,function(e2) {
+			lib_Global.mouseDown = false;
 		});
-		this.window.addEventListener(Global.KEY_DOWN,function(e3) {
+		this.window.addEventListener(lib_Global.KEY_DOWN,function(e3) {
 			if(e3.metaKey == true && e3.key == "f") {
-				if(!Global.isFullscreen) {
+				if(!lib_Global.isFullscreen) {
 					_gthis.openFullscreen();
-					Global.isFullscreen = true;
+					lib_Global.isFullscreen = true;
 				} else {
 					_gthis.closeFullscreen();
-					Global.isFullscreen = false;
+					lib_Global.isFullscreen = false;
 				}
 			}
 		},false);
@@ -399,9 +185,9 @@ var art_CCBase = function(ctx) {
 	this.isDebug = false;
 	this.isDrawActive = true;
 	this.ctx = ctx;
-	window.addEventListener(Global.RESIZE,$bind(this,this._reset),false);
-	window.addEventListener(Global.KEY_DOWN,$bind(this,this._keyDown),false);
-	window.addEventListener(Global.KEY_UP,$bind(this,this._keyUp),false);
+	window.addEventListener(lib_Global.RESIZE,$bind(this,this._reset),false);
+	window.addEventListener(lib_Global.KEY_DOWN,$bind(this,this._keyDown),false);
+	window.addEventListener(lib_Global.KEY_UP,$bind(this,this._keyUp),false);
 	this.init();
 	this._draw();
 };
@@ -412,7 +198,7 @@ art_CCBase.prototype = {
 	,_keyUp: function(e) {
 	}
 	,_reset: function() {
-		this.ctx.clearRect(0,0,Global.w,Global.h);
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
 		this.init();
 	}
 	,_draw: function(timestamp) {
@@ -462,9 +248,9 @@ art_CC000.prototype = $extend(art_CCBase.prototype,{
 		this.rotate++;
 		this.size++;
 		this.ctx.save();
-		this.ctx.translate(Global.w / 2,Global.h / 2);
+		this.ctx.translate(lib_Global.w / 2,lib_Global.h / 2);
 		this.ctx.rotate(this.rotate);
-		CanvasTools.centreStrokeRect(this.ctx,0,0,this.size);
+		lib_CanvasTools.centreStrokeRect(this.ctx,0,0,this.size);
 		this.ctx.restore();
 		if(this.size >= 1000) {
 			this.pause();
@@ -481,9 +267,9 @@ art_CC001.__super__ = art_CCBase;
 art_CC001.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		CanvasTools.background(this.ctx,0,0,0);
-		CanvasTools.fillColour(this.ctx,255,255,255);
-		CanvasTools.fillCircle(this.ctx,Global.w / 2,Global.h / 2,100);
+		lib_CanvasTools.background(this.ctx,0,0,0);
+		lib_CanvasTools.fillColour(this.ctx,255,255,255);
+		lib_CanvasTools.fillCircle(this.ctx,lib_Global.w / 2,lib_Global.h / 2,100);
 		this.pause();
 	}
 	,__class__: art_CC001
@@ -497,8 +283,8 @@ art_CC002.__super__ = art_CCBase;
 art_CC002.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
 		console.log("draw: " + this.toString());
-		CanvasTools.fillColour(this.ctx,util_ColorUtil.LIME.r,util_ColorUtil.LIME.g,util_ColorUtil.LIME.b);
-		CanvasTools.fillEllipse(this.ctx,Global.w / 2,Global.h / 2,100,200);
+		lib_CanvasTools.fillColour(this.ctx,lib_util_ColorUtil.LIME.r,lib_util_ColorUtil.LIME.g,lib_util_ColorUtil.LIME.b);
+		lib_CanvasTools.fillEllipse(this.ctx,lib_Global.w / 2,lib_Global.h / 2,100,200);
 		this.pause();
 	}
 	,__class__: art_CC002
@@ -515,7 +301,7 @@ art_CC003.__super__ = art_CCBase;
 art_CC003.prototype = $extend(art_CCBase.prototype,{
 	init: function() {
 		console.log("init: " + this.toString());
-		CanvasTools.background(this.ctx,255,255,255,0.2);
+		lib_CanvasTools.background(this.ctx,255,255,255,0.2);
 		var _g1 = 0;
 		var _g = this.maxBalls;
 		while(_g1 < _g) {
@@ -528,7 +314,7 @@ art_CC003.prototype = $extend(art_CCBase.prototype,{
 		this.drawBall();
 	}
 	,createBall: function() {
-		var ball = { x : util_MathUtil.random(this.sizeBall / 2,Global.w - this.sizeBall / 2), y : util_MathUtil.random(this.sizeBall / 2,Global.h - this.sizeBall / 2), speed_x : util_MathUtil.random(-5,5), speed_y : util_MathUtil.random(-5,5), size : this.sizeBall, colour : util_ColorUtil.rgb(util_MathUtil.randomInt(55),util_MathUtil.randomInt(255),0)};
+		var ball = { x : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.w - this.sizeBall / 2), y : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.h - this.sizeBall / 2), speed_x : lib_util_MathUtil.random(-5,5), speed_y : lib_util_MathUtil.random(-5,5), size : this.sizeBall, colour : lib_util_ColorUtil.rgb(lib_util_MathUtil.randomInt(55),lib_util_MathUtil.randomInt(255),0)};
 		return ball;
 	}
 	,moveBall: function() {
@@ -539,13 +325,13 @@ art_CC003.prototype = $extend(art_CCBase.prototype,{
 			var b = this.ballArray[i];
 			b.x += b.speed_x;
 			b.y += b.speed_y;
-			if(util_AnimateUtil.bounce(b.x,0,Global.w,b.size)) {
+			if(lib_util_AnimateUtil.bounce(b.x,0,lib_Global.w,b.size)) {
 				b.speed_x *= -1;
-				b.colour = util_ColorUtil.rgb(util_MathUtil.randomInt(55),util_MathUtil.randomInt(255),0);
+				b.colour = lib_util_ColorUtil.rgb(lib_util_MathUtil.randomInt(55),lib_util_MathUtil.randomInt(255),0);
 			}
-			if(util_AnimateUtil.bounce(b.y,0,Global.h,b.size)) {
+			if(lib_util_AnimateUtil.bounce(b.y,0,lib_Global.h,b.size)) {
 				b.speed_y *= -1;
-				b.colour = util_ColorUtil.rgb(0,util_MathUtil.randomInt(255),util_MathUtil.randomInt(55));
+				b.colour = lib_util_ColorUtil.rgb(0,lib_util_MathUtil.randomInt(255),lib_util_MathUtil.randomInt(55));
 			}
 		}
 	}
@@ -556,7 +342,7 @@ art_CC003.prototype = $extend(art_CCBase.prototype,{
 			var i = _g1++;
 			var b = this.ballArray[i];
 			this.ctx.fillStyle = b.colour;
-			CanvasTools.fillCircle(this.ctx,b.x,b.y,b.size);
+			lib_CanvasTools.fillCircle(this.ctx,b.x,b.y,b.size);
 		}
 	}
 	,__class__: art_CC003
@@ -584,12 +370,12 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 	}
 	,draw: function() {
 		this.moveBall();
-		this.ctx.clearRect(0,0,Global.w,Global.h);
-		CanvasTools.background(this.ctx,0,0,0);
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.background(this.ctx,0,0,0);
 		this.drawBall();
 	}
 	,createBall: function() {
-		var ball = { x : util_MathUtil.random(this.sizeBall / 2,Global.w - this.sizeBall / 2), y : util_MathUtil.random(this.sizeBall / 2,Global.h - this.sizeBall / 2), speed_x : util_MathUtil.random(-0.5,0.5), speed_y : util_MathUtil.random(-0.5,0.5), size : this.sizeBall, colour : util_ColorUtil.rgb(255,255,255)};
+		var ball = { x : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.w - this.sizeBall / 2), y : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.h - this.sizeBall / 2), speed_x : lib_util_MathUtil.random(-0.5,0.5), speed_y : lib_util_MathUtil.random(-0.5,0.5), size : this.sizeBall, colour : lib_util_ColorUtil.rgb(255,255,255)};
 		return ball;
 	}
 	,moveBall: function() {
@@ -600,10 +386,10 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 			var b = this.ballArray[i];
 			b.x += b.speed_x;
 			b.y += b.speed_y;
-			if(util_AnimateUtil.bounce(b.x,0,Global.w,b.size)) {
+			if(lib_util_AnimateUtil.bounce(b.x,0,lib_Global.w,b.size)) {
 				b.speed_x *= -1;
 			}
-			if(util_AnimateUtil.bounce(b.y,0,Global.h,b.size)) {
+			if(lib_util_AnimateUtil.bounce(b.y,0,lib_Global.h,b.size)) {
 				b.speed_y *= -1;
 			}
 		}
@@ -615,7 +401,7 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 			var i = _g1++;
 			var b1 = this.ballArray[i];
 			this.ctx.fillStyle = b1.colour;
-			CanvasTools.fillCircle(this.ctx,b1.x,b1.y,b1.size);
+			lib_CanvasTools.fillCircle(this.ctx,b1.x,b1.y,b1.size);
 			var _g3 = 0;
 			var _g2 = this.ballArray.length;
 			while(_g3 < _g2) {
@@ -624,11 +410,11 @@ art_CC004.prototype = $extend(art_CCBase.prototype,{
 				if(b1 == b2) {
 					continue;
 				}
-				var _dist = util_MathUtil.distance(b1.x,b1.y,b2.x,b2.y);
+				var _dist = lib_util_MathUtil.distance(b1.x,b1.y,b2.x,b2.y);
 				if(_dist < this.maxDistance) {
 					var alpha = 0.8 - _dist / this.maxDistance;
-					CanvasTools.lineColour(this.ctx,util_ColorUtil.WHITE.r,util_ColorUtil.WHITE.g,util_ColorUtil.WHITE.b,alpha);
-					CanvasTools.line(this.ctx,b1.x,b1.y,b2.x,b2.y);
+					lib_CanvasTools.lineColour(this.ctx,lib_util_ColorUtil.WHITE.r,lib_util_ColorUtil.WHITE.g,lib_util_ColorUtil.WHITE.b,alpha);
+					lib_CanvasTools.line(this.ctx,b1.x,b1.y,b2.x,b2.y);
 				}
 			}
 		}
@@ -645,41 +431,41 @@ art_CC005.prototype = $extend(art_CCBase.prototype,{
 	init: function() {
 		console.log("init: " + this.toString());
 		var padding = 100;
-		var arr = util_GridUtil.create(padding,padding,Global.w - 2 * padding,Global.h - 2 * padding,3,4);
+		var arr = lib_util_GridUtil.create(padding,padding,lib_Global.w - 2 * padding,lib_Global.h - 2 * padding,3,4);
 		var _g1 = 0;
 		var _g = arr.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			var point = arr[i];
-			util_ShapeUtil.registerPoint(this.ctx,point.x,point.y);
+			lib_util_ShapeUtil.registerPoint(this.ctx,point.x,point.y);
 		}
 		var _size = 50;
 		var _width = _size;
 		var _height = 25;
-		CanvasTools.colour(this.ctx,util_ColorUtil.NAVY.r,util_ColorUtil.NAVY.g,util_ColorUtil.NAVY.b,0.5);
+		lib_CanvasTools.colour(this.ctx,lib_util_ColorUtil.NAVY.r,lib_util_ColorUtil.NAVY.g,lib_util_ColorUtil.NAVY.b,0.5);
 		var point1 = arr[0];
-		CanvasTools.centreFillRect(this.ctx,point1.x,point1.y,_size,_size);
+		lib_CanvasTools.centreFillRect(this.ctx,point1.x,point1.y,_size,_size);
 		var point2 = arr[1];
-		CanvasTools.circle(this.ctx,point2.x,point2.y,_size);
+		lib_CanvasTools.circle(this.ctx,point2.x,point2.y,_size);
 		var point3 = arr[2];
-		CanvasTools.fillEllipse(this.ctx,point3.x,point3.y,_width,_height);
+		lib_CanvasTools.fillEllipse(this.ctx,point3.x,point3.y,_width,_height);
 		var point4 = arr[3];
-		CanvasTools.lineColour(this.ctx,util_ColorUtil.NAVY.r,util_ColorUtil.NAVY.g,util_ColorUtil.NAVY.b,0.5);
-		CanvasTools.line(this.ctx,point4.x,point4.y,point4.x + _width,point4.y + _height);
+		lib_CanvasTools.lineColour(this.ctx,lib_util_ColorUtil.NAVY.r,lib_util_ColorUtil.NAVY.g,lib_util_ColorUtil.NAVY.b,0.5);
+		lib_CanvasTools.line(this.ctx,point4.x,point4.y,point4.x + _width,point4.y + _height);
 		var point5 = arr[4];
-		CanvasTools.fillTriangle(this.ctx,point5.x,point5.y - _height,point5.x - _width,point5.y - _height,point5.x + _width,point5.y + _height);
+		lib_CanvasTools.fillTriangle(this.ctx,point5.x,point5.y - _height,point5.x - _width,point5.y - _height,point5.x + _width,point5.y + _height);
 		var point6 = arr[5];
-		CanvasTools.fillPolygon(this.ctx,point6.x,point6.y,8,_size);
+		lib_CanvasTools.fillPolygon(this.ctx,point6.x,point6.y,8,_size);
 		var point7 = arr[6];
-		CanvasTools.fillPolygon(this.ctx,point7.x,point7.y,3,_size);
+		lib_CanvasTools.fillPolygon(this.ctx,point7.x,point7.y,3,_size);
 		var point8 = arr[7];
-		CanvasTools.eqDownFillTriangle(this.ctx,point8.x,point8.y,_size);
+		lib_CanvasTools.eqDownFillTriangle(this.ctx,point8.x,point8.y,_size);
 		var point9 = arr[8];
-		CanvasTools.eqDownTriangle(this.ctx,point9.x,point9.y,_size);
+		lib_CanvasTools.eqDownTriangle(this.ctx,point9.x,point9.y,_size);
 		var point10 = arr[9];
-		CanvasTools.roundRect(this.ctx,point10.x,point10.y,100,100,10);
-		util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
-		util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
+		lib_CanvasTools.roundRect(this.ctx,point10.x,point10.y,100,100,10);
+		lib_util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
+		lib_util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
 	}
 	,draw: function() {
 		this.stop();
@@ -689,7 +475,7 @@ art_CC005.prototype = $extend(art_CCBase.prototype,{
 var art_CC006 = function(ctx) {
 	var _gthis = this;
 	art_CCBase.call(this,ctx);
-	window.addEventListener(Global.KEY_DOWN,function(e) {
+	window.addEventListener(lib_Global.KEY_DOWN,function(e) {
 		if(e.key == " ") {
 			console.log("redraw");
 			_gthis.init();
@@ -705,21 +491,21 @@ art_CC006.prototype = $extend(art_CCBase.prototype,{
 		var _size = 50;
 		var _x = 0;
 		var _y = 0;
-		var _numHor = Math.ceil(Global.w / _size);
-		var _numVer = Math.ceil(Global.h / _size);
-		var arr = util_GridUtil.create(_x,_y,Global.w - 2 * _x,Global.h - 2 * _y,_numHor,_numVer);
+		var _numHor = Math.ceil(lib_Global.w / _size);
+		var _numVer = Math.ceil(lib_Global.h / _size);
+		var arr = lib_util_GridUtil.create(_x,_y,lib_Global.w - 2 * _x,lib_Global.h - 2 * _y,_numHor,_numVer);
 		if(this.isDebug) {
-			util_ShapeUtil.gridRegister(this.ctx,arr);
+			lib_util_ShapeUtil.gridRegister(this.ctx,arr);
 		}
 		var _g1 = 0;
 		var _g = arr.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			var p = arr[i];
-			var c = util_ColorUtil.randomColour();
+			var c = lib_util_ColorUtil.randomColour();
 			this.ctx.fillStyle = c;
-			CanvasTools.strokeWeight(this.ctx,0);
-			CanvasTools.centreFillRect(this.ctx,p.x,p.y,_size,_size);
+			lib_CanvasTools.strokeWeight(this.ctx,0);
+			lib_CanvasTools.centreFillRect(this.ctx,p.x,p.y,_size,_size);
 		}
 	}
 	,draw: function() {
@@ -755,19 +541,233 @@ js_Boot.__nativeClassName = function(o) {
 js_Boot.__resolveNativeClass = function(name) {
 	return $global[name];
 };
-var model_constants_App = function() { };
-model_constants_App.__name__ = ["model","constants","App"];
-var util_AnimateUtil = function() {
+var lib_AST = function() { };
+lib_AST.__name__ = ["lib","AST"];
+var lib_CanvasTools = function() { };
+lib_CanvasTools.__name__ = ["lib","CanvasTools"];
+lib_CanvasTools.square = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = width;
+	}
+	ctx.fillRect(x,y,width,height);
 };
-util_AnimateUtil.__name__ = ["util","AnimateUtil"];
-util_AnimateUtil.tween = function(pos,target,speed) {
+lib_CanvasTools.centreStrokeRect = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = width;
+	}
+	ctx.strokeRect(x - width / 2,y - height / 2,width,height);
+};
+lib_CanvasTools.centreFillRect = function(ctx,x,y,width,height) {
+	if(height == null) {
+		height = width;
+	}
+	ctx.fillRect(x - width / 2,y - height / 2,width,height);
+};
+lib_CanvasTools.roundRect = function(ctx,_x,_y,_width,_height,_radius,_fill,_stroke) {
+	if(_stroke == null) {
+		_stroke = false;
+	}
+	if(_fill == null) {
+		_fill = true;
+	}
+	if(_radius == null) {
+		_radius = 5;
+	}
+	_width = Math.abs(_width);
+	_height = Math.abs(_height);
+	_x -= _width / 2;
+	_y -= _height / 2;
+	var radius_tr;
+	var radius_tl;
+	var radius_br;
+	var radius_bl;
+	radius_tl = _radius;
+	radius_tr = _radius;
+	radius_br = _radius;
+	radius_bl = _radius;
+	ctx.beginPath();
+	ctx.moveTo(_x + radius_tl,_y);
+	ctx.lineTo(_x + _width - radius_tr,_y);
+	ctx.quadraticCurveTo(_x + _width,_y,_x + _width,_y + radius_tr);
+	ctx.lineTo(_x + _width,_y + _height - radius_br);
+	ctx.quadraticCurveTo(_x + _width,_y + _height,_x + _width - radius_br,_y + _height);
+	ctx.lineTo(_x + radius_bl,_y + _height);
+	ctx.quadraticCurveTo(_x,_y + _height,_x,_y + _height - radius_bl);
+	ctx.lineTo(_x,_y + radius_tl);
+	ctx.quadraticCurveTo(_x,_y,_x + radius_tl,_y);
+	ctx.closePath();
+	if(_fill) {
+		ctx.fill();
+	}
+	if(_stroke) {
+		ctx.stroke();
+	}
+};
+lib_CanvasTools.makeCircle = function(ctx,x,y,radius) {
+	ctx.beginPath();
+	ctx.arc(x,y,radius,0,Math.PI * 2,true);
+};
+lib_CanvasTools.circle = function(ctx,x,y,radius) {
+	lib_CanvasTools.makeCircle(ctx,x,y,radius);
+	ctx.fill();
+	ctx.closePath();
+};
+lib_CanvasTools.fillCircle = function(ctx,x,y,radius) {
+	lib_CanvasTools.makeCircle(ctx,x,y,radius);
+	ctx.fill();
+	ctx.closePath();
+};
+lib_CanvasTools.strokeCircle = function(ctx,x,y,radius) {
+	lib_CanvasTools.makeCircle(ctx,x,y,radius);
+	ctx.stroke();
+	ctx.closePath();
+};
+lib_CanvasTools.strokePolygon = function(ctx,x,y,sides,size) {
+	lib_CanvasTools.polygon(ctx,x,y,sides,size);
+	ctx.stroke();
+};
+lib_CanvasTools.fillPolygon = function(ctx,x,y,sides,size) {
+	lib_CanvasTools.polygon(ctx,x,y,sides,size);
+	ctx.fill();
+};
+lib_CanvasTools.outlinedPolygon = function(ctx,x,y,_sides,_size,_fill,_stroke) {
+	ctx.fillStyle = _fill;
+	lib_CanvasTools.fillPolygon(ctx,x,y,_sides,_size);
+	ctx.strokeStyle = _stroke;
+	lib_CanvasTools.strokePolygon(ctx,x,y,_sides,_size);
+};
+lib_CanvasTools.polygon = function(ctx,x,y,sides,size) {
+	ctx.beginPath();
+	ctx.moveTo(x + size * Math.cos(0),y + size * Math.sin(0));
+	var _g1 = 0;
+	var _g = sides;
+	while(_g1 < _g) {
+		var i = _g1++;
+		ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides),y + size * Math.sin(i * 2 * Math.PI / sides));
+	}
+};
+lib_CanvasTools.eellipse = function(ctx,x,y,width,height) {
+	ctx.beginPath();
+	var i = 0;
+	var counter = 0;
+	while(i < Math.PI * 2) {
+		console.log("" + counter + ". - " + i + " < " + Math.PI * 2);
+		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
+		i += Math.PI / 16;
+		++counter;
+	}
+	ctx.closePath();
+};
+lib_CanvasTools.fillEllipse = function(ctx,x,y,width,height) {
+	ctx.beginPath();
+	ctx.ellipse(x,y,width,height,0,0,2 * Math.PI);
+	ctx.fill();
+};
+lib_CanvasTools.strokeEllipse = function(ctx,x,y,width,height) {
+	ctx.beginPath();
+	ctx.ellipse(x,y,width,height,0,0,2 * Math.PI);
+	ctx.stroke();
+};
+lib_CanvasTools.line = function(ctx,x1,y1,x2,y2) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.stroke();
+	ctx.beginPath();
+};
+lib_CanvasTools.triangle = function(ctx,x1,y1,x2,y2,x3,y3) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.lineTo(x3,y3);
+	ctx.lineTo(x1,y1);
+	ctx.stroke();
+	ctx.closePath();
+};
+lib_CanvasTools.strokeTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.lineTo(x3,y3);
+	ctx.lineTo(x1,y1);
+	ctx.stroke();
+	ctx.closePath();
+};
+lib_CanvasTools.fillTriangle = function(ctx,x1,y1,x2,y2,x3,y3) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.lineTo(x3,y3);
+	ctx.lineTo(x1,y1);
+	ctx.fill();
+	ctx.closePath();
+};
+lib_CanvasTools.eqDownFillTriangle = function(ctx,x,y,sz) {
+	ctx.translate(x,y);
+	ctx.rotate(lib_util_MathUtil.radians(180));
+	lib_CanvasTools.fillTriangle(ctx,0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
+	ctx.rotate(lib_util_MathUtil.radians(-180));
+	ctx.translate(-x,-y);
+};
+lib_CanvasTools.eqDownTriangle = function(ctx,x,y,sz) {
+	ctx.translate(x,y);
+	ctx.rotate(lib_util_MathUtil.radians(180));
+	lib_CanvasTools.triangle(ctx,0,0 - sz,sz,sz / 2,0 - sz,sz / 2);
+	ctx.rotate(lib_util_MathUtil.radians(-180));
+	ctx.translate(-x,-y);
+};
+lib_CanvasTools.eqFillTriangle = function(ctx,x,y,sz) {
+	lib_CanvasTools.fillTriangle(ctx,x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
+};
+lib_CanvasTools.eqTriangle = function(ctx,x,y,sz) {
+	lib_CanvasTools.triangle(ctx,x,y - sz,x + sz,y + sz / 2,x - sz,y + sz / 2);
+};
+lib_CanvasTools.strokeWeight = function(ctx,inPx) {
+	ctx.lineWidth = inPx;
+};
+lib_CanvasTools.fillColour = function(ctx,r,g,b,a) {
+	lib_CanvasTools.colour(ctx,r,g,b,a);
+};
+lib_CanvasTools.colour = function(ctx,r,g,b,a) {
+	var c = lib_util_ColorUtil.getColour(r,g,b,a);
+	ctx.fillStyle = c;
+};
+lib_CanvasTools.strokeColour = function(ctx,r,g,b,a) {
+	lib_CanvasTools.lineColour(ctx,r,g,b,a);
+};
+lib_CanvasTools.lineColour = function(ctx,r,g,b,a) {
+	ctx.strokeStyle = lib_util_ColorUtil.getColour(r,g,b,a);
+};
+lib_CanvasTools.colourName = function(ctx,name) {
+	ctx.fillStyle = name;
+};
+lib_CanvasTools.background = function(ctx,r,g,b,a) {
+	if(g == null) {
+		ctx.fillStyle = lib_util_ColorUtil.rgb(r,r,r);
+	} else if(b == null && a == null) {
+		ctx.fillStyle = lib_util_ColorUtil.rgba(r,r,r,g);
+	} else if(a == null) {
+		ctx.fillStyle = lib_util_ColorUtil.rgb(r,g,b);
+	} else {
+		ctx.fillStyle = lib_util_ColorUtil.rgba(r,g,b,a);
+	}
+	ctx.fillRect(0,0,lib_Global.w,lib_Global.h);
+};
+var lib_Global = function() { };
+lib_Global.__name__ = ["lib","Global"];
+var lib_model_constants_App = function() { };
+lib_model_constants_App.__name__ = ["lib","model","constants","App"];
+var lib_util_AnimateUtil = function() {
+};
+lib_util_AnimateUtil.__name__ = ["lib","util","AnimateUtil"];
+lib_util_AnimateUtil.tween = function(pos,target,speed) {
 	if(speed == null) {
 		speed = 20;
 	}
 	pos += (target - pos) / speed;
 	return pos;
 };
-util_AnimateUtil.bounce = function(num,min,max,sz) {
+lib_util_AnimateUtil.bounce = function(num,min,max,sz) {
 	if(sz == null) {
 		sz = 0;
 	}
@@ -777,70 +777,70 @@ util_AnimateUtil.bounce = function(num,min,max,sz) {
 		return false;
 	}
 };
-util_AnimateUtil.prototype = {
-	__class__: util_AnimateUtil
+lib_util_AnimateUtil.prototype = {
+	__class__: lib_util_AnimateUtil
 };
-var util_ColorUtil = function() {
+var lib_util_ColorUtil = function() {
 };
-util_ColorUtil.__name__ = ["util","ColorUtil"];
-util_ColorUtil.getColour = function(r,g,b,a) {
+lib_util_ColorUtil.__name__ = ["lib","util","ColorUtil"];
+lib_util_ColorUtil.getColour = function(r,g,b,a) {
 	var c;
 	if(g == null) {
-		c = util_ColorUtil.rgb(r,r,r);
+		c = lib_util_ColorUtil.rgb(r,r,r);
 	} else if(b == null && a == null) {
-		c = util_ColorUtil.rgba(r,r,r,g);
+		c = lib_util_ColorUtil.rgba(r,r,r,g);
 	} else if(a == null) {
-		c = util_ColorUtil.rgb(r,g,b);
+		c = lib_util_ColorUtil.rgb(r,g,b);
 	} else {
-		c = util_ColorUtil.rgba(r,g,b,a);
+		c = lib_util_ColorUtil.rgba(r,g,b,a);
 	}
 	return c;
 };
-util_ColorUtil.rgb = function(r,g,b) {
+lib_util_ColorUtil.rgb = function(r,g,b) {
 	if(g == null) {
 		g = r;
 	}
 	if(b == null) {
 		b = r;
 	}
-	return "rgb(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(g),0,255) + ", " + util_MathUtil.clamp(Math.round(b),0,255) + ")";
+	return "rgb(" + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(g),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(b),0,255) + ")";
 };
-util_ColorUtil.rgba = function(r,g,b,a) {
+lib_util_ColorUtil.rgba = function(r,g,b,a) {
 	if(g == null) {
-		return "rgb(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ")";
+		return "rgb(" + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(r),0,255) + ")";
 	} else if(b == null) {
-		return "rgba(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(g,0,1) + ")";
+		return "rgba(" + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(g,0,1) + ")";
 	} else if(a == null) {
-		return "rgba(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(g),0,255) + ", " + util_MathUtil.clamp(Math.round(b),0,255) + ", 1)";
+		return "rgba(" + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(g),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(b),0,255) + ", 1)";
 	} else {
-		return "rgba(" + util_MathUtil.clamp(Math.round(r),0,255) + ", " + util_MathUtil.clamp(Math.round(g),0,255) + ", " + util_MathUtil.clamp(Math.round(b),0,255) + ", " + util_MathUtil.clamp(a,0,1) + ")";
+		return "rgba(" + lib_util_MathUtil.clamp(Math.round(r),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(g),0,255) + ", " + lib_util_MathUtil.clamp(Math.round(b),0,255) + ", " + lib_util_MathUtil.clamp(a,0,1) + ")";
 	}
 };
-util_ColorUtil.rgb2hex = function(r,g,b,a) {
+lib_util_ColorUtil.rgb2hex = function(r,g,b,a) {
 	if(a == null) {
 		a = 255;
 	}
 	return a << 24 | r << 16 | g << 8 | b;
 };
-util_ColorUtil.randomColour = function() {
-	var r = util_MathUtil.randomInt(255);
-	var g = util_MathUtil.randomInt(255);
-	var b = util_MathUtil.randomInt(255);
-	return util_ColorUtil.rgb(r,g,b);
+lib_util_ColorUtil.randomColour = function() {
+	var r = lib_util_MathUtil.randomInt(255);
+	var g = lib_util_MathUtil.randomInt(255);
+	var b = lib_util_MathUtil.randomInt(255);
+	return lib_util_ColorUtil.rgb(r,g,b);
 };
-util_ColorUtil.toRGB = function($int) {
+lib_util_ColorUtil.toRGB = function($int) {
 	return { r : Math.round($int >> 16 & 255), g : Math.round($int >> 8 & 255), b : Math.round($int & 255)};
 };
-util_ColorUtil.ttoRGB = function($int) {
+lib_util_ColorUtil.ttoRGB = function($int) {
 	return { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
 };
-util_ColorUtil.prototype = {
-	__class__: util_ColorUtil
+lib_util_ColorUtil.prototype = {
+	__class__: lib_util_ColorUtil
 };
-var util_FontUtil = function() {
+var lib_util_FontUtil = function() {
 };
-util_FontUtil.__name__ = ["util","FontUtil"];
-util_FontUtil.embedFillText = function(ctx,text,x,y,family,fontFamily) {
+lib_util_FontUtil.__name__ = ["lib","util","FontUtil"];
+lib_util_FontUtil.embedFillText = function(ctx,text,x,y,family,fontFamily) {
 	if(family == null) {
 		family = "Unica+One";
 	}
@@ -855,13 +855,13 @@ util_FontUtil.embedFillText = function(ctx,text,x,y,family,fontFamily) {
 		ctx.fillText(text,x,y);
 	});
 };
-util_FontUtil.prototype = {
-	__class__: util_FontUtil
+lib_util_FontUtil.prototype = {
+	__class__: lib_util_FontUtil
 };
-var util_GridUtil = function() {
+var lib_util_GridUtil = function() {
 };
-util_GridUtil.__name__ = ["util","GridUtil"];
-util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
+lib_util_GridUtil.__name__ = ["lib","util","GridUtil"];
+lib_util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
 	if(numVer == null) {
 		numVer = 1;
 	}
@@ -888,41 +888,41 @@ util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
 	}
 	return arr;
 };
-util_GridUtil.prototype = {
-	__class__: util_GridUtil
+lib_util_GridUtil.prototype = {
+	__class__: lib_util_GridUtil
 };
-var util_MathUtil = function() { };
-util_MathUtil.__name__ = ["util","MathUtil"];
-util_MathUtil.radians = function(deg) {
+var lib_util_MathUtil = function() { };
+lib_util_MathUtil.__name__ = ["lib","util","MathUtil"];
+lib_util_MathUtil.radians = function(deg) {
 	return deg * Math.PI / 180;
 };
-util_MathUtil.degrees = function(rad) {
+lib_util_MathUtil.degrees = function(rad) {
 	return rad * 180 / Math.PI;
 };
-util_MathUtil.degreesToPoint = function(deg,diameter) {
+lib_util_MathUtil.degreesToPoint = function(deg,diameter) {
 	var rad = Math.PI * deg / 180;
 	var r = diameter / 2;
 	return { x : r * Math.cos(rad), y : r * Math.sin(rad)};
 };
-util_MathUtil.distributeAngles = function(me,total) {
+lib_util_MathUtil.distributeAngles = function(me,total) {
 	return me / total * 360;
 };
-util_MathUtil.distance = function(x1,y1,x2,y2) {
-	return util_MathUtil.dist(x1,y1,x2,y2);
+lib_util_MathUtil.distance = function(x1,y1,x2,y2) {
+	return lib_util_MathUtil.dist(x1,y1,x2,y2);
 };
-util_MathUtil.dist = function(x1,y1,x2,y2) {
+lib_util_MathUtil.dist = function(x1,y1,x2,y2) {
 	x2 -= x1;
 	y2 -= y1;
 	return Math.sqrt(x2 * x2 + y2 * y2);
 };
-util_MathUtil.randomInteger = function(min,max) {
+lib_util_MathUtil.randomInteger = function(min,max) {
 	if(max == null) {
 		max = min;
 		min = 0;
 	}
 	return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
-util_MathUtil.random = function(min,max) {
+lib_util_MathUtil.random = function(min,max) {
 	if(min == null) {
 		min = 0;
 		max = 1;
@@ -932,7 +932,7 @@ util_MathUtil.random = function(min,max) {
 	}
 	return Math.random() * (max - min) + min;
 };
-util_MathUtil.randomP = function(min,max) {
+lib_util_MathUtil.randomP = function(min,max) {
 	if(min == null) {
 		min = 0.1;
 		max = 1;
@@ -942,20 +942,20 @@ util_MathUtil.randomP = function(min,max) {
 	}
 	return Math.random() * (max - min) + min;
 };
-util_MathUtil.randomInt = function(min,max) {
+lib_util_MathUtil.randomInt = function(min,max) {
 	if(max == null) {
 		max = min;
 		min = 0;
 	}
 	return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
-util_MathUtil.chance = function(value) {
-	return util_MathUtil.random(value) > value - 1;
+lib_util_MathUtil.chance = function(value) {
+	return lib_util_MathUtil.random(value) > value - 1;
 };
-util_MathUtil.posNeg = function() {
-	return util_MathUtil.randomInt(0,1) * 2 - 1;
+lib_util_MathUtil.posNeg = function() {
+	return lib_util_MathUtil.randomInt(0,1) * 2 - 1;
 };
-util_MathUtil.angle = function(cx,cy,ex,ey) {
+lib_util_MathUtil.angle = function(cx,cy,ex,ey) {
 	var dy = ey - cy;
 	var dx = ex - cx;
 	var theta = Math.atan2(dy,dx);
@@ -968,20 +968,20 @@ util_MathUtil.angle = function(cx,cy,ex,ey) {
 	}
 	return theta;
 };
-util_MathUtil.map = function(value,min1,max1,min2,max2,clampResult) {
+lib_util_MathUtil.map = function(value,min1,max1,min2,max2,clampResult) {
 	var returnvalue = (value - min1) / (max1 - min1) * (max2 - min2) + min2;
 	if(clampResult) {
-		return util_MathUtil.clamp(returnvalue,min2,max2);
+		return lib_util_MathUtil.clamp(returnvalue,min2,max2);
 	} else {
 		return returnvalue;
 	}
 };
-util_MathUtil.clamp = function(value,min,max) {
+lib_util_MathUtil.clamp = function(value,min,max) {
 	return Math.min(Math.max(value,Math.min(min,max)),Math.max(min,max));
 };
-var util_ShapeUtil = function() { };
-util_ShapeUtil.__name__ = ["util","ShapeUtil"];
-util_ShapeUtil.cross = function(ctx,x,y,width,height) {
+var lib_util_ShapeUtil = function() { };
+lib_util_ShapeUtil.__name__ = ["lib","util","ShapeUtil"];
+lib_util_ShapeUtil.cross = function(ctx,x,y,width,height) {
 	if(height == null) {
 		height = 60;
 	}
@@ -991,29 +991,29 @@ util_ShapeUtil.cross = function(ctx,x,y,width,height) {
 	ctx.fillRect(x - width / 2,y - height / 2,width,height);
 	ctx.fillRect(x - height / 2,y - width / 2,height,width);
 };
-util_ShapeUtil.registerPoint = function(ctx,x,y) {
+lib_util_ShapeUtil.registerPoint = function(ctx,x,y) {
 	var _w = 10;
 	var _h = 10;
 	var _d = 2;
-	CanvasTools.colour(ctx,util_ColorUtil.PINK.r,util_ColorUtil.PINK.g,util_ColorUtil.PINK.b,1);
+	lib_CanvasTools.colour(ctx,lib_util_ColorUtil.PINK.r,lib_util_ColorUtil.PINK.g,lib_util_ColorUtil.PINK.b,1);
 	ctx.fillRect(x - _w / 2,y - _d / 2,_w,_d);
 	ctx.fillRect(x - _d / 2,y - _h / 2,_d,_h);
 };
-util_ShapeUtil.xcross = function(ctx,x,y,size) {
+lib_util_ShapeUtil.xcross = function(ctx,x,y,size) {
 	if(size == null) {
 		size = 200;
 	}
-	CanvasTools.strokeWeight(ctx,100);
-	CanvasTools.line(ctx,x - size / 2,y - size / 2,x - size / 2 + size,y - size / 2 + size);
-	CanvasTools.line(ctx,x + size - size / 2,y - size / 2,x - size / 2,y + size - size / 2);
+	lib_CanvasTools.strokeWeight(ctx,100);
+	lib_CanvasTools.line(ctx,x - size / 2,y - size / 2,x - size / 2 + size,y - size / 2 + size);
+	lib_CanvasTools.line(ctx,x + size - size / 2,y - size / 2,x - size / 2,y + size - size / 2);
 };
-util_ShapeUtil.gridRegister = function(ctx,arr) {
+lib_util_ShapeUtil.gridRegister = function(ctx,arr) {
 	var _g1 = 0;
 	var _g = arr.length;
 	while(_g1 < _g) {
 		var i = _g1++;
 		var point = arr[i];
-		util_ShapeUtil.registerPoint(ctx,point.x,point.y);
+		lib_util_ShapeUtil.registerPoint(ctx,point.x,point.y);
 	}
 };
 var $_, $fid = 0;
@@ -1021,39 +1021,39 @@ function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id
 String.prototype.__class__ = String;
 String.__name__ = ["String"];
 Array.__name__ = ["Array"];
-Global.MOUSE_DOWN = "mousedown";
-Global.MOUSE_UP = "mouseup";
-Global.MOUSE_MOVE = "mousemove";
-Global.KEY_DOWN = "keydown";
-Global.KEY_UP = "keyup";
-Global.RESIZE = "resize";
-Global.mousePressed = 0;
-Global.mouseReleased = 0;
-Global.isFullscreen = false;
-Global.TWO_PI = Math.PI * 2;
 js_Boot.__toStr = ({ }).toString;
-model_constants_App.NAME = "Creative Code [mck]";
-model_constants_App.BUILD = "2019-01-28 22:14:22";
-util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
-util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
-util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
-util_ColorUtil.TEAL = { r : Math.round(57), g : Math.round(204), b : Math.round(204)};
-util_ColorUtil.OLIVE = { r : Math.round(61), g : Math.round(153), b : Math.round(112)};
-util_ColorUtil.GREEN = { r : Math.round(46), g : Math.round(204), b : Math.round(64)};
-util_ColorUtil.LIME = { r : Math.round(1), g : Math.round(255), b : Math.round(112)};
-util_ColorUtil.YELLOW = { r : Math.round(255), g : Math.round(220), b : Math.round(0)};
-util_ColorUtil.ORANGE = { r : Math.round(255), g : Math.round(133), b : Math.round(27)};
-util_ColorUtil.RED = { r : Math.round(255), g : Math.round(65), b : Math.round(54)};
-util_ColorUtil.MAROON = { r : Math.round(133), g : Math.round(20), b : Math.round(75)};
-util_ColorUtil.FUCHSIA = { r : Math.round(240), g : Math.round(18), b : Math.round(190)};
-util_ColorUtil.PURPLE = { r : Math.round(177), g : Math.round(13), b : Math.round(201)};
-util_ColorUtil.BLACK = { r : Math.round(17), g : Math.round(17), b : Math.round(17)};
-util_ColorUtil.GRAY = { r : Math.round(170), g : Math.round(170), b : Math.round(170)};
-util_ColorUtil.SILVER = { r : Math.round(221), g : Math.round(221), b : Math.round(221)};
-util_ColorUtil.WHITE = { r : Math.round(255), g : Math.round(255), b : Math.round(255)};
-util_ColorUtil.PINK = { r : Math.round(255), g : Math.round(20), b : Math.round(147)};
-util_ColorUtil.PINK_DEEP = { r : Math.round(255), g : Math.round(20), b : Math.round(147)};
-util_ColorUtil.PINK_HOT = { r : Math.round(255), g : Math.round(105), b : Math.round(180)};
+lib_Global.MOUSE_DOWN = "mousedown";
+lib_Global.MOUSE_UP = "mouseup";
+lib_Global.MOUSE_MOVE = "mousemove";
+lib_Global.KEY_DOWN = "keydown";
+lib_Global.KEY_UP = "keyup";
+lib_Global.RESIZE = "resize";
+lib_Global.mousePressed = 0;
+lib_Global.mouseReleased = 0;
+lib_Global.isFullscreen = false;
+lib_Global.TWO_PI = Math.PI * 2;
+lib_model_constants_App.NAME = "Creative Code [mck]";
+lib_model_constants_App.BUILD = "2019-01-29 10:39:11";
+lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
+lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
+lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
+lib_util_ColorUtil.TEAL = { r : Math.round(57), g : Math.round(204), b : Math.round(204)};
+lib_util_ColorUtil.OLIVE = { r : Math.round(61), g : Math.round(153), b : Math.round(112)};
+lib_util_ColorUtil.GREEN = { r : Math.round(46), g : Math.round(204), b : Math.round(64)};
+lib_util_ColorUtil.LIME = { r : Math.round(1), g : Math.round(255), b : Math.round(112)};
+lib_util_ColorUtil.YELLOW = { r : Math.round(255), g : Math.round(220), b : Math.round(0)};
+lib_util_ColorUtil.ORANGE = { r : Math.round(255), g : Math.round(133), b : Math.round(27)};
+lib_util_ColorUtil.RED = { r : Math.round(255), g : Math.round(65), b : Math.round(54)};
+lib_util_ColorUtil.MAROON = { r : Math.round(133), g : Math.round(20), b : Math.round(75)};
+lib_util_ColorUtil.FUCHSIA = { r : Math.round(240), g : Math.round(18), b : Math.round(190)};
+lib_util_ColorUtil.PURPLE = { r : Math.round(177), g : Math.round(13), b : Math.round(201)};
+lib_util_ColorUtil.BLACK = { r : Math.round(17), g : Math.round(17), b : Math.round(17)};
+lib_util_ColorUtil.GRAY = { r : Math.round(170), g : Math.round(170), b : Math.round(170)};
+lib_util_ColorUtil.SILVER = { r : Math.round(221), g : Math.round(221), b : Math.round(221)};
+lib_util_ColorUtil.WHITE = { r : Math.round(255), g : Math.round(255), b : Math.round(255)};
+lib_util_ColorUtil.PINK = { r : Math.round(255), g : Math.round(20), b : Math.round(147)};
+lib_util_ColorUtil.PINK_DEEP = { r : Math.round(255), g : Math.round(20), b : Math.round(147)};
+lib_util_ColorUtil.PINK_HOT = { r : Math.round(255), g : Math.round(105), b : Math.round(180)};
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 

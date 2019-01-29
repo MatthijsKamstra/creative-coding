@@ -1,11 +1,12 @@
-package;
+package lib;
 
-import util.*;
+import lib.util.*;
+import lib.util.ColorUtil.*;
 import js.html.CanvasRenderingContext2D;
-import Global.*;
+import lib.Global.*;
 
 /**
- * using CanvasTools;
+ * using lib.CanvasTools;
 **/
 class CanvasTools {
 	/**
@@ -200,17 +201,17 @@ class CanvasTools {
 
 	static public function eqDownFillTriangle(ctx:CanvasRenderingContext2D, x:Float, y:Float, sz:Float) {
 		ctx.translate(x, y);
-		ctx.rotate(util.MathUtil.radians(180));
+		ctx.rotate(MathUtil.radians(180));
 		fillTriangle(ctx, 0, 0 - sz, 0 + sz, 0 + sz / 2, 0 - sz, 0 + sz / 2);
-		ctx.rotate(util.MathUtil.radians(-180));
+		ctx.rotate(MathUtil.radians(-180));
 		ctx.translate(-x, -y);
 	}
 
 	static public function eqDownTriangle(ctx:CanvasRenderingContext2D, x:Float, y:Float, sz:Float) {
 		ctx.translate(x, y);
-		ctx.rotate(util.MathUtil.radians(180));
+		ctx.rotate(MathUtil.radians(180));
 		triangle(ctx, 0, 0 - sz, 0 + sz, 0 + sz / 2, 0 - sz, 0 + sz / 2);
-		ctx.rotate(util.MathUtil.radians(-180));
+		ctx.rotate(MathUtil.radians(-180));
 		ctx.translate(-x, -y);
 	}
 
