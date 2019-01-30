@@ -72,7 +72,9 @@ class CC008 extends CCBase implements ICCBase {
 		var _shape = shapeArray[5];
 		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).prop('foobar',180).onUpdate(onUpdateHandler, [5]).onComplete(onCompleteHandler, [5]);
 		var _shape = shapeArray[6];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).delay(2).rotation(360).yoyo();
+		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).delay(.7).rotation(360).yoyo();
+		var _shape = shapeArray[7];
+		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).rotation(360).yoyo().ease(Sine.easeInOut);
 	}
 
 	function onUpdateHandler (value) : Void {

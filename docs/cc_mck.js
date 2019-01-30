@@ -895,7 +895,7 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		var _range9 = { key : "x", from : _this16._isFrom ? value7 : objValue9, to : !_this16._isFrom ? value7 : objValue9};
 		_this16._props.set("x",_range9);
 		var _this17 = _this16;
-		_this17._delay = _this17.getDuration(2);
+		_this17._delay = _this17.getDuration(.7);
 		var _this18 = _this17;
 		var objValue10 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this18._target,"rotation")) {
@@ -905,6 +905,28 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		_this18._props.set("rotation",_range10);
 		var _this19 = _this18;
 		_this19._isYoyo = true;
+		var _shape7 = this.shapeArray[7];
+		var GoJs7 = new lets_GoJs(_shape7,2);
+		GoJs7._isFrom = false;
+		var _this20 = GoJs7;
+		var value8 = _shape7.x + (lib_Global.w - _shape7.x * 2);
+		var objValue11 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this20._target,"x")) {
+			objValue11 = Reflect.getProperty(_this20._target,"x");
+		}
+		var _range11 = { key : "x", from : _this20._isFrom ? value8 : objValue11, to : !_this20._isFrom ? value8 : objValue11};
+		_this20._props.set("x",_range11);
+		var _this21 = _this20;
+		var objValue12 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this21._target,"rotation")) {
+			objValue12 = Reflect.getProperty(_this21._target,"rotation");
+		}
+		var _range12 = { key : "rotation", from : _this21._isFrom ? 360 : objValue12, to : !_this21._isFrom ? 360 : objValue12};
+		_this21._props.set("rotation",_range12);
+		var _this22 = _this21;
+		_this22._isYoyo = true;
+		var _this23 = _this22;
+		_this23._easing = lets_easing_Sine.get_easeInOut();
 	}
 	,onUpdateHandler: function(value) {
 		var _shape = this.shapeArray[value];
@@ -2039,7 +2061,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-30 11:26:14";
+lib_model_constants_App.BUILD = "2019-01-30 11:31:18";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
