@@ -73,10 +73,13 @@ var Main = function() {
 		case "CC007":
 			new art_CC007(ctx);
 			break;
+		case "CC008":
+			new art_CC008(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC007";
-			new art_CC007(ctx);
+			window.location.hash = "CC008";
+			new art_CC008(ctx);
 		}
 		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
 		window.addEventListener("hashchange",function() {
@@ -680,9 +683,6 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 	}
 	,init: function() {
 		console.log("init: " + this.toString());
-		var rgb = lib_util_ColorUtil.randomColourObject();
-		lib_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
-		lib_util_ShapeUtil.xcross(this.ctx,lib_Global.w / 2,lib_Global.h / 2,200);
 		this.ballArray = [];
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -690,24 +690,30 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 			var i = _g1++;
 			var ball = this.createBall();
 			this.ballArray.push(ball);
-			this.ballA(ball);
+			this.ballAnimate(ball);
 		}
 	}
-	,ballA: function(ball) {
+	,ballAnimate: function(ball) {
 		var GoJs = new lets_GoJs(ball,lib_util_MathUtil.random(1,10));
 		GoJs._isFrom = false;
 		var _this = GoJs;
 		var value = lib_util_MathUtil.random(0,lib_Global.w);
-		var objValue = Reflect.getProperty(_this._target,"x");
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
+			objValue = Reflect.getProperty(_this._target,"x");
+		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
 		var _this1 = _this;
 		var value1 = lib_util_MathUtil.random(0,lib_Global.h);
-		var objValue1 = Reflect.getProperty(_this1._target,"y");
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
+			objValue1 = Reflect.getProperty(_this1._target,"y");
+		}
 		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("y",_range1);
 		var _this2 = _this1;
-		_this2._options.onComplete = $bind(this,this.ballA);
+		_this2._options.onComplete = $bind(this,this.ballAnimate);
 		_this2._options.onCompleteParams = [ball];
 		var _this3 = _this2;
 		_this3._easing = lets_Easing.back;
@@ -732,6 +738,206 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 		this.drawBall();
 	}
 	,__class__: art_CC007
+});
+var art_CC008 = function(ctx) {
+	this.shapeArray = [];
+	this.shapeSize = 20;
+	this.shapeMax = 10;
+	art_CCBase.call(this,ctx);
+	lib_util_HelperUtil.stats();
+};
+art_CC008.__name__ = ["art","CC008"];
+art_CC008.__interfaces__ = [art_ICCBase];
+art_CC008.__super__ = art_CCBase;
+art_CC008.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(y) {
+		var shape = { x : 100, y : this.shapeSize * 5 + this.shapeSize * 5 * y, width : Math.round(lib_util_MathUtil.random(this.shapeSize,this.shapeSize * 4)), height : Math.round(lib_util_MathUtil.random(this.shapeSize,this.shapeSize * 4)), rotation : 0, color : lib_util_ColorUtil.randomColour()};
+		return shape;
+	}
+	,drawShape: function() {
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.fillStyle = sh.color;
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(lib_util_MathUtil.radians(sh.rotation));
+			lib_CanvasTools.centreFillRect(this.ctx,0,0,sh.width,sh.height);
+			this.ctx.restore();
+		}
+	}
+	,init: function() {
+		console.log("init: " + this.toString());
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.shapeMax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var ball = this.createShape(i);
+			this.shapeArray.push(ball);
+		}
+		var _shape = this.shapeArray[0];
+		var GoJs = new lets_GoJs(_shape,2);
+		GoJs._isFrom = false;
+		var _this = GoJs;
+		var value = _shape.x + (lib_Global.w - _shape.x * 2);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
+			objValue = Reflect.getProperty(_this._target,"x");
+		}
+		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("x",_range);
+		var _shape1 = this.shapeArray[1];
+		var GoJs1 = new lets_GoJs(_shape1,2);
+		GoJs1._isFrom = false;
+		var _this1 = GoJs1;
+		var value1 = _shape1.x + (lib_Global.w - _shape1.x * 2);
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue1 = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range1 = { key : "x", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
+		_this1._props.set("x",_range1);
+		var _this2 = _this1;
+		_this2._isYoyo = true;
+		var _shape2 = this.shapeArray[2];
+		var GoJs2 = new lets_GoJs(_shape2,2);
+		GoJs2._isFrom = true;
+		var _this3 = GoJs2;
+		var value2 = _shape2.x + (lib_Global.w - _shape2.x * 2);
+		var objValue2 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this3._target,"x")) {
+			objValue2 = Reflect.getProperty(_this3._target,"x");
+		}
+		var _range2 = { key : "x", from : _this3._isFrom ? value2 : objValue2, to : !_this3._isFrom ? value2 : objValue2};
+		_this3._props.set("x",_range2);
+		var _this4 = _this3;
+		_this4._isYoyo = true;
+		var _shape3 = this.shapeArray[3];
+		var GoJs3 = new lets_GoJs(_shape3,2);
+		GoJs3._isFrom = false;
+		var _this5 = GoJs3;
+		var value3 = _shape3.x + (lib_Global.w - _shape3.x * 2);
+		var objValue3 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this5._target,"x")) {
+			objValue3 = Reflect.getProperty(_this5._target,"x");
+		}
+		var _range3 = { key : "x", from : _this5._isFrom ? value3 : objValue3, to : !_this5._isFrom ? value3 : objValue3};
+		_this5._props.set("x",_range3);
+		var _this6 = _this5;
+		var value4 = _shape3.y + 100;
+		var objValue4 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this6._target,"y")) {
+			objValue4 = Reflect.getProperty(_this6._target,"y");
+		}
+		var _range4 = { key : "y", from : _this6._isFrom ? value4 : objValue4, to : !_this6._isFrom ? value4 : objValue4};
+		_this6._props.set("y",_range4);
+		var _this7 = _this6;
+		_this7._isYoyo = true;
+		var _shape4 = this.shapeArray[4];
+		var GoJs4 = new lets_GoJs(_shape4,2);
+		GoJs4._isFrom = false;
+		var _this8 = GoJs4;
+		var value5 = _shape4.x + (lib_Global.w - _shape4.x * 2);
+		var objValue5 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this8._target,"x")) {
+			objValue5 = Reflect.getProperty(_this8._target,"x");
+		}
+		var _range5 = { key : "x", from : _this8._isFrom ? value5 : objValue5, to : !_this8._isFrom ? value5 : objValue5};
+		_this8._props.set("x",_range5);
+		var _this9 = _this8;
+		var objValue6 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this9._target,"rotation")) {
+			objValue6 = Reflect.getProperty(_this9._target,"rotation");
+		}
+		var _range6 = { key : "rotation", from : _this9._isFrom ? 180 : objValue6, to : !_this9._isFrom ? 180 : objValue6};
+		_this9._props.set("rotation",_range6);
+		var _this10 = _this9;
+		_this10._isYoyo = true;
+		var _this11 = _this10;
+		_this11._options.onUpdate = $bind(this,this.onUpdateHandler);
+		_this11._options.onUpdateParams = [4];
+		var _shape5 = this.shapeArray[5];
+		var GoJs5 = new lets_GoJs(_shape5,2);
+		GoJs5._isFrom = false;
+		var _this12 = GoJs5;
+		var value6 = _shape5.x + (lib_Global.w - _shape5.x * 2);
+		var objValue7 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this12._target,"x")) {
+			objValue7 = Reflect.getProperty(_this12._target,"x");
+		}
+		var _range7 = { key : "x", from : _this12._isFrom ? value6 : objValue7, to : !_this12._isFrom ? value6 : objValue7};
+		_this12._props.set("x",_range7);
+		var _this13 = _this12;
+		var objValue8 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this13._target,"foobar")) {
+			objValue8 = Reflect.getProperty(_this13._target,"foobar");
+		}
+		var _range8 = { key : "foobar", from : _this13._isFrom ? 180 : objValue8, to : !_this13._isFrom ? 180 : objValue8};
+		_this13._props.set("foobar",_range8);
+		var _this14 = _this13;
+		_this14._options.onUpdate = $bind(this,this.onUpdateHandler);
+		_this14._options.onUpdateParams = [5];
+		var _this15 = _this14;
+		_this15._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this15._options.onCompleteParams = [5];
+		var _shape6 = this.shapeArray[6];
+		var GoJs6 = new lets_GoJs(_shape6,2);
+		GoJs6._isFrom = false;
+		var _this16 = GoJs6;
+		var value7 = _shape6.x + (lib_Global.w - _shape6.x * 2);
+		var objValue9 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this16._target,"x")) {
+			objValue9 = Reflect.getProperty(_this16._target,"x");
+		}
+		var _range9 = { key : "x", from : _this16._isFrom ? value7 : objValue9, to : !_this16._isFrom ? value7 : objValue9};
+		_this16._props.set("x",_range9);
+		var _this17 = _this16;
+		_this17._delay = _this17.getDuration(2);
+		var _this18 = _this17;
+		var objValue10 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this18._target,"rotation")) {
+			objValue10 = Reflect.getProperty(_this18._target,"rotation");
+		}
+		var _range10 = { key : "rotation", from : _this18._isFrom ? 360 : objValue10, to : !_this18._isFrom ? 360 : objValue10};
+		_this18._props.set("rotation",_range10);
+		var _this19 = _this18;
+		_this19._isYoyo = true;
+	}
+	,onUpdateHandler: function(value) {
+		var _shape = this.shapeArray[value];
+		switch(value) {
+		case 4:
+			console.log("onUpdateHandler - rotation: " + _shape.rotation);
+			break;
+		case 5:
+			console.log("onUpdateHandler - foobar: " + _shape.foobar);
+			break;
+		default:
+			console.log("case " + value + ": trace ('" + value + "');");
+		}
+	}
+	,onCompleteHandler: function(value) {
+		var _shape = this.shapeArray[value];
+		switch(value) {
+		case 4:
+			console.log("onCompleteHandler - rotation: " + _shape.rotation);
+			break;
+		case 5:
+			console.log("onCompleteHandler - foobar: " + _shape.foobar);
+			break;
+		default:
+			console.log("case " + value + ": trace ('" + value + "');");
+		}
+	}
+	,draw: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.background(this.ctx,lib_util_ColorUtil.WHITE.r,lib_util_ColorUtil.WHITE.g,lib_util_ColorUtil.WHITE.b);
+		this.drawShape();
+	}
+	,__class__: art_CC008
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -903,6 +1109,7 @@ lets_Easing.reflect = function(f) {
 	};
 };
 var lets_GoJs = function(target,duration) {
+	this.VERSION = "1.0.6";
 	this.DEBUG = false;
 	this.FRAME_RATE = 60;
 	this._seconds = 0;
@@ -914,14 +1121,13 @@ var lets_GoJs = function(target,duration) {
 	this._props = new haxe_ds_StringMap();
 	this._options = { };
 	this._easing = lets_Easing.linear;
-	this._id = "[lets.Go]" + new Date().getTime();
+	this._id = "[lets.Go]" + this.VERSION + "." + new Date().getTime();
 	this._seconds = duration;
 	this._target = target;
+	this._duration = this.getDuration(duration);
 	if(this._isTimeBased) {
-		this._duration = duration * 1000 | 0;
 		this._initTime = this.getTimer();
 	} else {
-		this._duration = duration * this.FRAME_RATE | 0;
 		this._initTime = this._duration;
 	}
 	lets_GoJs._tweens.push(this);
@@ -950,39 +1156,77 @@ lets_GoJs.prototype = {
 		if(isTimeBased == null) {
 			isTimeBased = true;
 		}
+		console.log("Fixme: this doesn\t work right now");
 		this._isTimeBased = isTimeBased;
 		this._duration = this._duration / this.FRAME_RATE | 0;
 		return this;
 	}
 	,x: function(value) {
-		var objValue = Reflect.getProperty(this._target,"x");
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"x")) {
+			objValue = Reflect.getProperty(this._target,"x");
+		}
 		var _range = { key : "x", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("x",_range);
 		return this;
 	}
 	,y: function(value) {
-		var objValue = Reflect.getProperty(this._target,"y");
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"y")) {
+			objValue = Reflect.getProperty(this._target,"y");
+		}
 		var _range = { key : "y", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("y",_range);
 		return this;
 	}
-	,rotation: function(value) {
-		var objValue = Reflect.getProperty(this._target,"rotation");
+	,rotation: function(degree) {
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"rotation")) {
+			objValue = Reflect.getProperty(this._target,"rotation");
+		}
+		var _range = { key : "rotation", from : this._isFrom ? degree : objValue, to : !this._isFrom ? degree : objValue};
+		this._props.set("rotation",_range);
+		return this;
+	}
+	,degree: function(degree) {
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"rotation")) {
+			objValue = Reflect.getProperty(this._target,"rotation");
+		}
+		var _range = { key : "rotation", from : this._isFrom ? degree : objValue, to : !this._isFrom ? degree : objValue};
+		this._props.set("rotation",_range);
+		return this;
+	}
+	,radians: function(degree) {
+		var value = degree * Math.PI / 180;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"rotation")) {
+			objValue = Reflect.getProperty(this._target,"rotation");
+		}
 		var _range = { key : "rotation", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("rotation",_range);
 		return this;
 	}
 	,alpha: function(value) {
-		var objValue = Reflect.getProperty(this._target,"alpha");
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"alpha")) {
+			objValue = Reflect.getProperty(this._target,"alpha");
+		}
 		var _range = { key : "alpha", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("alpha",_range);
 		return this;
 	}
 	,scale: function(value) {
-		var objValue = Reflect.getProperty(this._target,"scaleX");
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"scaleX")) {
+			objValue = Reflect.getProperty(this._target,"scaleX");
+		}
 		var _range = { key : "scaleX", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("scaleX",_range);
-		var objValue1 = Reflect.getProperty(this._target,"scaleY");
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"scaleY")) {
+			objValue1 = Reflect.getProperty(this._target,"scaleY");
+		}
 		var _range1 = { key : "scaleY", from : this._isFrom ? value : objValue1, to : !this._isFrom ? value : objValue1};
 		this._props.set("scaleY",_range1);
 		return this;
@@ -991,13 +1235,15 @@ lets_GoJs.prototype = {
 		this._isYoyo = true;
 		return this;
 	}
-	,delay: function(value) {
-		console.log("FIXME");
-		this._delay = value * 1000 | 0;
+	,delay: function(duration) {
+		this._delay = this.getDuration(duration);
 		return this;
 	}
 	,prop: function(key,value) {
-		var objValue = Reflect.getProperty(this._target,key);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,key)) {
+			objValue = Reflect.getProperty(this._target,key);
+		}
 		var _range = { key : key, from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		var _this = this._props;
 		if(__map_reserved[key] != null) {
@@ -1050,8 +1296,12 @@ lets_GoJs.prototype = {
 		lets_GoJs._requestId = window.requestAnimationFrame($bind(this,this.onEnterFrameHandler));
 	}
 	,update: function() {
+		if(this._delay > 0 && this._isTimeBased) {
+			console.log("FIXME this doesn't work yet");
+		}
 		if(this._delay > 0) {
-			console.log("delay doesn't work at this moment");
+			this._delay--;
+			return;
 		}
 		this._initTime--;
 		var progressed = this._duration - this._initTime;
@@ -1100,7 +1350,7 @@ lets_GoJs.prototype = {
 			if(this._isTimeBased) {
 				this._initTime = this.getTimer();
 			} else {
-				this._initTime = 0;
+				this._initTime = this._duration;
 			}
 			this._isYoyo = false;
 			return;
@@ -1111,6 +1361,15 @@ lets_GoJs.prototype = {
 		if(Reflect.isFunction(func)) {
 			func.apply(func,arr);
 		}
+	}
+	,getDuration: function(duration) {
+		var d = 0;
+		if(this._isTimeBased) {
+			d = duration * 1000 | 0;
+		} else {
+			d = duration * this.FRAME_RATE | 0;
+		}
+		return d;
 	}
 	,getTimer: function() {
 		return new Date().getTime() | 0;
@@ -1487,6 +1746,15 @@ lib_util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
 lib_util_GridUtil.prototype = {
 	__class__: lib_util_GridUtil
 };
+var lib_util_HelperUtil = function() {
+};
+lib_util_HelperUtil.__name__ = ["lib","util","HelperUtil"];
+lib_util_HelperUtil.stats = function() {
+	var script = document.createElement('script');script.onload = function() {var stats = new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop() {stats.update();requestAnimationFrame(loop)});};script.src = '//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);
+};
+lib_util_HelperUtil.prototype = {
+	__class__: lib_util_HelperUtil
+};
 var lib_util_MathUtil = function() { };
 lib_util_MathUtil.__name__ = ["lib","util","MathUtil"];
 lib_util_MathUtil.radians = function(deg) {
@@ -1634,7 +1902,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-29 20:58:06";
+lib_model_constants_App.BUILD = "2019-01-30 11:14:03";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
