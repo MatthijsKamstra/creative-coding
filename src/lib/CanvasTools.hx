@@ -271,4 +271,7 @@ class CanvasTools {
 		}
 		ctx.fillRect(0, 0, w, h);
 	};
+	static public function backgroundObj(ctx:CanvasRenderingContext2D, rgb:ColorUtil.RGB) {
+		background(ctx, rgb.r, rgb.g, rgb.b);
+	}
 }

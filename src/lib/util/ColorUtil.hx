@@ -3,7 +3,7 @@ package lib.util;
 class ColorUtil {
 	public function new() {	}
 
-	static public function getColour(r:Int, ?g:Int, ?b:Int, ?a:Float) {
+	static public function getColour(r:Int, ?g:Int, ?b:Int, ?a:Float):String{
 		var c;
 		if (g == null) {
 			c = rgb(r, r, r);
@@ -16,6 +16,10 @@ class ColorUtil {
 		}
 		return (c);
 	};
+
+	static public function getColourObj(rgb:RGB) {
+		return getColour(rgb.r,rgb.g,rgb.b);
+	}
 
 	/**
 	 * use RGB values to create color
