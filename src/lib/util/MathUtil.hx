@@ -114,6 +114,9 @@ class MathUtil {
 		return (random(value) > value - 1);
 	}
 
+	/**
+	 * get value 1 or -1
+	 */
 	static public function posNeg() {
 		return randomInt(0, 1) * 2 - 1;
 	}
