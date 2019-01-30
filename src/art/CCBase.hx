@@ -10,6 +10,10 @@ class CCBase {
 	public var isDrawActive:Bool = true;
 	public var isDebug:Bool = false;
 
+
+	public var description ( get_description , set_description ) : String;
+	private var _description : String = '';
+
 	public function new(ctx:CanvasRenderingContext2D) {
 		this.ctx = ctx;
 		window.addEventListener(RESIZE, _reset, false);
@@ -73,6 +77,13 @@ class CCBase {
 	 */
 	public function play() {
 		isDrawActive = true;
+	}
+
+	function get_description () : String {
+		return _description;
+	}
+	function set_description(value : String) : String {
+		return _description = value;
 	}
 
 	/**
