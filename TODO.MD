@@ -72,6 +72,17 @@ stuff I need to look into
 - [ ] kap to record screen
 - [ ] different way to do this?
 
+instagram
+
+```
+#codeart #coding #creativecode #generative #generativeArt
+#minimalism #minimalist #minimal
+#haxe #javascript #js
+
+
+```
+
+
 creative code
 ```
 #codeart #coding #creativecode #generative #generativeArt
