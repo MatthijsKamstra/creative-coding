@@ -34,25 +34,24 @@ class CC007 extends CCBase implements ICCBase {
 		var totalTime = (haxe.Timer.stamp()- startTime);
 		var totalDate = (Date.now().getTime()- startDate)/1000;
 		trace('done: $value seconds - date: $totalDate , time: $totalTime');
-
 	}
 
 	override function init(){
 		trace('init: ${toString()}');
-		var rgb = randomColourObject();
-		ctx.strokeColour(rgb.r, rgb.g, rgb.b);
-		ctx.xcross(w/2, h/2, 200);
+		// var rgb = randomColourObject();
+		// ctx.strokeColour(rgb.r, rgb.g, rgb.b);
+		// ctx.xcross(w/2, h/2, 200);
 		ballArray = [];
 		for (i in 0...maxBalls){
-			var ball =  createBall();
+			var ball = createBall();
 			ballArray.push( ball );
-			ballA(ball);
-			// GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballA,[ball]);
+			ballAnimate(ball);
+			// GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]);
 		}
 	}
 
-	function ballA(ball:AnimateObj){
-		GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballA,[ball]).ease(lets.Easing.back);
+	function ballAnimate(ball:AnimateObj){
+		GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]).ease(lets.Easing.back);
 	}
 
 	function createBall() : AnimateObj{
