@@ -11,11 +11,14 @@
 - [x] add quicksettings lib
 - [x] resize and font injection
 - [x] check out Haxe import class.... might make the classes somewhat more readable
+- [x] refresh page (reinventing the wheel)
+- [x] draw vs animation?
+- [x] cursor for next/previous
 - [ ] check svg classes for color classes
 - [ ] choose color vs colour
 - [ ] nav between sketches (css)
 - [ ] add controle settings (quick settings)
-- [ ] default nav, description, etc css
+- [x] default nav, description, etc css
 - [ ] add signals lib ?
 - [ ] loading music
 - [ ] loading colors
@@ -23,10 +26,8 @@
 - [ ] exporting video
 - [ ] record state canvas,
 - [ ] website state
-- [ ] cursor for next/previous
 - [ ] "hidden" menu
 - [ ] branding
-- [ ] draw vs animation?
 - [ ] key to download canvas as file
 - [ ] `esc`-button to return to normal
 - [ ] save images as `.jpg` for instagram (`cmd`+`s`) & use `cmd`+`shift`+`s` to save a `.png`
