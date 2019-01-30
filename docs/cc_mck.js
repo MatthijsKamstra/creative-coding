@@ -1161,6 +1161,24 @@ lets_GoJs.prototype = {
 		this._duration = this._duration / this.FRAME_RATE | 0;
 		return this;
 	}
+	,width: function(value) {
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"width")) {
+			objValue = Reflect.getProperty(this._target,"width");
+		}
+		var _range = { key : "width", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("width",_range);
+		return this;
+	}
+	,height: function(value) {
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"height")) {
+			objValue = Reflect.getProperty(this._target,"height");
+		}
+		var _range = { key : "height", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
+		this._props.set("height",_range);
+		return this;
+	}
 	,x: function(value) {
 		var objValue = 0;
 		if(Object.prototype.hasOwnProperty.call(this._target,"x")) {
@@ -1902,7 +1920,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-30 11:14:03";
+lib_model_constants_App.BUILD = "2019-01-30 11:15:53";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

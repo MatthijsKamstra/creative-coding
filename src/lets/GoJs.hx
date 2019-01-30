@@ -119,6 +119,26 @@ class GoJs {
 	// ____________________________________ properties ____________________________________
 
 	/**
+	 * [Description]
+	 * @param value
+	 * @return GoJs
+	 */
+	inline public function width(value:Float):GoJs {
+		prop('width', value);
+		return this;
+	}
+
+	/**
+	 * [Description]
+	 * @param value
+	 * @return GoJs
+	 */
+	inline public function height(value:Float):GoJs {
+		prop('height', value);
+		return this;
+	}
+
+	/**
 	 * change the x value of an object
 	 *
  	 * @example		GoJs.to(foobarMc, 1.5).x(10);
