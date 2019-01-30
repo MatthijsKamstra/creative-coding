@@ -102,6 +102,9 @@ class Sketch {
 		});
 
 		window.addEventListener(KEY_DOWN, function (e:js.html.KeyboardEvent){
+			if (e.metaKey == true && e.key == 'r'){
+				location.reload();
+			}
 			if (e.metaKey == true && e.key == 'f'){
 				if(!isFullscreen){
 					openFullscreen();
