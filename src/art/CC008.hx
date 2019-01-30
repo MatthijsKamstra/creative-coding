@@ -13,6 +13,7 @@ class CC008 extends CCBase implements ICCBase {
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
+		description = 'lets.Go tests with rotation, delay, easing';
 		lib.util.HelperUtil.stats();
 	}
 
@@ -56,8 +57,8 @@ class CC008 extends CCBase implements ICCBase {
 		trace('init: ${toString()}');
 		shapeArray = [];
 		for (i in 0...shapeMax){
-			var ball = createShape(i);
-			shapeArray.push( ball );
+			var sh = createShape(i);
+			shapeArray.push( sh );
 		}
 		var _shape = shapeArray[0];
 		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2));
