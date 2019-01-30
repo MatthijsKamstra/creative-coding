@@ -29,5 +29,5 @@ typedef AnimateObj = {
 	@:optional var width:Int;
 	@:optional var height:Int;
 	@:optional var rotation:Int;
-	@:optional var alpha:Int;
+	@:optional var alpha:Float;
 };
