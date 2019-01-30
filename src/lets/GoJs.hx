@@ -26,7 +26,8 @@ class GoJs {
 	private var _seconds:Float = 0;
 
 	private var FRAME_RATE : Int = 60; // 60 frames per second (FPS)
-	private var DEBUG : Bool = false; // 60 frames per second (FPS)
+	private var DEBUG : Bool = false;
+	private var VERSION : String = '1.0.6';
 	/**
 	 * Animate an object to another state (like position, scale, rotation, alpha)
 	 *
@@ -36,23 +37,23 @@ class GoJs {
 	 * @param  duration 	in seconds
 	 */
 	public function new(target:Dynamic, duration:Float) {
-		this._id = '[lets.Go]' + Date.now().getTime();
+		this._id = '[lets.Go]$VERSION.' + Date.now().getTime();
 		this._seconds = duration;
 		this._target = target;
+		this._duration = getDuration(duration);
 		// this._easing = Easing.linear;
 		// this._options = cast{};
 		if(_isTimeBased){
-			this._duration = Std.int(duration * 1000); // convert seconds to miliseconds
 			this._initTime = getTimer();
 		} else {
-			this._duration = Std.int(duration * FRAME_RATE); // seconds * FPS = frames
-			// this._duration = Std.int(duration); // seconds * FPS = frames
 			this._initTime = this._duration;
 		}
 		_tweens.push(this);
 		if(DEBUG) console.log('New GoJs - _id: "$_id" / _duration: ' + _duration+  ' / _initTime: ' + _initTime+ ' / _tweens.length: ' + _tweens.length);
 		// [mck] extreme little delay to make sure all the values are set
 		haxe.Timer.delay(init, 1); // 1 milisecond delay
+
+		// [mck] TODO check if there is a tween attached to the same animation?
 	}
 
 	/**
@@ -108,6 +109,7 @@ class GoJs {
 	 * @return GoJs
 	 */
 	inline public function isTimeBased(?isTimeBased:Bool = true):GoJs {
+		trace('Fixme: this doesn\t work right now');
 		_isTimeBased = isTimeBased;
 		_duration = Std.int(_duration / FRAME_RATE);
 		return this;
@@ -147,13 +149,23 @@ class GoJs {
 	 *
  	 * @example		GoJs.to(foobarMc, 1.5).rotation(10);
 	 *
-	 * @param  value 	rotation in degrees (360)
+	 * @param  degree 	rotation in degrees (360)
 	 * @return       GoJs
 	 */
-	inline public function rotation(value:Float):GoJs {
-		prop('rotation', value);
+	inline public function rotation(degree:Float):GoJs {
+		prop('rotation', degree);
 		return this;
 	}
+	inline public function degree(degree:Float):GoJs {
+		prop('rotation', degree);
+		return this;
+	}
+	inline public function radians(degree:Float):GoJs {
+		prop('rotation', degree*Math.PI/180);
+		return this;
+	}
+
+	// [mck] do I need a conversion between degree and radians?
 
 	/**
 	 * change the alpha value of an object
@@ -182,7 +194,6 @@ class GoJs {
 		return this;
 	}
 
-
 	/**
 	 * yoyo to the original values of an object
 	 *
@@ -200,12 +211,11 @@ class GoJs {
 	 *
  	 * @example		GoJs.to(foobarMc, 1.5).delay(1.5);
 	 *
-	 * @param value 	delay in seconds
+	 * @param duration 	delay in seconds
 	 * @return       GoJs
 	 */
-	inline public function delay(value:Float):GoJs {
-		trace('FIXME');
-		_delay = Std.int(value * 1000); // convert seconds to miliseconds
+	inline public function delay(duration:Float):GoJs {
+		_delay = getDuration(duration);
 		return this;
 	}
 
@@ -219,7 +229,11 @@ class GoJs {
 	 * @return       GoJs
 	 */
 	inline public function prop(key:String, value:Float):GoJs {
-		var objValue = Reflect.getProperty(_target, key);
+		// [mck] TODO set a zero value if it doesn't exist
+		var objValue = 0;
+		if(Reflect.hasField(_target, key)) {
+			objValue = Reflect.getProperty(_target, key);
+		}
 		var _range = {key: key, from: (_isFrom) ? value : objValue, to: (!_isFrom) ? value : objValue};
 		_props.set(key, _range);
 		return this;
@@ -319,27 +333,34 @@ class GoJs {
 	}
 
 	private function update():Void {
-		if(_delay > 0 ) trace('delay doesn\'t work at this moment');
-		/*
-		// [mck] check for delay
-		if (_delay > 0) {
-			var waitTime = (getTimer() - _initTime);
-			if (waitTime >= _delay) {
-				_delay = 0;
-				if(_isTimeBased){
-					_initTime = getTimer();
-				} else {
-					_initTime--;
-				}
-			} else {
-				return null;
-			}
+
+		// [mck] check for delay, simply count down the delay before we animate
+		// [mck] TODO doesn't work with time
+		if(_delay > 0 && _isTimeBased ) trace ('FIXME this doesn\'t work yet');
+		if(_delay >0){
+			_delay--;
+			return null;
 		}
-		*/
+
+
+		// if (_delay > 0) {
+		// 	_delay--;
+		// 	// var waitTime = (getTimer() - _initTime);
+		// 	// if (waitTime >= _delay) {
+		// 	// 	_delay = 0;
+		// 	// 	if(_isTimeBased){
+		// 	// 		_initTime = getTimer();
+		// 	// 	} else {
+		// 	// 		_initTime--;
+		// 	// 	}
+		// 	return null;
+		// // } else {
+		// // 	return null;
+		// }
+
 
 
 		this._initTime--;
-		// var progressed = _duration - (_duration - _initTime);
 		var progressed = (this._duration - this._initTime);
 		if(_isTimeBased){
 			progressed = getTimer() - _initTime;
@@ -382,7 +403,7 @@ class GoJs {
 			if(_isTimeBased){
 				this._initTime = getTimer();
 			} else {
-				this._initTime = 0;
+				this._initTime = _duration;
 			}
 			_isYoyo = false;
 			return null;
@@ -395,6 +416,20 @@ class GoJs {
 
 		if (Reflect.isFunction(func))
 			Reflect.callMethod(func, func, arr);
+	}
+
+	/**
+	 * function to calculate the duration (frames or miliseconds)
+	 * @param duration 	given in seconds, recalculated to miliseconds OR frame
+	 */
+	function getDuration(duration:Float):Int {
+		var d = 0;
+		if(_isTimeBased){
+			d = Std.int(duration * 1000); // convert seconds to miliseconds
+		} else {
+			d = Std.int(duration * FRAME_RATE); // seconds * FPS = frames
+		}
+		return d;
 	}
 
 	/**
