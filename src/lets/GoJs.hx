@@ -209,8 +209,9 @@ class GoJs {
 	 * @return       GoJs
 	 */
 	inline public function scale(value:Float):GoJs {
-		prop('scaleX', value);
-		prop('scaleY', value);
+		prop('scaleX', value); // might be values needed from previous Go version
+		prop('scaleY', value); // might be values needed from previous Go version
+		prop('scale', value);
 		return this;
 	}
 

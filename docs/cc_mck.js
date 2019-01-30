@@ -1247,6 +1247,12 @@ lets_GoJs.prototype = {
 		}
 		var _range1 = { key : "scaleY", from : this._isFrom ? value : objValue1, to : !this._isFrom ? value : objValue1};
 		this._props.set("scaleY",_range1);
+		var objValue2 = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"scale")) {
+			objValue2 = Reflect.getProperty(this._target,"scale");
+		}
+		var _range2 = { key : "scale", from : this._isFrom ? value : objValue2, to : !this._isFrom ? value : objValue2};
+		this._props.set("scale",_range2);
 		return this;
 	}
 	,yoyo: function() {
@@ -1920,7 +1926,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-30 11:15:53";
+lib_model_constants_App.BUILD = "2019-01-30 11:17:18";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
