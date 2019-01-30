@@ -3,6 +3,9 @@ package lets;
 import lets.Easing;
 import haxe.Timer;
 
+import lets.easing.Quad;
+import lets.easing.IEasing;
+
 import js.Browser.*;
 
 class GoJs {
@@ -14,8 +17,8 @@ class GoJs {
 	private var _id:String;
 	private var _target:Dynamic;
 	private var _duration:Int; // is set in seconds, but is eventually converted to miliseconds
-	private var _easing:Float->Float = Easing.linear;
-	// private var _easing:lets.easing.IEasing = lets.easing.Linear.easeNone;
+	// private var _easing:Float->Float = Easing.linear;
+	private var _easing:IEasing = Quad.easeOut;
 	private var _options:Dynamic = cast {};
 	private var _props = new Map<String, Range>();
 	private var _isFrom:Bool = false;
@@ -41,7 +44,6 @@ class GoJs {
 		this._seconds = duration;
 		this._target = target;
 		this._duration = getDuration(duration);
-		// this._easing = Easing.linear;
 		// this._options = cast{};
 		if(_isTimeBased){
 			this._initTime = getTimer();
@@ -295,8 +297,8 @@ class GoJs {
 	 * @param  easing->Float 		check Easing class
 	 * @return		GoJs
 	 */
-	inline public function ease(easing:Float->Float):GoJs {
-	// inline public function ease(easing:lets.easing.IEasing):GoJs {
+	// inline public function ease(easing:Float->Float):GoJs {
+	inline public function ease(easing:IEasing):GoJs {
 		this._easing = easing;
 		return this;
 	}
@@ -405,7 +407,8 @@ class GoJs {
 		}
 		for (n in _props.keys()) {
 			var range = _props.get(n);
-			Reflect.setProperty(_target, n, _easing(time / _duration) * (range.to - range.from) + range.from);
+			// Reflect.setProperty(_target, n, _easing(time / _duration) * (range.to - range.from) + range.from);
+			Reflect.setProperty(_target, n, _easing.ease( time, range.from, (range.to-range.from), _duration ) );
 		}
 		// else throw( "Property "+propertyName+" not found in target!" );
 	}
@@ -466,7 +469,7 @@ class GoJs {
 			_tweens.remove(this);
 		// [mck] cleaning up
 		if (_options) {
-			_easing = Easing.linear;
+			_easing = Quad.easeOut;
 			_options = cast {};
 			_target = null;
 			_props = null;

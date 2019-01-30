@@ -18,4 +18,5 @@ using lib.util.ShapeUtil;
 
 // animation lib
 import lets.GoJs;
+import lets.easing.*;
 
