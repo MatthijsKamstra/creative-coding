@@ -19,7 +19,12 @@
 - [ ] nav between sketches (css)
 - [ ] add controle settings (quick settings)
 - [x] default nav, description, etc css
-- [ ] add signals lib ?
+- [x] add signals lib ?
+- [x] added options: https://github.com/soulwire/sketch.js/wiki/API
+- [x] get export to image from `gen-js-art`
+- [x] save images as `.jpg` for instagram (`cmd`+`s`) & use `cmd`+`shift`+`s` to save a `.png`
+- [x] key to download canvas as file base64 `cmd`+`alt`+`s`
+- [ ] get scaling canvas image (A4 -> A0)  from `gen-js-art`
 - [ ] loading music
 - [ ] loading colors
 - [ ] exporting images
@@ -28,11 +33,9 @@
 - [ ] website state
 - [ ] "hidden" menu
 - [ ] branding
-- [ ] key to download canvas as file
 - [ ] `esc`-button to return to normal
-- [ ] save images as `.jpg` for instagram (`cmd`+`s`) & use `cmd`+`shift`+`s` to save a `.png`
 - [ ] check for usefull stuff: https://github.com/soulwire/sketch.js/wiki/API
-- [ ] get classes form gen-js-art
+- [ ] get classes from `gen-js-art`
 - [ ] snack bar added to page (see fonk-onepressforhappiness)
 - [ ] ....
 

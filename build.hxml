@@ -1,5 +1,6 @@
 -lib hxquicksettings
 -lib thx.color
+-lib msignal
 -cp src
 -main Main
 -js docs/cc_mck.js
