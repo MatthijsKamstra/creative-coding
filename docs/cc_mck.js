@@ -716,7 +716,7 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 		_this2._options.onComplete = $bind(this,this.ballAnimate);
 		_this2._options.onCompleteParams = [ball];
 		var _this3 = _this2;
-		_this3._easing = lets_Easing.back;
+		_this3._easing = lets_easing_Sine.get_easeInOut();
 	}
 	,createBall: function() {
 		var ball = { x : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.w - this.sizeBall / 2), y : lib_util_MathUtil.random(this.sizeBall / 2,lib_Global.h - this.sizeBall / 2), size : lib_util_MathUtil.random(this.sizeBall,this.sizeBall * 4), color : lib_util_ColorUtil.randomColour()};
@@ -741,7 +741,7 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 });
 var art_CC008 = function(ctx) {
 	this.shapeArray = [];
-	this.shapeSize = 20;
+	this.shapeSize = 15;
 	this.shapeMax = 10;
 	art_CCBase.call(this,ctx);
 	lib_util_HelperUtil.stats();
@@ -1120,7 +1120,7 @@ var lets_GoJs = function(target,duration) {
 	this._isFrom = false;
 	this._props = new haxe_ds_StringMap();
 	this._options = { };
-	this._easing = lets_Easing.linear;
+	this._easing = lets_easing_Quad.get_easeOut();
 	this._id = "[lets.Go]" + this.VERSION + "." + new Date().getTime();
 	this._seconds = duration;
 	this._target = target;
@@ -1350,7 +1350,7 @@ lets_GoJs.prototype = {
 			var n1 = n.next();
 			var _this = this._props;
 			var range = __map_reserved[n1] != null ? _this.getReserved(n1) : _this.h[n1];
-			Reflect.setProperty(this._target,n1,this._easing(time / this._duration) * (range.to - range.from) + range.from);
+			Reflect.setProperty(this._target,n1,this._easing.ease(time,range.from,range.to - range.from,this._duration));
 		}
 	}
 	,complete: function() {
@@ -1403,7 +1403,7 @@ lets_GoJs.prototype = {
 			HxOverrides.remove(lets_GoJs._tweens,this);
 		}
 		if(this._options) {
-			this._easing = lets_Easing.linear;
+			this._easing = lets_easing_Quad.get_easeOut();
 			this._options = { };
 			this._target = null;
 			this._props = null;
@@ -1413,6 +1413,119 @@ lets_GoJs.prototype = {
 		}
 	}
 	,__class__: lets_GoJs
+};
+var lets_easing_IEasing = function() { };
+lets_easing_IEasing.__name__ = ["lets","easing","IEasing"];
+lets_easing_IEasing.prototype = {
+	__class__: lets_easing_IEasing
+};
+var lets_easing_Quad = function() { };
+lets_easing_Quad.__name__ = ["lets","easing","Quad"];
+lets_easing_Quad.__properties__ = {get_easeOut:"get_easeOut",get_easeInOut:"get_easeInOut",get_easeIn:"get_easeIn"};
+lets_easing_Quad.get_easeIn = function() {
+	return new lets_easing_QuadEaseIn();
+};
+lets_easing_Quad.get_easeInOut = function() {
+	return new lets_easing_QuadEaseInOut();
+};
+lets_easing_Quad.get_easeOut = function() {
+	return new lets_easing_QuadEaseOut();
+};
+var lets_easing_QuadEaseIn = function() {
+};
+lets_easing_QuadEaseIn.__name__ = ["lets","easing","QuadEaseIn"];
+lets_easing_QuadEaseIn.__interfaces__ = [lets_easing_IEasing];
+lets_easing_QuadEaseIn.prototype = {
+	calculate: function(k) {
+		return k * k;
+	}
+	,ease: function(t,b,c,d) {
+		return c * (t /= d) * t + b;
+	}
+	,__class__: lets_easing_QuadEaseIn
+};
+var lets_easing_QuadEaseInOut = function() {
+};
+lets_easing_QuadEaseInOut.__name__ = ["lets","easing","QuadEaseInOut"];
+lets_easing_QuadEaseInOut.__interfaces__ = [lets_easing_IEasing];
+lets_easing_QuadEaseInOut.prototype = {
+	calculate: function(k) {
+		if((k *= 2) < 1) {
+			return 0.5 * k * k;
+		}
+		return -0.5 * ((k - 1) * (k - 3) - 1);
+	}
+	,ease: function(t,b,c,d) {
+		if((t /= d / 2) < 1) {
+			return c / 2 * t * t + b;
+		}
+		return -c / 2 * ((t - 1) * (t - 3) - 1) + b;
+	}
+	,__class__: lets_easing_QuadEaseInOut
+};
+var lets_easing_QuadEaseOut = function() {
+};
+lets_easing_QuadEaseOut.__name__ = ["lets","easing","QuadEaseOut"];
+lets_easing_QuadEaseOut.__interfaces__ = [lets_easing_IEasing];
+lets_easing_QuadEaseOut.prototype = {
+	calculate: function(k) {
+		return -k * (k - 2);
+	}
+	,ease: function(t,b,c,d) {
+		return -c * (t /= d) * (t - 2) + b;
+	}
+	,__class__: lets_easing_QuadEaseOut
+};
+var lets_easing_Sine = function() { };
+lets_easing_Sine.__name__ = ["lets","easing","Sine"];
+lets_easing_Sine.__properties__ = {get_easeOut:"get_easeOut",get_easeInOut:"get_easeInOut",get_easeIn:"get_easeIn"};
+lets_easing_Sine.get_easeIn = function() {
+	return new lets_easing_SineEaseIn();
+};
+lets_easing_Sine.get_easeInOut = function() {
+	return new lets_easing_SineEaseInOut();
+};
+lets_easing_Sine.get_easeOut = function() {
+	return new lets_easing_SineEaseOut();
+};
+var lets_easing_SineEaseIn = function() {
+};
+lets_easing_SineEaseIn.__name__ = ["lets","easing","SineEaseIn"];
+lets_easing_SineEaseIn.__interfaces__ = [lets_easing_IEasing];
+lets_easing_SineEaseIn.prototype = {
+	calculate: function(k) {
+		return 1 - Math.cos(k * (Math.PI / 2));
+	}
+	,ease: function(t,b,c,d) {
+		return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
+	}
+	,__class__: lets_easing_SineEaseIn
+};
+var lets_easing_SineEaseInOut = function() {
+};
+lets_easing_SineEaseInOut.__name__ = ["lets","easing","SineEaseInOut"];
+lets_easing_SineEaseInOut.__interfaces__ = [lets_easing_IEasing];
+lets_easing_SineEaseInOut.prototype = {
+	calculate: function(k) {
+		return -(Math.cos(Math.PI * k) - 1) / 2;
+	}
+	,ease: function(t,b,c,d) {
+		return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
+	}
+	,__class__: lets_easing_SineEaseInOut
+};
+var lets_easing_SineEaseOut = function() {
+};
+lets_easing_SineEaseOut.__name__ = ["lets","easing","SineEaseOut"];
+lets_easing_SineEaseOut.__interfaces__ = [lets_easing_IEasing];
+lets_easing_SineEaseOut.prototype = {
+	calculate: function(k) {
+		return Math.sin(k * (Math.PI / 2));
+	}
+	,ease: function(t,b,c,d) {
+		return c * Math.sin(t / d * (Math.PI / 2)) + b;
+	}
+	,__class__: lets_easing_SineEaseOut
 };
 var lib_AST = function() { };
 lib_AST.__name__ = ["lib","AST"];
@@ -1926,7 +2039,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-30 11:17:18";
+lib_model_constants_App.BUILD = "2019-01-30 11:26:14";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

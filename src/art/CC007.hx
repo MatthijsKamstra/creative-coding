@@ -51,7 +51,7 @@ class CC007 extends CCBase implements ICCBase {
 	}
 
 	function ballAnimate(ball:AnimateObj){
-		GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]).ease(lets.Easing.back);
+		GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]).ease(Sine.easeInOut);
 	}
 
 	function createBall() : AnimateObj{

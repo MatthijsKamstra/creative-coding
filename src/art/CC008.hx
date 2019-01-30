@@ -6,7 +6,7 @@ package art;
 class CC008 extends CCBase implements ICCBase {
 
 	var shapeMax = 10;
-	var shapeSize = 20;
+	var shapeSize = 15;
 	var shapeArray : Array<AnimateObj> = [];
 	var startTime : Float;
 	var startDate : Float;
