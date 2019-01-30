@@ -24,10 +24,10 @@ typedef AnimateObj = {
 	@:optional var _id : Int;
 	@:optional var x:Float;
 	@:optional var y:Float;
-	@:optional var speedX:Float;
-	@:optional var speedY:Float;
 	@:optional var size:Float;
 	@:optional var color:String;
-	@:optional var width:String;
-	@:optional var height:String;
+	@:optional var width:Int;
+	@:optional var height:Int;
+	@:optional var rotation:Int;
+	@:optional var alpha:Int;
 };
