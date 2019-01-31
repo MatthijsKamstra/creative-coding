@@ -97,10 +97,13 @@ var Main = function() {
 		case "CC010":
 			new art_CC010(ctx);
 			break;
+		case "CC011":
+			new art_CC011(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC010";
-			new art_CC010(ctx);
+			window.location.hash = "CC011";
+			new art_CC011(ctx);
 		}
 		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
 		window.addEventListener("hashchange",function() {
@@ -1294,6 +1297,25 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC010
 });
+var art_CC011 = function(ctx) {
+	art_CCBase.call(this,ctx);
+};
+art_CC011.__name__ = ["art","CC011"];
+art_CC011.__interfaces__ = [art_ICCBase];
+art_CC011.__super__ = art_CCBase;
+art_CC011.prototype = $extend(art_CCBase.prototype,{
+	init: function() {
+		console.log("init: " + this.toString());
+		var rgb = lib_util_ColorUtil.randomColourObject();
+		lib_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
+		lib_util_ShapeUtil.xcross(this.ctx,lib_Global.w / 2,lib_Global.h / 2,200);
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.stop();
+	}
+	,__class__: art_CC011
+});
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
 haxe_IMap.prototype = {
@@ -2462,7 +2484,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-31 22:16:40";
+lib_model_constants_App.BUILD = "2019-01-31 22:17:50";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
