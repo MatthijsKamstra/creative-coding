@@ -94,10 +94,13 @@ var Main = function() {
 		case "CC009":
 			new art_CC009(ctx);
 			break;
+		case "CC010":
+			new art_CC010(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC009";
-			new art_CC009(ctx);
+			window.location.hash = "CC010";
+			new art_CC010(ctx);
 		}
 		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
 		window.addEventListener("hashchange",function() {
@@ -373,6 +376,7 @@ Type.getClassName = function(c) {
 };
 var art_CCBase = function(ctx) {
 	this._description = "";
+	this._title = "";
 	this.isDebug = false;
 	this.isDrawActive = true;
 	this.ctx = ctx;
@@ -418,12 +422,21 @@ art_CCBase.prototype = {
 	,set_description: function(value) {
 		return this._description = value;
 	}
+	,get_title: function() {
+		if(this._title == "") {
+			this._title = this.toString();
+		}
+		return this._title;
+	}
+	,set_title: function(value) {
+		return this._title = value;
+	}
 	,toString: function() {
 		var className = Type.getClassName(js_Boot.getClass(this));
 		return className;
 	}
 	,__class__: art_CCBase
-	,__properties__: {set_description:"set_description",get_description:"get_description"}
+	,__properties__: {set_description:"set_description",get_description:"get_description",set_title:"set_title",get_title:"get_title"}
 };
 var art_ICCBase = function() { };
 art_ICCBase.__name__ = ["art","ICCBase"];
@@ -662,8 +675,8 @@ art_CC005.prototype = $extend(art_CCBase.prototype,{
 		lib_CanvasTools.eqDownTriangle(this.ctx,point9.x,point9.y,_size);
 		var point10 = arr[9];
 		lib_CanvasTools.roundRect(this.ctx,point10.x,point10.y,100,100,10);
-		lib_util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
-		lib_util_FontUtil.embedFillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
+		lib_util_FontUtil.fillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
+		lib_util_FontUtil.fillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
 	}
 	,draw: function() {
 		this.stop();
@@ -886,6 +899,7 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		var _shape2 = this.shapeArray[2];
 		var GoJs2 = new lets_GoJs(_shape2,2);
 		GoJs2._isFrom = true;
+		GoJs2.updateProperties(0);
 		var _this3 = GoJs2;
 		var value2 = _shape2.x + (lib_Global.w - _shape2.x * 2);
 		var objValue2 = 0;
@@ -1144,6 +1158,142 @@ art_CC009.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC009
 });
+var art_CC010 = function(ctx) {
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("Animating text");
+	lib_util_FontUtil.embedGoogleFont("UnifrakturMaguntia",$bind(this,this.onEmbedHandler));
+	lib_util_FontUtil.embedGoogleFont("Press+Start+2P",$bind(this,this.onEmbedHandler));
+};
+art_CC010.__name__ = ["art","CC010"];
+art_CC010.__interfaces__ = [art_ICCBase];
+art_CC010.__super__ = art_CCBase;
+art_CC010.prototype = $extend(art_CCBase.prototype,{
+	onEmbedHandler: function(e) {
+		console.log("Embed: \"" + e + "\"");
+	}
+	,createText: function() {
+		var shape = { x : lib_Global.w / 2, y : lib_Global.h / 2 + 20, alpha : 1, size : 60, type : "text"};
+		shape["text"] = this.toString();
+		shape["r"] = lib_util_ColorUtil.BLACK.r;
+		shape["g"] = lib_util_ColorUtil.BLACK.g;
+		shape["b"] = lib_util_ColorUtil.BLACK.b;
+		var ypos1 = shape.y - 100;
+		var ypos2 = shape.y + 100;
+		var GoJs = new lets_GoJs(shape,1.0);
+		GoJs._isFrom = true;
+		GoJs.updateProperties(0);
+		var _this = GoJs;
+		var value = shape.x;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
+			objValue = Reflect.getProperty(_this._target,"x");
+		}
+		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("x",_range);
+		var _this1 = _this;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
+			objValue1 = Reflect.getProperty(_this1._target,"y");
+		}
+		var _range1 = { key : "y", from : _this1._isFrom ? ypos1 : objValue1, to : !_this1._isFrom ? ypos1 : objValue1};
+		_this1._props.set("y",_range1);
+		var _this2 = _this1;
+		var objValue2 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this2._target,"alpha")) {
+			objValue2 = Reflect.getProperty(_this2._target,"alpha");
+		}
+		var _range2 = { key : "alpha", from : _this2._isFrom ? 0 : objValue2, to : !_this2._isFrom ? 0 : objValue2};
+		_this2._props.set("alpha",_range2);
+		var _this3 = _this2;
+		var objValue3 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this3._target,"size")) {
+			objValue3 = Reflect.getProperty(_this3._target,"size");
+		}
+		var _range3 = { key : "size", from : _this3._isFrom ? 50 : objValue3, to : !_this3._isFrom ? 50 : objValue3};
+		_this3._props.set("size",_range3);
+		var _this4 = _this3;
+		_this4._easing = lets_easing_Sine.get_easeOut();
+		var _this5 = _this4;
+		_this5._delay = _this5.getDuration(2);
+		var GoJs1 = new lets_GoJs(shape,1.0);
+		GoJs1._isFrom = false;
+		var _this6 = GoJs1;
+		var value1 = shape.x;
+		var objValue4 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this6._target,"x")) {
+			objValue4 = Reflect.getProperty(_this6._target,"x");
+		}
+		var _range4 = { key : "x", from : _this6._isFrom ? value1 : objValue4, to : !_this6._isFrom ? value1 : objValue4};
+		_this6._props.set("x",_range4);
+		var _this7 = _this6;
+		var objValue5 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this7._target,"y")) {
+			objValue5 = Reflect.getProperty(_this7._target,"y");
+		}
+		var _range5 = { key : "y", from : _this7._isFrom ? ypos2 : objValue5, to : !_this7._isFrom ? ypos2 : objValue5};
+		_this7._props.set("y",_range5);
+		var _this8 = _this7;
+		var objValue6 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this8._target,"alpha")) {
+			objValue6 = Reflect.getProperty(_this8._target,"alpha");
+		}
+		var _range6 = { key : "alpha", from : _this8._isFrom ? 0 : objValue6, to : !_this8._isFrom ? 0 : objValue6};
+		_this8._props.set("alpha",_range6);
+		var _this9 = _this8;
+		var objValue7 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this9._target,"size")) {
+			objValue7 = Reflect.getProperty(_this9._target,"size");
+		}
+		var _range7 = { key : "size", from : _this9._isFrom ? 50 : objValue7, to : !_this9._isFrom ? 50 : objValue7};
+		_this9._props.set("size",_range7);
+		var _this10 = _this9;
+		_this10._easing = lets_easing_Sine.get_easeIn();
+		var _this11 = _this10;
+		_this11._delay = _this11.getDuration(5.5);
+		return shape;
+	}
+	,createBall: function() {
+		var shape = { x : lib_Global.w / 2, y : lib_Global.h / 2, size : 50, alpha : 1, color : lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.FUCHSIA), type : "ball"};
+		shape["r"] = lib_util_ColorUtil.FUCHSIA.r;
+		shape["g"] = lib_util_ColorUtil.FUCHSIA.g;
+		shape["b"] = lib_util_ColorUtil.FUCHSIA.b;
+		shape["angle"] = 0;
+		return shape;
+	}
+	,init: function() {
+		console.log("init: " + this.toString());
+		this.shapeArray = [];
+		this.shapeArray.push(this.createBall());
+		this.shapeArray.push(this.createText());
+	}
+	,drawShape: function() {
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			if(sh.type == "text") {
+				this.ctx.fillStyle = lib_util_ColorUtil.getColour(sh.r,sh.g,sh.b,sh.alpha);
+				lib_util_FontUtil.centerFillText(this.ctx,sh.text,sh.x,sh.y,"'UnifrakturMaguntia', cursive",Math.round(sh.size));
+			}
+			if(sh.type == "ball") {
+				var radius = 50;
+				var speed = 2;
+				sh.angle += speed;
+				sh.x = lib_Global.w / 2 + Math.cos(lib_util_MathUtil.radians(sh.angle)) * radius;
+				sh.y = lib_Global.h / 2 + Math.sin(lib_util_MathUtil.radians(sh.angle)) * radius;
+				this.ctx.fillStyle = lib_util_ColorUtil.getColour(sh.r,sh.g,sh.b,sh.alpha);
+				lib_CanvasTools.circle(this.ctx,sh.x,sh.y,sh.size);
+			}
+		}
+	}
+	,draw: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		this.drawShape();
+	}
+	,__class__: art_CC010
+});
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
 haxe_IMap.prototype = {
@@ -1350,6 +1500,7 @@ lets_GoJs.to = function(target,duration) {
 lets_GoJs.from = function(target,duration) {
 	var GoJs = new lets_GoJs(target,duration);
 	GoJs._isFrom = true;
+	GoJs.updateProperties(0);
 	return GoJs;
 };
 lets_GoJs.timer = function(duration) {
@@ -1500,6 +1651,9 @@ lets_GoJs.prototype = {
 		this.destroy();
 	}
 	,init: function() {
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		if(this._isTimeBased) {
 			console.log("TODO: build timebased animation");
 		} else if(lets_GoJs._requestId == null) {
@@ -2048,7 +2202,7 @@ lib_util_ExportUtil.downloadImage = function(ctx,isJpg,fileName) {
 		isJpg = false;
 	}
 	if(fileName == null) {
-		fileName = "gen-art_" + new Date().getTime();
+		fileName = "CC-art-" + new Date().getTime();
 	}
 	var link = window.document.createElement("a");
 	link.href = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
@@ -2080,20 +2234,41 @@ lib_util_ExportUtil.prototype = {
 var lib_util_FontUtil = function() {
 };
 lib_util_FontUtil.__name__ = ["lib","util","FontUtil"];
-lib_util_FontUtil.embedFillText = function(ctx,text,x,y,family,fontFamily) {
-	if(family == null) {
-		family = "Unica+One";
+lib_util_FontUtil.fillText = function(ctx,text,x,y,css,size) {
+	if(size == null) {
+		size = 20;
 	}
-	var cleanFamily = StringTools.replace(family,"+"," ");
-	var link = window.document.createElement("link");
-	link.href = "https://fonts.googleapis.com/css?family=" + family;
+};
+lib_util_FontUtil.centerFillText = function(ctx,text,x,y,css,size) {
+	if(size == null) {
+		size = 20;
+	}
+	ctx.font = "" + size + "px " + css;
+	ctx.textAlign = "center";
+	ctx.fillText(text,x,y);
+};
+lib_util_FontUtil.embedGoogleFont = function(family,callback,callbackArray) {
+	var _id = "embededGoogleFonts";
+	var _url = "https://fonts.googleapis.com/css?family=";
+	var link = window.document.getElementById(_id);
+	if(link != null) {
+		var temp = StringTools.replace(link.href,_url,"");
+		family = temp + "|" + family;
+	} else {
+		link = window.document.createElement("link");
+	}
+	if(callbackArray == null) {
+		callbackArray = [family];
+	}
+	link.href = "" + _url + family;
 	link.rel = "stylesheet";
-	link.id = cleanFamily;
-	window.document.body.appendChild(link);
-	window.addEventListener("load",function(e) {
-		ctx.font = "20px \"" + cleanFamily + "\"";
-		ctx.fillText(text,x,y);
-	});
+	link.id = _id;
+	link.onload = function() {
+		if(callback != null) {
+			callback.apply(callback,callbackArray);
+		}
+	};
+	window.document.head.appendChild(link);
 };
 lib_util_FontUtil.prototype = {
 	__class__: lib_util_FontUtil
@@ -2287,7 +2462,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-30 22:22:08";
+lib_model_constants_App.BUILD = "2019-01-31 22:16:40";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

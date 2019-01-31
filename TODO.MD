@@ -41,6 +41,32 @@
 
 
 
+### Miso Regular  replacement
+
+
+- Barlow Condensed
+- Dosis - Medium
+
+**Dosis**
+
+- `<link href="https://fonts.googleapis.com/css?family=Dosis:500" rel="stylesheet">`
+- `font-family: 'Dosis', sans-serif;`
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P|UnifrakturMaguntia" rel="stylesheet">
+
+
+font-family: 'UnifrakturMaguntia', cursive;
+font-family: 'Press Start 2P', cursive;
+
+'UnifrakturMaguntia' > old skool german
+'Press Start 2P' > pixel 8px or 16px
+
+
+
+
+
 test with fonts
 
 **Display**
@@ -75,11 +101,10 @@ stuff I need to look into
 instagram
 
 ```
+sketch.cc0009 :: stars
 #codeart #coding #creativecode #generative #generativeArt
 #minimalism #minimalist #minimal
 #haxe #javascript #js
-
-
 ```
 
 

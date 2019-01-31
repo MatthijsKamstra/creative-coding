@@ -24,9 +24,17 @@ Read more <https://github.com/GeorgeGally/creative_coding>
 
 I am focusing on getting it to work on Chrome... just giving you an headsup!
 
+## TODO
 
+I have created a [TODO.MD](TODO.MD), that keeps me in my ide and helps structure progress.
 
-### TODO
+Important stuff:
+
+- [x] start lib
+- [x] add animation engine
+- [x] create navigation for sketches
+
+### READ
 
 liveserver `https`
 
