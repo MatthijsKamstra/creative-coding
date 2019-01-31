@@ -8,7 +8,7 @@ class ExportUtil {
 
 	public static function downloadImage(ctx:CanvasRenderingContext2D, ?isJpg:Bool = false, ?fileName:String) {
 		if (fileName == null)
-			fileName = 'gen-art_${Date.now().getTime()}';
+			fileName = 'CC-art-${Date.now().getTime()}';
 		var link = document.createAnchorElement();
 		link.href = ctx.canvas.toDataURL((isJpg) ? 'image/jpeg' : '', 1);
 		link.download = fileName;
@@ -19,6 +19,24 @@ class ExportUtil {
 		var base64 = ctx.canvas.toDataURL((isJpg) ? 'image/jpeg' : '', 1);
 		// var base64 = ctx.toDataURL(); // default png
 		clipboard(base64);
+	}
+
+	/**
+	 * [Description]
+	 * @example
+	 * 			utils.Clipboard.copy('hello');
+	 * @param text 	value you want to export (probably base64)
+	 */
+	public static function clipboard(text:String) {
+		var win = 'Ctrl+C';
+		var mac = 'Cmd+C';
+		var copyCombo = win;
+		var userAgent = js.Browser.navigator.userAgent;
+		var ereg = new EReg("iPhone|iPod|iPad|Android|BlackBerry", "i");
+		var ismac = ereg.match(userAgent);
+		if (ismac)
+			copyCombo = mac;
+		window.prompt('Copy to clipboard: $copyCombo, Enter', text);
 	}
 
 	// Returns contents of a canvas as a png based data url, with the specified
@@ -70,20 +88,6 @@ class ExportUtil {
 		}
 	 */
 
-	/**
-		* [Description]
-				utils.Clipboard.copy('hello');
-		* @param text
-	 */
-	public static function clipboard(text:String) {
-		var win = 'Ctrl+C';
-		var mac = 'Cmd+C';
-		var copyCombo = win;
-		var userAgent = js.Browser.navigator.userAgent;
-		var ereg = new EReg("iPhone|iPod|iPad|Android|BlackBerry", "i");
-		var ismac = ereg.match(userAgent);
-		if (ismac)
-			copyCombo = mac;
-		window.prompt('Copy to clipboard: $copyCombo, Enter', text);
-	}
+
+
 }
