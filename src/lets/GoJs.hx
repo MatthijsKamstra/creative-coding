@@ -53,6 +53,7 @@ class GoJs {
 		_tweens.push(this);
 		if(DEBUG) console.log('New GoJs - _id: "$_id" / _duration: ' + _duration+  ' / _initTime: ' + _initTime+ ' / _tweens.length: ' + _tweens.length);
 		// [mck] extreme little delay to make sure all the values are set
+		// init();
 		haxe.Timer.delay(init, 1); // 1 milisecond delay
 
 		// [mck] TODO check if there is a tween attached to the same animation?
@@ -85,6 +86,7 @@ class GoJs {
 	static inline public function from(target:Dynamic, duration:Float):GoJs {
 		var GoJs = new GoJs(target, duration);
 		GoJs._isFrom = true;
+		GoJs.updateProperties(0); // this can't be done faster
 		return GoJs;
 	}
 
@@ -318,6 +320,11 @@ class GoJs {
 
 	// ____________________________________ private ____________________________________
 	private function init():Void {
+		if(_isFrom) {
+			// trace('force end result');
+			// make sure asap that the animation starts in its from position
+			updateProperties(0);
+		}
 		if(_isTimeBased){
 			// [mck] TODO clean this up!!!!
 			trace('TODO: build timebased animation');
