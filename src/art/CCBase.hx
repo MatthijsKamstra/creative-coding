@@ -10,10 +10,24 @@ class CCBase {
 	public var isDrawActive:Bool = true;
 	public var isDebug:Bool = false;
 
+	/**
+	 * title of sketch (default: package.className)
+	 * @example:
+	 * 		trace(title); // "art.CCBase"
+	 */
+	public var title ( get_title , set_title ) : String;
+	private var _title : String = '';
 
+	/**
+	 * description of sketch (default: '')
+	 */
 	public var description ( get_description , set_description ) : String;
 	private var _description : String = '';
 
+	/**
+	 * constructor
+	 * @param ctx
+	 */
 	public function new(ctx:CanvasRenderingContext2D) {
 		this.ctx = ctx;
 		window.addEventListener(RESIZE, _reset, false);
@@ -22,6 +36,8 @@ class CCBase {
 		init();
 		_draw(); // start draw loop
 	}
+
+	// ____________________________________ private ____________________________________
 
 	// track key functions
 	function _keyDown(e:js.html.KeyboardEvent) {
@@ -42,6 +58,8 @@ class CCBase {
 		if (isDrawActive)
 			window.requestAnimationFrame(_draw);
 	}
+
+	// ____________________________________ public ____________________________________
 
 	/**
 	 * setup your art here, is also the best place to reset data
@@ -79,6 +97,8 @@ class CCBase {
 		isDrawActive = true;
 	}
 
+	// ____________________________________ getter/setter ____________________________________
+
 	function get_description () : String {
 		return _description;
 	}
@@ -86,9 +106,20 @@ class CCBase {
 		return _description = value;
 	}
 
+	function get_title () : String {
+		if (_title == '') _title = toString();
+		return _title;
+	}
+	function set_title(value : String) : String {
+		return _title = value;
+	}
+
+	// ____________________________________ toString() ____________________________________
+
 	/**
 	 * Get className, with package
-	 * @example: trace(toString()); // this file would be "art.CCBase"
+	 * @example:
+	 * 		trace(toString()); // this file would be "art.CCBase"
 	 */
 	public function toString() {
 		var className = Type.getClassName(Type.getClass(this));
