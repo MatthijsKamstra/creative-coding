@@ -11,7 +11,7 @@ typedef Point = {
 
 // create a Ball typedef
 typedef Ball = {
-	@:optional var id:Int;
+	@:optional var _id:Int;
 	var x:Float;
 	var y:Float;
 	var speed_x:Float;
@@ -21,7 +21,7 @@ typedef Ball = {
 };
 
 typedef AnimateObj = {
-	@:optional var _id : Int;
+	@:optional var _id:Int;
 	@:optional var x:Float;
 	@:optional var y:Float;
 	@:optional var size:Float;
@@ -30,4 +30,5 @@ typedef AnimateObj = {
 	@:optional var height:Int;
 	@:optional var rotation:Int;
 	@:optional var alpha:Float;
+	@:optional var type:String; // make possible to switch draw
 };
