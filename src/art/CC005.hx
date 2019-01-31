@@ -74,8 +74,8 @@ class CC005 extends CCBase implements ICCBase {
 		ctx.roundRect(point.x, point.y,100, 100, 10);
 
 		// text
-		ctx.embedFillText('Matthijs Kamstra aka [mck]', padding/2, padding/2, 'Unica+One');
-		ctx.embedFillText('Matthijs Kamstra aka [mck]', padding/2, padding*2, 'Nova+Mono');
+		FontUtil.fillText(ctx, 'Matthijs Kamstra aka [mck]', padding/2, padding/2, 'Unica+One');
+		FontUtil.fillText(ctx, 'Matthijs Kamstra aka [mck]', padding/2, padding*2, 'Nova+Mono');
 
 		// var link = document.createLinkElement();
 		// link.href = "https://fonts.googleapis.com/css?family=Nova+Mono";
