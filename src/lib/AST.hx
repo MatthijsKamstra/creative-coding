@@ -20,6 +20,19 @@ typedef Ball = {
 	var colour:String;
 };
 
+// create a Line typedef
+typedef Line = {
+	@:optional var _type:String; // make possible to switch draw
+	@:optional var _id:Int;
+	var x1:Float;
+	var y1:Float;
+	var x2:Float;
+	var y2:Float;
+	@:optional var stroke:Int;
+	@:optional var colour:String;
+	@:optional var radius:Float;
+};
+
 typedef AnimateObj = {
 	@:optional var _id:Int;
 	@:optional var x:Float;
