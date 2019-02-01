@@ -1298,21 +1298,118 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 	,__class__: art_CC010
 });
 var art_CC011 = function(ctx) {
+	this.divide = 4;
+	this.radius1 = 350;
+	this.radius0 = 150;
+	this.shapeMax = Math.round(90.);
+	this.shapeArray2 = [];
+	this.shapeArray = [];
 	art_CCBase.call(this,ctx);
+	this.set_description("Equalizer with sound");
 };
 art_CC011.__name__ = ["art","CC011"];
 art_CC011.__interfaces__ = [art_ICCBase];
 art_CC011.__super__ = art_CCBase;
 art_CC011.prototype = $extend(art_CCBase.prototype,{
-	init: function() {
+	createShape: function(i) {
+		var angle = i * this.divide;
+		var line = { _id : i, x1 : lib_Global.w / 2 + Math.cos(lib_util_MathUtil.radians(angle)) * this.radius0, y1 : lib_Global.h / 2 + Math.sin(lib_util_MathUtil.radians(angle)) * this.radius0, x2 : lib_Global.w / 2 + Math.cos(lib_util_MathUtil.radians(angle)) * this.radius1, y2 : lib_Global.h / 2 + Math.sin(lib_util_MathUtil.radians(angle)) * this.radius1, stroke : 10, radius : lib_util_MathUtil.random(this.radius0,this.radius1)};
+		this.onCompleteHandler(line);
+		return line;
+	}
+	,createX: function(i) {
+		var obj = { _id : i, r : lib_util_ColorUtil.WHITE.r, g : lib_util_ColorUtil.WHITE.g, b : lib_util_ColorUtil.WHITE.b, a : 1, rotation : 0, x : lib_Global.w / 2, y : lib_Global.h / 2, size : 160, stroke : 80};
+		this.onXHandler(obj);
+		return obj;
+	}
+	,drawShape: function() {
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var line = this.shapeArray[i];
+			var angle = i * this.divide;
+			line.x2 = lib_Global.w / 2 + Math.cos(lib_util_MathUtil.radians(angle)) * line.radius;
+			line.y2 = lib_Global.h / 2 + Math.sin(lib_util_MathUtil.radians(angle)) * line.radius;
+			lib_CanvasTools.lineColour(this.ctx,lib_util_ColorUtil.WHITE.r,lib_util_ColorUtil.WHITE.g,lib_util_ColorUtil.WHITE.b,1);
+			this.ctx.lineWidth = line.stroke;
+			lib_CanvasTools.line(this.ctx,line.x1,line.y1,line.x2,line.y2);
+		}
+		var _g11 = 0;
+		var _g2 = this.shapeArray2.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var shape = this.shapeArray2[i1];
+			this.ctx.save();
+			this.ctx.translate(shape.x,shape.y);
+			this.ctx.rotate(lib_util_MathUtil.radians(shape.rotation));
+			lib_CanvasTools.strokeColour(this.ctx,shape.r,shape.g,shape.b,shape.a);
+			lib_util_ShapeUtil.xcross(this.ctx,0,0,shape.size,shape.stroke);
+			this.ctx.restore();
+		}
+	}
+	,onUpdateHandler: function(e) {
+		console.log("update: " + e);
+	}
+	,onCompleteHandler: function(line) {
+		var GoJs = new lets_GoJs(line,lib_util_MathUtil.random(0.5,1.5));
+		GoJs._isFrom = false;
+		var _this = GoJs;
+		var value = lib_util_MathUtil.random(this.radius0,this.radius1);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"radius")) {
+			objValue = Reflect.getProperty(_this._target,"radius");
+		}
+		var _range = { key : "radius", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("radius",_range);
+		var _this1 = _this;
+		_this1._easing = lets_easing_Sine.get_easeInOut();
+		var _this2 = _this1;
+		_this2._options.onComplete = $bind(this,this.onCompleteHandler);
+		_this2._options.onCompleteParams = [line];
+	}
+	,onXHandler: function(obj) {
+		var GoJs = new lets_GoJs(obj,lib_util_MathUtil.random(0.5,1.5));
+		GoJs._isFrom = false;
+		var _this = GoJs;
+		var value = lib_util_MathUtil.random(0,360);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"rotation")) {
+			objValue = Reflect.getProperty(_this._target,"rotation");
+		}
+		var _range = { key : "rotation", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("rotation",_range);
+		var _this1 = _this;
+		var value1 = lib_util_MathUtil.random(150,160);
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"size")) {
+			objValue1 = Reflect.getProperty(_this1._target,"size");
+		}
+		var _range1 = { key : "size", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
+		_this1._props.set("size",_range1);
+		var _this2 = _this1;
+		_this2._easing = lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onXHandler);
+		_this3._options.onCompleteParams = [obj];
+		var _this4 = _this3;
+		_this4._delay = _this4.getDuration(lib_util_MathUtil.random(0,0.5));
+	}
+	,init: function() {
 		console.log("init: " + this.toString());
-		var rgb = lib_util_ColorUtil.randomColourObject();
-		lib_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
-		lib_util_ShapeUtil.xcross(this.ctx,lib_Global.w / 2,lib_Global.h / 2,200);
+		var _g1 = 0;
+		var _g = this.shapeMax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+		this.shapeArray2.push(this.createX(0));
+		this.draw();
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
-		this.stop();
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
+		this.drawShape();
 	}
 	,__class__: art_CC011
 });
@@ -2445,11 +2542,14 @@ lib_util_ShapeUtil.registerPoint = function(ctx,x,y) {
 	ctx.fillRect(x - _w / 2,y - _d / 2,_w,_d);
 	ctx.fillRect(x - _d / 2,y - _h / 2,_d,_h);
 };
-lib_util_ShapeUtil.xcross = function(ctx,x,y,size) {
+lib_util_ShapeUtil.xcross = function(ctx,x,y,size,weight) {
+	if(weight == null) {
+		weight = 100;
+	}
 	if(size == null) {
 		size = 200;
 	}
-	lib_CanvasTools.strokeWeight(ctx,100);
+	lib_CanvasTools.strokeWeight(ctx,weight);
 	lib_CanvasTools.line(ctx,x - size / 2,y - size / 2,x - size / 2 + size,y - size / 2 + size);
 	lib_CanvasTools.line(ctx,x + size - size / 2,y - size / 2,x - size / 2,y + size - size / 2);
 };
@@ -2484,7 +2584,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-01-31 22:17:50";
+lib_model_constants_App.BUILD = "2019-02-01 12:08:57";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
