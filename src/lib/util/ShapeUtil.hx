@@ -39,14 +39,19 @@ class ShapeUtil {
 		// trace('xxx');
 	}
 	/**
-	 * [Description] (not centered)
+	 * centered x-shape
+	 *
+	 * @example
+	 * 		ctx.xcross(w/2, h/2, 100, 20);
+	 *
 	 * @param ctx
-	 * @param x
-	 * @param y
-	 * @param size
+	 * @param x			x pos, center of x-shape
+	 * @param y			y pos, center of x-shape
+	 * @param size		(optional) size shape, default:200
+	 * @param weight	(optional) stroke weight, default:100
 	 */
-	public static function xcross(ctx:CanvasRenderingContext2D, x:Float, y:Float, ?size:Float = 200){
-		ctx.strokeWeight(100);
+	public static function xcross(ctx:CanvasRenderingContext2D, x:Float, y:Float, ?size:Float = 200, ?weight:Int = 100){
+		ctx.strokeWeight(weight);
 		ctx.line(x - size / 2, y - size / 2, x - size / 2+size, y - size / 2+size);
 		ctx.line(x+size - size / 2, y - size / 2, x - size / 2, y+size - size / 2);
 	}
