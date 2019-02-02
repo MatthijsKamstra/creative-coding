@@ -1,6 +1,6 @@
 package model.constants;
 
-import mck.geom.Rectangle;
+import lib.AST;
 
 /**
 A1	594 x 841 mm	23.4 x 33.1 in
@@ -33,17 +33,17 @@ class Paper {
 	];
 
 	/**
-	 * inPixel 
+	 * inPixel
 	 *
 	 * @example		Paper.inPixel(PaperSize.A$)
-	 * @see			
+	 * @see
 	 *
-	 * @param		
+	 * @param
 	 *
 	 * @return
 	 */
 	public static function inPixel(papersize:PaperSize):Rectangle{
-		var rectangle : Rectangle = new Rectangle(0,0);
+		var rectangle : Rectangle;
 		var w : Int;
 		var h : Int;
 		switch (papersize) {
@@ -63,12 +63,14 @@ class Paper {
 		}
 		rectangle.width = Std.int(mm2pixel(w));
 		rectangle.height = Std.int(mm2pixel(h));
+		rectangle.x = 0;
+		rectangle.y = 0;
 		return rectangle;
 	}
 
 	public static function mm2pixel(value:Float):Float{
 		var dpi = 72;
-		
+
 		// mm = ( pixels * 25.4 ) / DPI
 		// Width : 10 cm * 300 / 2.54 = 1181 pixels
 		// Height: 15 cm * 300 / 2.54 = 1772 pixels
