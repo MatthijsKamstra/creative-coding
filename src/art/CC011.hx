@@ -1,6 +1,5 @@
 package art;
 
-
 /**
  * short description what this does
  */
@@ -74,6 +73,8 @@ class CC011 extends CCBase implements ICCBase {
 		}
 	}
 
+	// ____________________________________ onHandlers ____________________________________
+
 	function onUpdateHandler(e){
 		trace('update: $e');
 	}
@@ -85,22 +86,15 @@ class CC011 extends CCBase implements ICCBase {
 		GoJs.to(obj, random(0.5, 1.5)).prop('rotation',random(0, 360)).prop('size',random(150,160)).ease(Sine.easeInOut).onComplete(onXHandler,[obj]).delay(random(0,0.5));
 	}
 
+	// ____________________________________ override ____________________________________
+
 	override function init(){
 		trace('init: ${toString()}');
-
 		for ( i in 0 ... shapeMax ) {
 			shapeArray.push(createShape(i));
 		}
 		shapeArray2.push(createX(0));
-
-
-		// var rgb = randomColourObject();
-		// ctx.strokeColour(rgb.r, rgb.g, rgb.b);
-		// ctx.xcross(w/2, h/2, 200);
-
 		draw();
-
-
 	}
 
 	override function draw(){
