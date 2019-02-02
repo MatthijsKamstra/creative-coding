@@ -175,6 +175,14 @@ class Sketch {
 	var WEBGL = 'webgl';
 	var DOM = 'dom';
 }
+@:enum abstract PaperSize(String) {
+	var A6 = 'A6';
+	var A5 = 'A5';
+	var A4 = 'A4';
+	var A3 = 'A3';
+	var A2 = 'A2';
+	var A1 = 'A1';
+}
 // https://github.com/soulwire/sketch.js/wiki/API#options
 class SketchOption {
 
