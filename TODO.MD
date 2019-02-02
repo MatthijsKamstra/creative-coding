@@ -33,6 +33,8 @@
 - [ ] website state
 - [ ] "hidden" menu
 - [ ] branding
+- [x] add different paper sizes to lib (gen-js-art)
+- [x] import json with colors (https://github.com/mattdesl/nice-color-palettes)
 - [ ] `esc`-button to return to normal
 - [ ] check for usefull stuff: https://github.com/soulwire/sketch.js/wiki/API
 - [ ] get classes from `gen-js-art`

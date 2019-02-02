@@ -20,6 +20,20 @@ So why not give it a try...
 Read more <https://github.com/GeorgeGally/creative_coding>
 
 
+## Color
+
+- heavy lifting doen via `thx.color`
+- ColorUtil class
+- <https://github.com/mattdesl/nice-color-palettes>
+
+
+## libs
+
+-lib hxquicksettings
+-lib thx.color
+-lib msignal
+
+
 ## WIP
 
 I am focusing on getting it to work on Chrome... just giving you an headsup!
