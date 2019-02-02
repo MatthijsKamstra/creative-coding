@@ -39,8 +39,7 @@ typedef Point = {
 };
 
 // ____________________________________ shape typedef  ____________________________________
-
-typedef Circle  = {
+typedef Circle = {
 	> Base,
 	> Position,
 	> Appearance,
@@ -48,7 +47,7 @@ typedef Circle  = {
 	@:optional var size:Float;
 };
 
-typedef Oval  = {
+typedef Oval = {
 	> Base,
 	> Position,
 	> Appearance,
@@ -62,6 +61,7 @@ typedef Square = {
 	@:optional var rotation:Float;
 	@:optional var size:Float; // width and height are the same
 }
+
 typedef Rectangle = {
 	> Base,
 	> Position,
@@ -90,7 +90,6 @@ typedef Ball = {
 	> Circle,
 	var speed_x:Float;
 	var speed_y:Float;
-	// var colour:String;
 };
 
 // create a Line typedef
