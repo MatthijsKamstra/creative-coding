@@ -31,6 +31,8 @@ class FontUtil {
 		ctx.font = '${size}px ${css}';
 		ctx.textAlign = "center";
 		ctx.fillText(text, x, y);
+
+		// trace( text, x, y, css, size);
 	}
 
 	/**
