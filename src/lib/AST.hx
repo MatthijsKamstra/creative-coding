@@ -37,6 +37,11 @@ typedef Point = {
 	var x:Float;
 	var y:Float;
 };
+// point
+typedef PointInt = {
+	var x:Int;
+	var y:Int;
+};
 
 // ____________________________________ shape typedef  ____________________________________
 typedef Circle = {
