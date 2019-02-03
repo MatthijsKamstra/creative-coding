@@ -33,7 +33,7 @@ class CCBase {
 		window.addEventListener(RESIZE, _reset, false);
 		window.addEventListener(KEY_DOWN, _keyDown, false);
 		window.addEventListener(KEY_UP, _keyUp, false);
-		init();
+		setup();
 		_draw(); // start draw loop
 	}
 
@@ -49,7 +49,7 @@ class CCBase {
 	// trigger when window resize, draw function is still running, so clear canvas and restart with init
 	function _reset() {
 		ctx.clearRect(0, 0, w, h);
-		init();
+		setup();
 	}
 
 	// wrapper around the real `draw` class
@@ -65,9 +65,31 @@ class CCBase {
 	 * setup your art here, is also the best place to reset data
 	 * when the browser resizes
 	 */
+	@:deprecated("use 'setup' instead")
 	public function init() {
 		// trace('override public function init()');
 	}
+	public function setup() {
+		// init();
+		// trace('override public function setup()');
+	}
+
+
+	// setup
+	// update
+	// draw
+	// touchstart
+	// touchmove
+	// touchend
+	// mouseover
+	// mousedown
+	// mousemove
+	// mouseout
+	// mouseup
+	// click
+	// keydown
+	// keyup
+	// resize
 
 	/**
 	 * the magic happens here, every class should have a `draw` function

@@ -4,7 +4,7 @@ interface ICCBase {
 	/**
 	 * setup data, setup animation
 	 */
-	public function init():Void;
+	public function setup():Void;
 
 	/**
 	 * draw on framerate, only usefull for animation

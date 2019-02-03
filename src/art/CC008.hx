@@ -53,8 +53,8 @@ class CC008 extends CCBase implements ICCBase {
 	}
 
 
-	override function init(){
-		trace('init: ${toString()}');
+	override function setup(){
+		trace('setup: ${toString()}');
 		shapeArray = [];
 		for (i in 0...shapeMax){
 			var sh = createShape(i);

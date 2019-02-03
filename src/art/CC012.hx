@@ -79,8 +79,8 @@ class CC012 extends CCBase implements ICCBase {
 	}
 
 	// ____________________________________ override ____________________________________
-	override function init() {
-		trace('init: ${toString()}');
+	override function setup() {
+		trace('setup: ${toString()}');
 		for (i in 0...shapeMax) {
 			shapeArray.push(createShape(i));
 		}

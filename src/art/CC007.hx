@@ -36,8 +36,8 @@ class CC007 extends CCBase implements ICCBase {
 		trace('done: $value seconds - date: $totalDate , time: $totalTime');
 	}
 
-	override function init(){
-		trace('init: ${toString()}');
+	override function setup(){
+		trace('setup: ${toString()}');
 		// var rgb = randomColourObject();
 		// ctx.strokeColour(rgb.r, rgb.g, rgb.b);
 		// ctx.xcross(w/2, h/2, 200);

@@ -10,13 +10,13 @@ class CC006 extends CCBase implements ICCBase {
 		window.addEventListener(KEY_DOWN, function (e:js.html.KeyboardEvent){
 			if (e.key == ' '){
 				trace('redraw');
-				init();
+				setup();
 			}
 		}, false);
 	}
 
-	override function init() {
-		trace('init: ${toString()}');
+	override function setup() {
+		trace('setup: ${toString()}');
 		var _size = 50;
 		var _x = 0;
 		var _y = 0;

@@ -33,8 +33,8 @@ class CC003 extends CCBase implements ICCBase {
 	/**
 	 * create balls that bounce of the border of the canvas
 	 */
-	override public function init(){
-		trace('init: ${toString()}');
+	override public function setup(){
+		trace('setup: ${toString()}');
 		ctx.background(255,255,255, 0.2);
 		for (i in 0...maxBalls){
 			ballArray.push( createBall() );

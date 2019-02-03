@@ -59,8 +59,8 @@ class CC010 extends CCBase implements ICCBase {
 		return shape;
 	}
 
-	override function init(){
-		trace('init: ${toString()}');
+	override function setup(){
+		trace('setup: ${toString()}');
 		shapeArray = [];
 		shapeArray.push(createBall());
 		shapeArray.push(createText());

@@ -26,8 +26,8 @@ class CC005 extends CCBase implements ICCBase {
 		super(ctx);
 	}
 
-	override function init() {
-		trace('init: ${toString()}');
+	override function setup() {
+		trace('setup: ${toString()}');
 		var padding = 100;
 		var arr:Array<Point> = GridUtil.create(padding, padding, w - (2 * padding), h - (2 * padding), 3, 4);
 		// console.table(arr);

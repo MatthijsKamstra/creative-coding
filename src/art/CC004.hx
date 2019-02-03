@@ -32,8 +32,8 @@ class CC004 extends CCBase implements ICCBase {
 		super(ctx);
 	}
 
-	override function init(){
-		trace('${toString()} :: init()');
+	override function setup(){
+		trace('${toString()} :: setup()');
 		// reset everything for resize
 		ballArray = [];
 		for (i in 0...maxBalls){

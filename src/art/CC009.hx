@@ -59,7 +59,7 @@ class CC009 extends CCBase implements ICCBase {
 		}
 	}
 
-	override function init(){
+	override function setup(){
 		shapeArray = [];
 		for (i in 0...shapeMax){
 			var sh = createShape();
