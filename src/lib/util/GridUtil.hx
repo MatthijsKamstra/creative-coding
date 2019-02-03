@@ -4,7 +4,114 @@ import lib.Global.*;
 import lib.AST;
 
 class GridUtil {
+
+	public var array:Array<Point> = [];
+	public var x:Float = null;
+	public var y:Float = null;
+	public var width:Float = null;
+	public var height:Float = null;
+	public var gridX:Float = 0;
+	public var gridY:Float = 0;
+	public var cellWidth:Float = 0;
+	public var cellHeight:Float = 0;
+	public var numHor:Float = 0;
+	public var numVer:Float = 0;
+
 	public function new() {}
+
+	/**
+	 * [Description]
+	 * @param x			start position x
+	 * @param y			start postion y
+	 */
+	public function position(x, y){
+		this.x = x;
+		this.y = y;
+		calculate();
+	}
+
+	/**
+	 * [Description]
+	 * @param width		width of grid
+	 * @param height	height of grid
+	 */
+	public function dimensie(width, height){
+		this.width = width;
+		this.height = height;
+		calculate();
+	}
+
+	/**
+	 * create
+	 * @param numHor	number of items horizontal
+	 * @param numVer	number of itmes vertical
+	 */
+	public function numbered(numHor, numVer){
+		this.numHor = numHor;
+		this.numVer = numVer;
+		calculate();
+	}
+
+	/**
+	 * [Description]
+	 * @param cellWidth 	fixed grid width
+	 * @param cellHeight 	fixed grid height
+	 */
+	public function cellSize(cellWidth, ?cellHeight){
+		if (cellHeight == null) cellHeight = cellWidth;
+		this.cellWidth = cellWidth;
+		this.cellHeight = cellHeight;
+		calculate();
+	}
+
+	function calculate(){
+		// if (width == null  || width <= 0) width = w;
+		// if (height == null || height <= 0) height = h;
+		// if(cellWidth == null || cellWidth <= 0) cellWidth = 20;
+		// if(cellHeight == null || cellHeight <= 0) cellHeight = 20;
+
+		 /**
+		  * solution #1:
+		  * 	grid is fixed via cellWidth and cellHeight
+		  *
+		  * calculate x, y, width, height, numH, numV,
+		  *
+		  * TOP/LEFT centerpoint?
+		  */
+
+		if (cellWidth != null){
+			numHor = Math.floor(w / cellWidth);
+			width = numHor * cellWidth;
+			x = (w - width)/2;
+		}
+		if (cellHeight!= null){
+			numVer = Math.floor(h / cellHeight);
+			height = numVer * cellHeight;
+			y = (h - height)/2;
+		}
+		// force
+		// x = 0;
+		// y=0;
+
+
+		array= [];
+		var total = Math.round(numHor * numVer);
+		var xpos = 0;
+		var ypos = 0;
+		for (i in 0...total) {
+			var point:Point = {
+				x: Math.round(x + (xpos * cellWidth)),
+				y: Math.round(y + (ypos * cellHeight)),
+			}
+			array.push(point);
+			xpos++;
+			if (xpos >= numHor) {
+				xpos = 0;
+				ypos++;
+			}
+		}
+	}
+
 
 	/**
 	 * [Description]
@@ -36,5 +143,34 @@ class GridUtil {
 			}
 		}
 		return arr;
+	}
+
+
+
+	/**
+	 *
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param gridX
+	 * @param gridY
+	 * @param numHor
+	 * @param numVer
+	 * @return GridUtil
+	 */
+	static public function calc(?x:Float = -1, ?y:Float = -1,
+								?width:Float = -1, ?height:Float = -1,
+								?gridX:Float = 1, ?gridY:Float = 1,
+								?numHor:Int = 1, ?numVer:Int = 1):GridUtil {
+		var grid = new GridUtil();
+		grid.array = [];
+		grid.x = 0;
+		grid.y = 0;
+		grid.width = 0;
+		grid.height = 0;
+		grid.gridX = 0;
+		grid.gridY = 0;
+		return grid;
 	}
 }
