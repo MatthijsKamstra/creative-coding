@@ -22,6 +22,8 @@ class Sketch {
 
 	public function new() {}
 
+	// https://github.com/soulwire/sketch.js/wiki/API#class-methods
+	// ____________________________________ class-methods ____________________________________
 	public static function create(name:String, ?option:SketchOption):CanvasRenderingContext2D {
 		if (option == null) {
 			option = new SketchOption();
@@ -107,29 +109,29 @@ class Sketch {
 			// if(typeof onMouseUp == 'function') onMouseUp();
 		});
 
-		window.addEventListener(KEY_DOWN, function (e:js.html.KeyboardEvent){
+		window.addEventListener(KEY_DOWN, function(e:js.html.KeyboardEvent) {
 			e.preventDefault();
 			e.stopPropagation();
 			// trace(e);
-			if (e.metaKey == true && e.key == 'r'){
+			if (e.metaKey == true && e.key == 'r') {
 				trace('cmd + r');
 				location.reload();
 			}
-			if (e.metaKey == true && e.key == 's' && e.shiftKey == false){
+			if (e.metaKey == true && e.key == 's' && e.shiftKey == false) {
 				trace('cmd + s');
 				lib.util.ExportUtil.downloadImage(ctx, true);
 			}
-			if (e.metaKey == true && e.key == 's' && e.shiftKey == true){
+			if (e.metaKey == true && e.key == 's' && e.shiftKey == true) {
 				trace('cmd + shift + s');
 				lib.util.ExportUtil.downloadImage(ctx, false);
 			}
-			if (e.metaKey == true && untyped e.code == 'KeyS' && e.altKey == true){
+			if (e.metaKey == true && untyped e.code == 'KeyS' && e.altKey == true) {
 				trace('cmd + alt + s');
 				lib.util.ExportUtil.onBase64Handler(ctx, true);
 			}
 
-			if (e.metaKey == true && e.key == 'f'){
-				if(!isFullscreen){
+			if (e.metaKey == true && e.key == 'f') {
+				if (!isFullscreen) {
 					openFullscreen();
 					isFullscreen = true;
 				} else {
@@ -170,13 +172,51 @@ class Sketch {
 			untyped document.msExitFullscreen();
 		}
 	}
+
+	//https://github.com/soulwire/sketch.js/wiki/API#instance-methods
+	// ____________________________________ Instance Methods ____________________________________
+	// start
+	// stop
+	// toggle
+	// clear
+	// destroy
+
+
+	// https://github.com/soulwire/sketch.js/wiki/API#overridable-instance-methods
+	// Overridable Instance Methods
+	// Implement these methods on your sketch instance (or pass them to create inside the options hash).
+
+	// setup
+	// update
+	// draw
+	// touchstart
+	// touchmove
+	// touchend
+	// mouseover
+	// mousedown
+	// mousemove
+	// mouseout
+	// mouseup
+	// click
+	// keydown
+	// keyup
+	// resize
+
 }
+
+// Constants
+// CANVAS Enumeration for the Canvas type
+// WEBGL Enumeration for the WebGL type
+// DOM Enumeration for the DOM type
+// instances A list of all current Sketch instances
+
 
 @:enum abstract SketchType(String) {
 	var CANVAS = 'canvas';
 	var WEBGL = 'webgl';
 	var DOM = 'dom';
 }
+
 @:enum abstract PaperSize(String) {
 	var A6 = 'A6';
 	var A5 = 'A5';
@@ -185,53 +225,48 @@ class Sketch {
 	var A2 = 'A2';
 	var A1 = 'A1';
 }
+
 // https://github.com/soulwire/sketch.js/wiki/API#options
 class SketchOption {
-
 	// fullscreen Default: true; when false, you can pass width: 500, height: 500 to specify a size.
-	public var fullscreen ( get_fullscreen , set_fullscreen ) : Bool;
-	private var _fullscreen : Bool = true;
-	function get_fullscreen () : Bool { return _fullscreen; }
-	function set_fullscreen(value : Bool) : Bool { return _fullscreen = value; }
+	public var fullscreen(get_fullscreen, set_fullscreen):Bool;
+	private var _fullscreen:Bool = true;
+	function get_fullscreen():Bool {return _fullscreen;}
+	function set_fullscreen(value:Bool):Bool {return _fullscreen = value;}
 
 	// autoclear Default: true Whether to clear the context before each call to draw. Otherwise call clear()
-	public var autoclear ( get_autoclear , set_autoclear ) : Bool;
-	private var _autoclear : Bool = true;
-	function get_autoclear () : Bool { return _autoclear; }
-	function set_autoclear(value : Bool) : Bool { return _autostart = value;}
+	public var autoclear(get_autoclear, set_autoclear):Bool;
+	private var _autoclear:Bool = true;
+	function get_autoclear():Bool {return _autoclear;}
+	function set_autoclear(value:Bool):Bool {return _autostart = value;}
 
 	// autostart Default: true Otherwise call start()
-	public var autostart ( get_autostart , set_autostart ) : Bool;
-	private var _autostart : Bool = true;
-	function get_autostart () : Bool { return _autostart;}
-	function set_autostart(value : Bool) : Bool { return _autostart = value;}
+	public var autostart(get_autostart, set_autostart):Bool;
+	private var _autostart:Bool = true;
+	function get_autostart():Bool {return _autostart;}
+	function set_autostart(value:Bool):Bool {return _autostart = value;}
 
 	// autopause Default: true Whether to pause the animation on window blur and resume on focus
-	public var autopause ( get_autopause , set_autopause ) : Bool;
-	private var _autopause : Bool = true;
-	function get_autopause () : Bool { return _autopause;}
-	function set_autopause(value : Bool) : Bool { return _autopause = value;}
+	public var autopause(get_autopause, set_autopause):Bool;
+	private var _autopause:Bool = true;
+	function get_autopause():Bool {return _autopause;}
+	function set_autopause(value:Bool):Bool {return _autopause = value;}
 
 	// container Default: document.body Where to put the sketch context
-	public var container ( get_container , set_container ) : js.html.Element;
-	private var _container : js.html.Element = document.body;
-	function get_container () : js.html.Element { return _container; }
-	function set_container(value : js.html.Element) : js.html.Element { return _container = value; }
+	public var container(get_container, set_container):js.html.Element;
+	private var _container:js.html.Element = document.body;
+	function get_container():js.html.Element {return _container;}
+	function set_container(value:js.html.Element):js.html.Element {return _container = value;}
 
 	// type Default Sketch.CANVAS Possible values: Sketch.CANVAS, Sketch.WEB_GL and Sketch.DOM
-	public var type ( get_type , set_type ) : SketchType;
-	private var _type : SketchType = SketchType.CANVAS;
-	function get_type () : SketchType { return _type; }
-	function set_type(value : SketchType) : SketchType { return _type = value; }
+	public var type(get_type, set_type):SketchType;
+	private var _type:SketchType = SketchType.CANVAS;
+	function get_type():SketchType {return _type;}
+	function set_type(value:SketchType):SketchType {return _type = value;}
 
 	// interval Default: 1 The update / draw interval (2 will update every 2 frames, etc)
 	// globals Default: true Add global properties and methods to the window
 	// retina Default: false Resize for best appearance on retina displays. Can be slow due to so many pixels!
 	// eventTarget If you want Sketch to bind mouse events to an element other than the Sketch canvas, you can specify that ele
-
-	public function new() {	}
-
-
-
+	public function new() {}
 }
-
