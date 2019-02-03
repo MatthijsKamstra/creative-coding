@@ -10,7 +10,7 @@ class AST {}
 }
 
 typedef Base = {
-	@:optional var _id:Int;
+	@:optional var _id:String;
 	@:optional var _type:String; // make possible to switch draw
 	// [mck] perhaps enum? ShapeType
 }
