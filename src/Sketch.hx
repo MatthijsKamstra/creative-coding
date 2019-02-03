@@ -22,9 +22,11 @@ class Sketch {
 
 	public function new() {}
 
-	public static function create(name:String, ?type:String = '2d'):CanvasRenderingContext2D {
-		// new Sketch().init();
-		if (type == '2d') {
+	public static function create(name:String, ?option:SketchOption):CanvasRenderingContext2D {
+		if (option == null) {
+			option = new SketchOption();
+		}
+		if (option.type == SketchType.CANVAS) {
 			return new Sketch().createCanvas(name);
 		} else {
 			return new Sketch().createGLCanvas(name);
