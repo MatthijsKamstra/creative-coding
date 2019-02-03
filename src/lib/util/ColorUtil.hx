@@ -1,5 +1,7 @@
 package lib.util;
 
+using StringTools;
+
 typedef RGBObject = {
 	var r : Int;
 	var g : Int;
@@ -116,6 +118,14 @@ class ColorUtil {
     }
 
 	public static inline function ttoRGB(int:Int) : RGB {
+        return {
+            r: ((int >> 16) & 255),
+            g: ((int >> 8) & 255),
+            b: (int & 255),
+        }
+    }
+	public static inline function hex2RGB(hex:String) : RGB {
+		var int = Std.parseInt(hex.replace('#', '0x'));
         return {
             r: ((int >> 16) & 255),
             g: ((int >> 8) & 255),
