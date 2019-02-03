@@ -238,6 +238,10 @@ class CanvasTools {
 		var c = ColorUtil.getColour(r, g, b, a);
 		ctx.fillStyle = c;
 	};
+	static public function colourObj(ctx:CanvasRenderingContext2D, rgb:lib.util.ColorUtil.RGB, ?a:Float) {
+		var c = ColorUtil.getColour(rgb.r, rgb.g, rgb.b, a);
+		ctx.fillStyle = c;
+	};
 
 	static public function strokeColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		lineColour(ctx, r, g, b, a);
