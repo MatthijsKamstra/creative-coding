@@ -101,6 +101,22 @@ stuff I need to look into
 - [ ] kap to record screen
 - [ ] different way to do this?
 
+## instagram posting
+
+**Best Times to Post on Instagram**
+
+- The best time to post on Instagram is Wednesday at 3 p.m., Thursday at 5 a.m., 11 a.m., and 3 to 4 p.m. and Friday at 5 a.m.
+- Thursday is the best day to post to Instagram.
+- The safest times to post to Instagram are Tuesday through Friday 9 a.m. to 6 p.m.
+- Sunday is the least engaging day for Instagram.
+
+**Best Times to Post on Instagram for Tech**
+
+- The best time to post on Instagram for tech brands is Wednesday at 10 a.m.
+- Thursday is the best day to post to Instagram for tech.
+- The safest times to post are generally 10 a.m. to 5 p.m. Wednesday to Friday.
+- Sunday is the least engaged day of the week for tech.
+
 instagram
 
 ```
