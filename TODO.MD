@@ -24,6 +24,9 @@
 - [x] get export to image from `gen-js-art`
 - [x] save images as `.jpg` for instagram (`cmd`+`s`) & use `cmd`+`shift`+`s` to save a `.png`
 - [x] key to download canvas as file base64 `cmd`+`alt`+`s`
+- [x] implement sketchoptions
+- [x] add different paper sizes to lib (gen-js-art)
+- [x] import json with colors (https://github.com/mattdesl/nice-color-palettes)
 - [ ] get scaling canvas image (A4 -> A0)  from `gen-js-art`
 - [ ] loading music
 - [ ] loading colors
@@ -33,8 +36,6 @@
 - [ ] website state
 - [ ] "hidden" menu
 - [ ] branding
-- [x] add different paper sizes to lib (gen-js-art)
-- [x] import json with colors (https://github.com/mattdesl/nice-color-palettes)
 - [ ] `esc`-button to return to normal
 - [ ] check for usefull stuff: https://github.com/soulwire/sketch.js/wiki/API
 - [ ] get classes from `gen-js-art`
