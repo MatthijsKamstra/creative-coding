@@ -259,6 +259,9 @@ class GoJs {
 		if(Reflect.hasField(_target, key)) {
 			objValue = Reflect.getProperty(_target, key);
 		}
+
+		// trace()
+
 		var _range = {key: key, from: (_isFrom) ? value : objValue, to: (!_isFrom) ? value : objValue};
 		_props.set(key, _range);
 		return this;
