@@ -41,12 +41,17 @@ class Main {
 				case 'CC010': new CC010(ctx);
 				case 'CC011': new CC011(ctx);
 				case 'CC012': new CC012(ctx);
+				case 'CC013': new CC013(ctx);
+				case 'CC014': new CC014(ctx);
 				default :
 					trace ("case '"+hash+"': new "+hash+"(ctx);");
-					location.hash = 'CC012';
-					new CC012(ctx);
+					location.hash = 'CC014';
+					new CC014(ctx);
 
 			}
+
+	 		var snackbar = new lib.html.Snackbar();
+	  		snackbar.show('project $hash');
 
 			var count = Std.parseInt(hash.toLowerCase().replace('cc',''));
 
