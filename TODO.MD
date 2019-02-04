@@ -130,32 +130,10 @@ sketch.cc0009 :: stars
 creative code
 ```
 #codeart #coding #creativecode #generative #generativeArt
-```
-
-style
-```
 #minimalism #minimalist #minimal #blackandwhite
-```
-
-visual/animation
-
-```
 #vj #visuals #visualcollective
-```
-
-language
-
-```
 #haxe #nodejs #javascript #js
-```
-
-hmmm
-```
 #amsterdam
-```
-
-with sound
-```
 #sound #soundcloud #soundreactive
 #techno
 ```
