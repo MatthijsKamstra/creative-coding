@@ -14,10 +14,6 @@
 - [x] refresh page (reinventing the wheel)
 - [x] draw vs animation?
 - [x] cursor for next/previous
-- [ ] check svg classes for color classes
-- [ ] choose color vs colour
-- [ ] nav between sketches (css)
-- [ ] add controle settings (quick settings)
 - [x] default nav, description, etc css
 - [x] add signals lib ?
 - [x] added options: https://github.com/soulwire/sketch.js/wiki/API
@@ -27,6 +23,12 @@
 - [x] implement sketchoptions
 - [x] add different paper sizes to lib (gen-js-art)
 - [x] import json with colors (https://github.com/mattdesl/nice-color-palettes)
+- [x] snack bar added to page (see fonk-onepressforhappiness)
+- [ ] create snackbar that is more subtile
+- [ ] check svg classes for color classes
+- [ ] choose color vs colour
+- [ ] nav between sketches (css)
+- [ ] add controle settings (quick settings)
 - [ ] get scaling canvas image (A4 -> A0)  from `gen-js-art`
 - [ ] loading music
 - [ ] loading colors
@@ -39,7 +41,10 @@
 - [ ] `esc`-button to return to normal
 - [ ] check for usefull stuff: https://github.com/soulwire/sketch.js/wiki/API
 - [ ] get classes from `gen-js-art`
-- [ ] snack bar added to page (see fonk-onepressforhappiness)
+- [ ] check `gen-js-art` for usefull classes
+- [ ] check `fonk-onepressforhappines` for usefull classes
+- [ ] check `web-drawnumbers` for usefull classes
+- [ ] check `project-monofonts` for usefull classes
 - [ ] ....
 
 

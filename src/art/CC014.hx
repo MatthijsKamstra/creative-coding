@@ -46,21 +46,18 @@ class CC014 extends CCBase implements ICCBase {
 			size: random(10, 100),
 		}
 		Reflect.setField(circle, 'stroke', 20);
-
-		trace(untyped circle.stroke);
-
 		onCircleHandler(circle);
 		return circle;
 	}
 
-	function onCircleHandler(circle) {
-		// var _s = Std.parseInt(circle.size);
-		// var r = Math.round(random(_s/5, _s/8));
+	function onCircleHandler(circle:Circle) {
+		// trace(untyped circle.stroke);
+		var r = Math.round(random(1, 20));
 		GoJs.to(circle, random(1, 5))
 			.x(random(0, w))
 			.y(random(0, h))
 			.prop('size', Math.round(random(10, 100)))
-			.prop('stroke', 20)
+			.prop('stroke', r)
 			.ease(Sine.easeInOut)
 			.onComplete(onCircleHandler, [circle])
 			.delay(random(0, 2));
@@ -69,19 +66,24 @@ class CC014 extends CCBase implements ICCBase {
 	function drawShape() {
 
 
-
-
 		ctx.fillStyle = getColourObj(flipColorW);
 		// FontUtil.centerFillText(ctx, '[MCK]', w/2, h/2+200, "'Six Caps', sans-serif", 500);
 		FontUtil.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
 
+		ctx.globalCompositeOperation = 'xor';
+
+		// ctx.globalCompositeOperation = 'source-out';
+		// ctx.save();
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 			ctx.strokeColourObj(flipColorW);
 			ctx.strokeWeight(untyped sh.stroke);
 			ctx.strokeCircle(sh.x, sh.y, sh.size / 2);
+		// ctx.globalCompositeOperation = 'source-out';
 		}
+		// ctx.restore();
 
+		// FontUtil.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
 
 		// ctx.save();
 

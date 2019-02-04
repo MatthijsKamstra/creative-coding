@@ -200,7 +200,7 @@ var Main = function() {
 			new art_CC014(ctx);
 		}
 		var snackbar = new lib_html_Snackbar();
-		snackbar.show("project " + hash);
+		snackbar.show("sketch " + hash);
 		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
 		window.addEventListener("hashchange",function() {
 			window.location.reload();
@@ -1919,11 +1919,11 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 	,createShape: function(i) {
 		var circle = { _id : "" + i, _type : "circle", x : lib_util_MathUtil.random(0,lib_Global.w), y : lib_util_MathUtil.random(0,lib_Global.h), size : lib_util_MathUtil.random(10,100)};
 		circle["stroke"] = 20;
-		console.log(circle.stroke);
 		this.onCircleHandler(circle);
 		return circle;
 	}
 	,onCircleHandler: function(circle) {
+		var r = Math.round(lib_util_MathUtil.random(1,20));
 		var GoJs = new lets_GoJs(circle,lib_util_MathUtil.random(1,5));
 		GoJs._isFrom = false;
 		var _this = GoJs;
@@ -1955,7 +1955,7 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		if(Object.prototype.hasOwnProperty.call(_this3._target,"stroke")) {
 			objValue3 = Reflect.getProperty(_this3._target,"stroke");
 		}
-		var _range3 = { key : "stroke", from : _this3._isFrom ? 20 : objValue3, to : !_this3._isFrom ? 20 : objValue3};
+		var _range3 = { key : "stroke", from : _this3._isFrom ? r : objValue3, to : !_this3._isFrom ? r : objValue3};
 		_this3._props.set("stroke",_range3);
 		var _this4 = _this3;
 		_this4._easing = lets_easing_Sine.get_easeInOut();
@@ -1968,6 +1968,7 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 	,drawShape: function() {
 		this.ctx.fillStyle = lib_util_ColorUtil.getColourObj(this.flipColorW);
 		lib_util_FontUtil.centerFillText(this.ctx,"[mck]",lib_Global.w / 2,lib_Global.h / 2 + 50,"'Barlow Condensed', sans-serif",300);
+		this.ctx.globalCompositeOperation = "xor";
 		var _g1 = 0;
 		var _g = this.shapeArray.length;
 		while(_g1 < _g) {
@@ -3582,7 +3583,7 @@ lib_html_Snackbar.prototype = $extend(lib_html_CSSinjector.prototype,{
 		},3000);
 	}
 	,css: function() {
-		return "\n/* https://www.w3schools.com/howto/howto_js_snackbar.asp */\n/* The snackbar - position it at the bottom and in the middle of the screen */\n#snackbar {\n    visibility: hidden; /* Hidden by default. Visible on click */\n    min-width: 250px; /* Set a default minimum width */\n    margin-left: -125px; /* Divide value of min-width by 2 */\n    background-color: #333; /* Black background color */\n    color: #fff; /* White text color */\n    text-align: center; /* Centered text */\n    border-radius: 2px; /* Rounded borders */\n    padding: 16px; /* Padding */\n    position: fixed; /* Sit on top of the screen */\n    z-index: 1; /* Add a z-index if needed */\n    left: 50%; /* Center the snackbar */\n    bottom: " + this.bottomIn + "px; /* " + this.bottomIn + "px from the bottom */\n}\n\n/* Show the snackbar when clicking on a button (class added with JavaScript) */\n#snackbar.show {\n    visibility: visible; /* Show the snackbar */\n\n\t/* Add animation: Take 0.5 seconds to fade in and out the snackbar.\n\tHowever, delay the fade out process for 2.5 seconds */\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\n}\n\n/* Animations to fade the snackbar in and out */\n@-webkit-keyframes fadein {\n    from {bottom: " + this.bottomOut + "px; opacity: 0;}\n    to {bottom: " + this.bottomIn + "px; opacity: 1;}\n}\n\n@keyframes fadein {\n    from {bottom: " + this.bottomOut + "px; opacity: 0;}\n    to {bottom: " + this.bottomIn + "px; opacity: 1;}\n}\n\n@-webkit-keyframes fadeout {\n    from {bottom: " + this.bottomIn + "px; opacity: 1;}\n    to {bottom: " + this.bottomOut + "px; opacity: 0;}\n}\n\n@keyframes fadeout {\n    from {bottom: " + this.bottomIn + "px; opacity: 1;}\n    to {bottom: " + this.bottomOut + "px; opacity: 0;}\n}\n\t\t";
+		return "\n/* https://www.w3schools.com/howto/howto_js_snackbar.asp */\n/* The snackbar - position it at the bottom and in the middle of the screen */\n#snackbar {\n    visibility: hidden; /* Hidden by default. Visible on click */\n    min-width: 250px; /* Set a default minimum width */\n    margin-left: -125px; /* Divide value of min-width by 2 */\n    background-color: #333; /* Black background color */\n    color: #fff; /* White text color */\n    text-align: center; /* Centered text */\n    border-radius: 5px 5px 0 0; /* Rounded borders */\n    padding: 10px; /* Padding */\n    position: fixed; /* Sit on top of the screen */\n    z-index: 1; /* Add a z-index if needed */\n    left: 50%; /* Center the snackbar */\n    bottom: " + this.bottomIn + "px; /* " + this.bottomIn + "px from the bottom */\n    font-size: 13px;\n\topacity: 0.5;\n}\n\n/* Show the snackbar when clicking on a button (class added with JavaScript) */\n#snackbar.show {\n    visibility: visible; /* Show the snackbar */\n\n\t/* Add animation: Take 0.5 seconds to fade in and out the snackbar.\n\tHowever, delay the fade out process for 2.5 seconds */\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\n}\n\n/* Animations to fade the snackbar in and out */\n@-webkit-keyframes fadein {\n    from {bottom: " + this.bottomOut + "px; opacity: 0;}\n    to {bottom: " + this.bottomIn + "px; opacity: 1;}\n}\n\n@keyframes fadein {\n    from {bottom: " + this.bottomOut + "px; opacity: 0;}\n    to {bottom: " + this.bottomIn + "px; opacity: 1;}\n}\n\n@-webkit-keyframes fadeout {\n    from {bottom: " + this.bottomIn + "px; opacity: 1;}\n    to {bottom: " + this.bottomOut + "px; opacity: 0;}\n}\n\n@keyframes fadeout {\n    from {bottom: " + this.bottomIn + "px; opacity: 1;}\n    to {bottom: " + this.bottomOut + "px; opacity: 0;}\n}\n\t\t";
 	}
 	,__class__: lib_html_Snackbar
 });
@@ -3730,7 +3731,7 @@ lib_util_FontUtil.centerFillText = function(ctx,text,x,y,css,size) {
 	if(size == null) {
 		size = 20;
 	}
-	ctx.font = "" + size + "px " + css;
+	ctx.font = "" + size + "px " + StringTools.replace(css,";","");
 	ctx.textAlign = "center";
 	ctx.fillText(text,x,y);
 };
@@ -4851,7 +4852,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-04 10:47:38";
+lib_model_constants_App.BUILD = "2019-02-04 21:41:31";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
