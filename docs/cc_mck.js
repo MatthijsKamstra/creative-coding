@@ -194,10 +194,13 @@ var Main = function() {
 		case "CC014":
 			new art_CC014(ctx);
 			break;
+		case "CC015":
+			new art_CC015(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC014";
-			new art_CC014(ctx);
+			window.location.hash = "CC015";
+			new art_CC015(ctx);
 		}
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
@@ -1994,6 +1997,42 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC014
+});
+var art_CC015 = function(ctx) {
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC015.__name__ = ["art","CC015"];
+art_CC015.__interfaces__ = [art_ICCBase];
+art_CC015.__super__ = art_CCBase;
+art_CC015.prototype = $extend(art_CCBase.prototype,{
+	createShape: function() {
+		var shape = { x : lib_Global.w / 2, y : lib_Global.h / 2, size : 50, alpha : 1, color : lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.FUCHSIA), type : "ball"};
+		shape["r"] = lib_util_ColorUtil.FUCHSIA.r;
+		shape["g"] = lib_util_ColorUtil.FUCHSIA.g;
+		shape["b"] = lib_util_ColorUtil.FUCHSIA.b;
+		shape["angle"] = 0;
+		return shape;
+	}
+	,drawShape: function() {
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+		}
+	}
+	,init: function() {
+		console.log("init: " + this.toString());
+		var rgb = lib_util_ColorUtil.randomColourObject();
+		lib_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
+		lib_util_ShapeUtil.xcross(this.ctx,lib_Global.w / 2,lib_Global.h / 2,200);
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.stop();
+	}
+	,__class__: art_CC015
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -4852,7 +4891,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-04 21:42:09";
+lib_model_constants_App.BUILD = "2019-02-04 21:43:02";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
