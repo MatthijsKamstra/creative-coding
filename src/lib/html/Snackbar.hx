@@ -61,12 +61,13 @@ class Snackbar extends CSSinjector {
     background-color: #333; /* Black background color */
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
-    padding: 16px; /* Padding */
+    border-radius: 5px 5px 0 0; /* Rounded borders */
+    padding: 10px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
     left: 50%; /* Center the snackbar */
     bottom: ${bottomIn}px; /* ${bottomIn}px from the bottom */
+    font-size: 13px;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
