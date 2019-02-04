@@ -28,7 +28,8 @@ class FontUtil {
 	 * @param size
 	 */
 	public static function centerFillText(ctx:CanvasRenderingContext2D, text:String, x:Float, y:Float, css:String, ?size:Int = 20) {
-		ctx.font = '${size}px ${css}';
+		ctx.font = '${size}px ${css.replace(';','')}';
+		// seems to break something if css has `;`
 		ctx.textAlign = "center";
 		ctx.fillText(text, x, y);
 
