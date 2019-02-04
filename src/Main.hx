@@ -51,7 +51,7 @@ class Main {
 			}
 
 	 		var snackbar = new lib.html.Snackbar();
-	  		snackbar.show('project $hash');
+	  		snackbar.show('sketch $hash');
 
 			var count = Std.parseInt(hash.toLowerCase().replace('cc',''));
 

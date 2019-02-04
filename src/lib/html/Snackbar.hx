@@ -68,6 +68,7 @@ class Snackbar extends CSSinjector {
     left: 50%; /* Center the snackbar */
     bottom: ${bottomIn}px; /* ${bottomIn}px from the bottom */
     font-size: 13px;
+	opacity: 0.5;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
