@@ -34,7 +34,7 @@ class CC000 extends CCBase implements ICCBase {
 	}
 
 
-	override function init(){
+	override function setup(){
 		trace('init: ${toString()}');
 		var rgb = randomColourObject();
 		ctx.strokeColour(rgb.r, rgb.g, rgb.b);
