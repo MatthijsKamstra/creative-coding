@@ -37,13 +37,20 @@ class Sketch {
 
 	// this enables me to have many canvases all positioned on top of eachother at 100% width and height of page
 	public function createCanvas(canvas_name):CanvasRenderingContext2D {
-		canvas = document.createCanvasElement();
 		var body = document.querySelector('body');
+
+		var container = document.createDivElement();
+		container.className = 'container';
+
+		canvas = document.createCanvasElement();
 		canvas.setAttribute("id", canvas_name);
-		canvas.style.position = "absolute";
-		canvas.style.left = "0px";
-		canvas.style.top = "0px";
-		body.appendChild(canvas);
+		// canvas.style.position = "absolute";
+		// canvas.style.left = "0px";
+		// canvas.style.top = "0px";
+
+		body.appendChild(container);
+		container.appendChild(canvas);
+
 		ctx = canvas.getContext('2d');
 		new Sketch().init(ctx);
 		resize();

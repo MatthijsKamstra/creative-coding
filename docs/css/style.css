@@ -1,3 +1,25 @@
 canvas {
 	/* border: 1px solid pink; */
+	/* width: 500px; */
+	background-color: white;
+
+}
+
+.container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+* {
+	background-color: #fafafa;
+}
+html, body {
+    height: 100%;
+}
+body {
+    margin: 0;
 }
