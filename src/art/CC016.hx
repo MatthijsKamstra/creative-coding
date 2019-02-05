@@ -6,10 +6,10 @@ package art;
 class CC016 extends CCBase implements ICCBase {
 
 	var shapeArray : Array<CircleExtra> = [];
-	var arr : Array<Array<CircleExtra>> = [];
+	var arr : Array<Array<CircleExtra>> = [[]];
 	var shapeMax : Int = 25;
 
-	var _size = 50;
+	var _size = 75;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'Circle with trail';
@@ -35,19 +35,15 @@ class CC016 extends CCBase implements ICCBase {
 	}
 
 	function drawShape(){
-		var grid = new GridUtil();
-		// grid.setCellSize(_size);
-		grid.setIsCenterPoint(true);
-		// grid.setNumbered(10,10);
-		grid.setNumbered(2,2);
 
 		if (isDebug) {
 			ShapeUtil.gridField(ctx, grid);
 		}
+
 		for ( j in 0 ... grid.array.length ) {
 			var point = grid.array[j];
-			for ( i in 0 ... shapeArray.length ) {
-				var sh = shapeArray[i];
+			for ( i in 0 ... arr[j].length ) {
+				var sh = arr[j][i];
 				sh.angle -= sh.speed;
 				// plot the balls x to cos and y to sin
 				// sh.x = w/2 + Math.cos(radians(untyped sh.angle))*sh.radius;
@@ -58,21 +54,47 @@ class CC016 extends CCBase implements ICCBase {
 				ctx.circle(sh.x, sh.y, sh.size);
 			}
 		}
+		// for ( j in 0 ... grid.array.length ) {
+		// 	var point = grid.array[j];
+		// 	for ( i in 0 ... shapeArray.length ) {
+		// 		var sh = shapeArray[i];
+		// 		sh.angle -= sh.speed;
+		// 		// plot the balls x to cos and y to sin
+		// 		// sh.x = w/2 + Math.cos(radians(untyped sh.angle))*sh.radius;
+		// 		// sh.y = h/2 + Math.sin(radians(untyped sh.angle))*sh.radius;
+		// 		sh.x = point.x + Math.cos(radians(untyped sh.angle))*sh.radius;
+		// 		sh.y = point.y + Math.sin(radians(untyped sh.angle))*sh.radius;
+		// 		ctx.fillStyle = getColourObj(sh.rgb, sh.alpha);
+		// 		ctx.circle(sh.x, sh.y, sh.size);
+		// 	}
+		// }
 	}
 
+	var grid = new GridUtil();
 
 	override function setup(){
 		trace('init: ${toString()}');
 
+		// var grid = new GridUtil();
+		grid.setCellSize(_size);
+		grid.setIsCenterPoint(true);
+		// grid.setNumbered(10,10);
+		// grid.setNumbered(2,2);
 
-		trace(isDebug);
-		isDebug = true;
-		trace(isDebug);
+
+
+		// trace(isDebug);
+		// isDebug = true;
+		// trace(isDebug);
 
 
 
-		for ( i in 0 ... shapeMax ) {
-			shapeArray.push(createShape(i));
+		for ( j in 0 ... grid.array.length ) {
+			arr.push([]);
+			for ( i in 0 ... shapeMax ) {
+				// arr[j]
+				arr[j].push(createShape(i));
+			}
 		}
 		// console.table(shapeArray);
 

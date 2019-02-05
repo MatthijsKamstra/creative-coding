@@ -2067,9 +2067,10 @@ art_CC015.prototype = $extend(art_CCBase.prototype,{
 	,__class__: art_CC015
 });
 var art_CC016 = function(ctx) {
-	this._size = 50;
+	this.grid = new lib_util_GridUtil();
+	this._size = 75;
 	this.shapeMax = 25;
-	this.arr = [];
+	this.arr = [[]];
 	this.shapeArray = [];
 	this.set_description("Circle with trail");
 	art_CCBase.call(this,ctx);
@@ -2083,22 +2084,19 @@ art_CC016.prototype = $extend(art_CCBase.prototype,{
 		return shape;
 	}
 	,drawShape: function() {
-		var grid = new lib_util_GridUtil();
-		grid.setIsCenterPoint(true);
-		grid.setNumbered(2,2);
 		if(this.isDebug) {
-			lib_util_ShapeUtil.gridField(this.ctx,grid);
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
 		}
 		var _g1 = 0;
-		var _g = grid.array.length;
+		var _g = this.grid.array.length;
 		while(_g1 < _g) {
 			var j = _g1++;
-			var point = grid.array[j];
+			var point = this.grid.array[j];
 			var _g3 = 0;
-			var _g2 = this.shapeArray.length;
+			var _g2 = this.arr[j].length;
 			while(_g3 < _g2) {
 				var i = _g3++;
-				var sh = this.shapeArray[i];
+				var sh = this.arr[j][i];
 				sh.angle -= sh.speed;
 				sh.x = point.x + Math.cos(lib_util_MathUtil.radians(sh.angle)) * sh.radius;
 				sh.y = point.y + Math.sin(lib_util_MathUtil.radians(sh.angle)) * sh.radius;
@@ -2109,14 +2107,19 @@ art_CC016.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		console.log("init: " + this.toString());
-		console.log(this.isDebug);
-		this.isDebug = true;
-		console.log(this.isDebug);
+		this.grid.setCellSize(this._size);
+		this.grid.setIsCenterPoint(true);
 		var _g1 = 0;
-		var _g = this.shapeMax;
+		var _g = this.grid.array.length;
 		while(_g1 < _g) {
-			var i = _g1++;
-			this.shapeArray.push(this.createShape(i));
+			var j = _g1++;
+			this.arr.push([]);
+			var _g3 = 0;
+			var _g2 = this.shapeMax;
+			while(_g3 < _g2) {
+				var i = _g3++;
+				this.arr[j].push(this.createShape(i));
+			}
 		}
 	}
 	,draw: function() {
@@ -5017,7 +5020,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-05 21:51:34";
+lib_model_constants_App.BUILD = "2019-02-05 22:05:30";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
