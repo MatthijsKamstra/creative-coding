@@ -4,47 +4,80 @@ package art;
  * short description what this does
  */
 class CC015 extends CCBase implements ICCBase {
-
-	var shapeArray : Array<Point> = [];
+	var shapeArray:Array<Point> = [];
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
-		description = '';
+		description = 'clock';
 	}
 
-	function createShape(){
-		var shape : AnimateObj = {
-			x: w/2,
-			y: h/2,
-			size: 50,
-			alpha: 1,
-			color: getColourObj (FUCHSIA),
-			type: 'ball'
+	var color = lib.util.ColorUtil.niceColor100[0];
+
+	override function setup() {
+		// isDebug = true;
+	}
+
+	function drawShape() {
+		// trace(color);
+
+		// trace('drawShape');
+		var time = Date.now();
+		var hours = time.getHours(); // 24
+		var min = time.getMinutes(); // 60
+		var sec = time.getSeconds(); // 60
+		// var sec = time.get() + 1; // 60
+
+		var min90 = -radians(90);
+		var lineW = 100;
+		var minRadius = 3 * lineW;
+		var _lineCap = 'round'; // 'round' "butt|round|square";
+		var centerX = w/2;
+		var centerY = h/2;
+		var _alpha = 0.1;
+
+		if (isDebug){
+			trace('$hours:$min:$sec');
+			// hours = 23;
 		}
-		Reflect.setField(shape,'r', FUCHSIA.r);
-		Reflect.setField(shape,'g', FUCHSIA.g);
-		Reflect.setField(shape,'b', FUCHSIA.b);
-		Reflect.setField(shape,'angle', 0);
-		return shape;
+		// 360graden == (2*Math.PI) == 24 uur == 60 min
+
+		// sec
+		ctx.beginPath();
+		ctx.strokeStyle = getColourObj(hex2RGB(color[0]));
+		ctx.lineCap = _lineCap;
+		ctx.lineWidth = lineW;
+		ctx.arc(centerX, centerY, minRadius - (0 * lineW), min90, radians((360 / 60) * sec) + min90);
+		ctx.stroke();
+		ctx.strokeStyle = getColourObj(hex2RGB(color[0]), _alpha);
+		ctx.strokeCircle(centerX, centerY, minRadius - (0 * lineW));
+
+		// min
+		ctx.beginPath();
+		ctx.strokeStyle = getColourObj(hex2RGB(color[1]));
+		ctx.lineCap = _lineCap;
+		ctx.lineWidth = lineW;
+		ctx.arc(centerX, centerY, minRadius - (1 * lineW), min90, radians((360 / 60) * min) + min90);
+		ctx.stroke();
+		ctx.strokeStyle = getColourObj(hex2RGB(color[1]), _alpha);
+		ctx.strokeCircle(centerX, centerY, minRadius - (1 * lineW));
+
+		// hour
+		ctx.beginPath();
+		ctx.strokeStyle = getColourObj(hex2RGB(color[2]));
+		ctx.lineCap = _lineCap;
+		ctx.lineWidth = lineW;
+		ctx.arc(centerX, centerY, minRadius - (2 * lineW), min90, radians((360 / 24) * hours) + min90);
+		ctx.stroke();
+		ctx.strokeStyle = getColourObj(hex2RGB(color[2]), _alpha);
+		ctx.strokeCircle(centerX, centerY, minRadius - (2 * lineW));
+
 	}
 
-	function drawShape(){
-		for ( i in 0 ... shapeArray.length ) {
-		}
-	}
-
-
-	override function init(){
-		trace('init: ${toString()}');
-		var rgb = randomColourObject();
-		ctx.strokeColour(rgb.r, rgb.g, rgb.b);
-		ctx.xcross(w/2, h/2, 200);
-	}
-
-	override function draw(){
-		trace('draw: ${toString()}');
-		// ctx.clearRect(0,0,w,h);
-		// ctx.backgroundObj(BLACK);
-		stop();
+	override function draw() {
+		// trace('draw: ${toString()}');
+		ctx.clearRect(0, 0, w, h);
+		ctx.backgroundObj(WHITE);
+		drawShape();
+		// stop();
 	}
 }
