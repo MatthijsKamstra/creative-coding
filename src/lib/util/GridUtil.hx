@@ -12,15 +12,15 @@ class GridUtil {
 	public var height:Float = null;
 	public var gridX:Float = 0;
 	public var gridY:Float = 0;
-	public var cellWidth:Float = 0;
 	public var isCentered :Bool = false;
 
+	public var cellWidth:Float = null;
 	/**
-	 * how heigh is the grid
+	 * how height is the grid
 	 */
-	public var cellHeight:Float = 0;
-	public var numHor:Float = 0;
-	public var numVer:Float = 0;
+	public var cellHeight:Float = null;
+	public var numHor:Float = null;
+	public var numVer:Float = null;
 
 	public function new() {}
 
@@ -29,7 +29,7 @@ class GridUtil {
 	 * @param x			start position x
 	 * @param y			start postion y
 	 */
-	public function position(x, y){
+	public function setPosition(x, y){
 		this.x = x;
 		this.y = y;
 		calculate();
@@ -40,7 +40,7 @@ class GridUtil {
 	 *
 	 * @param isCentered  (default: true)
 	 */
-	public function useCenterPoints(isCentered:Bool = true){
+	public function setIsCenterPoint(isCentered:Bool = true){
 		this.isCentered = isCentered;
 		calculate();
 	}
@@ -51,7 +51,7 @@ class GridUtil {
 	 * @param width		total width of grid
 	 * @param height	total height of grid
 	 */
-	public function dimension(width, height){
+	public function setDimension(width, height){
 		this.width = width;
 		this.height = height;
 		calculate();
@@ -62,7 +62,7 @@ class GridUtil {
 	 * @param numHor	number of items horizontal
 	 * @param numVer	number of itmes vertical
 	 */
-	public function numbered(numHor, numVer){
+	public function setNumbered(numHor:Float, numVer:Float){
 		this.numHor = numHor;
 		this.numVer = numVer;
 		calculate();
@@ -77,7 +77,7 @@ class GridUtil {
 	 * @param cellWidth 	fixed grid width
 	 * @param cellHeight 	fixed grid height
 	 */
-	public function cellSize(cellWidth, ?cellHeight){
+	public function setCellSize(cellWidth, ?cellHeight){
 		if (cellHeight == null) cellHeight = cellWidth;
 		this.cellWidth = cellWidth;
 		this.cellHeight = cellHeight;
@@ -104,7 +104,7 @@ class GridUtil {
 			width = numHor * cellWidth;
 			x = (w - width)/2;
 		}
-		if (cellHeight!= null){
+		if (cellHeight != null){
 			numVer = Math.floor(h / cellHeight);
 			height = numVer * cellHeight;
 			y = (h - height)/2;
@@ -112,6 +112,20 @@ class GridUtil {
 		// force
 		// x = 0;
 		// y=0;
+
+		// trace(numHor);
+		// trace(numVer);
+
+		if(numHor != null){
+			cellWidth = w / numHor;
+			width = numHor * cellWidth;
+			x = (w - width)/2;
+		}
+		if(numVer != null){
+			cellHeight = h / numVer;
+			height = numVer * cellHeight;
+			y = (h - height)/2;
+		}
 
 		var cx = 0.0;
 		var cy = 0.0;
