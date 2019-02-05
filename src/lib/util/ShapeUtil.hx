@@ -69,4 +69,20 @@ class ShapeUtil {
 		}
 	}
 
+	/**
+	 * use with de data of GridUtil
+	 * create registration point with a border of grid
+	 * @example
+	 * 			var grid = ...
+	 * 			lib.util.ShapeUtil.gridField(ctx, grid);
+	 */
+	public static function gridField(ctx:CanvasRenderingContext2D, grid:GridUtil){
+		for (i in 0...grid.array.length) {
+			var point:Point = grid.array[i];
+			registerPoint(ctx, point.x, point.y);
+		}
+		ctx.lineColour(GRAY.r, GRAY.g, GRAY.b, 0.5);
+		ctx.strokeRect(grid.x, grid.y, grid.width, grid.height);
+	}
+
 }
