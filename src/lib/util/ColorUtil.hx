@@ -31,8 +31,8 @@ class ColorUtil {
 		return (c);
 	};
 
-	static public function getColourObj(rgb:RGB):String {
-		return getColour(rgb.r,rgb.g,rgb.b);
+	static public function getColourObj(rgb:RGB, ?a:Float):String {
+		return getColour(rgb.r,rgb.g,rgb.b,a);
 	}
 
 	/**
