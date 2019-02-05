@@ -1,5 +1,7 @@
 package lib;
 
+import  lib.util.ColorUtil;
+
 class AST {}
 
 // ____________________________________ extending typedef ____________________________________
@@ -30,6 +32,12 @@ typedef Appearance = {
 	@:optional var color:Int;
 	@:optional var colour:String;
 	@:optional var alpha:Float;
+	@:optional var rgb:RGB;
+};
+
+typedef Rotation = {
+	@:optional var angle:Float;
+	@:optional var speed:Float;
 };
 
 // point
@@ -44,6 +52,17 @@ typedef PointInt = {
 };
 
 // ____________________________________ shape typedef  ____________________________________
+
+typedef CircleExtra = {
+	> Base,
+	> Position,
+	> Appearance,
+	> Rotation,
+	@:optional var radius:Float;
+	@:optional var size:Float;
+};
+
+
 typedef Circle = {
 	> Base,
 	> Position,
