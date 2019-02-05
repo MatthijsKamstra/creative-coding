@@ -47,7 +47,7 @@ class CC013 extends CCBase implements ICCBase {
 		var _numVer = Math.round(h / _size) + 1;
 		// var arr:Array<Point> = GridUtil.create(_x, _y, w - (2 * _x), h - (2 * _y), _numHor, _numVer);
 		var grid = new GridUtil();
-		grid.cellSize(_size);
+		grid.setCellSize(_size);
 
 		// trace('x: ${grid.x}, y: ${grid.y}');
 		// trace('w: ${w}, h: ${h}');
