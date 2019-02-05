@@ -13,6 +13,11 @@ class GridUtil {
 	public var gridX:Float = 0;
 	public var gridY:Float = 0;
 	public var cellWidth:Float = 0;
+	public var isCentered :Bool = false;
+
+	/**
+	 * how heigh is the grid
+	 */
 	public var cellHeight:Float = 0;
 	public var numHor:Float = 0;
 	public var numVer:Float = 0;
@@ -31,11 +36,22 @@ class GridUtil {
 	}
 
 	/**
-	 * [Description]
-	 * @param width		width of grid
-	 * @param height	height of grid
+	 * use centered point for grid
+	 *
+	 * @param isCentered  (default: true)
 	 */
-	public function dimensie(width, height){
+	public function useCenterPoints(isCentered:Bool = true){
+		this.isCentered = isCentered;
+		calculate();
+	}
+
+	/**
+	 * TODO : create a grid based upon width/height
+	 * 		x, y, cellWidth, cellHeight is calculated
+	 * @param width		total width of grid
+	 * @param height	total height of grid
+	 */
+	public function dimension(width, height){
 		this.width = width;
 		this.height = height;
 		calculate();
@@ -53,7 +69,11 @@ class GridUtil {
 	}
 
 	/**
-	 * [Description]
+	 * use these values to calculate the grid
+	 * if this is only set, it will x, y, width, height of the grid
+	 *
+	 * center point is LEFT,TOP
+	 *
 	 * @param cellWidth 	fixed grid width
 	 * @param cellHeight 	fixed grid height
 	 */
@@ -93,6 +113,12 @@ class GridUtil {
 		// x = 0;
 		// y=0;
 
+		var cx = 0.0;
+		var cy = 0.0;
+		if(isCentered) {
+			cx = cellWidth/2;
+			cy = cellHeight/2;
+		}
 
 		array= [];
 		var total = Math.round(numHor * numVer);
@@ -100,8 +126,8 @@ class GridUtil {
 		var ypos = 0;
 		for (i in 0...total) {
 			var point:Point = {
-				x: Math.round(x + (xpos * cellWidth)),
-				y: Math.round(y + (ypos * cellHeight)),
+				x: Math.round(x + (xpos * cellWidth) + cx),
+				y: Math.round(y + (ypos * cellHeight) + cy),
 			}
 			array.push(point);
 			xpos++;
