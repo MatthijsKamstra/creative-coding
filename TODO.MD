@@ -122,7 +122,28 @@ stuff I need to look into
 - The safest times to post are generally 10 a.m. to 5 p.m. Wednesday to Friday.
 - Sunday is the least engaged day of the week for tech.
 
-instagram
+
+## instagram images
+
+https://dustn.tv/instagram-sizes/
+
+The standard square image on Instagram remains to be shown at a maximum of 600×600 pixels.
+
+https://colorlib.com/wp/size-of-the-instagram-picture/
+
+- Square Image: 1080px in width by 1080px in height
+- Vertical Image:  1080px in width by 1350px in height
+- Horizontal Image: 1080px in width by 566px in height
+
+
+https://louisem.com/37587/whats-the-best-instagram-image-size
+
+The optimal sizes are 1080 pixels wide by 566 pixels to 1350 pixels high.
+
+
+
+
+## instagram hash
 
 ```
 sketch.cc0009 :: stars
