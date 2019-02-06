@@ -22,6 +22,10 @@ class GridUtil {
 	public var numHor:Float = null;
 	public var numVer:Float = null;
 
+
+	var _isCellSize : Bool = false;
+	var _isNumbered : Bool = false;
+
 	public function new() {}
 
 	/**
@@ -65,6 +69,7 @@ class GridUtil {
 	public function setNumbered(numHor:Float, numVer:Float){
 		this.numHor = numHor;
 		this.numVer = numVer;
+		this._isNumbered = true;
 		calculate();
 	}
 
@@ -75,12 +80,13 @@ class GridUtil {
 	 * center point is LEFT,TOP
 	 *
 	 * @param cellWidth 	fixed grid width
-	 * @param cellHeight 	fixed grid height
+	 * @param cellHeight 	(optional) fixed grid height (default is equal to cellWidth)
 	 */
 	public function setCellSize(cellWidth, ?cellHeight){
 		if (cellHeight == null) cellHeight = cellWidth;
 		this.cellWidth = cellWidth;
 		this.cellHeight = cellHeight;
+		this._isCellSize = true;
 		calculate();
 	}
 
@@ -98,33 +104,36 @@ class GridUtil {
 		  *
 		  * TOP/LEFT centerpoint?
 		  */
-
-		if (cellWidth != null){
-			numHor = Math.floor(w / cellWidth);
-			width = numHor * cellWidth;
-			x = (w - width)/2;
-		}
-		if (cellHeight != null){
-			numVer = Math.floor(h / cellHeight);
-			height = numVer * cellHeight;
-			y = (h - height)/2;
+		if(_isCellSize){
+			if (cellWidth != null){
+				numHor = Math.floor(w / cellWidth);
+				width = numHor * cellWidth;
+				x = (w - width)/2;
+			}
+			if (cellHeight != null){
+				numVer = Math.floor(h / cellHeight);
+				height = numVer * cellHeight;
+				y = (h - height)/2;
+			}
 		}
 		// force
 		// x = 0;
 		// y=0;
 
-		// trace(numHor);
-		// trace(numVer);
-
-		if(numHor != null){
-			cellWidth = w / numHor;
-			width = numHor * cellWidth;
-			x = (w - width)/2;
-		}
-		if(numVer != null){
-			cellHeight = h / numVer;
-			height = numVer * cellHeight;
-			y = (h - height)/2;
+		/**
+		 * #2 use numbered cells, so calculate the rest
+		 */
+		if(_isNumbered){
+			if(numHor != null){
+				cellWidth = w / numHor;
+				width = numHor * cellWidth;
+				x = (w - width)/2;
+			}
+			if(numVer != null){
+				cellHeight = h / numVer;
+				height = numVer * cellHeight;
+				y = (h - height)/2;
+			}
 		}
 
 		var cx = 0.0;
