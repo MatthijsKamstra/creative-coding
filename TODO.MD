@@ -24,7 +24,7 @@
 - [x] add different paper sizes to lib (gen-js-art)
 - [x] import json with colors (https://github.com/mattdesl/nice-color-palettes)
 - [x] snack bar added to page (see fonk-onepressforhappiness)
-- [ ] create snackbar that is more subtile
+- [x] create snackbar that is more subtile
 - [ ] check svg classes for color classes
 - [ ] choose color vs colour
 - [ ] nav between sketches (css)
