@@ -200,10 +200,22 @@ var Main = function() {
 		case "CC016":
 			new art_CC016(ctx);
 			break;
+		case "CC017":
+			new art_CC017(ctx);
+			break;
+		case "CC018":
+			new art_CC018(ctx);
+			break;
+		case "CC019":
+			new art_CC019(ctx);
+			break;
+		case "CC020":
+			new art_CC020(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC016";
-			new art_CC016(ctx);
+			window.location.hash = "CC020";
+			new art_CC020(ctx);
 		}
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
@@ -363,21 +375,25 @@ Sketch.prototype = {
 			lib_Global.mouseDown = false;
 		});
 		this.window.addEventListener(lib_Global.KEY_DOWN,function(e3) {
-			e3.preventDefault();
-			e3.stopPropagation();
 			if(e3.metaKey == true && e3.key == "r") {
 				console.log("cmd + r");
 				window.location.reload();
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == false) {
+				e3.preventDefault();
+				e3.stopPropagation();
 				console.log("cmd + s");
 				lib_util_ExportUtil.downloadImage(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == true) {
+				e3.preventDefault();
+				e3.stopPropagation();
 				console.log("cmd + shift + s");
 				lib_util_ExportUtil.downloadImage(ctx,false);
 			}
 			if(e3.metaKey == true && (e3.code == "KeyS" && e3.altKey == true)) {
+				e3.preventDefault();
+				e3.stopPropagation();
 				console.log("cmd + alt + s");
 				lib_util_ExportUtil.onBase64Handler(ctx,true);
 			}
@@ -2067,10 +2083,9 @@ art_CC015.prototype = $extend(art_CCBase.prototype,{
 	,__class__: art_CC015
 });
 var art_CC016 = function(ctx) {
-	this.grid = new lib_util_GridUtil();
-	this._size = 75;
-	this.shapeMax = 25;
-	this.arr = [[]];
+	this._size = 50;
+	this._radius = 150;
+	this.shapeMax = 200;
 	this.shapeArray = [];
 	this.set_description("Circle with trail");
 	art_CCBase.call(this,ctx);
@@ -2079,6 +2094,51 @@ art_CC016.__name__ = ["art","CC016"];
 art_CC016.__interfaces__ = [art_ICCBase];
 art_CC016.__super__ = art_CCBase;
 art_CC016.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i) {
+		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.BLACK, alpha : 1 - i * (1 / this.shapeMax), radius : this._radius, size : this._size, angle : i, speed : 4};
+		return shape;
+	}
+	,drawShape: function() {
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			sh.angle -= sh.speed;
+			sh.x = lib_Global.w / 2 + Math.cos(lib_util_MathUtil.radians(sh.angle)) * sh.radius;
+			sh.y = lib_Global.h / 2 + Math.sin(lib_util_MathUtil.radians(sh.angle)) * sh.radius;
+			this.ctx.fillStyle = lib_util_ColorUtil.getColourObj(sh.rgb,sh.alpha);
+			lib_CanvasTools.circle(this.ctx,sh.x,sh.y,sh.size);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var _g1 = 0;
+		var _g = this.shapeMax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		this.drawShape();
+	}
+	,__class__: art_CC016
+});
+var art_CC017 = function(ctx) {
+	this.grid = new lib_util_GridUtil();
+	this._size = 75;
+	this.shapeMax = 25;
+	this.arr = [[]];
+	this.shapeArray = [];
+	this.set_description("Circles with trail");
+	art_CCBase.call(this,ctx);
+};
+art_CC017.__name__ = ["art","CC017"];
+art_CC017.__interfaces__ = [art_ICCBase];
+art_CC017.__super__ = art_CCBase;
+art_CC017.prototype = $extend(art_CCBase.prototype,{
 	createShape: function(i) {
 		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.BLACK, alpha : 1 - i * (1 / this.shapeMax), radius : 20, size : 10, angle : i * 10, speed : 4};
 		return shape;
@@ -2126,7 +2186,221 @@ art_CC016.prototype = $extend(art_CCBase.prototype,{
 		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
 		this.drawShape();
 	}
-	,__class__: art_CC016
+	,__class__: art_CC017
+});
+var art_CC018 = function(ctx) {
+	this._size = 75;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC018.__name__ = ["art","CC018"];
+art_CC018.__interfaces__ = [art_ICCBase];
+art_CC018.__super__ = art_CCBase;
+art_CC018.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : lib_util_MathUtil.random(5,this._size / 2)};
+		this.onYoYoHandler(shape);
+		return shape;
+	}
+	,drawShape: function() {
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.BLACK);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var circle = this.shapeArray[i];
+			lib_CanvasTools.circle(this.ctx,circle.x,circle.y,circle.radius);
+		}
+	}
+	,onYoYoHandler: function(circle) {
+		var GoJs = new lets_GoJs(circle,lib_util_MathUtil.random(0.1,2));
+		GoJs._isFrom = false;
+		var _this = GoJs;
+		var value = lib_util_MathUtil.random(5,this._size / 2);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"radius")) {
+			objValue = Reflect.getProperty(_this._target,"radius");
+		}
+		var _range = { key : "radius", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("radius",_range);
+		var _this1 = _this;
+		_this1._isYoyo = true;
+		var _this2 = _this1;
+		_this2._easing = lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onYoYoHandler);
+		_this3._options.onCompleteParams = [circle];
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.grid.setCellSize(this._size);
+		this.grid.setIsCenterPoint(true);
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = this.grid.array[i];
+			this.shapeArray.push(this.createShape(i,point));
+		}
+	}
+	,draw: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		this.drawShape();
+	}
+	,__class__: art_CC018
+});
+var art_CC019 = function(ctx) {
+	this._lineColor = null;
+	this._bgColor = null;
+	this._radius = 150;
+	this._size = 75;
+	this.grid = new lib_util_GridUtil();
+	this.shapeMax = 10;
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC019.__name__ = ["art","CC019"];
+art_CC019.__interfaces__ = [art_ICCBase];
+art_CC019.__super__ = art_CCBase;
+art_CC019.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius};
+		if(i != 4) {
+			this.onAnimateHandler(shape);
+		}
+		return shape;
+	}
+	,drawShape: function() {
+		lib_CanvasTools.backgroundObj(this.ctx,this._bgColor);
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor);
+		lib_CanvasTools.strokeWeight(this.ctx,15);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var circle = this.shapeArray[i];
+			lib_CanvasTools.strokeCircle(this.ctx,circle.x,circle.y,circle.radius);
+		}
+	}
+	,onAnimateHandler: function(circle) {
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var circle1 = this.shapeArray[i];
+			var point = this.grid.array[i];
+			circle1.x = point.x;
+			circle1.y = point.y;
+		}
+		var GoJs = new lets_GoJs(circle,5);
+		GoJs._isFrom = false;
+		var _this = GoJs;
+		var value = lib_Global.w / 2;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
+			objValue = Reflect.getProperty(_this._target,"x");
+		}
+		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("x",_range);
+		var _this1 = _this;
+		var value1 = lib_Global.h / 2;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
+			objValue1 = Reflect.getProperty(_this1._target,"y");
+		}
+		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
+		_this1._props.set("y",_range1);
+		var _this2 = _this1;
+		_this2._easing = lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this3._options.onCompleteParams = [circle];
+	}
+	,setup: function() {
+		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		this.grid.setDimension(lib_Global.w * 2.1,lib_Global.h * 2.1);
+		this.grid.setNumbered(3,3);
+		this.grid.setIsCenterPoint(true);
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = this.grid.array[i];
+			this.shapeArray.push(this.createShape(i,point));
+		}
+	}
+	,draw: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		this.drawShape();
+	}
+	,__class__: art_CC019
+});
+var art_CC020 = function(ctx) {
+	this._lineColor2 = null;
+	this._lineColor = null;
+	this._bgColor = null;
+	this._radius = 150;
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC020.__name__ = ["art","CC020"];
+art_CC020.__interfaces__ = [art_ICCBase];
+art_CC020.__super__ = art_CCBase;
+art_CC020.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "arc", x : lib_Global.w / 2, y : lib_Global.h / 2, radius : this._radius, rotation : 0, angle : 250, speed : 1};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,this._bgColor);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			sh.rotation += sh.speed + i;
+			this.ctx.beginPath();
+			this.ctx.strokeStyle = lib_util_ColorUtil.getColourObj(this._lineColor);
+			if(i == 0) {
+				this.ctx.strokeStyle = lib_util_ColorUtil.getColourObj(this._lineColor2);
+			}
+			this.ctx.lineCap = "round";
+			this.ctx.lineWidth = 30;
+			this.ctx.arc(lib_Global.w / 2,lib_Global.h / 2,sh.radius * (0.6 * i + 1),lib_util_MathUtil.radians(sh.rotation),lib_util_MathUtil.radians(sh.angle + sh.rotation));
+			this.ctx.stroke();
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._lineColor2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		this.shapeArray.push(this.createShape(0));
+		this.shapeArray.push(this.createShape(1));
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC020
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -3627,6 +3901,9 @@ lib_CanvasTools.strokeWeight = function(ctx,inPx) {
 lib_CanvasTools.fillColour = function(ctx,r,g,b,a) {
 	lib_CanvasTools.colour(ctx,r,g,b,a);
 };
+lib_CanvasTools.fillColourRGB = function(ctx,rgb,a) {
+	lib_CanvasTools.colour(ctx,rgb.r,rgb.g,rgb.b,a);
+};
 lib_CanvasTools.colour = function(ctx,r,g,b,a) {
 	var c = lib_util_ColorUtil.getColour(r,g,b,a);
 	ctx.fillStyle = c;
@@ -3660,6 +3937,9 @@ lib_CanvasTools.background = function(ctx,r,g,b,a) {
 	ctx.fillRect(0,0,lib_Global.w,lib_Global.h);
 };
 lib_CanvasTools.backgroundObj = function(ctx,rgb) {
+	lib_CanvasTools.background(ctx,rgb.r,rgb.g,rgb.b);
+};
+lib_CanvasTools.backgroundRGB = function(ctx,rgb) {
 	lib_CanvasTools.background(ctx,rgb.r,rgb.g,rgb.b);
 };
 var lib_Global = function() { };
@@ -3895,6 +4175,9 @@ lib_util_FontUtil.prototype = {
 	__class__: lib_util_FontUtil
 };
 var lib_util_GridUtil = function() {
+	this._isDimension = false;
+	this._isNumbered = false;
+	this._isCellSize = false;
 	this.numVer = null;
 	this.numHor = null;
 	this.cellHeight = null;
@@ -3987,11 +4270,13 @@ lib_util_GridUtil.prototype = {
 	,setDimension: function(width,height) {
 		this.width = width;
 		this.height = height;
+		this._isDimension = true;
 		this.calculate();
 	}
 	,setNumbered: function(numHor,numVer) {
 		this.numHor = numHor;
 		this.numVer = numVer;
+		this._isNumbered = true;
 		this.calculate();
 	}
 	,setCellSize: function(cellWidth,cellHeight) {
@@ -4000,28 +4285,39 @@ lib_util_GridUtil.prototype = {
 		}
 		this.cellWidth = cellWidth;
 		this.cellHeight = cellHeight;
+		this._isCellSize = true;
 		this.calculate();
 	}
 	,calculate: function() {
-		if(this.cellWidth != null) {
-			this.numHor = Math.floor(lib_Global.w / this.cellWidth);
-			this.width = this.numHor * this.cellWidth;
-			this.x = (lib_Global.w - this.width) / 2;
+		if(this._isCellSize) {
+			if(this.cellWidth != null) {
+				this.numHor = Math.floor(lib_Global.w / this.cellWidth);
+				this.width = this.numHor * this.cellWidth;
+				this.x = (lib_Global.w - this.width) / 2;
+			}
+			if(this.cellHeight != null) {
+				this.numVer = Math.floor(lib_Global.h / this.cellHeight);
+				this.height = this.numVer * this.cellHeight;
+				this.y = (lib_Global.h - this.height) / 2;
+			}
 		}
-		if(this.cellHeight != null) {
-			this.numVer = Math.floor(lib_Global.h / this.cellHeight);
-			this.height = this.numVer * this.cellHeight;
-			this.y = (lib_Global.h - this.height) / 2;
+		if(this._isNumbered) {
+			if(this.numHor != null) {
+				var _w = this.width != null ? this.width : lib_Global.w;
+				this.cellWidth = _w / this.numHor;
+				this.width = this.numHor * this.cellWidth;
+				this.x = (lib_Global.w - this.width) / 2;
+			}
+			if(this.numVer != null) {
+				var _h = this.height != null ? this.height : lib_Global.h;
+				this.cellHeight = _h / this.numVer;
+				this.height = this.numVer * this.cellHeight;
+				this.y = (lib_Global.h - this.height) / 2;
+			}
 		}
-		if(this.numHor != null) {
-			this.cellWidth = lib_Global.w / this.numHor;
-			this.width = this.numHor * this.cellWidth;
-			this.x = (lib_Global.w - this.width) / 2;
-		}
-		if(this.numVer != null) {
-			this.cellHeight = lib_Global.h / this.numVer;
-			this.height = this.numVer * this.cellHeight;
-			this.y = (lib_Global.h - this.height) / 2;
+		if(this._isDimension) {
+			var tmp = this.width != null;
+			var tmp1 = this.height != null;
 		}
 		var cx = 0.0;
 		var cy = 0.0;
@@ -4193,6 +4489,7 @@ lib_util_ShapeUtil.gridField = function(ctx,grid) {
 		var point = grid.array[i];
 		lib_util_ShapeUtil.registerPoint(ctx,point.x,point.y);
 	}
+	ctx.lineWidth = 1;
 	lib_CanvasTools.lineColour(ctx,lib_util_ColorUtil.GRAY.r,lib_util_ColorUtil.GRAY.g,lib_util_ColorUtil.GRAY.b,0.5);
 	ctx.strokeRect(grid.x,grid.y,grid.width,grid.height);
 };
@@ -5020,7 +5317,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-05 22:05:30";
+lib_model_constants_App.BUILD = "2019-02-06 20:40:59";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
