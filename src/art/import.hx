@@ -7,6 +7,7 @@ import lib.Global.*;
 // easy access to the utils
 import lib.util.MathUtil.*;
 import lib.util.ColorUtil.*;
+import lib.util.ColorUtil;
 import lib.util.AnimateUtil.*;
 import lib.util.FontUtil;
 import lib.util.GridUtil;
