@@ -69,6 +69,11 @@ class CCBase {
 	public function init() {
 		// trace('override public function init()');
 	}
+
+	/**
+	 * setup your art here, is also the best place to reset data
+	 * when the browser resizes
+	 */
 	public function setup() {
 		// init();
 		// trace('override public function setup()');
