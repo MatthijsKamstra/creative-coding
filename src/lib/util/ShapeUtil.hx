@@ -81,6 +81,7 @@ class ShapeUtil {
 			var point:Point = grid.array[i];
 			registerPoint(ctx, point.x, point.y);
 		}
+		ctx.lineWidth = 1;
 		ctx.lineColour(GRAY.r, GRAY.g, GRAY.b, 0.5);
 		ctx.strokeRect(grid.x, grid.y, grid.width, grid.height);
 	}
