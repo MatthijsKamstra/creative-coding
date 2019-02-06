@@ -222,6 +222,10 @@ var Main = function() {
 		}
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
+		var left = new lib_html_Nav();
+		left.dir("left");
+		var right = new lib_html_Nav();
+		right.dir("right");
 		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
 		window.addEventListener("hashchange",function() {
 			window.location.reload();
@@ -4038,6 +4042,32 @@ lib_html_CSSinjector.prototype = {
 	}
 	,__class__: lib_html_CSSinjector
 };
+var lib_html_Nav = function() {
+	this.bottomOut = -50;
+	this.bottomIn = 0;
+	lib_html_CSSinjector.call(this);
+	var _css = this.css();
+	this.setCSS(_css,"inject-nav");
+};
+lib_html_Nav.__name__ = ["lib","html","Nav"];
+lib_html_Nav.__super__ = lib_html_CSSinjector;
+lib_html_Nav.prototype = $extend(lib_html_CSSinjector.prototype,{
+	dir: function(dir) {
+		var x = window.document.getElementById("nav-" + dir);
+		if(x == null) {
+			var div = window.document.createElement("div");
+			div.id = "nav-" + dir;
+			div.className = "nav nav-" + dir;
+			window.document.body.appendChild(div);
+			x = div;
+		}
+		var tmp = dir == "left";
+	}
+	,css: function() {
+		return "\n.nav {\n\tdisplay: none;\n\twidth: 80px;\n\theight: 80px;\n    background-color: #333;\n    color: #fff;\n    text-align: center;\n    padding: 10px;\n    position: fixed;\n    z-index: 1;\n    top: 50%;\n    font-size: 13px;\n    opacity: 0.5;\n\tmargin-top: -40px;\n}\n.nav-left{\n    left: 0%;\n    border-radius: 0 5px 5px 0;\n}\n.nav-right{\n    right: 0%;\n    border-radius: 5px 0 0 5px;\n}\n";
+	}
+	,__class__: lib_html_Nav
+});
 var lib_html_Snackbar = function() {
 	this.bottomOut = -50;
 	this.bottomIn = 0;
@@ -5385,7 +5415,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-06 22:24:40";
+lib_model_constants_App.BUILD = "2019-02-06 22:47:59";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

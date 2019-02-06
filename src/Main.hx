@@ -60,6 +60,11 @@ class Main {
 	 		var snackbar = new lib.html.Snackbar();
 	  		snackbar.show('sketch $hash');
 
+			var left = new lib.html.Nav();
+			left.dir('left');
+			var right = new lib.html.Nav();
+			right.dir('right');
+
 			var count = Std.parseInt(hash.toLowerCase().replace('cc',''));
 
 			// make sure the browser updates after changing the hash
