@@ -117,22 +117,26 @@ class Sketch {
 		});
 
 		window.addEventListener(KEY_DOWN, function(e:js.html.KeyboardEvent) {
-			e.preventDefault();
-			e.stopPropagation();
 			// trace(e);
 			if (e.metaKey == true && e.key == 'r') {
 				trace('cmd + r');
 				location.reload();
 			}
 			if (e.metaKey == true && e.key == 's' && e.shiftKey == false) {
+				e.preventDefault();
+				e.stopPropagation();
 				trace('cmd + s');
 				lib.util.ExportUtil.downloadImage(ctx, true);
 			}
 			if (e.metaKey == true && e.key == 's' && e.shiftKey == true) {
+				e.preventDefault();
+				e.stopPropagation();
 				trace('cmd + shift + s');
 				lib.util.ExportUtil.downloadImage(ctx, false);
 			}
 			if (e.metaKey == true && untyped e.code == 'KeyS' && e.altKey == true) {
+				e.preventDefault();
+				e.stopPropagation();
 				trace('cmd + alt + s');
 				lib.util.ExportUtil.onBase64Handler(ctx, true);
 			}
