@@ -3,32 +3,35 @@ package art;
 /**
  * short description what this does
  */
-class CC010 extends CCBase implements ICCBase {
+class CC020 extends CCBase implements ICCBase {
 
-	var shapeArray : Array<Point> = [];
+	var shapeArray : Array<Circle> = [];
+	var _radius = 150;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 		description = '';
 	}
 
-	function createShape(){
-		var shape : AnimateObj = {
-			x: w/2,
-			y: h/2,
-			size: 50,
-			alpha: 1,
-			color: getColourObj (FUCHSIA),
-			type: 'ball'
+	function createShape(i:Int, ?point:Point){
+		var shape : Circle = {
+			_id: '$i',
+			_type: 'circle',
+			x: point.x,
+			y: point.y,
+			radius:_radius,
 		}
-		Reflect.setField(shape,'r', FUCHSIA.r);
-		Reflect.setField(shape,'g', FUCHSIA.g);
-		Reflect.setField(shape,'b', FUCHSIA.b);
-		Reflect.setField(shape,'angle', 0);
+		onAnimateHandler(shape);
 		return shape;
 	}
 
+	function onAnimateHandler(circle:Circle){
+		// GoJs.to(circle, 5).x(w/2).y(h/2).ease(lets.easing.Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
+	}
+
 	function drawShape(){
+		ctx.clearRect(0,0,w,h);
+		ctx.backgroundObj(WHITE);
 		for ( i in 0 ... shapeArray.length ) {
 		}
 	}
@@ -43,8 +46,7 @@ class CC010 extends CCBase implements ICCBase {
 
 	override function draw(){
 		trace('draw: ${toString()}');
-		// ctx.clearRect(0,0,w,h);
-		// ctx.backgroundObj(BLACK);
+		// drawShape();
 		stop();
 	}
 }
