@@ -6,7 +6,7 @@ package art;
 class CC016 extends CCBase implements ICCBase {
 
 	var shapeArray : Array<CircleExtra> = [];
-	var shapeMax : Int = 25;
+	var shapeMax : Int = 200;
 
 	var _radius = 150;
 	var _size = 50;
@@ -24,10 +24,10 @@ class CC016 extends CCBase implements ICCBase {
 			y: h/2,
 			rgb: BLACK,
 			alpha: 1 - (i * (1/shapeMax)),
-			radius: _radius,
-			size: _size,
-			angle: i*10,
-			speed: 4,
+			radius: _radius, // offset of
+			size: _size, // size of circles
+			angle: i*1, // steps for rotation
+			speed: 4, // rotation speed
 		}
 		return shape;
 	}
@@ -55,10 +55,7 @@ class CC016 extends CCBase implements ICCBase {
 		// trace('draw: ${toString()}');
 		ctx.clearRect(0,0,w,h);
 		// ctx.backgroundObj(BLACK);
-
-
 		drawShape();
-
 		// stop();
 	}
 }
