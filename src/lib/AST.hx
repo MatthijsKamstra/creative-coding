@@ -37,7 +37,10 @@ typedef Appearance = {
 
 typedef Rotation = {
 	@:optional var angle:Float;
+	@:optional var startAngle:Float;
+	@:optional var endAngle:Float;
 	@:optional var speed:Float;
+	@:optional var rotation:Float;
 };
 
 // point
@@ -67,6 +70,15 @@ typedef Circle = {
 	> Base,
 	> Position,
 	> Appearance,
+	@:optional var radius:Float;
+	@:optional var size:Float;
+};
+
+typedef Arc = {
+	> Base,
+	> Position,
+	> Appearance,
+	> Rotation,
 	@:optional var radius:Float;
 	@:optional var size:Float;
 };
