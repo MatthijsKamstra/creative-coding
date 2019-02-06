@@ -212,10 +212,13 @@ var Main = function() {
 		case "CC020":
 			new art_CC020(ctx);
 			break;
+		case "CC021":
+			new art_CC021(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC020";
-			new art_CC020(ctx);
+			window.location.hash = "CC021";
+			new art_CC021(ctx);
 		}
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
@@ -2401,6 +2404,71 @@ art_CC020.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC020
+});
+var art_CC021 = function(ctx) {
+	this._fillColor = null;
+	this._lineColor = null;
+	this._bgColor = null;
+	this._radius = 150;
+	this._size = 75;
+	this.grid = new lib_util_GridUtil();
+	this.shapeMax = 10;
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC021.__name__ = ["art","CC021"];
+art_CC021.__interfaces__ = [art_ICCBase];
+art_CC021.__super__ = art_CCBase;
+art_CC021.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,this._bgColor);
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor);
+		lib_CanvasTools.strokeWeight(this.ctx,15);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var rectangle = this.shapeArray[i];
+			var size = this._size * 0.8;
+			var radiusMax = this._size / 2;
+			var temp = radiusMax / this.shapeArray.length * i;
+			lib_CanvasTools.fillColourRGB(this.ctx,this._lineColor);
+			lib_CanvasTools.roundRect(this.ctx,rectangle.x,rectangle.y,size,size,temp);
+		}
+	}
+	,setup: function() {
+		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._fillColor = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		this.grid.setCellSize(this._size);
+		this.grid.setIsCenterPoint(true);
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = this.grid.array[i];
+			this.shapeArray.push(this.createShape(i,point));
+		}
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC021
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -5317,7 +5385,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-06 20:40:59";
+lib_model_constants_App.BUILD = "2019-02-06 22:22:12";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
