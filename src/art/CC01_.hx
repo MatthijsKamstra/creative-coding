@@ -3,7 +3,7 @@ package art;
 /**
  * short description what this does
  */
-class CC000 extends CCBase implements ICCBase {
+class CC010 extends CCBase implements ICCBase {
 
 	var shapeArray : Array<Point> = [];
 
@@ -35,7 +35,7 @@ class CC000 extends CCBase implements ICCBase {
 
 
 	override function setup(){
-		trace('init: ${toString()}');
+		trace('setup: ${toString()}');
 		var rgb = randomColourObject();
 		ctx.strokeColour(rgb.r, rgb.g, rgb.b);
 		ctx.xcross(w/2, h/2, 200);
