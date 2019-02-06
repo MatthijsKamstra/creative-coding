@@ -4,7 +4,7 @@ import lib.util.*;
 import lib.util.ColorUtil.*;
 import js.html.CanvasRenderingContext2D;
 import lib.Global.*;
-
+import lib.util.ColorUtil.RGB;
 /**
  * using lib.CanvasTools;
 **/
@@ -233,6 +233,9 @@ class CanvasTools {
 	static public function fillColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
 		colour(ctx, r, g, b, a);
 	};
+	static public function fillColourRGB(ctx:CanvasRenderingContext2D, rgb:lib.util.ColorUtil.RGB, ?a:Int) {
+		colour(ctx, rgb.r, rgb.g, rgb.b, a);
+	};
 
 	static public function colour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		var c = ColorUtil.getColour(r, g, b, a);
@@ -279,6 +282,9 @@ class CanvasTools {
 		ctx.fillRect(0, 0, w, h);
 	};
 	static public function backgroundObj(ctx:CanvasRenderingContext2D, rgb:ColorUtil.RGB) {
+		background(ctx, rgb.r, rgb.g, rgb.b);
+	}
+	static public function backgroundRGB(ctx:CanvasRenderingContext2D, rgb:ColorUtil.RGB) {
 		background(ctx, rgb.r, rgb.g, rgb.b);
 	}
 }
