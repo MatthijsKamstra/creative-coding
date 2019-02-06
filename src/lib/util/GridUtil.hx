@@ -25,6 +25,7 @@ class GridUtil {
 
 	var _isCellSize : Bool = false;
 	var _isNumbered : Bool = false;
+	var _isDimension : Bool = false;
 
 	public function new() {}
 
@@ -50,7 +51,7 @@ class GridUtil {
 	}
 
 	/**
-	 * TODO : create a grid based upon width/height
+	 * create a grid based upon width/height
 	 * 		x, y, cellWidth, cellHeight is calculated
 	 * @param width		total width of grid
 	 * @param height	total height of grid
@@ -58,6 +59,7 @@ class GridUtil {
 	public function setDimension(width, height){
 		this.width = width;
 		this.height = height;
+		this._isDimension = true;
 		calculate();
 	}
 
@@ -121,20 +123,35 @@ class GridUtil {
 		// y=0;
 
 		/**
-		 * #2 use numbered cells, so calculate the rest
+		 * #2 use numbered cells (in x-dir and y-dir), so calculate the rest
 		 */
 		if(_isNumbered){
 			if(numHor != null){
-				cellWidth = w / numHor;
+				var _w = (width != null) ? width : w;
+				cellWidth = _w / numHor;
 				width = numHor * cellWidth;
 				x = (w - width)/2;
 			}
 			if(numVer != null){
-				cellHeight = h / numVer;
+				var _h = (height != null) ? height : h;
+				cellHeight = _h / numVer;
 				height = numVer * cellHeight;
 				y = (h - height)/2;
 			}
 		}
+
+		/**
+		 * #3
+		 */
+		if(_isDimension){
+			if (width != null){
+				// see also solution
+			}
+			if (height != null){
+
+			}
+		}
+
 
 		var cx = 0.0;
 		var cy = 0.0;
