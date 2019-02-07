@@ -7,8 +7,10 @@
 	"author": "Matthijs Kamstra aka [mck]",
 	"scripts": {
 		"prewatch": "haxe build_all.hxml",
-		"watch": "onchange 'src/*.hx' 'src/*/*.hx' 'src/*/*/*.hx' 'src/*/*/*/*.hx' -v -- haxe build_all.hxml  & livereload docs/"	},
+		"watch": "onchange 'src/*.hx' 'src/*/*.hx' 'src/*/*/*.hx' 'src/*/*/*/*.hx' -v -- haxe build_all.hxml & livereload docs/"
+	},
 	"dependencies": {
+		"uglify-js": "^3.4.9"
 	},
 	"devDependencies": {
 		"livereload": "0.6.0",

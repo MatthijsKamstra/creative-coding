@@ -2,6 +2,8 @@
 -lib thx.color
 -lib msignal
 -lib mloader
+-lib uglifyjs
+# -lib minifier
 # -lib mconsole
 -cp src
 -main Main
@@ -11,3 +13,4 @@
 -debug
 # -dce full
 # -dce no
+
