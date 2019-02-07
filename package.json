@@ -1,17 +1,17 @@
 {
 	"license": "MIT",
-	"name": "example_javascript",
-	"version": "0.0.1",
+	"name": "creative-coding-library",
+	"version": "1.0.0",
 	"description": "",
 	"private": true,
 	"author": "Matthijs Kamstra aka [mck]",
 	"scripts": {
-		"prewatch": "haxe build.hxml",
-		"watch": "onchange 'src/*.hx' 'src/*/*.hx' 'src/*/*/*.hx' 'src/*/*/*/*.hx' -v -- haxe build.hxml"
-	},
+		"prewatch": "haxe build_all.hxml",
+		"watch": "onchange 'src/*.hx' 'src/*/*.hx' 'src/*/*/*.hx' 'src/*/*/*/*.hx' -v -- haxe build_all.hxml  & livereload docs/"	},
 	"dependencies": {
 	},
 	"devDependencies": {
+		"livereload": "0.6.0",
 		"onchange": "3.0.2"
 	}
 }
