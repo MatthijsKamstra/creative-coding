@@ -16,8 +16,8 @@ class Nav extends CSSinjector {
 	 */
 	public function new() {
 		super();
-		var _css = css();
-		setCSS(_css, 'inject-nav');
+		// var _css = css();
+		// setCSS(_css, 'inject-nav');
 	}
 
 	public function dir(dir:String) {

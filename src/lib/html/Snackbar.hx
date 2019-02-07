@@ -19,8 +19,8 @@ class Snackbar extends CSSinjector {
 	public function new() {
 		super();
 		// var _css = css() + CSSAnimation.CSSAnimations.getAnimation();
-		var _css = css();
-		setCSS(_css, 'inject-snackbar');
+		// var _css = css();
+		// setCSS(_css, 'inject-snackbar');
 	}
 
 	public function show(msg:String) {
