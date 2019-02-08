@@ -218,10 +218,19 @@ var Main = function() {
 		case "CC022":
 			new art_CC022(ctx);
 			break;
+		case "CC023":
+			new art_CC023(ctx);
+			break;
+		case "CC024":
+			new art_CC024(ctx);
+			break;
+		case "CC025":
+			new art_CC025(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC022";
-			new art_CC022(ctx);
+			window.location.hash = "CC025";
+			new art_CC025(ctx);
 		}
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
@@ -236,11 +245,17 @@ var Main = function() {
 		window.addEventListener(lib_Global.KEY_DOWN,function(e) {
 			var _g = e.key;
 			switch(_g) {
+			case "ArrowDown":
+				count = 0;
+				break;
 			case "ArrowLeft":
 				count -= 1;
 				break;
 			case "ArrowRight":
 				count += 1;
+				break;
+			case "ArrowUp":
+				count = 100000;
 				break;
 			}
 			var tmp = StringTools.lpad(count == null ? "null" : "" + count,"0",3);
@@ -2528,13 +2543,14 @@ art_CC022.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length)];
+		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
 		var int1 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
 		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
 		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
 		this._fillColor = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this._xmax;
 		while(_g1 < _g) {
@@ -2547,6 +2563,271 @@ art_CC022.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC022
+});
+var art_CC023 = function(ctx) {
+	this.radiusY = lib_Global.h / 3;
+	this.centerY = lib_Global.h / 2;
+	this.centerX = lib_Global.w / 2;
+	this.maxDistance = lib_Global.w / 2;
+	this._xmax = 50;
+	this._fillColor2 = null;
+	this._lineColor2 = null;
+	this._fillColor = null;
+	this._lineColor = null;
+	this._bgColor = null;
+	this.shapeArray2 = [];
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC023.__name__ = ["art","CC023"];
+art_CC023.__interfaces__ = [art_ICCBase];
+art_CC023.__super__ = art_CCBase;
+art_CC023.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var _angle = 360 / this._xmax * i;
+		var shape = { _id : "" + i, _type : "circle", radius : lib_Global.h / 2, angle : _angle, x : lib_Global.w / this._xmax * i + point.x, y : this.centerY + point.y};
+		shape["point"] = point;
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,this._bgColor);
+		lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			var point = Reflect.getProperty(sh,"point");
+			sh.angle += 1;
+			sh.y = this.centerY + point.y + Math.sin(lib_util_MathUtil.radians(sh.angle)) * this.radiusY;
+			lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor,1);
+			lib_CanvasTools.strokeCircle(this.ctx,sh.x,sh.y,10);
+			var sh2 = this.shapeArray2[i];
+			var point2 = Reflect.getProperty(sh2,"point");
+			sh2.angle += 1;
+			sh2.y = this.centerY + point2.y + Math.sin(lib_util_MathUtil.radians(sh2.angle)) * this.radiusY;
+			lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor,1);
+			lib_CanvasTools.strokeCircle(this.ctx,sh2.x,sh2.y,10);
+			lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor2,1);
+			lib_CanvasTools.lineColour(this.ctx,this._fillColor.r,this._fillColor.g,this._fillColor.b,1);
+			lib_CanvasTools.line(this.ctx,sh.x,sh.y,sh2.x,sh2.y);
+		}
+	}
+	,setup: function() {
+		var colorArray = lib_util_ColorUtil.niceColor100[5];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._fillColor = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._lineColor2 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._fillColor2 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this._xmax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = { x : -50, y : -50};
+			this.shapeArray.push(this.createShape(i,point));
+		}
+		this.shapeArray2 = [];
+		var _g11 = 0;
+		var _g2 = this._xmax;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var point1 = { x : 50, y : 50};
+			this.shapeArray2.push(this.createShape(i1,point1));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC023
+});
+var art_CC024 = function(ctx) {
+	this.radiusY = lib_Global.h / 3;
+	this.centerY = lib_Global.h / 2;
+	this.centerX = lib_Global.w / 2;
+	this.maxDistance = 250;
+	this._xmax = 50;
+	this._fillColor2 = null;
+	this._lineColor2 = null;
+	this._fillColor = null;
+	this._lineColor = null;
+	this._bgColor = null;
+	this.shapeArray2 = [];
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC024.__name__ = ["art","CC024"];
+art_CC024.__interfaces__ = [art_ICCBase];
+art_CC024.__super__ = art_CCBase;
+art_CC024.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var _angle = 360 / this._xmax * i;
+		var shape = { _id : "" + i, _type : "circle", radius : lib_Global.h / 2, angle : _angle, x : lib_Global.w / this._xmax * i + point.x, y : this.centerY + point.y};
+		shape["point"] = point;
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,this._bgColor);
+		lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			var point = Reflect.getProperty(sh,"point");
+			sh.angle += 1;
+			sh.y = this.centerY + point.y + Math.sin(lib_util_MathUtil.radians(sh.angle)) * this.radiusY;
+			lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor,1);
+			lib_CanvasTools.strokeCircle(this.ctx,sh.x,sh.y,10);
+			var sh2 = this.shapeArray2[i];
+			var point2 = Reflect.getProperty(sh2,"point");
+			sh2.angle += 1;
+			sh2.y = this.centerY + point2.y + Math.sin(lib_util_MathUtil.radians(sh2.angle)) * this.radiusY;
+			lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor,1);
+			lib_CanvasTools.strokeCircle(this.ctx,sh2.x,sh2.y,10);
+			lib_CanvasTools.strokeColourObj(this.ctx,this._lineColor2,1);
+			lib_CanvasTools.lineColour(this.ctx,this._fillColor.r,this._fillColor.g,this._fillColor.b,1);
+			lib_CanvasTools.line(this.ctx,sh.x,sh.y,sh2.x,sh2.y);
+			var _g3 = 0;
+			var _g2 = this.shapeArray2.length;
+			while(_g3 < _g2) {
+				var j = _g3++;
+				var b2 = this.shapeArray2[j];
+				if(sh == b2) {
+					continue;
+				}
+				var _dist = lib_util_MathUtil.distance(sh.x,sh.y,b2.x,b2.y);
+				if(_dist < this.maxDistance) {
+					var alpha = 0.8 - _dist / this.maxDistance;
+					lib_CanvasTools.lineColour(this.ctx,this._fillColor2.r,this._fillColor2.g,this._fillColor2.b,alpha);
+					lib_CanvasTools.line(this.ctx,sh.x,sh.y,b2.x,b2.y);
+				}
+			}
+		}
+	}
+	,setup: function() {
+		var colorArray = lib_util_ColorUtil.niceColor100[2];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._fillColor = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._lineColor2 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._fillColor2 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this._xmax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = { x : -50, y : -50};
+			this.shapeArray.push(this.createShape(i,point));
+		}
+		this.shapeArray2 = [];
+		var _g11 = 0;
+		var _g2 = this._xmax;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var point1 = { x : 50, y : 50};
+			this.shapeArray2.push(this.createShape(i1,point1));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC024
+});
+var art_CC025 = function(ctx) {
+	this._fillColor2 = null;
+	this._lineColor2 = null;
+	this._fillColor = null;
+	this._lineColor = null;
+	this._bgColor = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC025.__name__ = ["art","CC025"];
+art_CC025.__interfaces__ = [art_ICCBase];
+art_CC025.__super__ = art_CCBase;
+art_CC025.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = this.grid.array[i];
+			var colorArray = lib_util_ColorUtil.niceColor100[i];
+			var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+			var color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+			var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+			var color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+			var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+			var color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+			var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+			var color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+			var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+			var color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+			var _colorA = [color0,color1,color2,color3,color4];
+			var _g3 = 0;
+			var _g2 = _colorA.length;
+			while(_g3 < _g2) {
+				var j = _g3++;
+				var px = 10;
+				var _w = Math.round((this.grid.cellWidth - px) / _colorA.length);
+				var offsetX = j * _w;
+				lib_CanvasTools.fillColourRGB(this.ctx,_colorA[j]);
+				this.ctx.fillRect(offsetX + point.x,point.y,_w,this.grid.cellHeight - px);
+			}
+		}
+	}
+	,setup: function() {
+		var colorArray = lib_util_ColorUtil.niceColor100[10];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._lineColor = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._fillColor = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._lineColor2 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._fillColor2 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.grid.setNumbered(10,10);
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC025
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -4061,6 +4342,9 @@ lib_CanvasTools.colourObj = function(ctx,rgb,a) {
 lib_CanvasTools.strokeColourObj = function(ctx,rgb,a) {
 	lib_CanvasTools.lineColour(ctx,rgb.r,rgb.g,rgb.b,a);
 };
+lib_CanvasTools.strokeColourRGB = function(ctx,rgb,a) {
+	lib_CanvasTools.lineColour(ctx,rgb.r,rgb.g,rgb.b,a);
+};
 lib_CanvasTools.strokeColour = function(ctx,r,g,b,a) {
 	lib_CanvasTools.lineColour(ctx,r,g,b,a);
 };
@@ -5489,7 +5773,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-07 20:52:50";
+lib_model_constants_App.BUILD = "2019-02-08 10:13:15";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
