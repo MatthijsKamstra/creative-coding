@@ -249,6 +249,9 @@ class CanvasTools {
 	static public function strokeColourObj(ctx:CanvasRenderingContext2D,  rgb:lib.util.ColorUtil.RGB,  ?a:Float) {
 		lineColour(ctx, rgb.r, rgb.g, rgb.b, a);
 	};
+	static public function strokeColourRGB(ctx:CanvasRenderingContext2D,  rgb:lib.util.ColorUtil.RGB,  ?a:Float) {
+		lineColour(ctx, rgb.r, rgb.g, rgb.b, a);
+	};
 	static public function strokeColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		lineColour(ctx, r, g, b, a);
 	};
