@@ -55,10 +55,11 @@ class Main {
 				case 'CC024': new CC024(ctx);
 				case 'CC025': new CC025(ctx);
 				case 'CC026': new CC026(ctx);
+				case 'CC027': new CC027(ctx);
 				default :
 					trace ("case '"+hash+"': new "+hash+"(ctx);");
-					location.hash = 'CC026';
-					new CC026(ctx);
+					location.hash = 'CC027';
+					new CC027(ctx);
 
 			}
 
