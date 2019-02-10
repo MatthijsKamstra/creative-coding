@@ -16,6 +16,8 @@ using StringTools;
  */
 class Main {
 
+	var count : Int ;
+
 	public function new () {
 		document.addEventListener("DOMContentLoaded", function(event) {
 			// DOM ready
@@ -63,15 +65,25 @@ class Main {
 
 			}
 
+			count = Std.parseInt(hash.toLowerCase().replace('cc',''));
+
 	 		var snackbar = new lib.html.Snackbar();
 	  		snackbar.show('sketch $hash');
 
 			var left = new lib.html.Nav();
-			left.dir('left');
+			var ldiv = left.dir('left');
+			ldiv.onclick = function (){
+				trace('left');
+				count--;
+				changeHash ();
+			};
 			var right = new lib.html.Nav();
-			right.dir('right');
-
-			var count = Std.parseInt(hash.toLowerCase().replace('cc',''));
+			var rdiv = right.dir('right');
+			rdiv.onclick = function (){
+				trace('right');
+				count++;
+				changeHash ();
+			};
 
 			// make sure the browser updates after changing the hash
 			window.addEventListener("hashchange", function (){
@@ -91,6 +103,11 @@ class Main {
 			}, false);
 
 		});
+	}
+
+	function changeHash (){
+		location.hash = 'CC' + Std.string(count).lpad('0',3);
+
 	}
 
 	static public function main () {

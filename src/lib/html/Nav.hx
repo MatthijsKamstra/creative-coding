@@ -20,9 +20,9 @@ class Nav extends CSSinjector {
 		// setCSS(_css, 'inject-nav');
 	}
 
-	public function dir(dir:String) {
+	public function dir(dir:String):js.html.DivElement {
 		// Get the nav DIV
-		var x = document.getElementById('nav-$dir');
+		var x : js.html.DivElement = cast document.getElementById('nav-$dir');
 		// if no #snackbar exists, create it
 
 		var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" data-name="Layer 1"><path d="M10.5 40h59M69.5 40l-18-18M51.5 58l18-18"/></g></svg>';
@@ -30,7 +30,7 @@ class Nav extends CSSinjector {
 			svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" data-name="Layer 1"><path d="M69.5 40h-59M10.5 40l18-18M28.5 58l-18-18"/></g></svg>';
 		}
 		if(x == null){
-			var div = document.createDivElement();
+			var div : js.html.DivElement = document.createDivElement();
 			div.id = 'nav-$dir';
 			div.className = 'nav nav-$dir';
 			div.innerHTML = svg;
@@ -38,6 +38,7 @@ class Nav extends CSSinjector {
 			x = div;
 		}
 
+		return x;
 
 	}
 

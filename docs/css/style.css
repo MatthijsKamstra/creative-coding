@@ -14,7 +14,7 @@ canvas {
     justify-content: center;
 }
 
-* {
+body {
 	background-color: #fafafa;
 }
 html, body {
@@ -31,9 +31,9 @@ body {
 */
 
 .nav {
-	display: none;
-	width: 80px;
-	height: 80px;
+	display: block;
+	width: 60px;
+	height: 60px;
     background-color: #333;
     color: #fff;
     text-align: center;
@@ -44,6 +44,9 @@ body {
     font-size: 13px;
     opacity: 0.5;
 	margin-top: -40px;
+    -webkit-animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+    animation-fill-mode: forwards;
 }
 .nav-left{
     left: 0%;
@@ -84,28 +87,48 @@ body {
 
 	/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
 	However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-animation: fadeAndMoveIn 0.5s, fadeAndMoveOut 0.5s 2.5s;
+    animation: fadeAndMoveIn 0.5s, fadeAndMoveOut 0.5s 2.5s;
 }
 
 /* Animations to fade the snackbar in and out */
-@-webkit-keyframes fadein {
-    from {bottom: -50px; opacity: 0;}
-
-    to {bottom: 0px; opacity: 1;}
-}
-
-@keyframes fadein {
+@-webkit-keyframes fadeAndMoveIn {
     from {bottom: -50px; opacity: 0;}
     to {bottom: 0px; opacity: 1;}
 }
 
-@-webkit-keyframes fadeout {
+@keyframes fadeAndMoveIn {
+    from {bottom: -50px; opacity: 0;}
+    to {bottom: 0px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeAndMoveOut {
     from {bottom: 0px; opacity: 1;}
     to {bottom: -50px; opacity: 0;}
 }
 
-@keyframes fadeout {
+@keyframes fadeAndMoveOut {
     from {bottom: 0px; opacity: 1;}
     to {bottom: -50px; opacity: 0;}
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
 }
