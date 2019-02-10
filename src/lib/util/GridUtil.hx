@@ -45,6 +45,7 @@ class GridUtil {
 	 * @param y			start postion y
 	 */
 	public function setPosition(x, y){
+		if (_isDebug) console.log('GridUtil :: setPostion');
 		this.x = x;
 		this.y = y;
 		this._isPosition = true;
@@ -57,6 +58,7 @@ class GridUtil {
 	 * @param isCentered  (default: true)
 	 */
 	public function setIsCenterPoint(isCentered:Bool = true){
+		if (_isDebug) console.log('GridUtil :: setCenterPoint');
 		this.isCentered = isCentered;
 		calculate();
 	}
@@ -68,6 +70,7 @@ class GridUtil {
 	 * @param height	total height of grid
 	 */
 	public function setDimension(width, height){
+		if (_isDebug) console.log('GridUtil :: setDimension');
 		this.width = width;
 		this.height = height;
 		this._isDimension = true;
@@ -80,6 +83,7 @@ class GridUtil {
 	 * @param numVer	number of itmes vertical
 	 */
 	public function setNumbered(numHor:Float, numVer:Float){
+		if (_isDebug) console.log('GridUtil :: setNumbers');
 		this.numHor = numHor;
 		this.numVer = numVer;
 		this._isNumbered = true;
@@ -97,6 +101,7 @@ class GridUtil {
 	 */
 	public function setCellSize(cellWidth, ?cellHeight){
 		if (cellHeight == null) cellHeight = cellWidth;
+		if (_isDebug) console.log('GridUtil :: setCellSize');
 		this.cellWidth = cellWidth;
 		this.cellHeight = cellHeight;
 		this._isCellSize = true;
@@ -128,10 +133,12 @@ class GridUtil {
 		 * use numbered cells (in x-dir and y-dir),
 		 * calculate: `x`, `y`, `width`, `height`, `cellWidth`, `cellHeight`
 		 */
-		if(_isNumbered){
+		if(_isNumbered && !_isDimension){
 			if (_isDebug) console.info('GridUtil solution #2: numbered cells set');
 			var _w = (width != null) ? width : w;
 			var _h = (height != null) ? height : h;
+			// numHor = Math.floor(_w / cellWidth);
+			// numVer = Math.floor(_h / cellHeight);
 			cellWidth = _w / numHor;
 			cellHeight = _h / numVer;
 			width = numHor * cellWidth;
@@ -143,16 +150,43 @@ class GridUtil {
 		/**
 		 * solution #3:
 		 * use a grid with set `width` and `height`
-		 * calculate: `x`, `y`, `width`, `height`, `cellWidth`, `cellHeight`
+		 * calculate: `x`, `y`, `numHor`, `numVer`, `cellWidth`, `cellHeight`
 		 */
-		if(_isDimension && !_isCellSize){
-			if (_isDebug) console.info('GridUtil solution #3: width/height set');
-			var _w = (width != null) ? width : w;
-			var _h = (height != null) ? height : h;
-			cellWidth = _w / numHor;
-			cellHeight = _h / numVer;
+		if(_isDimension && !_isNumbered && !_isCellSize){
+			if (_isDebug) console.info('GridUtil solution #3: width/height set ($width, $height)');
+
+			// is not set
+			var _cellWidth = (cellWidth != null) ? cellWidth : 50;
+			var _cellHeight = (cellHeight != null) ? cellHeight : 50;
+			// now we can calculate the number of rows/cols
+			numHor = Math.floor(width / _cellWidth);
+			numVer = Math.floor(height / _cellHeight);
+			// because we can't have half a row, we need to recalculate the width/heigth
+			width = numHor * _cellWidth;
+			height = numVer * _cellHeight;
+			// and now the width and height might have changed, so does the cells
+			cellWidth = width / numHor;
+			cellHeight = height / numVer;
+			// centered everything
+			x = (w - width)/2;
+			y = (h - height)/2;
+		}
+
+		/**
+		 * solution #3a:
+		 * use a grid with set `width`, `height` AND `numHor`, `numVer`
+		 * calculate: `x`, `y`, `cellWidth`, `cellHeight`
+		 */
+		if(_isDimension && _isNumbered && !_isCellSize){
+			if (_isDebug) console.info('GridUtil solution #3a: width/height set ($width, $height) AND number row/cols ($numHor, $numVer)');
+
+			// is not set, calculate
+			cellWidth = Math.floor(width/numHor); // make it round numbers
+			cellHeight =  Math.floor(height/numVer); // make it round numbers
+			// because we can't have half a row, we need to recalculate the width/heigth
 			width = numHor * cellWidth;
 			height = numVer * cellHeight;
+			// centered everything
 			x = (w - width)/2;
 			y = (h - height)/2;
 		}
