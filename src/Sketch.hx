@@ -115,9 +115,9 @@ class Sketch {
 		canvas.style.left = "0px";
 		canvas.style.top = "0px";
 		canvas.style.border = "1px solid pink";
-		// canvas.style.left = -window.innerWidth + "px";
 		canvas.width = option.width;
 		canvas.height = option.height;
+		canvas.style.left = - (option.width*1.5) + "px";
 
 
 		var ctx = canvas.getContext('2d');
