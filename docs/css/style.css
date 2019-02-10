@@ -44,9 +44,10 @@ body {
     font-size: 13px;
     opacity: 0.5;
 	margin-top: -40px;
-    -webkit-animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
-    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+    -webkit-animation: fadeIn 0.5s, fadeOut 0.5s 1.5s;
+    animation: fadeIn 0.5s, fadeOut 0.5s 1.5s;
     animation-fill-mode: forwards;
+    cursor: pointer;
 }
 .nav-left{
     left: 0%;
