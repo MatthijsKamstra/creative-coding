@@ -227,10 +227,13 @@ var Main = function() {
 		case "CC025":
 			new art_CC025(ctx);
 			break;
+		case "CC026":
+			new art_CC026(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC025";
-			new art_CC025(ctx);
+			window.location.hash = "CC026";
+			new art_CC026(ctx);
 		}
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
@@ -349,6 +352,23 @@ Sketch.create = function(name,option) {
 		return new Sketch().createGLCanvas(name);
 	}
 };
+Sketch.createHiddenCanvas = function(name,option) {
+	if(option == null) {
+		option = new SketchOption();
+	}
+	var body = window.document.querySelector("body");
+	var canvas = window.document.createElement("canvas");
+	body.appendChild(canvas);
+	canvas.setAttribute("id","hiddencanvas-" + name);
+	canvas.style.position = "absolute";
+	canvas.style.left = "0px";
+	canvas.style.top = "0px";
+	canvas.style.border = "1px solid pink";
+	canvas.width = option.get_width();
+	canvas.height = option.get_height();
+	var ctx = canvas.getContext("2d");
+	return ctx;
+};
 Sketch.prototype = {
 	createCanvas: function(canvas_name) {
 		var body = this.document.querySelector("body");
@@ -367,6 +387,9 @@ Sketch.prototype = {
 	,createGLCanvas: function(canvas_name) {
 		return null;
 	}
+	,checkForId: function(id) {
+		return true;
+	}
 	,resize: function() {
 		var c = this.document.getElementsByTagName("canvas");
 		lib_Global.w = this.window.innerWidth;
@@ -376,15 +399,13 @@ Sketch.prototype = {
 		while(_g1 < _g) {
 			var i = _g1++;
 			var _c = c[i];
+			if(_c.id.indexOf("hiddencanvas-") != -1) {
+				continue;
+			}
 			_c.width = lib_Global.w;
 			_c.height = lib_Global.h;
 		}
 		window.console.log("resize: " + lib_Global.w + ":" + lib_Global.h);
-	}
-	,createHiddenCanvas: function(canvas_name) {
-		var ctx = this.createCanvas(canvas_name);
-		this.canvas.style.left = -lib_Global.w + "px";
-		return ctx;
 	}
 	,init: function(ctx) {
 		var _gthis = this;
@@ -468,7 +489,19 @@ var SketchOption = function() {
 };
 SketchOption.__name__ = ["SketchOption"];
 SketchOption.prototype = {
-	get_fullscreen: function() {
+	get_width: function() {
+		return this._width;
+	}
+	,set_width: function(value) {
+		return this._width = value;
+	}
+	,get_height: function() {
+		return this._height;
+	}
+	,set_height: function(value) {
+		return this._height = value;
+	}
+	,get_fullscreen: function() {
 		return this._fullscreen;
 	}
 	,set_fullscreen: function(value) {
@@ -505,7 +538,7 @@ SketchOption.prototype = {
 		return this._type = value;
 	}
 	,__class__: SketchOption
-	,__properties__: {set_type:"set_type",get_type:"get_type",set_container:"set_container",get_container:"get_container",set_autopause:"set_autopause",get_autopause:"get_autopause",set_autostart:"set_autostart",get_autostart:"get_autostart",set_autoclear:"set_autoclear",get_autoclear:"get_autoclear",set_fullscreen:"set_fullscreen",get_fullscreen:"get_fullscreen"}
+	,__properties__: {set_type:"set_type",get_type:"get_type",set_container:"set_container",get_container:"get_container",set_autopause:"set_autopause",get_autopause:"get_autopause",set_autostart:"set_autostart",get_autostart:"get_autostart",set_autoclear:"set_autoclear",get_autoclear:"get_autoclear",set_fullscreen:"set_fullscreen",get_fullscreen:"get_fullscreen",set_height:"set_height",get_height:"get_height",set_width:"set_width",get_width:"get_width"}
 };
 var Std = function() { };
 Std.__name__ = ["Std"];
@@ -1146,6 +1179,9 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		var value1 = lib_util_MathUtil.random(0,lib_Global.h);
 		var objValue1 = 0;
@@ -1154,6 +1190,9 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		_this2._options.onComplete = $bind(this,this.ballAnimate);
 		_this2._options.onCompleteParams = [ball];
@@ -1232,6 +1271,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _shape1 = this.shapeArray[1];
 		var GoJs1 = new lets_GoJs(_shape1,2);
 		GoJs1._isFrom = false;
@@ -1243,6 +1285,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "x", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("x",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		_this2._isYoyo = true;
 		var _shape2 = this.shapeArray[2];
@@ -1257,6 +1302,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range2 = { key : "x", from : _this3._isFrom ? value2 : objValue2, to : !_this3._isFrom ? value2 : objValue2};
 		_this3._props.set("x",_range2);
+		if(_this3._isFrom) {
+			_this3.updateProperties(0);
+		}
 		var _this4 = _this3;
 		_this4._isYoyo = true;
 		var _shape3 = this.shapeArray[3];
@@ -1270,6 +1318,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range3 = { key : "x", from : _this5._isFrom ? value3 : objValue3, to : !_this5._isFrom ? value3 : objValue3};
 		_this5._props.set("x",_range3);
+		if(_this5._isFrom) {
+			_this5.updateProperties(0);
+		}
 		var _this6 = _this5;
 		var value4 = _shape3.y + 100;
 		var objValue4 = 0;
@@ -1278,6 +1329,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range4 = { key : "y", from : _this6._isFrom ? value4 : objValue4, to : !_this6._isFrom ? value4 : objValue4};
 		_this6._props.set("y",_range4);
+		if(_this6._isFrom) {
+			_this6.updateProperties(0);
+		}
 		var _this7 = _this6;
 		_this7._isYoyo = true;
 		var _shape4 = this.shapeArray[4];
@@ -1291,6 +1345,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range5 = { key : "x", from : _this8._isFrom ? value5 : objValue5, to : !_this8._isFrom ? value5 : objValue5};
 		_this8._props.set("x",_range5);
+		if(_this8._isFrom) {
+			_this8.updateProperties(0);
+		}
 		var _this9 = _this8;
 		var objValue6 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this9._target,"rotation")) {
@@ -1298,6 +1355,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range6 = { key : "rotation", from : _this9._isFrom ? 180 : objValue6, to : !_this9._isFrom ? 180 : objValue6};
 		_this9._props.set("rotation",_range6);
+		if(_this9._isFrom) {
+			_this9.updateProperties(0);
+		}
 		var _this10 = _this9;
 		_this10._isYoyo = true;
 		var _this11 = _this10;
@@ -1314,6 +1374,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range7 = { key : "x", from : _this12._isFrom ? value6 : objValue7, to : !_this12._isFrom ? value6 : objValue7};
 		_this12._props.set("x",_range7);
+		if(_this12._isFrom) {
+			_this12.updateProperties(0);
+		}
 		var _this13 = _this12;
 		var objValue8 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this13._target,"foobar")) {
@@ -1321,6 +1384,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range8 = { key : "foobar", from : _this13._isFrom ? 180 : objValue8, to : !_this13._isFrom ? 180 : objValue8};
 		_this13._props.set("foobar",_range8);
+		if(_this13._isFrom) {
+			_this13.updateProperties(0);
+		}
 		var _this14 = _this13;
 		_this14._options.onUpdate = $bind(this,this.onUpdateHandler);
 		_this14._options.onUpdateParams = [5];
@@ -1338,6 +1404,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range9 = { key : "x", from : _this16._isFrom ? value7 : objValue9, to : !_this16._isFrom ? value7 : objValue9};
 		_this16._props.set("x",_range9);
+		if(_this16._isFrom) {
+			_this16.updateProperties(0);
+		}
 		var _this17 = _this16;
 		_this17._delay = _this17.getDuration(.7);
 		var _this18 = _this17;
@@ -1347,6 +1416,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range10 = { key : "rotation", from : _this18._isFrom ? 360 : objValue10, to : !_this18._isFrom ? 360 : objValue10};
 		_this18._props.set("rotation",_range10);
+		if(_this18._isFrom) {
+			_this18.updateProperties(0);
+		}
 		var _this19 = _this18;
 		_this19._isYoyo = true;
 		var _shape7 = this.shapeArray[7];
@@ -1360,6 +1432,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range11 = { key : "x", from : _this20._isFrom ? value8 : objValue11, to : !_this20._isFrom ? value8 : objValue11};
 		_this20._props.set("x",_range11);
+		if(_this20._isFrom) {
+			_this20.updateProperties(0);
+		}
 		var _this21 = _this20;
 		var objValue12 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this21._target,"rotation")) {
@@ -1367,6 +1442,9 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range12 = { key : "rotation", from : _this21._isFrom ? 360 : objValue12, to : !_this21._isFrom ? 360 : objValue12};
 		_this21._props.set("rotation",_range12);
+		if(_this21._isFrom) {
+			_this21.updateProperties(0);
+		}
 		var _this22 = _this21;
 		_this22._isYoyo = true;
 		var _this23 = _this22;
@@ -1449,6 +1527,9 @@ art_CC009.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		var value1 = point.y;
 		var objValue1 = 0;
@@ -1457,6 +1538,9 @@ art_CC009.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		var objValue2 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this2._target,"alpha")) {
@@ -1464,6 +1548,9 @@ art_CC009.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range2 = { key : "alpha", from : _this2._isFrom ? 1 : objValue2, to : !_this2._isFrom ? 1 : objValue2};
 		_this2._props.set("alpha",_range2);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
 		var _this3 = _this2;
 		var value2 = lib_util_MathUtil.randomInt(10);
 		var objValue3 = 0;
@@ -1472,6 +1559,9 @@ art_CC009.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range3 = { key : "size", from : _this3._isFrom ? value2 : objValue3, to : !_this3._isFrom ? value2 : objValue3};
 		_this3._props.set("size",_range3);
+		if(_this3._isFrom) {
+			_this3.updateProperties(0);
+		}
 		var _this4 = _this3;
 		_this4._easing = lets_easing_Sine.get_easeInOut();
 		var _this5 = _this4;
@@ -1540,6 +1630,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		var objValue1 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
@@ -1547,6 +1640,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "y", from : _this1._isFrom ? ypos1 : objValue1, to : !_this1._isFrom ? ypos1 : objValue1};
 		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		var objValue2 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this2._target,"alpha")) {
@@ -1554,6 +1650,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range2 = { key : "alpha", from : _this2._isFrom ? 0 : objValue2, to : !_this2._isFrom ? 0 : objValue2};
 		_this2._props.set("alpha",_range2);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
 		var _this3 = _this2;
 		var objValue3 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this3._target,"size")) {
@@ -1561,6 +1660,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range3 = { key : "size", from : _this3._isFrom ? 50 : objValue3, to : !_this3._isFrom ? 50 : objValue3};
 		_this3._props.set("size",_range3);
+		if(_this3._isFrom) {
+			_this3.updateProperties(0);
+		}
 		var _this4 = _this3;
 		_this4._easing = lets_easing_Sine.get_easeOut();
 		var _this5 = _this4;
@@ -1575,6 +1677,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range4 = { key : "x", from : _this6._isFrom ? value1 : objValue4, to : !_this6._isFrom ? value1 : objValue4};
 		_this6._props.set("x",_range4);
+		if(_this6._isFrom) {
+			_this6.updateProperties(0);
+		}
 		var _this7 = _this6;
 		var objValue5 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this7._target,"y")) {
@@ -1582,6 +1687,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range5 = { key : "y", from : _this7._isFrom ? ypos2 : objValue5, to : !_this7._isFrom ? ypos2 : objValue5};
 		_this7._props.set("y",_range5);
+		if(_this7._isFrom) {
+			_this7.updateProperties(0);
+		}
 		var _this8 = _this7;
 		var objValue6 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this8._target,"alpha")) {
@@ -1589,6 +1697,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range6 = { key : "alpha", from : _this8._isFrom ? 0 : objValue6, to : !_this8._isFrom ? 0 : objValue6};
 		_this8._props.set("alpha",_range6);
+		if(_this8._isFrom) {
+			_this8.updateProperties(0);
+		}
 		var _this9 = _this8;
 		var objValue7 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this9._target,"size")) {
@@ -1596,6 +1707,9 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range7 = { key : "size", from : _this9._isFrom ? 50 : objValue7, to : !_this9._isFrom ? 50 : objValue7};
 		_this9._props.set("size",_range7);
+		if(_this9._isFrom) {
+			_this9.updateProperties(0);
+		}
 		var _this10 = _this9;
 		_this10._easing = lets_easing_Sine.get_easeIn();
 		var _this11 = _this10;
@@ -1708,6 +1822,9 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "radius", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("radius",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		_this1._easing = lets_easing_Sine.get_easeInOut();
 		var _this2 = _this1;
@@ -1725,6 +1842,9 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "rotation", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("rotation",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		var value1 = lib_util_MathUtil.random(150,160);
 		var objValue1 = 0;
@@ -1733,6 +1853,9 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "size", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("size",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		_this2._easing = lets_easing_Sine.get_easeInOut();
 		var _this3 = _this2;
@@ -1825,6 +1948,9 @@ art_CC012.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "radius", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("radius",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		_this1._easing = lets_easing_Sine.get_easeInOut();
 		var _this2 = _this1;
@@ -1981,6 +2107,9 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		var value1 = lib_util_MathUtil.random(0,lib_Global.h);
 		var objValue1 = 0;
@@ -1989,6 +2118,9 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		var value2 = Math.round(lib_util_MathUtil.random(10,100));
 		var objValue2 = 0;
@@ -1997,6 +2129,9 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range2 = { key : "size", from : _this2._isFrom ? value2 : objValue2, to : !_this2._isFrom ? value2 : objValue2};
 		_this2._props.set("size",_range2);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
 		var _this3 = _this2;
 		var objValue3 = 0;
 		if(Object.prototype.hasOwnProperty.call(_this3._target,"stroke")) {
@@ -2004,6 +2139,9 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range3 = { key : "stroke", from : _this3._isFrom ? r : objValue3, to : !_this3._isFrom ? r : objValue3};
 		_this3._props.set("stroke",_range3);
+		if(_this3._isFrom) {
+			_this3.updateProperties(0);
+		}
 		var _this4 = _this3;
 		_this4._easing = lets_easing_Sine.get_easeInOut();
 		var _this5 = _this4;
@@ -2253,6 +2391,9 @@ art_CC018.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "radius", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("radius",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		_this1._isYoyo = true;
 		var _this2 = _this1;
@@ -2336,6 +2477,9 @@ art_CC019.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
 		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
 		var _this1 = _this;
 		var value1 = lib_Global.h / 2;
 		var objValue1 = 0;
@@ -2344,6 +2488,9 @@ art_CC019.prototype = $extend(art_CCBase.prototype,{
 		}
 		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
 		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
 		var _this2 = _this1;
 		_this2._easing = lets_easing_Sine.get_easeInOut();
 		var _this3 = _this2;
@@ -2828,6 +2975,129 @@ art_CC025.prototype = $extend(art_CCBase.prototype,{
 		this.stop();
 	}
 	,__class__: art_CC025
+});
+var art_CC026 = function(ctx) {
+	this._fillColor = null;
+	this._lineColor = null;
+	this._bgColor = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.shapeMax = 2000;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC026.__name__ = ["art","CC026"];
+art_CC026.__interfaces__ = [art_ICCBase];
+art_CC026.__super__ = art_CCBase;
+art_CC026.prototype = $extend(art_CCBase.prototype,{
+	onAnimateHandler: function(circle) {
+		var startx = circle.x;
+		var starty = circle.y;
+		if(lib_util_MathUtil.posNeg() > 0) {
+			if(circle.x < lib_Global.w / 2) {
+				startx = circle.x - lib_Global.w;
+			} else {
+				startx = circle.x + lib_Global.w;
+			}
+			starty += lib_util_MathUtil.random(-lib_Global.h,lib_Global.h);
+		} else {
+			startx += lib_util_MathUtil.random(-lib_Global.w,lib_Global.w);
+			if(circle.y < lib_Global.h / 2) {
+				starty = circle.y - lib_Global.h;
+			} else {
+				starty = circle.y + lib_Global.h;
+			}
+		}
+		var time = lib_util_MathUtil.random(1,3);
+		var delay = lib_util_MathUtil.random(0,3);
+		var GoJs = new lets_GoJs(circle,time);
+		GoJs._isFrom = true;
+		GoJs.updateProperties(0);
+		var _this = GoJs;
+		_this._delay = _this.getDuration(delay);
+		var _this1 = _this;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range = { key : "x", from : _this1._isFrom ? startx : objValue, to : !_this1._isFrom ? startx : objValue};
+		_this1._props.set("x",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this2._target,"y")) {
+			objValue1 = Reflect.getProperty(_this2._target,"y");
+		}
+		var _range1 = { key : "y", from : _this2._isFrom ? starty : objValue1, to : !_this2._isFrom ? starty : objValue1};
+		_this2._props.set("y",_range1);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
+		var _this3 = _this2;
+		_this3._easing = lets_easing_Sine.get_easeOut();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var circle = this.shapeArray[i];
+			this.ctx.fillStyle = circle.colour;
+			lib_CanvasTools.circle(this.ctx,circle.x,circle.y,5);
+		}
+	}
+	,setup: function() {
+		var _gthis = this;
+		console.log("setup: " + this.toString());
+		var img = new Image();
+		img.src = "/assets/img/planb.png";
+		img.onload = function() {
+			var option = new SketchOption();
+			option.set_width(img.width);
+			option.set_height(img.height);
+			_gthis.ctx2 = Sketch.createHiddenCanvas("imageholder",option);
+			_gthis.ctx2.drawImage(img,0,0,img.width,img.height);
+			img.style.display = "none";
+			_gthis.getPixel();
+		};
+	}
+	,getPixel: function() {
+		var _g1 = 0;
+		var _g = this.shapeMax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var xpos = lib_util_MathUtil.random(0,this.ctx2.canvas.width);
+			var ypos = lib_util_MathUtil.random(0,this.ctx2.canvas.height);
+			var pixel = this.ctx2.getImageData(xpos,ypos,1,1);
+			var data = pixel.data;
+			if(data[0] == 255 && data[1] == 255 && data[2] == 255) {
+				continue;
+			}
+			var rgba = "rgba(" + data[0] + ", " + data[1] + ", " + data[2] + ", " + data[3] / 255 + ")";
+			var xstart = Math.round((lib_Global.w - this.ctx2.canvas.width) / 2);
+			var ystart = Math.round((lib_Global.h - this.ctx2.canvas.height) / 2);
+			var circle = { _id : "" + i, _type : "circle", x : xstart + xpos, y : ystart + ypos, radius : 10, colour : rgba};
+			this.shapeArray.push(circle);
+		}
+		console.log(this.shapeArray.length);
+		var _g11 = 0;
+		var _g2 = this.shapeArray.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var _shapeArray = this.shapeArray[i1];
+			this.onAnimateHandler(_shapeArray);
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC026
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -3779,6 +4049,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "width", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("width",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,height: function(value) {
@@ -3788,6 +4061,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "height", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("height",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,x: function(value) {
@@ -3797,6 +4073,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "x", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("x",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,y: function(value) {
@@ -3806,6 +4085,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "y", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("y",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,rotation: function(degree) {
@@ -3815,6 +4097,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "rotation", from : this._isFrom ? degree : objValue, to : !this._isFrom ? degree : objValue};
 		this._props.set("rotation",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,degree: function(degree) {
@@ -3824,6 +4109,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "rotation", from : this._isFrom ? degree : objValue, to : !this._isFrom ? degree : objValue};
 		this._props.set("rotation",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,radians: function(degree) {
@@ -3834,6 +4122,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "rotation", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("rotation",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,alpha: function(value) {
@@ -3843,6 +4134,9 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "alpha", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("alpha",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,scale: function(value) {
@@ -3852,18 +4146,27 @@ lets_GoJs.prototype = {
 		}
 		var _range = { key : "scaleX", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("scaleX",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		var objValue1 = 0;
 		if(Object.prototype.hasOwnProperty.call(this._target,"scaleY")) {
 			objValue1 = Reflect.getProperty(this._target,"scaleY");
 		}
 		var _range1 = { key : "scaleY", from : this._isFrom ? value : objValue1, to : !this._isFrom ? value : objValue1};
 		this._props.set("scaleY",_range1);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		var objValue2 = 0;
 		if(Object.prototype.hasOwnProperty.call(this._target,"scale")) {
 			objValue2 = Reflect.getProperty(this._target,"scale");
 		}
 		var _range2 = { key : "scale", from : this._isFrom ? value : objValue2, to : !this._isFrom ? value : objValue2};
 		this._props.set("scale",_range2);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,yoyo: function() {
@@ -3886,6 +4189,9 @@ lets_GoJs.prototype = {
 		} else {
 			_this.h[key] = _range;
 		}
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
 		return this;
 	}
 	,onComplete: function(func,arr) {
@@ -3906,9 +4212,6 @@ lets_GoJs.prototype = {
 		this.destroy();
 	}
 	,init: function() {
-		if(this._isFrom) {
-			this.updateProperties(0);
-		}
 		if(this._isTimeBased) {
 			console.log("TODO: build timebased animation");
 		} else if(lets_GoJs._requestId == null) {
@@ -3958,6 +4261,9 @@ lets_GoJs.prototype = {
 			var func = this._options.onUpdate;
 			var arr = this._options.onUpdateParams != null ? this._options.onUpdateParams : [];
 			func.apply(func,arr);
+		}
+		if(this._props == null) {
+			return;
 		}
 		var n = this._props.keys();
 		while(n.hasNext()) {
@@ -5773,7 +6079,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-08 10:13:28";
+lib_model_constants_App.BUILD = "2019-02-10 13:11:24";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
