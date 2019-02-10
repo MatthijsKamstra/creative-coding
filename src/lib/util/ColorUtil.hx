@@ -12,6 +12,12 @@ typedef RGB = {
 	var g : Int;
 	var b : Int;
 };
+typedef RGBA = {
+	var r : Int;
+	var g : Int;
+	var b : Int;
+	var a : Float;
+};
 
 class ColorUtil {
 
