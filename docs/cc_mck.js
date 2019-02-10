@@ -3139,7 +3139,7 @@ var art_CC027 = function(ctx) {
 	this.shapeMax = 5000;
 	this.shapeArray = [];
 	art_CCBase.call(this,ctx);
-	this.set_description("");
+	this.set_description("dots bombard plan b");
 	lib_util_HelperUtil.stats();
 };
 art_CC027.__name__ = ["art","CC027"];
@@ -3215,7 +3215,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 			lib_CanvasTools.strokeCircle(this.ctx,circle.x,circle.y,circle.radius);
 		}
 	}
-	,getPixel: function() {
+	,buildGrid: function() {
 		this.grid.setPosition(0,0);
 		this.grid.setCellSize(this._cellsize);
 		this.grid.setDimension(this.ctxHidden.canvas.width,this.ctxHidden.canvas.height);
@@ -3266,7 +3266,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 			_gthis.ctxHidden = Sketch.createHiddenCanvas("imageholder",option);
 			_gthis.ctxHidden.drawImage(img,0,0,img.width,img.height);
 			img.style.display = "none";
-			_gthis.getPixel();
+			_gthis.buildGrid();
 		};
 	}
 	,draw: function() {
@@ -6391,7 +6391,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-10 18:05:36";
+lib_model_constants_App.BUILD = "2019-02-10 20:00:12";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

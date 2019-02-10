@@ -14,7 +14,7 @@ class CC027 extends CCBase implements ICCBase {
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
-		description = '';
+		description = 'dots bombard plan b';
 		lib.util.HelperUtil.stats();
 	}
 
@@ -72,7 +72,7 @@ class CC027 extends CCBase implements ICCBase {
 		}
 	}
 
-	function getPixel() {
+	function buildGrid() {
 
 		grid.setPosition(0,0);
 		grid.setCellSize(_cellsize);
@@ -81,8 +81,6 @@ class CC027 extends CCBase implements ICCBase {
 		trace('grid (width,height): ${grid.width},${grid.height}');
 		trace('grid.array.length: ${grid.array.length}');
 		trace('grid cell (width,height): ${grid.cellHeight}, ${grid.cellWidth}');
-
-
 
 		for (i in 0...grid.array.length) {
 			var point = grid.array[i];
@@ -140,7 +138,7 @@ class CC027 extends CCBase implements ICCBase {
 			ctxHidden.drawImage(img, 0, 0, img.width, img.height);
 			img.style.display = 'none';
 
-			getPixel();
+			buildGrid();
 		};
 	}
 
@@ -151,6 +149,7 @@ class CC027 extends CCBase implements ICCBase {
 	}
 
 	// ____________________________________ helpers ____________________________________
+
 	function pixelData2RGBA(data:Uint8ClampedArray):RGBA {
 		return {
 			r: data[0],
