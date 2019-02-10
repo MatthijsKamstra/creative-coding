@@ -254,7 +254,7 @@ class GoJs {
 	 * @return       GoJs
 	 */
 	inline public function prop(key:String, value:Float):GoJs {
-		// [mck] TODO set a zero value if it doesn't exist
+		// [mck] TODO set zero value if it doesn't exist
 		var objValue = 0;
 		if(Reflect.hasField(_target, key)) {
 			objValue = Reflect.getProperty(_target, key);
@@ -264,6 +264,10 @@ class GoJs {
 
 		var _range = {key: key, from: (_isFrom) ? value : objValue, to: (!_isFrom) ? value : objValue};
 		_props.set(key, _range);
+
+		// [mck] make sure the `_isFrom` is set asap
+		if(_isFrom) updateProperties(0);
+
 		return this;
 	}
 
@@ -323,11 +327,6 @@ class GoJs {
 
 	// ____________________________________ private ____________________________________
 	private function init():Void {
-		if(_isFrom) {
-			// trace('force end result');
-			// make sure asap that the animation starts in its from position
-			updateProperties(0);
-		}
 		if(_isTimeBased){
 			// [mck] TODO clean this up!!!!
 			trace('TODO: build timebased animation');
@@ -370,7 +369,7 @@ class GoJs {
 		// [mck] check for delay, simply count down the delay before we animate
 		// [mck] TODO doesn't work with time
 		if(_delay > 0 && _isTimeBased ) trace ('FIXME this doesn\'t work yet');
-		if(_delay >0){
+		if(_delay > 0){
 			_delay--;
 			return null;
 		}
@@ -415,6 +414,8 @@ class GoJs {
 			var arr = (_options.onUpdateParams != null) ? _options.onUpdateParams : [];
 			Reflect.callMethod(func, func, arr);
 		}
+		// [mck] for some reason this can be null
+		if(_props == null) return;
 		for (n in _props.keys()) {
 			var range = _props.get(n);
 			// Reflect.setProperty(_target, n, _easing(time / _duration) * (range.to - range.from) + range.from);
