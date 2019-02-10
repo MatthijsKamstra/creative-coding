@@ -129,7 +129,7 @@ class CC027 extends CCBase implements ICCBase {
 
 		// start loading image
 		var img = new Image();
-		img.src = '/assets/img/planb.png';
+		img.src = 'assets/img/planb.png';
 		img.onload = function() {
 			var option = new Sketch.SketchOption();
 			option.width = img.width;

@@ -103,7 +103,7 @@ class CC026 extends CCBase implements ICCBase {
 	override function setup() {
 		trace('setup: ${toString()}');
 		var img = new Image();
-		img.src = '/assets/img/planb.png';
+		img.src = 'assets/img/planb.png';
 		img.onload = function() {
 			var option = new Sketch.SketchOption();
 			option.width = img.width;

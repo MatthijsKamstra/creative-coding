@@ -3113,7 +3113,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 		var _gthis = this;
 		console.log("setup: " + this.toString());
 		var img = new Image();
-		img.src = "/assets/img/planb.png";
+		img.src = "assets/img/planb.png";
 		img.onload = function() {
 			var option = new SketchOption();
 			option.set_width(img.width);
@@ -3258,7 +3258,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 		console.log("setup: " + this.toString());
 		this.shapeArray = [];
 		var img = new Image();
-		img.src = "/assets/img/planb.png";
+		img.src = "assets/img/planb.png";
 		img.onload = function() {
 			var option = new SketchOption();
 			option.set_width(img.width);
@@ -6391,7 +6391,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-10 20:00:12";
+lib_model_constants_App.BUILD = "2019-02-10 20:03:26";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
