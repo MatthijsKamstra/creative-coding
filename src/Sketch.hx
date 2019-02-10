@@ -76,21 +76,51 @@ class Sketch {
 		return null;
 	}
 
+	function checkForId (id:String) : Bool {
+		return true;
+	}
+
 	function resize() {
 		var c:Array<CanvasElement> = cast document.getElementsByTagName('canvas');
 		w = window.innerWidth;
 		h = window.innerHeight;
 		for (i in 0...c.length) {
 			var _c = c[i];
+			if(_c.id.indexOf('hiddencanvas-')!= -1) {
+				// trace(_c.id);
+				continue;
+			}
 			_c.width = w;
 			_c.height = h;
 		}
 		console.log("resize: " + w + ":" + h);
 	}
 
-	function createHiddenCanvas(canvas_name) {
-		var ctx = createCanvas(canvas_name);
-		canvas.style.left = -w + "px";
+	/**
+	 * so we need a canvas to sample from
+	 * @param name
+	 * @param option
+	 */
+	public static function createHiddenCanvas(name, ?option:SketchOption): CanvasRenderingContext2D {
+		if (option == null) {
+			option = new SketchOption();
+		}
+
+		var body = document.querySelector('body');
+		var canvas = document.createCanvasElement();
+		body.appendChild(canvas);
+
+		canvas.setAttribute("id", 'hiddencanvas-${name}');
+		canvas.style.position = "absolute";
+		canvas.style.left = "0px";
+		canvas.style.top = "0px";
+		canvas.style.border = "1px solid pink";
+		// canvas.style.left = -window.innerWidth + "px";
+		canvas.width = option.width;
+		canvas.height = option.height;
+
+
+		var ctx = canvas.getContext('2d');
 		return ctx;
 	}
 
@@ -239,6 +269,17 @@ class Sketch {
 
 // https://github.com/soulwire/sketch.js/wiki/API#options
 class SketchOption {
+
+	public var width ( get_width , set_width ) : Int;
+	private var _width : Int;
+	function get_width () : Int { return _width;}
+	function set_width(value : Int) : Int { return _width = value; }
+
+	public var height ( get_height , set_height ) : Int;
+	private var _height : Int;
+	function get_height () : Int { return _height; }
+	function set_height(value : Int) : Int { return _height = value; }
+
 	// fullscreen Default: true; when false, you can pass width: 500, height: 500 to specify a size.
 	public var fullscreen(get_fullscreen, set_fullscreen):Bool;
 	private var _fullscreen:Bool = true;
