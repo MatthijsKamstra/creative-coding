@@ -86,4 +86,22 @@ class ShapeUtil {
 		ctx.strokeRect(grid.x, grid.y, grid.width, grid.height);
 	}
 
+	/**
+	 * use with de data of GridUtil
+	 * create dot point with a border of grid
+	 * @example
+	 * 			var grid = ...
+	 * 			lib.util.ShapeUtil.gridDots(ctx, grid);
+	 */
+	public static function gridDots(ctx:CanvasRenderingContext2D, grid:GridUtil){
+		for (i in 0...grid.array.length) {
+			var point:Point = grid.array[i];
+			ctx.colour(PINK.r, PINK.g, PINK.b, 1);
+			ctx.circle(point.x, point.y, 1);
+		}
+		ctx.lineWidth = 1;
+		ctx.lineColour(GRAY.r, GRAY.g, GRAY.b, 0.5);
+		ctx.strokeRect(grid.x, grid.y, grid.width, grid.height);
+	}
+
 }
