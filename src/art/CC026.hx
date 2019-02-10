@@ -4,32 +4,19 @@ package art;
  * short description what this does
  */
 class CC026 extends CCBase implements ICCBase {
+
 	var shapeArray:Array<Circle> = [];
-	var grid:GridUtil = new GridUtil();
-	var shapeMax = 2000;
-	var _radius = 150;
-	var _cellsize = 150;
-	var _bgColor:RGB = null;
-	var _lineColor:RGB = null;
-	var _fillColor:RGB = null;
-	var ctx2:CanvasRenderingContext2D;
+	var shapeMax = 5000;
+	var ctxHidden:CanvasRenderingContext2D;
+	var readyCounter = 0;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 		description = '';
+		lib.util.HelperUtil.stats();
 	}
 
-	// function createShape(i:Int, ?point:Point){
-	// 	var shape : Circle = {
-	// 		_id: '$i',
-	// 		_type: 'circle',
-	// 		x: point.x,
-	// 		y: point.y,
-	// 		radius:_radius,
-	// 	}
-	// 	// onAnimateHandler(shape);
-	// 	return shape;
-	// }
+	// ____________________________________ handlers ____________________________________
 	function onAnimateHandler(circle:Circle) {
 		var startx = circle.x;
 		var starty = circle.y;
@@ -49,9 +36,19 @@ class CC026 extends CCBase implements ICCBase {
 			.delay(delay)
 			.x(startx)
 			.y(starty)
-			.ease(lets.easing.Sine.easeOut);
+			.ease(lets.easing.Sine.easeOut)
+			.onComplete(onCompleteHandler, [circle]);
 	}
 
+	function onCompleteHandler(circle) {
+		readyCounter++;
+		if (readyCounter >= shapeArray.length) {
+			trace('stop');
+			stop();
+		}
+	}
+
+	// ____________________________________ shape related  ____________________________________
 	function drawShape() {
 		ctx.clearRect(0, 0, w, h);
 		ctx.backgroundObj(WHITE);
@@ -64,41 +61,22 @@ class CC026 extends CCBase implements ICCBase {
 		}
 	}
 
-	override function setup() {
-		trace('setup: ${toString()}');
-		var img = new Image();
-		// img.src = '/assets/img/rhino.jpg';
-		// img.src = '/assets/img/planb.jpg';
-		img.src = '/assets/img/planb.png';
-		img.onload = function() {
-			// trace(img.width, img.height);
-			// trace(img.src);
-
-			var option = new Sketch.SketchOption();
-			option.width = img.width;
-			option.height = img.height;
-			ctx2 = Sketch.createHiddenCanvas('imageholder', option);
-			ctx2.drawImage(img, 0, 0, img.width, img.height);
-			img.style.display = 'none';
-
-			getPixel();
-		};
-	}
-
 	function getPixel() {
 		for (i in 0...shapeMax) {
-			var xpos = random(0, ctx2.canvas.width);
-			var ypos = random(0, ctx2.canvas.height);
+			var xpos = random(0, ctxHidden.canvas.width);
+			var ypos = random(0, ctxHidden.canvas.height);
 
-			var pixel = ctx2.getImageData(xpos, ypos, 1, 1);
+			var pixel = ctxHidden.getImageData(xpos, ypos, 1, 1);
 			var data = pixel.data;
 			if (data[0] == 255 && data[1] == 255 && data[2] == 255)
+				continue;
+			if (data[0] != 0 && data[1] != 0 && data[2] != 0)
 				continue;
 			var rgba = 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
 			// trace(rgba);
 
-			var xstart = Math.round((w - ctx2.canvas.width) / 2);
-			var ystart = Math.round((h - ctx2.canvas.height) / 2);
+			var xstart = Math.round((w - ctxHidden.canvas.width) / 2);
+			var ystart = Math.round((h - ctxHidden.canvas.height) / 2);
 
 			var circle:Circle = {
 				_id: '$i',
@@ -121,9 +99,36 @@ class CC026 extends CCBase implements ICCBase {
 		}
 	}
 
+	// ____________________________________ override  ____________________________________
+	override function setup() {
+		trace('setup: ${toString()}');
+		var img = new Image();
+		img.src = '/assets/img/planb.png';
+		img.onload = function() {
+			var option = new Sketch.SketchOption();
+			option.width = img.width;
+			option.height = img.height;
+			ctxHidden = Sketch.createHiddenCanvas('imageholder', option);
+			ctxHidden.drawImage(img, 0, 0, img.width, img.height);
+			img.style.display = 'none';
+
+			getPixel();
+		};
+	}
+
 	override function draw() {
 		// trace('draw: ${toString()}');
 		drawShape();
 		// stop();
+	}
+
+	// ____________________________________ helpers ____________________________________
+	function pixelData2RGBA(data):RGBA {
+		return {
+			r: data[0],
+			g: data[1],
+			b: data[2],
+			a: (data[3] / 255),
+		}
 	}
 }
