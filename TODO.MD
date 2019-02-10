@@ -25,14 +25,14 @@
 - [x] import json with colors (https://github.com/mattdesl/nice-color-palettes)
 - [x] snack bar added to page (see fonk-onepressforhappiness)
 - [x] create snackbar that is more subtile
+- [x] nav between sketches (css)
+- [x] exporting images
 - [ ] check svg classes for color classes
 - [ ] choose color vs colour
-- [ ] nav between sketches (css)
 - [ ] add controle settings (quick settings)
 - [ ] get scaling canvas image (A4 -> A0)  from `gen-js-art`
 - [ ] loading music
 - [ ] loading colors
-- [ ] exporting images
 - [ ] exporting video
 - [ ] record state canvas,
 - [ ] website state
