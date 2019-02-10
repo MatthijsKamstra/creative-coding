@@ -143,6 +143,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
+	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
 		var ctx = Sketch.create("creative_code_mck");
@@ -238,13 +239,24 @@ var Main = function() {
 			window.location.hash = "CC027";
 			new art_CC027(ctx);
 		}
+		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
+		_gthis.count = Std.parseInt(tmp);
 		var snackbar = new lib_html_Snackbar();
 		snackbar.show("sketch " + hash);
 		var left = new lib_html_Nav();
-		left.dir("left");
+		var ldiv = left.dir("left");
+		ldiv.onclick = function() {
+			console.log("left");
+			_gthis.count--;
+			_gthis.changeHash();
+		};
 		var right = new lib_html_Nav();
-		right.dir("right");
-		var count = Std.parseInt(StringTools.replace(hash.toLowerCase(),"cc",""));
+		var rdiv = right.dir("right");
+		rdiv.onclick = function() {
+			console.log("right");
+			_gthis.count++;
+			_gthis.changeHash();
+		};
 		window.addEventListener("hashchange",function() {
 			window.location.reload();
 		},false);
@@ -252,20 +264,20 @@ var Main = function() {
 			var _g = e.key;
 			switch(_g) {
 			case "ArrowDown":
-				count = 0;
+				_gthis.count = 0;
 				break;
 			case "ArrowLeft":
-				count -= 1;
+				_gthis.count--;
 				break;
 			case "ArrowRight":
-				count += 1;
+				_gthis.count++;
 				break;
 			case "ArrowUp":
-				count = 100000;
+				_gthis.count = 100000;
 				break;
 			}
-			var tmp = StringTools.lpad(count == null ? "null" : "" + count,"0",3);
-			window.location.hash = "CC" + tmp;
+			var tmp1 = StringTools.lpad(_gthis.count == null ? "null" : "" + _gthis.count,"0",3);
+			window.location.hash = "CC" + tmp1;
 		},false);
 	});
 };
@@ -274,7 +286,11 @@ Main.main = function() {
 	var app = new Main();
 };
 Main.prototype = {
-	__class__: Main
+	changeHash: function() {
+		var tmp = StringTools.lpad(Std.string(this.count),"0",3);
+		window.location.hash = "CC" + tmp;
+	}
+	,__class__: Main
 };
 Math.__name__ = ["Math"];
 var Reflect = function() { };
@@ -4951,6 +4967,7 @@ lib_html_Nav.prototype = $extend(lib_html_CSSinjector.prototype,{
 			window.document.body.appendChild(div);
 			x = div;
 		}
+		return x;
 	}
 	,css: function() {
 		return "\n.nav {\n\tdisplay: none;\n\twidth: 80px;\n\theight: 80px;\n    background-color: #333;\n    color: #fff;\n    text-align: center;\n    padding: 10px;\n    position: fixed;\n    z-index: 1;\n    top: 50%;\n    font-size: 13px;\n    opacity: 0.5;\n\tmargin-top: -40px;\n}\n.nav-left{\n    left: 0%;\n    border-radius: 0 5px 5px 0;\n}\n.nav-right{\n    right: 0%;\n    border-radius: 5px 0 0 5px;\n}\n";
@@ -6346,7 +6363,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-10 16:50:48";
+lib_model_constants_App.BUILD = "2019-02-10 17:17:41";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
