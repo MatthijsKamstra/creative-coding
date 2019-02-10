@@ -2,13 +2,21 @@ package lib.util;
 
 import lib.Global.*;
 import lib.AST;
+import js.Browser.*;
 
 class GridUtil {
 
 	public var array:Array<Point> = [];
+	public var total:Int = null;
 	public var x:Float = null;
 	public var y:Float = null;
+	/**
+	 * the width of the grid
+	 */
 	public var width:Float = null;
+	/**
+	 * the height of the grid
+	 */
 	public var height:Float = null;
 	public var gridX:Float = 0;
 	public var gridY:Float = 0;
@@ -26,6 +34,8 @@ class GridUtil {
 	var _isCellSize : Bool = false;
 	var _isNumbered : Bool = false;
 	var _isDimension : Bool = false;
+	var _isPosition : Bool = false;
+	var _isDebug : Bool = false; // fix ugly grid bugs
 
 	public function new() {}
 
@@ -37,6 +47,7 @@ class GridUtil {
 	public function setPosition(x, y){
 		this.x = x;
 		this.y = y;
+		this._isPosition = true;
 		calculate();
 	}
 
@@ -92,65 +103,80 @@ class GridUtil {
 		calculate();
 	}
 
-	function calculate(){
-		// if (width == null  || width <= 0) width = w;
-		// if (height == null || height <= 0) height = h;
-		// if(cellWidth == null || cellWidth <= 0) cellWidth = 20;
-		// if(cellHeight == null || cellHeight <= 0) cellHeight = 20;
 
+	function calculate(){
+		if (_isDebug) console.log('GridUtil.calculate');
 		 /**
 		  * solution #1:
-		  * 	grid is fixed via cellWidth and cellHeight
-		  *
-		  * calculate x, y, width, height, numH, numV,
+		  * grid is fixed via `cellWidth` and `cellHeight`
+		  * calculate: `x`, `y`, `width`, `height`, `numHor`, `numVer`
 		  *
 		  * TOP/LEFT centerpoint?
 		  */
-		if(_isCellSize){
-			if (cellWidth != null){
-				numHor = Math.floor(w / cellWidth);
-				width = numHor * cellWidth;
-				x = (w - width)/2;
-			}
-			if (cellHeight != null){
-				numVer = Math.floor(h / cellHeight);
-				height = numVer * cellHeight;
-				y = (h - height)/2;
-			}
+		if(_isCellSize && !_isDimension){
+			if (_isDebug) console.info('GridUtil solution #1: cellSize is set');
+			numHor = Math.floor(w / cellWidth);
+			numVer = Math.floor(h / cellHeight);
+			width = numHor * cellWidth;
+			height = numVer * cellHeight;
+			x = (w - width)/2;
+			y = (h - height)/2;
 		}
-		// force
-		// x = 0;
-		// y=0;
 
 		/**
-		 * #2 use numbered cells (in x-dir and y-dir), so calculate the rest
+		 * solution #2:
+		 * use numbered cells (in x-dir and y-dir),
+		 * calculate: `x`, `y`, `width`, `height`, `cellWidth`, `cellHeight`
 		 */
 		if(_isNumbered){
-			if(numHor != null){
-				var _w = (width != null) ? width : w;
-				cellWidth = _w / numHor;
-				width = numHor * cellWidth;
+			if (_isDebug) console.info('GridUtil solution #2: numbered cells set');
+			var _w = (width != null) ? width : w;
+			var _h = (height != null) ? height : h;
+			cellWidth = _w / numHor;
+			cellHeight = _h / numVer;
+			width = numHor * cellWidth;
+			height = numVer * cellHeight;
+			x = (w - width)/2;
+			y = (h - height)/2;
+		}
+
+		/**
+		 * solution #3:
+		 * use a grid with set `width` and `height`
+		 * calculate: `x`, `y`, `width`, `height`, `cellWidth`, `cellHeight`
+		 */
+		if(_isDimension && !_isCellSize){
+			if (_isDebug) console.info('GridUtil solution #3: width/height set');
+			var _w = (width != null) ? width : w;
+			var _h = (height != null) ? height : h;
+			cellWidth = _w / numHor;
+			cellHeight = _h / numVer;
+			width = numHor * cellWidth;
+			height = numVer * cellHeight;
+			x = (w - width)/2;
+			y = (h - height)/2;
+		}
+
+		/**
+		 * solution #4:
+		 * size of the cell is known, and width and height
+		 * calculate: `x`, `y`, `width`, `height`, `cellWidth`, `cellHeight`
+		 */
+		if (_isCellSize && _isDimension){
+			if (_isDebug) console.info('GridUtil solution #4: cellSize is set and width/height');
+			numHor = Math.floor(width / cellWidth);
+			numVer = Math.floor(height / cellHeight);
+
+			width = numHor * cellWidth;
+			height = numVer * cellHeight;
+
+			// [mck] cellwidth will be leading, so the width and height will be fixed accordingly
+			if(!_isPosition){
 				x = (w - width)/2;
-			}
-			if(numVer != null){
-				var _h = (height != null) ? height : h;
-				cellHeight = _h / numVer;
-				height = numVer * cellHeight;
 				y = (h - height)/2;
 			}
 		}
 
-		/**
-		 * #3
-		 */
-		if(_isDimension){
-			if (width != null){
-				// see also solution
-			}
-			if (height != null){
-
-			}
-		}
 
 
 		var cx = 0.0;
@@ -160,7 +186,7 @@ class GridUtil {
 			cy = cellHeight/2;
 		}
 
-		array= [];
+		array= []; // reset array
 		var total = Math.round(numHor * numVer);
 		var xpos = 0;
 		var ypos = 0;
@@ -176,6 +202,9 @@ class GridUtil {
 				ypos++;
 			}
 		}
+
+		total = array.length; // just to have easy access to the array lentth
+		if (_isDebug) console.warn('width: $width, height: $height, cellWidth: $cellWidth, cellHeight: $cellHeight, numHor: $numHor, numVer: $numVer, array: ${array.length}');
 	}
 
 
