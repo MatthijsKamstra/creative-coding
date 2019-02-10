@@ -76,7 +76,7 @@ class Sketch {
 		return null;
 	}
 
-	function checkForId (id:String) : Bool {
+	function checkForId(id:String):Bool {
 		return true;
 	}
 
@@ -86,7 +86,7 @@ class Sketch {
 		h = window.innerHeight;
 		for (i in 0...c.length) {
 			var _c = c[i];
-			if(_c.id.indexOf('hiddencanvas-')!= -1) {
+			if (_c.id.indexOf('hiddencanvas-') != -1) {
 				// trace(_c.id);
 				continue;
 			}
@@ -101,7 +101,7 @@ class Sketch {
 	 * @param name
 	 * @param option
 	 */
-	public static function createHiddenCanvas(name, ?option:SketchOption): CanvasRenderingContext2D {
+	public static function createHiddenCanvas(name, ?option:SketchOption):CanvasRenderingContext2D {
 		if (option == null) {
 			option = new SketchOption();
 		}
@@ -117,8 +117,7 @@ class Sketch {
 		canvas.style.border = "1px solid pink";
 		canvas.width = option.width;
 		canvas.height = option.height;
-		canvas.style.left = - (option.width*1.5) + "px";
-
+		canvas.style.left = -(option.width * 1.5) + "px";
 
 		var ctx = canvas.getContext('2d');
 		return ctx;
@@ -213,20 +212,16 @@ class Sketch {
 			untyped document.msExitFullscreen();
 		}
 	}
-
-	//https://github.com/soulwire/sketch.js/wiki/API#instance-methods
+	// https://github.com/soulwire/sketch.js/wiki/API#instance-methods
 	// ____________________________________ Instance Methods ____________________________________
 	// start
 	// stop
 	// toggle
 	// clear
 	// destroy
-
-
 	// https://github.com/soulwire/sketch.js/wiki/API#overridable-instance-methods
 	// Overridable Instance Methods
 	// Implement these methods on your sketch instance (or pass them to create inside the options hash).
-
 	// setup
 	// update
 	// draw
@@ -242,7 +237,6 @@ class Sketch {
 	// keydown
 	// keyup
 	// resize
-
 }
 
 // Constants
@@ -250,8 +244,6 @@ class Sketch {
 // WEBGL Enumeration for the WebGL type
 // DOM Enumeration for the DOM type
 // instances A list of all current Sketch instances
-
-
 @:enum abstract SketchType(String) {
 	var CANVAS = 'canvas';
 	var WEBGL = 'webgl';
@@ -269,52 +261,107 @@ class Sketch {
 
 // https://github.com/soulwire/sketch.js/wiki/API#options
 class SketchOption {
+	public var width(get_width, set_width):Int;
 
-	public var width ( get_width , set_width ) : Int;
-	private var _width : Int;
-	function get_width () : Int { return _width;}
-	function set_width(value : Int) : Int { return _width = value; }
+	private var _width:Int;
 
-	public var height ( get_height , set_height ) : Int;
-	private var _height : Int;
-	function get_height () : Int { return _height; }
-	function set_height(value : Int) : Int { return _height = value; }
+	function get_width():Int {
+		return _width;
+	}
+
+	function set_width(value:Int):Int {
+		return _width = value;
+	}
+
+	public var height(get_height, set_height):Int;
+
+	private var _height:Int;
+
+	function get_height():Int {
+		return _height;
+	}
+
+	function set_height(value:Int):Int {
+		return _height = value;
+	}
 
 	// fullscreen Default: true; when false, you can pass width: 500, height: 500 to specify a size.
 	public var fullscreen(get_fullscreen, set_fullscreen):Bool;
+
 	private var _fullscreen:Bool = true;
-	function get_fullscreen():Bool {return _fullscreen;}
-	function set_fullscreen(value:Bool):Bool {return _fullscreen = value;}
+
+	function get_fullscreen():Bool {
+		return _fullscreen;
+	}
+
+	function set_fullscreen(value:Bool):Bool {
+		return _fullscreen = value;
+	}
 
 	// autoclear Default: true Whether to clear the context before each call to draw. Otherwise call clear()
 	public var autoclear(get_autoclear, set_autoclear):Bool;
+
 	private var _autoclear:Bool = true;
-	function get_autoclear():Bool {return _autoclear;}
-	function set_autoclear(value:Bool):Bool {return _autostart = value;}
+
+	function get_autoclear():Bool {
+		return _autoclear;
+	}
+
+	function set_autoclear(value:Bool):Bool {
+		return _autostart = value;
+	}
 
 	// autostart Default: true Otherwise call start()
 	public var autostart(get_autostart, set_autostart):Bool;
+
 	private var _autostart:Bool = true;
-	function get_autostart():Bool {return _autostart;}
-	function set_autostart(value:Bool):Bool {return _autostart = value;}
+
+	function get_autostart():Bool {
+		return _autostart;
+	}
+
+	function set_autostart(value:Bool):Bool {
+		return _autostart = value;
+	}
 
 	// autopause Default: true Whether to pause the animation on window blur and resume on focus
 	public var autopause(get_autopause, set_autopause):Bool;
+
 	private var _autopause:Bool = true;
-	function get_autopause():Bool {return _autopause;}
-	function set_autopause(value:Bool):Bool {return _autopause = value;}
+
+	function get_autopause():Bool {
+		return _autopause;
+	}
+
+	function set_autopause(value:Bool):Bool {
+		return _autopause = value;
+	}
 
 	// container Default: document.body Where to put the sketch context
 	public var container(get_container, set_container):js.html.Element;
+
 	private var _container:js.html.Element = document.body;
-	function get_container():js.html.Element {return _container;}
-	function set_container(value:js.html.Element):js.html.Element {return _container = value;}
+
+	function get_container():js.html.Element {
+		return _container;
+	}
+
+	function set_container(value:js.html.Element):js.html.Element {
+		return _container = value;
+	}
 
 	// type Default Sketch.CANVAS Possible values: Sketch.CANVAS, Sketch.WEB_GL and Sketch.DOM
 	public var type(get_type, set_type):SketchType;
+
 	private var _type:SketchType = SketchType.CANVAS;
-	function get_type():SketchType {return _type;}
-	function set_type(value:SketchType):SketchType {return _type = value;}
+
+	function get_type():SketchType {
+		return _type;
+	}
+
+	function set_type(value:SketchType):SketchType {
+		return _type = value;
+	}
 
 	// interval Default: 1 The update / draw interval (2 will update every 2 frames, etc)
 	// globals Default: true Add global properties and methods to the window
