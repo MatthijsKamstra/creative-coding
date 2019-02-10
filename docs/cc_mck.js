@@ -2519,7 +2519,7 @@ art_CC019.prototype = $extend(art_CCBase.prototype,{
 		_this3._options.onCompleteParams = [circle];
 	}
 	,setup: function() {
-		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length)];
+		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
 		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
@@ -5261,6 +5261,9 @@ lib_util_GridUtil.calc = function(x,y,width,height,gridX,gridY,numHor,numVer) {
 };
 lib_util_GridUtil.prototype = {
 	setPosition: function(x,y) {
+		if(this._isDebug) {
+			window.console.log("GridUtil :: setPostion");
+		}
 		this.x = x;
 		this.y = y;
 		this._isPosition = true;
@@ -5270,16 +5273,25 @@ lib_util_GridUtil.prototype = {
 		if(isCentered == null) {
 			isCentered = true;
 		}
+		if(this._isDebug) {
+			window.console.log("GridUtil :: setCenterPoint");
+		}
 		this.isCentered = isCentered;
 		this.calculate();
 	}
 	,setDimension: function(width,height) {
+		if(this._isDebug) {
+			window.console.log("GridUtil :: setDimension");
+		}
 		this.width = width;
 		this.height = height;
 		this._isDimension = true;
 		this.calculate();
 	}
 	,setNumbered: function(numHor,numVer) {
+		if(this._isDebug) {
+			window.console.log("GridUtil :: setNumbers");
+		}
 		this.numHor = numHor;
 		this.numVer = numVer;
 		this._isNumbered = true;
@@ -5288,6 +5300,9 @@ lib_util_GridUtil.prototype = {
 	,setCellSize: function(cellWidth,cellHeight) {
 		if(cellHeight == null) {
 			cellHeight = cellWidth;
+		}
+		if(this._isDebug) {
+			window.console.log("GridUtil :: setCellSize");
 		}
 		this.cellWidth = cellWidth;
 		this.cellHeight = cellHeight;
@@ -5309,7 +5324,7 @@ lib_util_GridUtil.prototype = {
 			this.x = (lib_Global.w - this.width) / 2;
 			this.y = (lib_Global.h - this.height) / 2;
 		}
-		if(this._isNumbered) {
+		if(this._isNumbered && !this._isDimension) {
 			if(this._isDebug) {
 				window.console.info("GridUtil solution #2: numbered cells set");
 			}
@@ -5322,14 +5337,27 @@ lib_util_GridUtil.prototype = {
 			this.x = (lib_Global.w - this.width) / 2;
 			this.y = (lib_Global.h - this.height) / 2;
 		}
-		if(this._isDimension && !this._isCellSize) {
+		if(this._isDimension && !this._isNumbered && !this._isCellSize) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #3: width/height set");
+				window.console.info("GridUtil solution #3: width/height set (" + this.width + ", " + this.height + ")");
 			}
-			var _w1 = this.width != null ? this.width : lib_Global.w;
-			var _h1 = this.height != null ? this.height : lib_Global.h;
-			this.cellWidth = _w1 / this.numHor;
-			this.cellHeight = _h1 / this.numVer;
+			var _cellWidth = this.cellWidth != null ? this.cellWidth : 50;
+			var _cellHeight = this.cellHeight != null ? this.cellHeight : 50;
+			this.numHor = Math.floor(this.width / _cellWidth);
+			this.numVer = Math.floor(this.height / _cellHeight);
+			this.width = this.numHor * _cellWidth;
+			this.height = this.numVer * _cellHeight;
+			this.cellWidth = this.width / this.numHor;
+			this.cellHeight = this.height / this.numVer;
+			this.x = (lib_Global.w - this.width) / 2;
+			this.y = (lib_Global.h - this.height) / 2;
+		}
+		if(this._isDimension && this._isNumbered && !this._isCellSize) {
+			if(this._isDebug) {
+				window.console.info("GridUtil solution #3a: width/height set (" + this.width + ", " + this.height + ") AND number row/cols (" + this.numHor + ", " + this.numVer + ")");
+			}
+			this.cellWidth = Math.floor(this.width / this.numHor);
+			this.cellHeight = Math.floor(this.height / this.numVer);
 			this.width = this.numHor * this.cellWidth;
 			this.height = this.numVer * this.cellHeight;
 			this.x = (lib_Global.w - this.width) / 2;
@@ -6363,7 +6391,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-10 17:17:41";
+lib_model_constants_App.BUILD = "2019-02-10 18:05:36";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
