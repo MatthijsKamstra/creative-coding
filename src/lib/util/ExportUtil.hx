@@ -21,6 +21,27 @@ class ExportUtil {
 		clipboard(base64);
 	}
 
+	// Start file download.
+	// ExportUtil.downloadTextFile("This is the content of my file :)", "hello.txt");
+	public static function downloadTextFile(text:String, ?fileName:String ) {
+		if (fileName == null)
+			fileName = 'CC-txt-${Date.now().getTime()}.txt';
+
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + untyped encodeURIComponent(text));
+		element.setAttribute('download', fileName);
+
+		element.style.display = 'none';
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
+	}
+
+
+
+
 	/**
 	 * [Description]
 	 * @example
