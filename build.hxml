@@ -1,5 +1,6 @@
 -lib hxquicksettings
 -lib thx.color
+-lib hxColorToolkit
 -lib msignal
 -lib mloader
 -lib uglifyjs

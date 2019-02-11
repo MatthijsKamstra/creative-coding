@@ -27,6 +27,8 @@
 - [x] create snackbar that is more subtile
 - [x] nav between sketches (css)
 - [x] exporting images
+- [ ] https://github.com/andyli/hxColorToolkit
+- [ ] https://github.com/fponticelli/thx.color
 - [ ] check svg classes for color classes
 - [ ] choose color vs colour
 - [ ] add controle settings (quick settings)
