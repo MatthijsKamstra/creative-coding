@@ -234,10 +234,13 @@ var Main = function() {
 		case "CC027":
 			new art_CC027(ctx);
 			break;
+		case "CC028":
+			new art_CC028(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC027";
-			new art_CC027(ctx);
+			window.location.hash = "CC028";
+			new art_CC028(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -594,6 +597,21 @@ StringTools.lpad = function(s,c,l) {
 };
 StringTools.replace = function(s,sub,by) {
 	return s.split(sub).join(by);
+};
+StringTools.hex = function(n,digits) {
+	var s = "";
+	var hexChars = "0123456789ABCDEF";
+	while(true) {
+		s = hexChars.charAt(n & 15) + s;
+		n >>>= 4;
+		if(!(n > 0)) {
+			break;
+		}
+	}
+	if(digits != null) {
+		while(s.length < digits) s = "0" + s;
+	}
+	return s;
 };
 var ValueType = { __ename__ : true, __constructs__ : ["TNull","TInt","TFloat","TBool","TObject","TFunction","TClass","TEnum","TUnknown"] };
 ValueType.TNull = ["TNull",0];
@@ -3280,6 +3298,236 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC027
 });
+var art_CC028 = function(ctx) {
+	this.exportIntArray = [];
+	this.exportStringArray = [];
+	this.colorArr = [];
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	art_CCBase.call(this,ctx);
+	this.loader = new mloader_JsonLoader("assets/1000.json");
+	this.loader.loaded.add($bind(this,this.loaded));
+	this.loader.load();
+};
+art_CC028.__name__ = ["art","CC028"];
+art_CC028.__interfaces__ = [art_ICCBase];
+art_CC028.__super__ = art_CCBase;
+art_CC028.prototype = $extend(art_CCBase.prototype,{
+	loaded: function(event) {
+		var _g = event.type;
+		switch(_g[1]) {
+		case 3:
+			this.colorArr = event.target.content;
+			this.convertColors();
+			break;
+		case 4:
+			var error = _g[2];
+			console.log(error);
+			break;
+		default:
+		}
+	}
+	,convertColors: function() {
+		this.exportStringArray = [];
+		this.exportIntArray = [];
+		var _g1 = 0;
+		var _g = this.colorArr.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var _colorArr = this.colorArr[i];
+			var array = this.convertToHex2(_colorArr[0]);
+			var color = this.convertToHex2(_colorArr[0]);
+			var array1 = { hex : array, gray : new hxColorToolkit_spaces_Gray().setColor(color).getColor()};
+			var array2 = this.convertToHex2(_colorArr[1]);
+			var color1 = this.convertToHex2(_colorArr[1]);
+			var array3 = { hex : array2, gray : new hxColorToolkit_spaces_Gray().setColor(color1).getColor()};
+			var array4 = this.convertToHex2(_colorArr[2]);
+			var color2 = this.convertToHex2(_colorArr[2]);
+			var array5 = { hex : array4, gray : new hxColorToolkit_spaces_Gray().setColor(color2).getColor()};
+			var array6 = this.convertToHex2(_colorArr[3]);
+			var color3 = this.convertToHex2(_colorArr[3]);
+			var array7 = { hex : array6, gray : new hxColorToolkit_spaces_Gray().setColor(color3).getColor()};
+			var array8 = this.convertToHex2(_colorArr[4]);
+			var color4 = this.convertToHex2(_colorArr[4]);
+			var array9 = [array1,array3,array5,array7,{ hex : array8, gray : new hxColorToolkit_spaces_Gray().setColor(color4).getColor()}];
+			var copy = array9.slice();
+			haxe_ds_ArraySort.sort(copy,function(a,b) {
+				if(a.gray < b.gray) {
+					return 1;
+				} else if(a.gray > b.gray) {
+					return -1;
+				} else {
+					return 0;
+				}
+			});
+			var storeStringArray = [];
+			var storeIntArray = [];
+			var _g3 = 0;
+			var _g2 = copy.length;
+			while(_g3 < _g2) {
+				var j = _g3++;
+				var __c = copy[j].hex;
+				storeStringArray.push("#" + StringTools.hex(__c,6));
+				storeIntArray.push(__c);
+			}
+			this.exportStringArray.push(storeStringArray);
+			this.exportIntArray.push(storeIntArray);
+		}
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		var colorArray = lib_util_ColorUtil.niceColor100[10];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		var _color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		var _color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		var _color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		var _color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		var _color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		var _colorA = [_color0,_color1,_color2,_color3,_color4];
+		var point = this.grid.array[0];
+		var _g1 = 0;
+		var _g = _colorA.length;
+		while(_g1 < _g) {
+			var j = _g1++;
+			var px = 10;
+			var _w = Math.round((this.grid.cellWidth - px) / _colorA.length);
+			var offsetX = j * _w;
+			lib_CanvasTools.fillColourRGB(this.ctx,_colorA[j]);
+			this.ctx.fillRect(offsetX + point.x,point.y,_w,this.grid.cellHeight - px);
+		}
+		var color = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		var _color01 = this.convertToHexToGray(colorArray[0]);
+		var _color11 = this.convertToHexToGray(colorArray[1]);
+		var _color21 = this.convertToHexToGray(colorArray[2]);
+		var _color31 = this.convertToHexToGray(colorArray[3]);
+		var _color41 = this.convertToHexToGray(colorArray[4]);
+		var px1 = 10;
+		var _w1 = Math.round((this.grid.cellWidth - px1) / _colorA.length);
+		var point1 = this.grid.array[1];
+		var _colorA1 = [_color01,_color11,_color21,_color31,_color41];
+		var _g11 = 0;
+		var _g2 = _colorA1.length;
+		while(_g11 < _g2) {
+			var j1 = _g11++;
+			var offsetX1 = j1 * _w1;
+			lib_CanvasTools.fillColourRGB(this.ctx,_colorA1[j1]);
+			this.ctx.fillRect(offsetX1 + point1.x,point1.y,_w1,this.grid.cellHeight - px1);
+		}
+		var array = this.convertToHex2(colorArray[0]);
+		var color1 = this.convertToHex2(colorArray[0]);
+		var array1 = { hex : array, gray : new hxColorToolkit_spaces_Gray().setColor(color1).getColor()};
+		var array2 = this.convertToHex2(colorArray[1]);
+		var color2 = this.convertToHex2(colorArray[1]);
+		var array3 = { hex : array2, gray : new hxColorToolkit_spaces_Gray().setColor(color2).getColor()};
+		var array4 = this.convertToHex2(colorArray[2]);
+		var color3 = this.convertToHex2(colorArray[2]);
+		var array5 = { hex : array4, gray : new hxColorToolkit_spaces_Gray().setColor(color3).getColor()};
+		var array6 = this.convertToHex2(colorArray[3]);
+		var color4 = this.convertToHex2(colorArray[3]);
+		var array7 = { hex : array6, gray : new hxColorToolkit_spaces_Gray().setColor(color4).getColor()};
+		var array8 = this.convertToHex2(colorArray[4]);
+		var color5 = this.convertToHex2(colorArray[4]);
+		var array9 = [array1,array3,array5,array7,{ hex : array8, gray : new hxColorToolkit_spaces_Gray().setColor(color5).getColor()}];
+		window.console.log("An Array with objects",array9);
+		var copy = array9.slice();
+		haxe_ds_ArraySort.sort(copy,function(a,b) {
+			if(a.gray < b.gray) {
+				return 1;
+			} else if(a.gray > b.gray) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		window.console.log("An Array with objects",copy);
+		var point2 = this.grid.array[2];
+		var _g12 = 0;
+		var _g3 = copy.length;
+		while(_g12 < _g3) {
+			var j2 = _g12++;
+			var offsetX2 = j2 * _w1;
+			var color6 = copy[j2].gray;
+			var __c = new hxColorToolkit_spaces_RGB(color6 >> 16 & 255,color6 >> 8 & 255,color6 & 255);
+			lib_CanvasTools.fillColour(this.ctx,Math.round(__c.get_red()),Math.round(__c.get_green()),Math.round(__c.get_blue()));
+			this.ctx.fillRect(offsetX2 + point2.x,point2.y,_w1,this.grid.cellHeight - px1);
+		}
+		var point3 = this.grid.array[3];
+		var _g13 = 0;
+		var _g4 = copy.length;
+		while(_g13 < _g4) {
+			var j3 = _g13++;
+			var offsetX3 = j3 * _w1;
+			var color7 = copy[j3].hex;
+			var __c1 = new hxColorToolkit_spaces_RGB(color7 >> 16 & 255,color7 >> 8 & 255,color7 & 255);
+			lib_CanvasTools.fillColour(this.ctx,Math.round(__c1.get_red()),Math.round(__c1.get_green()),Math.round(__c1.get_blue()));
+			this.ctx.fillRect(offsetX3 + point3.x,point3.y,_w1,this.grid.cellHeight - px1);
+		}
+	}
+	,setup: function() {
+		var _gthis = this;
+		console.log("setup: " + this.toString());
+		this.grid.setNumbered(4,1);
+		window.addEventListener(lib_Global.KEY_DOWN,function(e) {
+			e.preventDefault();
+			var _g = e.key;
+			if(_g == "s") {
+				var arrayInt100 = [];
+				var arrayString100 = [];
+				var arrayInt500 = [];
+				var arrayString500 = [];
+				var _g1 = 0;
+				var _g2 = _gthis.exportIntArray.length;
+				while(_g1 < _g2) {
+					var i = _g1++;
+					var _exportIntArray = _gthis.exportIntArray[i];
+					var _exportStringArray = _gthis.exportStringArray[i];
+					if(i <= 100) {
+						arrayInt100.push(_exportIntArray);
+						arrayString100.push(_exportStringArray);
+					}
+					if(i <= 500) {
+						arrayInt500.push(_exportIntArray);
+						arrayString500.push(_exportStringArray);
+					}
+				}
+				lib_util_ExportUtil.downloadTextFile(JSON.stringify(arrayInt100),"sorted_int_100.json");
+				lib_util_ExportUtil.downloadTextFile(JSON.stringify(arrayString100),"sorted_100.json");
+				lib_util_ExportUtil.downloadTextFile(JSON.stringify(arrayInt500),"sorted_int_500.json");
+				lib_util_ExportUtil.downloadTextFile(JSON.stringify(arrayString500),"sorted_500.json");
+				lib_util_ExportUtil.downloadTextFile(JSON.stringify(_gthis.exportIntArray),"sorted_int_1000.json");
+				lib_util_ExportUtil.downloadTextFile(JSON.stringify(_gthis.exportStringArray),"sorted_1000.json");
+			} else {
+				console.log("case '" + e.key + "': trace ('" + e.key + "');");
+			}
+		},false);
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,convertToHex: function(value) {
+		var _color = Std.parseInt(StringTools.replace(value,"#","0x"));
+		var rgb = { r : Math.round(new hxColorToolkit_spaces_RGB(_color >> 16 & 255,_color >> 8 & 255,_color & 255).get_red()), g : Math.round(new hxColorToolkit_spaces_RGB(_color >> 16 & 255,_color >> 8 & 255,_color & 255).get_green()), b : Math.round(new hxColorToolkit_spaces_RGB(_color >> 16 & 255,_color >> 8 & 255,_color & 255).get_blue())};
+		return rgb;
+	}
+	,convertToHexToGray: function(value) {
+		var _color = Std.parseInt(StringTools.replace(value,"#","0x"));
+		var rgb = { r : Math.round(new hxColorToolkit_spaces_Gray().setColor(_color).toRGB().get_red()), g : Math.round(new hxColorToolkit_spaces_Gray().setColor(_color).toRGB().get_green()), b : Math.round(new hxColorToolkit_spaces_Gray().setColor(_color).toRGB().get_blue())};
+		return rgb;
+	}
+	,convertToHex2: function(value) {
+		var _color = Std.parseInt(StringTools.replace(value,"#","0x"));
+		return _color;
+	}
+	,__class__: art_CC028
+});
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
 haxe_IMap.prototype = {
@@ -3458,6 +3706,136 @@ haxe_Timer.prototype = {
 	,run: function() {
 	}
 	,__class__: haxe_Timer
+};
+var haxe_ds_ArraySort = function() { };
+haxe_ds_ArraySort.__name__ = ["haxe","ds","ArraySort"];
+haxe_ds_ArraySort.sort = function(a,cmp) {
+	haxe_ds_ArraySort.rec(a,cmp,0,a.length);
+};
+haxe_ds_ArraySort.rec = function(a,cmp,from,to) {
+	var middle = from + to >> 1;
+	if(to - from < 12) {
+		if(to <= from) {
+			return;
+		}
+		var _g1 = from + 1;
+		var _g = to;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var j = i;
+			while(j > from) {
+				if(cmp(a[j],a[j - 1]) < 0) {
+					haxe_ds_ArraySort.swap(a,j - 1,j);
+				} else {
+					break;
+				}
+				--j;
+			}
+		}
+		return;
+	}
+	haxe_ds_ArraySort.rec(a,cmp,from,middle);
+	haxe_ds_ArraySort.rec(a,cmp,middle,to);
+	haxe_ds_ArraySort.doMerge(a,cmp,from,middle,to,middle - from,to - middle);
+};
+haxe_ds_ArraySort.doMerge = function(a,cmp,from,pivot,to,len1,len2) {
+	var first_cut;
+	var second_cut;
+	var len11;
+	var len22;
+	var new_mid;
+	if(len1 == 0 || len2 == 0) {
+		return;
+	}
+	if(len1 + len2 == 2) {
+		if(cmp(a[pivot],a[from]) < 0) {
+			haxe_ds_ArraySort.swap(a,pivot,from);
+		}
+		return;
+	}
+	if(len1 > len2) {
+		len11 = len1 >> 1;
+		first_cut = from + len11;
+		second_cut = haxe_ds_ArraySort.lower(a,cmp,pivot,to,first_cut);
+		len22 = second_cut - pivot;
+	} else {
+		len22 = len2 >> 1;
+		second_cut = pivot + len22;
+		first_cut = haxe_ds_ArraySort.upper(a,cmp,from,pivot,second_cut);
+		len11 = first_cut - from;
+	}
+	haxe_ds_ArraySort.rotate(a,cmp,first_cut,pivot,second_cut);
+	new_mid = first_cut + len22;
+	haxe_ds_ArraySort.doMerge(a,cmp,from,first_cut,new_mid,len11,len22);
+	haxe_ds_ArraySort.doMerge(a,cmp,new_mid,second_cut,to,len1 - len11,len2 - len22);
+};
+haxe_ds_ArraySort.rotate = function(a,cmp,from,mid,to) {
+	var n;
+	if(from == mid || mid == to) {
+		return;
+	}
+	n = haxe_ds_ArraySort.gcd(to - from,mid - from);
+	while(n-- != 0) {
+		var val = a[from + n];
+		var shift = mid - from;
+		var p1 = from + n;
+		var p2 = from + n + shift;
+		while(p2 != from + n) {
+			a[p1] = a[p2];
+			p1 = p2;
+			if(to - p2 > shift) {
+				p2 += shift;
+			} else {
+				p2 = from + (shift - (to - p2));
+			}
+		}
+		a[p1] = val;
+	}
+};
+haxe_ds_ArraySort.gcd = function(m,n) {
+	while(n != 0) {
+		var t = m % n;
+		m = n;
+		n = t;
+	}
+	return m;
+};
+haxe_ds_ArraySort.upper = function(a,cmp,from,to,val) {
+	var len = to - from;
+	var half;
+	var mid;
+	while(len > 0) {
+		half = len >> 1;
+		mid = from + half;
+		if(cmp(a[val],a[mid]) < 0) {
+			len = half;
+		} else {
+			from = mid + 1;
+			len = len - half - 1;
+		}
+	}
+	return from;
+};
+haxe_ds_ArraySort.lower = function(a,cmp,from,to,val) {
+	var len = to - from;
+	var half;
+	var mid;
+	while(len > 0) {
+		half = len >> 1;
+		mid = from + half;
+		if(cmp(a[mid],a[val]) < 0) {
+			from = mid + 1;
+			len = len - half - 1;
+		} else {
+			len = half;
+		}
+	}
+	return from;
+};
+haxe_ds_ArraySort.swap = function(a,i,j) {
+	var tmp = a[i];
+	a[i] = a[j];
+	a[j] = tmp;
 };
 var haxe_ds_StringMap = function() {
 	this.h = { };
@@ -3879,6 +4257,1771 @@ haxe_xml_Parser.doParse = function(str,strict,p,parent) {
 		return p;
 	}
 	throw new js__$Boot_HaxeError(new haxe_xml_XmlParserException("Unexpected end",str,p));
+};
+var hxColorToolkit_ColorToolkit = function() { };
+hxColorToolkit_ColorToolkit.__name__ = ["hxColorToolkit","ColorToolkit"];
+hxColorToolkit_ColorToolkit.setColorOpaque = function(color,opaqueValue) {
+	if(opaqueValue == null) {
+		opaqueValue = 255;
+	}
+	return opaqueValue << 24 | color & 16777215;
+};
+hxColorToolkit_ColorToolkit.desaturate = function(color) {
+	return new hxColorToolkit_spaces_Gray().setColor(color).getColor();
+};
+hxColorToolkit_ColorToolkit.getComplement = function(color) {
+	return hxColorToolkit_ColorToolkit.rybRotate(color,180);
+};
+hxColorToolkit_ColorToolkit.shiftBrighteness = function(color,degree) {
+	var col = new hxColorToolkit_spaces_HSB().setColor(color);
+	var _g = col;
+	_g.set_brightness(_g.get_brightness() + degree);
+	return col.getColor();
+};
+hxColorToolkit_ColorToolkit.shiftSaturation = function(color,degree) {
+	var col = new hxColorToolkit_spaces_HSB().setColor(color);
+	var _g = col;
+	_g.set_saturation(_g.get_saturation() + degree);
+	return col.getColor();
+};
+hxColorToolkit_ColorToolkit.shiftHue = function(color,degree) {
+	var col = new hxColorToolkit_spaces_HSB().setColor(color);
+	var _g = col;
+	_g.set_hue(_g.get_hue() + degree);
+	return col.getColor();
+};
+hxColorToolkit_ColorToolkit.toLab = function(color) {
+	return new hxColorToolkit_spaces_Lab().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toGray = function(color) {
+	return new hxColorToolkit_spaces_Gray().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toRGB = function(color) {
+	return new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255);
+};
+hxColorToolkit_ColorToolkit.toARGB = function(color) {
+	return new hxColorToolkit_spaces_ARGB(color >> 24 & 255,color >> 16 & 255,color >> 8 & 255,color & 255);
+};
+hxColorToolkit_ColorToolkit.toHSB = function(color) {
+	return new hxColorToolkit_spaces_HSB().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toHSL = function(color) {
+	return new hxColorToolkit_spaces_HSL().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toCMYK = function(color) {
+	return new hxColorToolkit_spaces_CMYK().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toXYZ = function(color) {
+	return new hxColorToolkit_spaces_XYZ().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toYUV = function(color) {
+	return new hxColorToolkit_spaces_YUV().setColor(color);
+};
+hxColorToolkit_ColorToolkit.toHex = function(color) {
+	return new hxColorToolkit_spaces_Hex(color);
+};
+hxColorToolkit_ColorToolkit.getAnalogousScheme = function(color,angle,contrast) {
+	if(contrast == null) {
+		contrast = 25;
+	}
+	if(angle == null) {
+		angle = 10;
+	}
+	return new hxColorToolkit_schemes_Analogous(new hxColorToolkit_spaces_Hex(color),angle,contrast);
+};
+hxColorToolkit_ColorToolkit.getComplementaryScheme = function(color) {
+	return new hxColorToolkit_schemes_Complementary(new hxColorToolkit_spaces_Hex(color));
+};
+hxColorToolkit_ColorToolkit.getCompoundScheme = function(color) {
+	return new hxColorToolkit_schemes_Compound(new hxColorToolkit_spaces_Hex(color));
+};
+hxColorToolkit_ColorToolkit.getFlippedCompoundScheme = function(color) {
+	return new hxColorToolkit_schemes_FlippedCompound(new hxColorToolkit_spaces_Hex(color));
+};
+hxColorToolkit_ColorToolkit.getMonochromeScheme = function(color) {
+	return new hxColorToolkit_schemes_Monochrome(new hxColorToolkit_spaces_Hex(color));
+};
+hxColorToolkit_ColorToolkit.getSplitComplementaryScheme = function(color) {
+	return new hxColorToolkit_schemes_SplitComplementary(new hxColorToolkit_spaces_Hex(color));
+};
+hxColorToolkit_ColorToolkit.getTetradScheme = function(color,angle,alt) {
+	if(alt == null) {
+		alt = false;
+	}
+	if(angle == null) {
+		angle = 90;
+	}
+	return new hxColorToolkit_schemes_Tetrad(new hxColorToolkit_spaces_Hex(color),angle,alt);
+};
+hxColorToolkit_ColorToolkit.getTriadScheme = function(color,angle) {
+	if(angle == null) {
+		angle = 120;
+	}
+	return new hxColorToolkit_schemes_Triad(new hxColorToolkit_spaces_Hex(color),angle);
+};
+hxColorToolkit_ColorToolkit.rybRotate = function(color,angle) {
+	var hsb = new hxColorToolkit_spaces_HSB().setColor(color);
+	var a = 0;
+	var _g1 = 0;
+	var _g = hxColorToolkit_ColorToolkit.rybWheel.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var x0 = hxColorToolkit_ColorToolkit.rybWheel[i][0];
+		var y0 = hxColorToolkit_ColorToolkit.rybWheel[i][1];
+		var x1 = hxColorToolkit_ColorToolkit.rybWheel[i + 1][0];
+		var y1 = hxColorToolkit_ColorToolkit.rybWheel[i + 1][1];
+		if(y1 < y0) {
+			y1 += 360;
+		}
+		if(y0 <= hsb.get_hue() && hsb.get_hue() <= y1) {
+			a = 1.0 * x0 + (x1 - x0) * (hsb.get_hue() - y0) / (y1 - y0);
+			break;
+		}
+	}
+	a += angle % 360;
+	if(a < 0) {
+		a = 360 + a;
+	}
+	if(a > 360) {
+		a -= 360;
+	}
+	a %= 360;
+	var newHue = 0;
+	var _g11 = 0;
+	var _g2 = hxColorToolkit_ColorToolkit.rybWheel.length;
+	while(_g11 < _g2) {
+		var k = _g11++;
+		var xx0 = hxColorToolkit_ColorToolkit.rybWheel[k][0];
+		var yy0 = hxColorToolkit_ColorToolkit.rybWheel[k][1];
+		var xx1 = hxColorToolkit_ColorToolkit.rybWheel[k + 1][0];
+		var yy1 = hxColorToolkit_ColorToolkit.rybWheel[k + 1][1];
+		if(yy1 < yy0) {
+			yy1 += 360;
+		}
+		if(xx0 <= a && a <= xx1) {
+			newHue = yy0 + (yy1 - yy0) * (a - xx0) / (xx1 - xx0);
+			break;
+		}
+	}
+	hsb.set_hue(newHue);
+	return hsb.getColor();
+};
+hxColorToolkit_ColorToolkit.intArray = function(colors) {
+	var a = [];
+	var c = colors.iterator();
+	while(c.hasNext()) {
+		var c1 = c.next();
+		a.push(c1.getColor());
+	}
+	return a;
+};
+var hxColorToolkit_ColorSpaceToolkit = function() { };
+hxColorToolkit_ColorSpaceToolkit.__name__ = ["hxColorToolkit","ColorSpaceToolkit"];
+hxColorToolkit_ColorSpaceToolkit.toLab = function(color) {
+	return new hxColorToolkit_spaces_Lab().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toGray = function(color) {
+	return new hxColorToolkit_spaces_Gray().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toHSB = function(color) {
+	return new hxColorToolkit_spaces_HSB().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toHSL = function(color) {
+	return new hxColorToolkit_spaces_HSL().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toCMYK = function(color) {
+	return new hxColorToolkit_spaces_CMYK().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toXYZ = function(color) {
+	return new hxColorToolkit_spaces_XYZ().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toYUV = function(color) {
+	return new hxColorToolkit_spaces_YUV().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toARGB = function(color) {
+	return new hxColorToolkit_spaces_ARGB().fromRGB(color.toRGB());
+};
+hxColorToolkit_ColorSpaceToolkit.toHex = function(color) {
+	return new hxColorToolkit_spaces_Hex(color.getColor());
+};
+var hxColorToolkit_schemes_ColorScheme = function() { };
+hxColorToolkit_schemes_ColorScheme.__name__ = ["hxColorToolkit","schemes","ColorScheme"];
+hxColorToolkit_schemes_ColorScheme.prototype = {
+	__class__: hxColorToolkit_schemes_ColorScheme
+};
+var hxColorToolkit_schemes_ColorWheelScheme = function(primaryColor) {
+	this._colors = [];
+	this._primaryColor = primaryColor;
+	this.numOfColors = 1;
+};
+hxColorToolkit_schemes_ColorWheelScheme.__name__ = ["hxColorToolkit","schemes","ColorWheelScheme"];
+hxColorToolkit_schemes_ColorWheelScheme.__interfaces__ = [hxColorToolkit_schemes_ColorScheme];
+hxColorToolkit_schemes_ColorWheelScheme.prototype = {
+	clone: function() {
+		throw new js__$Boot_HaxeError("need to be overrided");
+	}
+	,getColor: function(index) {
+		return this._colors[index];
+	}
+	,iterator: function() {
+		return HxOverrides.iter(this._colors);
+	}
+	,get_primaryColor: function() {
+		return this._primaryColor;
+	}
+	,set_primaryColor: function(val) {
+		this._primaryColor = val;
+		this.generate();
+		return this.get_primaryColor();
+	}
+	,generate: function() {
+		throw new js__$Boot_HaxeError("Method must be called by child class");
+	}
+	,wrap: function(x,min,threshold,plus) {
+		if(x - min < threshold) {
+			return x + plus;
+		} else {
+			return x - min;
+		}
+	}
+	,mutateFromPrimary: function(newColor) {
+		if(js_Boot.__instanceof(newColor,this._class)) {
+			return newColor.clone();
+		} else {
+			return this.get_primaryColor().clone().fromRGB(newColor.toRGB());
+		}
+	}
+	,__class__: hxColorToolkit_schemes_ColorWheelScheme
+	,__properties__: {set_primaryColor:"set_primaryColor",get_primaryColor:"get_primaryColor"}
+};
+var hxColorToolkit_schemes_Analogous = function(primaryColor,angle,contrast) {
+	if(contrast == null) {
+		contrast = 25;
+	}
+	if(angle == null) {
+		angle = 10;
+	}
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this._angle = angle;
+	this._contrast = contrast;
+	this.generate();
+};
+hxColorToolkit_schemes_Analogous.__name__ = ["hxColorToolkit","schemes","Analogous"];
+hxColorToolkit_schemes_Analogous.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_Analogous.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_Analogous(this.get_primaryColor(),this.get_angle(),this.get_contrast());
+	}
+	,get_angle: function() {
+		return this._angle;
+	}
+	,set_angle: function(val) {
+		this._angle = val;
+		this.generate();
+		return this.get_angle();
+	}
+	,get_contrast: function() {
+		return this._contrast;
+	}
+	,set_contrast: function(val) {
+		this._contrast = val;
+		this.generate();
+		return this._contrast;
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primaryHSB;
+		if(js_Boot.__instanceof(this.get_primaryColor(),hxColorToolkit_spaces_HSB)) {
+			_primaryHSB = this.get_primaryColor();
+		} else {
+			_primaryHSB = new hxColorToolkit_spaces_HSB().fromRGB(this.get_primaryColor().toRGB());
+		}
+		var newHSB = new hxColorToolkit_spaces_HSB();
+		var array = [[1.0,2.2],[2.0,1.0],[-1.0,-0.5],[-2.0,1.0]];
+		var _g1 = 0;
+		var _g = array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var one = array[i][0];
+			var two = array[i][1];
+			newHSB.setColor(hxColorToolkit_ColorToolkit.rybRotate(_primaryHSB.getColor(),this.get_angle() * one));
+			var t = 0.44 - two * 0.1;
+			if(_primaryHSB.get_brightness() - this.get_contrast() * two < t) {
+				newHSB.set_brightness(t * 100);
+			} else {
+				newHSB.set_brightness(_primaryHSB.get_brightness() - this.get_contrast() * two);
+			}
+			newHSB.set_saturation(newHSB.get_saturation() - 5);
+			this._colors.push(this.mutateFromPrimary(newHSB));
+		}
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_Analogous
+	,__properties__: $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype.__properties__,{set_contrast:"set_contrast",get_contrast:"get_contrast",set_angle:"set_angle",get_angle:"get_angle"})
+});
+var hxColorToolkit_schemes_Complementary = function(primaryColor) {
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this.generate();
+};
+hxColorToolkit_schemes_Complementary.__name__ = ["hxColorToolkit","schemes","Complementary"];
+hxColorToolkit_schemes_Complementary.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_Complementary.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_Complementary(this.get_primaryColor());
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primaryHSB;
+		if(js_Boot.__instanceof(this.get_primaryColor(),hxColorToolkit_spaces_HSB)) {
+			_primaryHSB = this.get_primaryColor();
+		} else {
+			_primaryHSB = new hxColorToolkit_spaces_HSB().fromRGB(this.get_primaryColor().toRGB());
+		}
+		var contrasting = _primaryHSB.clone();
+		if(_primaryHSB.get_brightness() > 40) {
+			contrasting.set_brightness(10 + _primaryHSB.get_brightness() * 0.25);
+		} else {
+			contrasting.set_brightness(100 - _primaryHSB.get_brightness() * 0.25);
+		}
+		this._colors.push(this.mutateFromPrimary(contrasting));
+		var supporting = _primaryHSB.clone();
+		supporting.set_brightness(30 + _primaryHSB.get_brightness());
+		supporting.set_saturation(10 + _primaryHSB.get_saturation() * 0.3);
+		this._colors.push(this.mutateFromPrimary(supporting));
+		var complement = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(this._primaryColor.getColor(),180));
+		this._colors.push(this.mutateFromPrimary(complement));
+		var contrastingComplement = complement.clone();
+		if(complement.get_brightness() > 30) {
+			contrastingComplement.set_brightness(10 + complement.get_brightness() * 0.25);
+		} else {
+			contrastingComplement.set_brightness(100 - complement.get_brightness() * 0.25);
+		}
+		this._colors.push(this.mutateFromPrimary(contrastingComplement));
+		var supportingComplement = complement.clone();
+		supportingComplement.set_brightness(30 + complement.get_brightness());
+		supportingComplement.set_saturation(10 + complement.get_saturation() * 0.3);
+		this._colors.push(this.mutateFromPrimary(supportingComplement));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_Complementary
+});
+var hxColorToolkit_schemes_Compound = function(primaryColor) {
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this.generate();
+};
+hxColorToolkit_schemes_Compound.__name__ = ["hxColorToolkit","schemes","Compound"];
+hxColorToolkit_schemes_Compound.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_Compound.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_Compound(this.get_primaryColor());
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primaryHSB;
+		if(js_Boot.__instanceof(this.get_primaryColor(),hxColorToolkit_spaces_HSB)) {
+			_primaryHSB = this.get_primaryColor();
+		} else {
+			_primaryHSB = new hxColorToolkit_spaces_HSB().fromRGB(this.get_primaryColor().toRGB());
+		}
+		var _primary = this._primaryColor.getColor();
+		var c1 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,30));
+		var x = _primaryHSB.get_brightness();
+		c1.set_brightness(x - 25 < 60 ? x + 25 : x - 25);
+		this._colors.push(this.mutateFromPrimary(c1));
+		var c2 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,30));
+		var x1 = _primaryHSB.get_brightness();
+		c2.set_brightness(x1 - 40 < 10 ? x1 + 40 : x1 - 40);
+		var x2 = _primaryHSB.get_saturation();
+		c2.set_saturation(x2 - 40 < 20 ? x2 + 40 : x2 - 40);
+		this._colors.push(this.mutateFromPrimary(c2));
+		var c3 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,160));
+		c3.set_brightness(Math.max(20,_primaryHSB.get_brightness()));
+		var x3 = _primaryHSB.get_saturation();
+		c3.set_saturation(x3 - 25 < 10 ? x3 + 25 : x3 - 25);
+		this._colors.push(this.mutateFromPrimary(c3));
+		var c4 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,150));
+		var x4 = _primaryHSB.get_brightness();
+		c4.set_brightness(x4 - 30 < 60 ? x4 + 30 : x4 - 30);
+		var x5 = _primaryHSB.get_saturation();
+		c4.set_saturation(x5 - 10 < 80 ? x5 + 10 : x5 - 10);
+		this._colors.push(this.mutateFromPrimary(c4));
+		var c5 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,150));
+		var x6 = _primaryHSB.get_brightness();
+		c5.set_brightness(x6 - 40 < 20 ? x6 + 40 : x6 - 40);
+		var x7 = _primaryHSB.get_saturation();
+		c5.set_saturation(x7 - 10 < 80 ? x7 + 10 : x7 - 10);
+		this._colors.push(this.mutateFromPrimary(c5));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_Compound
+});
+var hxColorToolkit_schemes_FlippedCompound = function(primaryColor) {
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this.generate();
+};
+hxColorToolkit_schemes_FlippedCompound.__name__ = ["hxColorToolkit","schemes","FlippedCompound"];
+hxColorToolkit_schemes_FlippedCompound.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_FlippedCompound.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_FlippedCompound(this.get_primaryColor());
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primaryHSB;
+		if(js_Boot.__instanceof(this.get_primaryColor(),hxColorToolkit_spaces_HSB)) {
+			_primaryHSB = this.get_primaryColor();
+		} else {
+			_primaryHSB = new hxColorToolkit_spaces_HSB().fromRGB(this.get_primaryColor().toRGB());
+		}
+		var _primary = this._primaryColor.getColor();
+		var d = 1;
+		var c1 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,-30));
+		var x = _primaryHSB.get_brightness();
+		c1.set_brightness(x - 25 < 60 ? x + 25 : x - 25);
+		this._colors.push(this.mutateFromPrimary(c1));
+		var c2 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,-30));
+		var x1 = _primaryHSB.get_brightness();
+		c2.set_brightness(x1 - 40 < 10 ? x1 + 40 : x1 - 40);
+		var x2 = _primaryHSB.get_saturation();
+		c2.set_saturation(x2 - 40 < 20 ? x2 + 40 : x2 - 40);
+		this._colors.push(this.mutateFromPrimary(c2));
+		var c3 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,-160));
+		c3.set_brightness(Math.max(20,_primaryHSB.get_brightness()));
+		var x3 = _primaryHSB.get_saturation();
+		c3.set_saturation(x3 - 25 < 10 ? x3 + 25 : x3 - 25);
+		this._colors.push(this.mutateFromPrimary(c3));
+		var c4 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,-150));
+		var x4 = _primaryHSB.get_brightness();
+		c4.set_brightness(x4 - 30 < 60 ? x4 + 30 : x4 - 30);
+		var x5 = _primaryHSB.get_saturation();
+		c4.set_saturation(x5 - 10 < 80 ? x5 + 10 : x5 - 10);
+		this._colors.push(this.mutateFromPrimary(c4));
+		var c5 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,-150));
+		var x6 = _primaryHSB.get_brightness();
+		c5.set_brightness(x6 - 40 < 20 ? x6 + 40 : x6 - 40);
+		var x7 = _primaryHSB.get_saturation();
+		c5.set_saturation(x7 - 10 < 80 ? x7 + 10 : x7 - 10);
+		this._colors.push(this.mutateFromPrimary(c5));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_FlippedCompound
+});
+var hxColorToolkit_schemes_Monochrome = function(primaryColor) {
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this.generate();
+};
+hxColorToolkit_schemes_Monochrome.__name__ = ["hxColorToolkit","schemes","Monochrome"];
+hxColorToolkit_schemes_Monochrome.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_Monochrome.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_Monochrome(this.get_primaryColor());
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primaryHSB;
+		if(js_Boot.__instanceof(this.get_primaryColor(),hxColorToolkit_spaces_HSB)) {
+			_primaryHSB = this.get_primaryColor();
+		} else {
+			_primaryHSB = new hxColorToolkit_spaces_HSB().fromRGB(this.get_primaryColor().toRGB());
+		}
+		var c1 = _primaryHSB.clone();
+		var x = _primaryHSB.get_brightness();
+		c1.set_brightness(x - 50 < 20 ? x + 30 : x - 50);
+		var x1 = _primaryHSB.get_saturation();
+		c1.set_saturation(x1 - 30 < 10 ? x1 + 20 : x1 - 30);
+		this._colors.push(this.mutateFromPrimary(c1));
+		var c2 = _primaryHSB.clone();
+		var x2 = _primaryHSB.get_brightness();
+		c2.set_brightness(x2 - 20 < 20 ? x2 + 60 : x2 - 20);
+		this._colors.push(this.mutateFromPrimary(c2));
+		var c3 = _primaryHSB.clone();
+		c3.set_brightness(Math.max(20,_primaryHSB.get_brightness() + (100 - _primaryHSB.get_brightness()) * 0.2));
+		var x3 = _primaryHSB.get_saturation();
+		c3.set_saturation(x3 - 30 < 10 ? x3 + 30 : x3 - 30);
+		this._colors.push(this.mutateFromPrimary(c3));
+		var c4 = _primaryHSB.clone();
+		var x4 = _primaryHSB.get_brightness();
+		c4.set_brightness(x4 - 50 < 20 ? x4 + 30 : x4 - 50);
+		this._colors.push(this.mutateFromPrimary(c4));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_Monochrome
+});
+var hxColorToolkit_schemes_SplitComplementary = function(primaryColor) {
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this.generate();
+};
+hxColorToolkit_schemes_SplitComplementary.__name__ = ["hxColorToolkit","schemes","SplitComplementary"];
+hxColorToolkit_schemes_SplitComplementary.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_SplitComplementary.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_SplitComplementary(this.get_primaryColor());
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primary = this._primaryColor.getColor();
+		var c1 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,150));
+		var c2 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,210));
+		var _g = c1;
+		_g.set_brightness(_g.get_brightness() + 10);
+		var _g1 = c2;
+		_g1.set_brightness(_g1.get_brightness() + 10);
+		this._colors.push(this.mutateFromPrimary(c1));
+		this._colors.push(this.mutateFromPrimary(c2));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_SplitComplementary
+});
+var hxColorToolkit_schemes_Tetrad = function(primaryColor,angle,alt) {
+	if(alt == null) {
+		alt = false;
+	}
+	if(angle == null) {
+		angle = 90;
+	}
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this._angle = angle;
+	this._alt = alt;
+	this.generate();
+};
+hxColorToolkit_schemes_Tetrad.__name__ = ["hxColorToolkit","schemes","Tetrad"];
+hxColorToolkit_schemes_Tetrad.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_Tetrad.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_Tetrad(this.get_primaryColor(),this.get_angle(),this.get_alt());
+	}
+	,get_angle: function() {
+		return this._angle;
+	}
+	,set_angle: function(value) {
+		this._angle = value;
+		this.generate();
+		return value;
+	}
+	,get_alt: function() {
+		return this._alt;
+	}
+	,set_alt: function(val) {
+		this._alt = val;
+		this.generate();
+		return this.get_alt();
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primaryHSB;
+		if(js_Boot.__instanceof(this.get_primaryColor(),hxColorToolkit_spaces_HSB)) {
+			_primaryHSB = this.get_primaryColor();
+		} else {
+			_primaryHSB = new hxColorToolkit_spaces_HSB().fromRGB(this.get_primaryColor().toRGB());
+		}
+		var _primary = this._primaryColor.getColor();
+		var c1 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,this._angle));
+		var multiplier;
+		if(!this.get_alt()) {
+			if(_primaryHSB.get_brightness() < 50) {
+				var _g = c1;
+				_g.set_brightness(_g.get_brightness() + 20);
+			} else {
+				var _g1 = c1;
+				_g1.set_brightness(_g1.get_brightness() - 20);
+			}
+		} else {
+			multiplier = (50 - _primaryHSB.get_brightness()) / 50;
+			c1.set_brightness(c1.get_brightness() + Math.min(20,Math.max(-20,20 * multiplier)));
+		}
+		this._colors.push(this.mutateFromPrimary(c1));
+		var c2 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,this._angle * 2));
+		if(!this.get_alt()) {
+			if(_primaryHSB.get_brightness() > 50) {
+				var _g2 = c2;
+				_g2.set_brightness(_g2.get_brightness() + 10);
+			} else {
+				var _g3 = c2;
+				_g3.set_brightness(_g3.get_brightness() - 10);
+			}
+		} else {
+			multiplier = (50 - _primaryHSB.get_brightness()) / 50;
+			c2.set_brightness(c2.get_brightness() + Math.min(10,Math.max(-10,10 * multiplier)));
+		}
+		this._colors.push(this.mutateFromPrimary(c2));
+		var c3 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,this._angle * 3));
+		var _g4 = c3;
+		_g4.set_brightness(_g4.get_brightness() + 10);
+		this._colors.push(this.mutateFromPrimary(c3));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_Tetrad
+	,__properties__: $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype.__properties__,{set_alt:"set_alt",get_alt:"get_alt",set_angle:"set_angle",get_angle:"get_angle"})
+});
+var hxColorToolkit_schemes_Triad = function(primaryColor,angle) {
+	if(angle == null) {
+		angle = 120;
+	}
+	hxColorToolkit_schemes_ColorWheelScheme.call(this,primaryColor);
+	this._angle = angle;
+	this.generate();
+};
+hxColorToolkit_schemes_Triad.__name__ = ["hxColorToolkit","schemes","Triad"];
+hxColorToolkit_schemes_Triad.__super__ = hxColorToolkit_schemes_ColorWheelScheme;
+hxColorToolkit_schemes_Triad.prototype = $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype,{
+	clone: function() {
+		return new hxColorToolkit_schemes_Triad(this.get_primaryColor(),this.get_angle());
+	}
+	,get_angle: function() {
+		return this._angle;
+	}
+	,set_angle: function(value) {
+		this._angle = value;
+		this.generate();
+		return this.get_angle();
+	}
+	,generate: function() {
+		this._colors = [this.get_primaryColor()];
+		var _primary = this._primaryColor.getColor();
+		var c1 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,this._angle));
+		var _g = c1;
+		_g.set_brightness(_g.get_brightness() + 10);
+		this._colors.push(this.mutateFromPrimary(c1));
+		var c2 = new hxColorToolkit_spaces_HSB().setColor(hxColorToolkit_ColorToolkit.rybRotate(_primary,-this._angle));
+		var _g1 = c2;
+		_g1.set_brightness(_g1.get_brightness() + 10);
+		this._colors.push(this.mutateFromPrimary(c2));
+		this.numOfColors = this._colors.length;
+	}
+	,__class__: hxColorToolkit_schemes_Triad
+	,__properties__: $extend(hxColorToolkit_schemes_ColorWheelScheme.prototype.__properties__,{set_angle:"set_angle",get_angle:"get_angle"})
+});
+var hxColorToolkit_spaces_Color = function() { };
+hxColorToolkit_spaces_Color.__name__ = ["hxColorToolkit","spaces","Color"];
+hxColorToolkit_spaces_Color.prototype = {
+	__class__: hxColorToolkit_spaces_Color
+};
+var hxColorToolkit_spaces_RGB = function(r,g,b) {
+	if(b == null) {
+		b = 0;
+	}
+	if(g == null) {
+		g = 0;
+	}
+	if(r == null) {
+		r = 0;
+	}
+	this.numOfChannels = 3;
+	this.data = [];
+	this.set_red(r);
+	this.set_green(g);
+	this.set_blue(b);
+};
+hxColorToolkit_spaces_RGB.__name__ = ["hxColorToolkit","spaces","RGB"];
+hxColorToolkit_spaces_RGB.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_RGB.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = Math.min(255,Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		return 255;
+	}
+	,get_red: function() {
+		return this.getValue(0);
+	}
+	,set_red: function(value) {
+		return this.setValue(0,value);
+	}
+	,get_green: function() {
+		return this.getValue(1);
+	}
+	,set_green: function(value) {
+		return this.setValue(1,value);
+	}
+	,get_blue: function() {
+		return this.getValue(2);
+	}
+	,set_blue: function(value) {
+		return this.setValue(2,value);
+	}
+	,toRGB: function() {
+		return this.clone();
+	}
+	,getColor: function() {
+		return Math.round(this.get_red()) << 16 | Math.round(this.get_green()) << 8 | Math.round(this.get_blue());
+	}
+	,fromRGB: function(rgb) {
+		this.set_red(rgb.get_red());
+		this.set_green(rgb.get_green());
+		this.set_blue(rgb.get_blue());
+		return this;
+	}
+	,setColor: function(color) {
+		this.set_red(color >> 16 & 255);
+		this.set_green(color >> 8 & 255);
+		this.set_blue(color & 255);
+		return this;
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_RGB(this.get_red(),this.get_green(),this.get_blue());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_RGB) ? target : new hxColorToolkit_spaces_RGB().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_RGB(this.get_red() + (target1.get_red() - this.get_red()) * ratio,this.get_green() + (target1.get_green() - this.get_green()) * ratio,this.get_blue() + (target1.get_blue() - this.get_blue()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_RGB
+	,__properties__: {set_blue:"set_blue",get_blue:"get_blue",set_green:"set_green",get_green:"get_green",set_red:"set_red",get_red:"get_red"}
+};
+var hxColorToolkit_spaces_ARGB = function(a,r,g,b) {
+	if(b == null) {
+		b = 0;
+	}
+	if(g == null) {
+		g = 0;
+	}
+	if(r == null) {
+		r = 0;
+	}
+	if(a == null) {
+		a = 255;
+	}
+	hxColorToolkit_spaces_RGB.call(this,r,g,b);
+	this.numOfChannels = 4;
+	this.set_alpha(a);
+};
+hxColorToolkit_spaces_ARGB.__name__ = ["hxColorToolkit","spaces","ARGB"];
+hxColorToolkit_spaces_ARGB.__super__ = hxColorToolkit_spaces_RGB;
+hxColorToolkit_spaces_ARGB.prototype = $extend(hxColorToolkit_spaces_RGB.prototype,{
+	get_alpha: function() {
+		return this.getValue(0);
+	}
+	,set_alpha: function(value) {
+		return this.setValue(0,value);
+	}
+	,get_red: function() {
+		return this.getValue(1);
+	}
+	,set_red: function(value) {
+		return this.setValue(1,value);
+	}
+	,get_green: function() {
+		return this.getValue(2);
+	}
+	,set_green: function(value) {
+		return this.setValue(2,value);
+	}
+	,get_blue: function() {
+		return this.getValue(3);
+	}
+	,set_blue: function(value) {
+		return this.setValue(3,value);
+	}
+	,toRGB: function() {
+		return new hxColorToolkit_spaces_RGB(this.get_red(),this.get_green(),this.get_blue());
+	}
+	,toARGB: function() {
+		return this.clone();
+	}
+	,getColor: function() {
+		return Math.round(this.get_alpha()) << 24 | Math.round(this.get_red()) << 16 | Math.round(this.get_green()) << 8 | Math.round(this.get_blue());
+	}
+	,fromRGB: function(rgb) {
+		this.set_alpha(255);
+		this.set_red(rgb.get_red());
+		this.set_green(rgb.get_green());
+		this.set_blue(rgb.get_blue());
+		return this;
+	}
+	,setColor: function(color) {
+		this.set_alpha(color >> 24 & 255);
+		this.set_red(color >> 16 & 255);
+		this.set_green(color >> 8 & 255);
+		this.set_blue(color & 255);
+		return this;
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_ARGB(this.get_alpha(),this.get_red(),this.get_green(),this.get_blue());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_ARGB) ? target : new hxColorToolkit_spaces_ARGB().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_ARGB(this.get_alpha() + (target1.get_alpha() - this.get_alpha()) * ratio,this.get_red() + (target1.get_red() - this.get_red()) * ratio,this.get_green() + (target1.get_green() - this.get_green()) * ratio,this.get_blue() + (target1.get_blue() - this.get_blue()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_ARGB
+	,__properties__: $extend(hxColorToolkit_spaces_RGB.prototype.__properties__,{set_alpha:"set_alpha",get_alpha:"get_alpha"})
+});
+var hxColorToolkit_spaces_CMYK = function(cyan,magenta,yellow,black) {
+	if(black == null) {
+		black = 0;
+	}
+	if(yellow == null) {
+		yellow = 0;
+	}
+	if(magenta == null) {
+		magenta = 0;
+	}
+	if(cyan == null) {
+		cyan = 0;
+	}
+	this.numOfChannels = 4;
+	this.data = [];
+	this.set_cyan(cyan);
+	this.set_magenta(magenta);
+	this.set_yellow(yellow);
+	this.set_black(black);
+};
+hxColorToolkit_spaces_CMYK.__name__ = ["hxColorToolkit","spaces","CMYK"];
+hxColorToolkit_spaces_CMYK.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_CMYK.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = Math.min(100,Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		return 100;
+	}
+	,get_cyan: function() {
+		return this.getValue(0);
+	}
+	,set_cyan: function(value) {
+		return this.setValue(0,value);
+	}
+	,get_magenta: function() {
+		return this.getValue(1);
+	}
+	,set_magenta: function(value) {
+		return this.setValue(1,value);
+	}
+	,get_yellow: function() {
+		return this.getValue(2);
+	}
+	,set_yellow: function(value) {
+		return this.setValue(2,value);
+	}
+	,get_black: function() {
+		return this.getValue(3);
+	}
+	,set_black: function(value) {
+		return this.setValue(3,value);
+	}
+	,toRGB: function() {
+		var cyan = Math.min(100,this.get_cyan() + this.get_black());
+		var magenta = Math.min(100,this.get_magenta() + this.get_black());
+		var yellow = Math.min(100,this.get_yellow() + this.get_black());
+		return new hxColorToolkit_spaces_RGB((100 - cyan) * 2.55,(100 - magenta) * 2.55,(100 - yellow) * 2.55);
+	}
+	,getColor: function() {
+		return this.toRGB().getColor();
+	}
+	,fromRGB: function(rgb) {
+		var r = rgb.get_red();
+		var g = rgb.get_green();
+		var b = rgb.get_blue();
+		var c = 1 - r / 255;
+		var m = 1 - g / 255;
+		var y = 1 - b / 255;
+		var k;
+		var var_K = 1;
+		if(c < var_K) {
+			var_K = c;
+		}
+		if(m < var_K) {
+			var_K = m;
+		}
+		if(y < var_K) {
+			var_K = y;
+		}
+		if(var_K == 1) {
+			y = 0;
+			m = y;
+			c = m;
+		} else {
+			c = (c - var_K) / (1 - var_K) * 100;
+			m = (m - var_K) / (1 - var_K) * 100;
+			y = (y - var_K) / (1 - var_K) * 100;
+		}
+		k = var_K * 100;
+		this.set_cyan(c);
+		this.set_magenta(m);
+		this.set_yellow(y);
+		this.set_black(k);
+		return this;
+	}
+	,setColor: function(color) {
+		return this.fromRGB(new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255));
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_CMYK(this.get_cyan(),this.get_magenta(),this.get_yellow(),this.get_black());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_CMYK) ? target : new hxColorToolkit_spaces_CMYK().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_CMYK(this.get_cyan() + (target1.get_cyan() - this.get_cyan()) * ratio,this.get_magenta() + (target1.get_magenta() - this.get_magenta()) * ratio,this.get_yellow() + (target1.get_yellow() - this.get_yellow()) * ratio,this.get_black() + (target1.get_black() - this.get_black()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_CMYK
+	,__properties__: {set_yellow:"set_yellow",get_yellow:"get_yellow",set_magenta:"set_magenta",get_magenta:"get_magenta",set_cyan:"set_cyan",get_cyan:"get_cyan",set_black:"set_black",get_black:"get_black"}
+};
+var hxColorToolkit_spaces_Gray = function(gray) {
+	if(gray == null) {
+		gray = 0;
+	}
+	this.numOfChannels = 1;
+	this.data = [];
+	this.set_gray(gray);
+};
+hxColorToolkit_spaces_Gray.__name__ = ["hxColorToolkit","spaces","Gray"];
+hxColorToolkit_spaces_Gray.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_Gray.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = Math.min(255,Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		return 255;
+	}
+	,get_gray: function() {
+		return this.getValue(0);
+	}
+	,set_gray: function(value) {
+		return this.setValue(0,value);
+	}
+	,toRGB: function() {
+		return new hxColorToolkit_spaces_RGB(this.get_gray(),this.get_gray(),this.get_gray());
+	}
+	,getColor: function() {
+		return this.toRGB().getColor();
+	}
+	,fromRGB: function(rgb) {
+		this.set_gray(0.3 * rgb.get_red() + 0.59 * rgb.get_green() + 0.11 * rgb.get_blue());
+		return this;
+	}
+	,setColor: function(color) {
+		return this.fromRGB(new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255));
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_Gray(this.get_gray());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_Gray) ? target : new hxColorToolkit_spaces_Gray().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_Gray(this.get_gray() + (target1.get_gray() - this.get_gray()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_Gray
+	,__properties__: {set_gray:"set_gray",get_gray:"get_gray"}
+};
+var hxColorToolkit_spaces_HSB = function(hue,saturation,brightness) {
+	if(brightness == null) {
+		brightness = 0;
+	}
+	if(saturation == null) {
+		saturation = 0;
+	}
+	if(hue == null) {
+		hue = 0;
+	}
+	this.numOfChannels = 3;
+	this.data = [];
+	this.set_hue(hue);
+	this.set_saturation(saturation);
+	this.set_brightness(brightness);
+};
+hxColorToolkit_spaces_HSB.__name__ = ["hxColorToolkit","spaces","HSB"];
+hxColorToolkit_spaces_HSB.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_HSB.loop = function(index,length) {
+	if(index < 0) {
+		index = length + index % length;
+	}
+	if(index >= length) {
+		index %= length;
+	}
+	return index;
+};
+hxColorToolkit_spaces_HSB.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = channel == 0 ? hxColorToolkit_spaces_HSB.loop(val,360) : Math.min(channel == 0 ? 360 : 100,Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		if(channel == 0) {
+			return 360;
+		} else {
+			return 100;
+		}
+	}
+	,get_hue: function() {
+		return this.getValue(0);
+	}
+	,set_hue: function(val) {
+		this.data[0] = hxColorToolkit_spaces_HSB.loop(val,360);
+		return val;
+	}
+	,get_saturation: function() {
+		return this.getValue(1);
+	}
+	,set_saturation: function(val) {
+		this.data[1] = Math.min(100,Math.max(val,0));
+		return val;
+	}
+	,get_brightness: function() {
+		return this.getValue(2);
+	}
+	,set_brightness: function(val) {
+		this.data[2] = Math.min(100,Math.max(val,0));
+		return val;
+	}
+	,toRGB: function() {
+		var hue = this.get_hue();
+		var saturation = this.get_saturation();
+		var brightness = this.get_brightness();
+		var r = 0;
+		var g = 0;
+		var b = 0;
+		var i;
+		var f;
+		var p;
+		var q;
+		var t;
+		hue %= 360;
+		if(brightness == 0) {
+			return new hxColorToolkit_spaces_RGB();
+		}
+		saturation *= 0.01;
+		brightness *= 0.01;
+		hue /= 60;
+		i = Math.floor(hue);
+		f = hue - i;
+		p = brightness * (1 - saturation);
+		q = brightness * (1 - saturation * f);
+		t = brightness * (1 - saturation * (1 - f));
+		if(i == 0) {
+			r = brightness;
+			g = t;
+			b = p;
+		} else if(i == 1) {
+			r = q;
+			g = brightness;
+			b = p;
+		} else if(i == 2) {
+			r = p;
+			g = brightness;
+			b = t;
+		} else if(i == 3) {
+			r = p;
+			g = q;
+			b = brightness;
+		} else if(i == 4) {
+			r = t;
+			g = p;
+			b = brightness;
+		} else if(i == 5) {
+			r = brightness;
+			g = p;
+			b = q;
+		}
+		return new hxColorToolkit_spaces_RGB(r * 255,g * 255,b * 255);
+	}
+	,getColor: function() {
+		return this.toRGB().getColor();
+	}
+	,fromRGB: function(rgb) {
+		var r = rgb.get_red();
+		var g = rgb.get_green();
+		var b = rgb.get_blue();
+		r /= 255;
+		g /= 255;
+		b /= 255;
+		var h;
+		var s;
+		var v;
+		var min;
+		var max;
+		var delta;
+		min = Math.min(r,Math.min(g,b));
+		max = Math.max(r,Math.max(g,b));
+		v = max * 100;
+		delta = max - min;
+		if(max != 0) {
+			s = delta / max * 100;
+		} else {
+			s = 0;
+			h = -1;
+			this.set_hue(h);
+			this.set_saturation(s);
+			this.set_brightness(v);
+			return this;
+		}
+		if(delta == 0) {
+			this.set_hue(0);
+			this.set_saturation(s);
+			this.set_brightness(v);
+			return this;
+		}
+		if(r == max) {
+			h = (g - b) / delta;
+		} else if(g == max) {
+			h = 2 + (b - r) / delta;
+		} else {
+			h = 4 + (r - g) / delta;
+		}
+		h *= 60;
+		if(h < 0) {
+			h += 360;
+		}
+		this.set_hue(h);
+		this.set_saturation(s);
+		this.set_brightness(v);
+		return this;
+	}
+	,setColor: function(color) {
+		return this.fromRGB(new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255));
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_HSB(this.get_hue(),this.get_saturation(),this.get_brightness());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_HSB) ? target : new hxColorToolkit_spaces_HSB().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_HSB(this.get_hue() + (target1.get_hue() - this.get_hue()) * ratio,this.get_saturation() + (target1.get_saturation() - this.get_saturation()) * ratio,this.get_brightness() + (target1.get_brightness() - this.get_brightness()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_HSB
+	,__properties__: {set_brightness:"set_brightness",get_brightness:"get_brightness",set_saturation:"set_saturation",get_saturation:"get_saturation",set_hue:"set_hue",get_hue:"get_hue"}
+};
+var hxColorToolkit_spaces_HSL = function(hue,saturation,lightness) {
+	if(lightness == null) {
+		lightness = 0;
+	}
+	if(saturation == null) {
+		saturation = 0;
+	}
+	if(hue == null) {
+		hue = 0;
+	}
+	this.numOfChannels = 3;
+	this.data = [];
+	this.set_hue(hue);
+	this.set_saturation(saturation);
+	this.set_lightness(lightness);
+};
+hxColorToolkit_spaces_HSL.__name__ = ["hxColorToolkit","spaces","HSL"];
+hxColorToolkit_spaces_HSL.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_HSL.loop = function(index,length) {
+	if(index < 0) {
+		index = length + index % length;
+	}
+	if(index >= length) {
+		index %= length;
+	}
+	return index;
+};
+hxColorToolkit_spaces_HSL.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = channel == 0 ? hxColorToolkit_spaces_HSL.loop(val,360) : Math.min(channel == 0 ? 360 : 100,Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		if(channel == 0) {
+			return 360;
+		} else {
+			return 100;
+		}
+	}
+	,get_hue: function() {
+		return this.getValue(0);
+	}
+	,set_hue: function(val) {
+		this.data[0] = hxColorToolkit_spaces_HSL.loop(val,360);
+		return val;
+	}
+	,get_saturation: function() {
+		return this.getValue(1);
+	}
+	,set_saturation: function(val) {
+		this.data[1] = Math.min(100,Math.max(val,0));
+		return val;
+	}
+	,get_lightness: function() {
+		return this.getValue(2);
+	}
+	,set_lightness: function(val) {
+		this.data[2] = Math.min(100,Math.max(val,0));
+		return val;
+	}
+	,toRGB: function() {
+		var hue = this.get_hue() / 360;
+		var saturation = this.get_saturation() * 0.01;
+		var lightness = this.get_lightness() * 0.01;
+		var r;
+		var g;
+		var b;
+		if(saturation == 0) {
+			b = lightness;
+			g = b;
+			r = g;
+		} else {
+			var q = lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation;
+			var p = 2 * lightness - q;
+			r = this.hue2rgb(p,q,hue + 0.333333333333333315);
+			g = this.hue2rgb(p,q,hue);
+			b = this.hue2rgb(p,q,hue - 0.333333333333333315);
+		}
+		return new hxColorToolkit_spaces_RGB(r * 255,g * 255,b * 255);
+	}
+	,getColor: function() {
+		return this.toRGB().getColor();
+	}
+	,fromRGB: function(rgb) {
+		var r = rgb.get_red();
+		var g = rgb.get_green();
+		var b = rgb.get_blue();
+		r /= 255;
+		g /= 255;
+		b /= 255;
+		var max = Math.max(r,Math.max(g,b));
+		var min = Math.min(r,Math.min(g,b));
+		var h;
+		var s;
+		var l = (max + min) / 2;
+		s = l;
+		h = s;
+		if(max == min) {
+			s = 0;
+			h = s;
+		} else {
+			var d = max - min;
+			if(l > 0.5) {
+				s = d / (2 - max - min);
+			} else {
+				s = d / (max + min);
+			}
+			if(max == r) {
+				h = (g - b) / d + (g < b ? 6 : 0);
+			} else if(max == g) {
+				h = (b - r) / d + 2;
+			} else {
+				h = (r - g) / d + 4;
+			}
+			h /= 6;
+		}
+		this.set_hue(Math.round(h * 360));
+		this.set_saturation(Math.round(s * 100));
+		this.set_lightness(Math.round(l * 100));
+		return this;
+	}
+	,setColor: function(color) {
+		return this.fromRGB(new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255));
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_HSL(this.get_hue(),this.get_saturation(),this.get_lightness());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_HSL) ? target : new hxColorToolkit_spaces_HSL().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_HSL(this.get_hue() + (target1.get_hue() - this.get_hue()) * ratio,this.get_saturation() + (target1.get_saturation() - this.get_saturation()) * ratio,this.get_lightness() + (target1.get_lightness() - this.get_lightness()) * ratio);
+	}
+	,hue2rgb: function(p,q,t) {
+		if(t < 0) {
+			++t;
+		}
+		if(t > 1) {
+			--t;
+		}
+		if(t < 0.166666666666666657) {
+			return p + (q - p) * 6 * t;
+		}
+		if(t < 0.5) {
+			return q;
+		}
+		if(t < 0.66666666666666663) {
+			return p + (q - p) * (0.66666666666666663 - t) * 6;
+		}
+		return p;
+	}
+	,__class__: hxColorToolkit_spaces_HSL
+	,__properties__: {set_lightness:"set_lightness",get_lightness:"get_lightness",set_saturation:"set_saturation",get_saturation:"get_saturation",set_hue:"set_hue",get_hue:"get_hue"}
+};
+var hxColorToolkit_spaces_Hex = function(color) {
+	if(color == null) {
+		color = 0;
+	}
+	this.numOfChannels = 1;
+	this.data = color;
+};
+hxColorToolkit_spaces_Hex.__name__ = ["hxColorToolkit","spaces","Hex"];
+hxColorToolkit_spaces_Hex.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_Hex.prototype = {
+	getValue: function(channel) {
+		return this.data;
+	}
+	,setValue: function(channel,val) {
+		this.data = Math.round(Math.min(-1,Math.max(val,0)));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		return -1;
+	}
+	,toRGB: function() {
+		return new hxColorToolkit_spaces_RGB(this.data >> 16 & 255,this.data >> 8 & 255,this.data & 255);
+	}
+	,toARGB: function() {
+		return new hxColorToolkit_spaces_ARGB(this.data >> 24 & 255,this.data >> 16 & 255,this.data >> 8 & 255,this.data & 255);
+	}
+	,getColor: function() {
+		return this.data;
+	}
+	,fromRGB: function(rgb) {
+		this.data = rgb.getColor();
+		return this;
+	}
+	,setColor: function(color) {
+		this.data = color;
+		return this;
+	}
+	,get_alpha: function() {
+		return this.data >> 24 & 255;
+	}
+	,get_red: function() {
+		return this.data >> 16 & 255;
+	}
+	,get_green: function() {
+		return this.data >> 8 & 255;
+	}
+	,get_blue: function() {
+		return this.data & 255;
+	}
+	,set_alpha: function(v) {
+		this.data = v <= 0 ? this.data & 16777215 : v >= 255 ? this.data | -16777216 : this.data & 16777215 | v << 24;
+		return v;
+	}
+	,set_red: function(v) {
+		this.data = v <= 0 ? this.data & -16711681 : v >= 255 ? this.data | 16711680 : this.data & -16711681 | v << 16;
+		return v;
+	}
+	,set_green: function(v) {
+		this.data = v <= 0 ? this.data & -65281 : v >= 255 ? this.data | 65280 : this.data & -65281 | v << 8;
+		return v;
+	}
+	,set_blue: function(v) {
+		this.data = v <= 0 ? this.data & -256 : v >= 255 ? this.data | 255 : this.data & -256 | v;
+		return v;
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_Hex(this.data);
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_Hex) ? target : new hxColorToolkit_spaces_Hex(target.getColor());
+		return new hxColorToolkit_spaces_Hex(new hxColorToolkit_spaces_RGB(this.data >> 16 & 255,this.data >> 8 & 255,this.data & 255).interpolate(new hxColorToolkit_spaces_RGB(target1.data >> 16 & 255,target1.data >> 8 & 255,target1.data & 255),ratio).getColor());
+	}
+	,__class__: hxColorToolkit_spaces_Hex
+	,__properties__: {set_blue:"set_blue",get_blue:"get_blue",set_green:"set_green",get_green:"get_green",set_red:"set_red",get_red:"get_red",set_alpha:"set_alpha",get_alpha:"get_alpha"}
+};
+var hxColorToolkit_spaces_Lab = function(lightness,a,b) {
+	if(b == null) {
+		b = 0;
+	}
+	if(a == null) {
+		a = 0;
+	}
+	if(lightness == null) {
+		lightness = 0;
+	}
+	this.numOfChannels = 3;
+	this.data = [];
+	this.set_lightness(lightness);
+	this.set_a(a);
+	this.set_b(b);
+};
+hxColorToolkit_spaces_Lab.__name__ = ["hxColorToolkit","spaces","Lab"];
+hxColorToolkit_spaces_Lab.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_Lab.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = Math.min(channel == 0 ? 100 : 127,Math.max(val,channel == 0 ? 0 : -128));
+		return val;
+	}
+	,minValue: function(channel) {
+		if(channel == 0) {
+			return 0;
+		} else {
+			return -128;
+		}
+	}
+	,maxValue: function(channel) {
+		if(channel == 0) {
+			return 100;
+		} else {
+			return 127;
+		}
+	}
+	,toRGB: function() {
+		return this.toXYZ().toRGB();
+	}
+	,toXYZ: function() {
+		var y = (this.get_lightness() + 16) / 116;
+		var x = this.get_a() * 0.002 + y;
+		var z = y - this.get_b() * 0.005;
+		if(Math.pow(y,3) > 0.008856) {
+			y = Math.pow(y,3);
+		} else {
+			y = (y - 0.137931034482758619) / 7.787;
+		}
+		if(Math.pow(x,3) > 0.008856) {
+			x = Math.pow(x,3);
+		} else {
+			x = (x - 0.137931034482758619) / 7.787;
+		}
+		if(Math.pow(z,3) > 0.008856) {
+			z = Math.pow(z,3);
+		} else {
+			z = (z - 0.137931034482758619) / 7.787;
+		}
+		return new hxColorToolkit_spaces_XYZ(95.047 * x,100.000 * y,108.883 * z);
+	}
+	,getColor: function() {
+		return this.toXYZ().getColor();
+	}
+	,fromRGB: function(rgb) {
+		this.data = new hxColorToolkit_spaces_XYZ().fromRGB(rgb).toLab().data;
+		return this;
+	}
+	,setColor: function(value) {
+		this.data = new hxColorToolkit_spaces_XYZ().setColor(value).toLab().data;
+		return this;
+	}
+	,get_lightness: function() {
+		return this.getValue(0);
+	}
+	,set_lightness: function(value) {
+		return this.setValue(0,value);
+	}
+	,get_a: function() {
+		return this.getValue(1);
+	}
+	,set_a: function(value) {
+		return this.setValue(1,value);
+	}
+	,get_b: function() {
+		return this.getValue(2);
+	}
+	,set_b: function(value) {
+		return this.setValue(2,value);
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_Lab(this.get_lightness(),this.get_a(),this.get_b());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_Lab) ? target : new hxColorToolkit_spaces_Lab().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_Lab(this.get_lightness() + (target1.get_lightness() - this.get_lightness()) * ratio,this.get_a() + (target1.get_a() - this.get_a()) * ratio,this.get_b() + (target1.get_b() - this.get_b()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_Lab
+	,__properties__: {set_b:"set_b",get_b:"get_b",set_a:"set_a",get_a:"get_a",set_lightness:"set_lightness",get_lightness:"get_lightness"}
+};
+var hxColorToolkit_spaces_XYZ = function(x,y,z) {
+	if(z == null) {
+		z = 0;
+	}
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	this.numOfChannels = 3;
+	this.data = [];
+	this.set_x(x);
+	this.set_y(y);
+	this.set_z(z);
+};
+hxColorToolkit_spaces_XYZ.__name__ = ["hxColorToolkit","spaces","XYZ"];
+hxColorToolkit_spaces_XYZ.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_XYZ.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		if(channel < 0 || channel >= this.numOfChannels) {
+			throw new js__$Boot_HaxeError("no such channel");
+		}
+		this.data[channel] = Math.min(this.maxValue(channel),Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		switch(channel) {
+		case 0:
+			return 95.047;
+		case 1:
+			return 100.000;
+		case 2:
+			return 108.883;
+		default:
+			throw new js__$Boot_HaxeError("XYZ does not have channel " + channel);
+		}
+	}
+	,get_x: function() {
+		return this.getValue(0);
+	}
+	,set_x: function(value) {
+		return this.setValue(0,value);
+	}
+	,get_y: function() {
+		return this.getValue(1);
+	}
+	,set_y: function(value) {
+		return this.setValue(1,value);
+	}
+	,get_z: function() {
+		return this.getValue(2);
+	}
+	,set_z: function(value) {
+		return this.setValue(2,value);
+	}
+	,toRGB: function() {
+		var x = this.get_x() * 0.01;
+		var y = this.get_y() * 0.01;
+		var z = this.get_z() * 0.01;
+		var r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+		var g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+		var b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+		if(r > 0.0031308) {
+			r = 1.055 * Math.pow(r,0.416666666666666685) - 0.055;
+		} else {
+			r = 12.92 * r;
+		}
+		if(g > 0.0031308) {
+			g = 1.055 * Math.pow(g,0.416666666666666685) - 0.055;
+		} else {
+			g = 12.92 * g;
+		}
+		if(b > 0.0031308) {
+			b = 1.055 * Math.pow(b,0.416666666666666685) - 0.055;
+		} else {
+			b = 12.92 * b;
+		}
+		return new hxColorToolkit_spaces_RGB(Math.round(r * 255),Math.round(g * 255),Math.round(b * 255));
+	}
+	,getColor: function() {
+		var x = this.get_x() * 0.01;
+		var y = this.get_y() * 0.01;
+		var z = this.get_z() * 0.01;
+		var r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+		var g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+		var b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+		if(r > 0.0031308) {
+			r = 1.055 * Math.pow(r,0.416666666666666685) - 0.055;
+		} else {
+			r = 12.92 * r;
+		}
+		if(g > 0.0031308) {
+			g = 1.055 * Math.pow(g,0.416666666666666685) - 0.055;
+		} else {
+			g = 12.92 * g;
+		}
+		if(b > 0.0031308) {
+			b = 1.055 * Math.pow(b,0.416666666666666685) - 0.055;
+		} else {
+			b = 12.92 * b;
+		}
+		var cR = Math.round(r * 255) << 16;
+		var cG = Math.round(g * 255) << 8;
+		var cB = Math.round(b * 255);
+		return cR | cG | cB;
+	}
+	,fromRGB: function(rgb) {
+		var r = rgb.get_red() / 255;
+		var g = rgb.get_green() / 255;
+		var b = rgb.get_blue() / 255;
+		if(r > 0.04045) {
+			r = Math.pow((r + 0.055) / 1.055,2.4);
+		} else {
+			r /= 12.92;
+		}
+		if(g > 0.04045) {
+			g = Math.pow((g + 0.055) / 1.055,2.4);
+		} else {
+			g /= 12.92;
+		}
+		if(b > 0.04045) {
+			b = Math.pow((b + 0.055) / 1.055,2.4);
+		} else {
+			b /= 12.92;
+		}
+		r *= 100;
+		g *= 100;
+		b *= 100;
+		this.set_x(r * 0.4124 + g * 0.3576 + b * 0.1805);
+		this.set_y(r * 0.2126 + g * 0.7152 + b * 0.0722);
+		this.set_z(r * 0.0193 + g * 0.1192 + b * 0.9505);
+		return this;
+	}
+	,toLab: function() {
+		var x = this.get_x() / 95.047;
+		var y = this.get_y() / 100.000;
+		var z = this.get_z() / 108.883;
+		if(x > 0.008856) {
+			x = Math.pow(x,0.333333333333333315);
+		} else {
+			x = 7.787 * x + 0.137931034482758619;
+		}
+		if(y > 0.008856) {
+			y = Math.pow(y,0.333333333333333315);
+		} else {
+			y = 7.787 * y + 0.137931034482758619;
+		}
+		if(z > 0.008856) {
+			z = Math.pow(z,0.333333333333333315);
+		} else {
+			z = 7.787 * z + 0.137931034482758619;
+		}
+		return new hxColorToolkit_spaces_Lab(116 * y - 16,500 * (x - y),200 * (y - z));
+	}
+	,setColor: function(color) {
+		return this.fromRGB(new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255));
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_XYZ(this.get_x(),this.get_y(),this.get_z());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_XYZ) ? target : new hxColorToolkit_spaces_XYZ().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_XYZ(this.get_x() + (target1.get_x() - this.get_x()) * ratio,this.get_y() + (target1.get_y() - this.get_y()) * ratio,this.get_z() + (target1.get_z() - this.get_z()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_XYZ
+	,__properties__: {set_z:"set_z",get_z:"get_z",set_y:"set_y",get_y:"get_y",set_x:"set_x",get_x:"get_x"}
+};
+var hxColorToolkit_spaces_YUV = function(y,u,v) {
+	if(v == null) {
+		v = 0;
+	}
+	if(u == null) {
+		u = 0;
+	}
+	if(y == null) {
+		y = 0;
+	}
+	this.numOfChannels = 3;
+	this.data = [];
+	this.set_y(y);
+	this.set_u(u);
+	this.set_v(v);
+};
+hxColorToolkit_spaces_YUV.__name__ = ["hxColorToolkit","spaces","YUV"];
+hxColorToolkit_spaces_YUV.__interfaces__ = [hxColorToolkit_spaces_Color];
+hxColorToolkit_spaces_YUV.prototype = {
+	getValue: function(channel) {
+		return this.data[channel];
+	}
+	,setValue: function(channel,val) {
+		this.data[channel] = Math.min(255,Math.max(val,0));
+		return val;
+	}
+	,minValue: function(channel) {
+		return 0;
+	}
+	,maxValue: function(channel) {
+		return 255;
+	}
+	,get_y: function() {
+		return this.getValue(0);
+	}
+	,set_y: function(value) {
+		return this.setValue(0,value);
+	}
+	,get_u: function() {
+		return this.getValue(1);
+	}
+	,set_u: function(value) {
+		return this.setValue(1,value);
+	}
+	,get_v: function() {
+		return this.getValue(2);
+	}
+	,set_v: function(value) {
+		return this.setValue(2,value);
+	}
+	,toRGB: function() {
+		return new hxColorToolkit_spaces_RGB(Math.max(0,Math.min(this.get_y() + 1.402 * (this.get_v() - 128),255)),Math.max(0,Math.min(this.get_y() - 0.344 * (this.get_u() - 128) - 0.714 * (this.get_v() - 128),255)),Math.max(0,Math.min(this.get_y() + 1.772 * (this.get_u() - 128),255)));
+	}
+	,getColor: function() {
+		return this.toRGB().getColor();
+	}
+	,fromRGB: function(rgb) {
+		var r = rgb.get_red();
+		var g = rgb.get_green();
+		var b = rgb.get_blue();
+		this.set_y(0.299 * r + 0.587 * g + 0.114 * b);
+		this.set_u(r * -0.169 + g * -0.331 + b * 0.499 + 128);
+		this.set_v(r * 0.499 + g * -0.418 + b * -0.0813 + 128);
+		return this;
+	}
+	,setColor: function(color) {
+		return this.fromRGB(new hxColorToolkit_spaces_RGB(color >> 16 & 255,color >> 8 & 255,color & 255));
+	}
+	,clone: function() {
+		return new hxColorToolkit_spaces_YUV(this.get_y(),this.get_u(),this.get_v());
+	}
+	,interpolate: function(target,ratio) {
+		if(ratio == null) {
+			ratio = 0.5;
+		}
+		var target1 = js_Boot.__instanceof(target,hxColorToolkit_spaces_YUV) ? target : new hxColorToolkit_spaces_YUV().fromRGB(target.toRGB());
+		return new hxColorToolkit_spaces_YUV(this.get_y() + (target1.get_y() - this.get_y()) * ratio,this.get_u() + (target1.get_u() - this.get_u()) * ratio,this.get_v() + (target1.get_v() - this.get_v()) * ratio);
+	}
+	,__class__: hxColorToolkit_spaces_YUV
+	,__properties__: {set_y:"set_y",get_y:"get_y",set_v:"set_v",get_v:"get_v",set_u:"set_u",get_u:"get_u"}
 };
 var js__$Boot_HaxeError = function(val) {
 	Error.call(this);
@@ -5118,6 +7261,18 @@ lib_util_ExportUtil.onBase64Handler = function(ctx,isJpg) {
 	}
 	var base64 = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
 	lib_util_ExportUtil.clipboard(base64);
+};
+lib_util_ExportUtil.downloadTextFile = function(text,fileName) {
+	if(fileName == null) {
+		fileName = "CC-txt-" + new Date().getTime() + ".txt";
+	}
+	var element = window.document.createElement("a");
+	element.setAttribute("href","data:text/plain;charset=utf-8," + encodeURIComponent(text));
+	element.setAttribute("download",fileName);
+	element.style.display = "none";
+	window.document.body.appendChild(element);
+	element.click();
+	window.document.body.removeChild(element);
 };
 lib_util_ExportUtil.clipboard = function(text) {
 	var win = "Ctrl+C";
@@ -6378,6 +8533,7 @@ haxe_xml_Parser.escapes = (function($this) {
 	$r = h;
 	return $r;
 }(this));
+hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75,41],[90,48],[105,54],[120,60],[135,81],[150,103],[165,123],[180,138],[195,155],[210,171],[225,187],[240,204],[255,219],[270,234],[285,251],[300,267],[315,282],[330,298],[345,329],[360,0]];
 js_Boot.__toStr = ({ }).toString;
 lets_GoJs._tweens = [];
 lib_Global.MOUSE_DOWN = "mousedown";
@@ -6391,7 +8547,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-10 20:03:26";
+lib_model_constants_App.BUILD = "2019-02-11 23:27:28";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
