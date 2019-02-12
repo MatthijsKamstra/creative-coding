@@ -15,6 +15,7 @@ class CC028
 
 	var shapeArray : Array<Circle> = [];
 	var grid : GridUtil = new GridUtil();
+
 	var loader:JsonLoader<Dynamic>;
 	var colorArr:Array<Array<String>> = [];
 
@@ -22,7 +23,7 @@ class CC028
 	var exportIntArray:Array<Array<Int>> = [];
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = '';
+		description = 'Convert 1000 colorcombos based on gray scale from light to dark';
 		super(ctx);
 
 		// loading gigantic 1000.json file with arrays
