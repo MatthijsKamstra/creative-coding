@@ -55,7 +55,7 @@ class CC020 extends CCBase implements ICCBase {
 
 	override function setup(){
 		trace('setup: ${toString()}');
-		var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length)];
+		var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length-1)];
 		_bgColor = hex2RGB(colorArray[0]);
 		_lineColor = hex2RGB(colorArray[1]);
 		_lineColor2 = hex2RGB(colorArray[2]);
