@@ -2,12 +2,10 @@ package;
 
 import js.Browser.*;
 import js.html.*;
-
 import Sketch;
 import art.*;
 import lib.model.constants.App;
 import lib.Global.*;
-
 
 using StringTools;
 
@@ -15,16 +13,15 @@ using StringTools;
  * @author Matthijs Kamstra aka [mck]
  */
 class Main {
+	var count:Int;
 
-	var count : Int ;
-
-	public function new () {
+	public function new() {
 		document.addEventListener("DOMContentLoaded", function(event) {
 			// DOM ready
 			console.log('${App.NAME} :: build: ${App.BUILD}');
 
 			// setup canvas
-			var ctx : CanvasRenderingContext2D = Sketch.create("creative_code_mck");
+			var ctx:CanvasRenderingContext2D = Sketch.create("creative_code_mck");
 
 			// get hash from url
 			var hash = js.Browser.location.hash;
@@ -61,58 +58,61 @@ class Main {
 				case 'CC028': new CC028(ctx);
 				case 'CC029': new CC029(ctx);
 				case 'CC030': new CC030(ctx);
-				default :
-					trace ("case '"+hash+"': new "+hash+"(ctx);");
-					location.hash = 'CC030';
-					new CC030(ctx);
-
+				case 'CC031': new CC031(ctx);
+				default:
+					trace("case '" + hash + "': new " + hash + "(ctx);");
+					location.hash = 'CC031';
+					new CC031(ctx);
 			}
 
-			count = Std.parseInt(hash.toLowerCase().replace('cc',''));
+			count = Std.parseInt(hash.toLowerCase().replace('cc', ''));
 
-	 		var snackbar = new lib.html.Snackbar();
-	  		snackbar.show('sketch $hash');
+			var snackbar = new lib.html.Snackbar();
+			snackbar.show('sketch $hash');
 
 			var left = new lib.html.Nav();
 			var ldiv = left.dir('left');
-			ldiv.onclick = function (){
+			ldiv.onclick = function() {
 				trace('left');
 				count--;
-				changeHash ();
+				changeHash();
 			};
 			var right = new lib.html.Nav();
 			var rdiv = right.dir('right');
-			rdiv.onclick = function (){
+			rdiv.onclick = function() {
 				trace('right');
 				count++;
-				changeHash ();
+				changeHash();
 			};
 
 			// make sure the browser updates after changing the hash
-			window.addEventListener("hashchange", function (){
+			window.addEventListener("hashchange", function() {
 				location.reload();
-			} , false);
-
-			// use cursor key lef and right to switch sketches
-			window.addEventListener(KEY_DOWN, function (e:js.html.KeyboardEvent){
-				switch (e.key) {
-					case 'ArrowRight': count++;
-					case 'ArrowLeft': count--;
-					case 'ArrowUp': count = 1000000;
-					case 'ArrowDown': count = 0;
-					// default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
-				}
-				location.hash = 'CC' + Std.string(count).lpad('0',3);
 			}, false);
 
+			// use cursor key lef and right to switch sketches
+			window.addEventListener(KEY_DOWN, function(e:js.html.KeyboardEvent) {
+				switch (e.key) {
+					case 'ArrowRight':
+						count++;
+					case 'ArrowLeft':
+						count--;
+					case 'ArrowUp':
+						count = 1000000;
+					case 'ArrowDown':
+						count = 0;
+						// default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
+				}
+				location.hash = 'CC' + Std.string(count).lpad('0', 3);
+			}, false);
 		});
 	}
 
-	function changeHash (){
-		location.hash = 'CC' + Std.string(count).lpad('0',3);
+	function changeHash() {
+		location.hash = 'CC' + Std.string(count).lpad('0', 3);
 	}
 
-	static public function main () {
-		var app = new Main ();
+	static public function main() {
+		var app = new Main();
 	}
 }
