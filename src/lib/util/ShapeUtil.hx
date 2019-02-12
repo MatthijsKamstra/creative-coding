@@ -14,7 +14,6 @@ using lib.CanvasTools;
  * 		using lib.CanvasTools;
  */
 class ShapeUtil {
-
 	/**
 	 * [Description]
 	 * @param ctx
@@ -27,17 +26,19 @@ class ShapeUtil {
 		ctx.fillRect(x - width / 2, y - height / 2, width, height);
 		ctx.fillRect(x - height / 2, y - width / 2, height, width);
 	}
+
 	static public function registerPoint(ctx:CanvasRenderingContext2D, x:Float, y:Float) {
 		var _w = 10;
 		var _h = 10;
 		var _d = 2;
 		ctx.colour(PINK.r, PINK.g, PINK.b, 1);
-		ctx.fillRect(x - _w / 2, y-(_d/2), _w, _d);
-		ctx.fillRect(x -(_d/2), y - _h / 2, _d, _h);
+		ctx.fillRect(x - _w / 2, y - (_d / 2), _w, _d);
+		ctx.fillRect(x - (_d / 2), y - _h / 2, _d, _h);
 		// ctx.fillCircle(x,y,10);
 
 		// trace('xxx');
 	}
+
 	/**
 	 * centered x-shape
 	 *
@@ -50,10 +51,10 @@ class ShapeUtil {
 	 * @param size		(optional) size shape, default:200
 	 * @param weight	(optional) stroke weight, default:100
 	 */
-	public static function xcross(ctx:CanvasRenderingContext2D, x:Float, y:Float, ?size:Float = 200, ?weight:Int = 100){
+	public static function xcross(ctx:CanvasRenderingContext2D, x:Float, y:Float, ?size:Float = 200, ?weight:Int = 100) {
 		ctx.strokeWeight(weight);
-		ctx.line(x - size / 2, y - size / 2, x - size / 2+size, y - size / 2+size);
-		ctx.line(x+size - size / 2, y - size / 2, x - size / 2, y+size - size / 2);
+		ctx.line(x - size / 2, y - size / 2, x - size / 2 + size, y - size / 2 + size);
+		ctx.line(x + size - size / 2, y - size / 2, x - size / 2, y + size - size / 2);
 	}
 
 	/**
@@ -62,7 +63,7 @@ class ShapeUtil {
 	 * 			var arr:Array<Point> = GridUtil.create(0, 0, w, h, 3, 4);
 	 * 			lib.util.ShapeUtil.gridRegister(ctx, arr);
 	 */
-	public static function gridRegister(ctx:CanvasRenderingContext2D, arr:Array<Point>){
+	public static function gridRegister(ctx:CanvasRenderingContext2D, arr:Array<Point>) {
 		for (i in 0...arr.length) {
 			var point:Point = arr[i];
 			registerPoint(ctx, point.x, point.y);
@@ -76,7 +77,7 @@ class ShapeUtil {
 	 * 			var grid = ...
 	 * 			lib.util.ShapeUtil.gridField(ctx, grid);
 	 */
-	public static function gridField(ctx:CanvasRenderingContext2D, grid:GridUtil){
+	public static function gridField(ctx:CanvasRenderingContext2D, grid:GridUtil) {
 		for (i in 0...grid.array.length) {
 			var point:Point = grid.array[i];
 			registerPoint(ctx, point.x, point.y);
@@ -93,7 +94,7 @@ class ShapeUtil {
 	 * 			var grid = ...
 	 * 			lib.util.ShapeUtil.gridDots(ctx, grid);
 	 */
-	public static function gridDots(ctx:CanvasRenderingContext2D, grid:GridUtil){
+	public static function gridDots(ctx:CanvasRenderingContext2D, grid:GridUtil) {
 		for (i in 0...grid.array.length) {
 			var point:Point = grid.array[i];
 			ctx.colour(PINK.r, PINK.g, PINK.b, 1);
@@ -103,5 +104,4 @@ class ShapeUtil {
 		ctx.lineColour(GRAY.r, GRAY.g, GRAY.b, 0.5);
 		ctx.strokeRect(grid.x, grid.y, grid.width, grid.height);
 	}
-
 }

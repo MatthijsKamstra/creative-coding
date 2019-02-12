@@ -23,7 +23,7 @@ class ExportUtil {
 
 	// Start file download.
 	// ExportUtil.downloadTextFile("This is the content of my file :)", "hello.txt");
-	public static function downloadTextFile(text:String, ?fileName:String ) {
+	public static function downloadTextFile(text:String, ?fileName:String) {
 		if (fileName == null)
 			fileName = 'CC-txt-${Date.now().getTime()}.txt';
 
@@ -38,9 +38,6 @@ class ExportUtil {
 
 		document.body.removeChild(element);
 	}
-
-
-
 
 	/**
 	 * [Description]
@@ -59,7 +56,6 @@ class ExportUtil {
 			copyCombo = mac;
 		window.prompt('Copy to clipboard: $copyCombo, Enter', text);
 	}
-
 	// Returns contents of a canvas as a png based data url, with the specified
 	// background color
 	/*
@@ -108,7 +104,4 @@ class ExportUtil {
 			return imageData;
 		}
 	 */
-
-
-
 }
