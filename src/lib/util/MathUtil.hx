@@ -1,6 +1,5 @@
 package lib.util;
 
-
 /**
  * Math related stuff is found here
  * 		- radians & convertions
@@ -21,17 +20,15 @@ package lib.util;
  */
 class MathUtil {
 
-	static public function radians(deg:Float) {return deg*Math.PI/180;};
-	static public function degrees(rad:Float) {return rad*180/Math.PI;};
+	static public function radians(deg:Float) {return deg * Math.PI / 180;};
+	static public function degrees(rad:Float) {return rad * 180 / Math.PI;};
 
 	// public function rotateDegrees(deg) {
 	// 	this.rotate(radians(deg));
 	// }
-
 	// public function rotateDeg(deg) {
 	// 	this.rotate(radians(deg));
 	// }
-
 	static public function degreesToPoint(deg, diameter) {
 		var rad = Math.PI * deg / 180;
 		var r = diameter / 2;
@@ -49,11 +46,14 @@ class MathUtil {
 	 * @param x2
 	 * @param y2
 	 */
-	static public function distance(x1:Float, y1:Float, x2:Float, y2:Float) : Float { return dist (x1, y1, x2, y2);}
+	static public function distance(x1:Float, y1:Float, x2:Float, y2:Float):Float {
+		return dist(x1, y1, x2, y2);
+	}
+
 	static public function dist(x1:Float, y1:Float, x2:Float, y2:Float) {
-		x2-=x1;
-		y2-=y1;
-		return Math.sqrt((x2*x2) + (y2*y2));
+		x2 -= x1;
+		y2 -= y1;
+		return Math.sqrt((x2 * x2) + (y2 * y2));
 	}
 
 	/**
@@ -66,17 +66,18 @@ class MathUtil {
 	 * @param radius 	radius of circel
 	 * @return Float	circumference
 	 */
-	static public function circumferenceCircle(radius:Float):Float{
+	static public function circumferenceCircle(radius:Float):Float {
 		return Math.PI * radius * 2;
 	}
+
 	/**
 		Oppervlakte = 1/4 * pi * diameter2 = pi * straal2
-	 * 	@example
-	 * 		MathUtil.areaCircle(10); // 62.83185307179586
-	 * @param radius
-	 * @return Float
+			 * 	@example
+			 * 		MathUtil.areaCircle(10); // 62.83185307179586
+			 * @param radius
+			 * @return Float
 	 */
-	static public function areaCircle(radius:Float):Float{
+	static public function areaCircle(radius:Float):Float {
 		return Math.PI * Math.sqrt(radius);
 	}
 
@@ -89,14 +90,15 @@ class MathUtil {
 	 * @param max 	maximum value (optional: if not `max == min` and `min == 0` )
 	 * @return Int	number between `min` and `max`
 	 */
-	static public function randomInteger(min:Int, ?max:Int) : Int {
-		if(max == null) {
+	static public function randomInteger(min:Int, ?max:Int):Int {
+		if (max == null) {
 			max = min;
 			min = 0;
 		}
 		return Math.floor(Math.random() * (max + 1 - min)) + min;
 	}
-	static public function randomInt(min, ?max) : Int {
+
+	static public function randomInt(min, ?max):Int {
 		return randomInteger(min, max);
 	}
 
@@ -131,10 +133,6 @@ class MathUtil {
 		return (Math.random() * (max - min)) + min;
 	};
 
-
-
-
-
 	static public function chance(value) {
 		return (random(value) > value - 1);
 	}
@@ -158,47 +156,46 @@ class MathUtil {
 		return theta;
 	}
 
-
 	static public function map(value, min1, max1, min2, max2, clampResult) {
-		var returnvalue = ((value-min1) / (max1 - min1) * (max2-min2)) + min2;
-		if(clampResult) return clamp(returnvalue, min2, max2);
-		else return returnvalue;
+		var returnvalue = ((value - min1) / (max1 - min1) * (max2 - min2)) + min2;
+		if (clampResult)
+			return clamp(returnvalue, min2, max2);
+		else
+			return returnvalue;
 	};
 
 	static public function clamp(value, min, max) {
 		return Math.min(Math.max(value, Math.min(min, max)), Math.max(min, max));
 	}
+	/**
+		function xyz(px, py, pz, pitch, roll, yaw) {
 
-/**
-function xyz(px, py, pz, pitch, roll, yaw) {
+		var cosa = Math.cos(yaw);
+		var sina = Math.sin(yaw);
 
-    var cosa = Math.cos(yaw);
-    var sina = Math.sin(yaw);
+		var cosb = Math.cos(pitch);
+		var sinb = Math.sin(pitch);
 
-    var cosb = Math.cos(pitch);
-    var sinb = Math.sin(pitch);
+		var cosc = Math.cos(roll);
+		var sinc = Math.sin(roll);
 
-    var cosc = Math.cos(roll);
-    var sinc = Math.sin(roll);
+		var Axx = cosa*cosb;
+		var Axy = cosa*sinb*sinc - sina*cosc;
+		var Axz = cosa*sinb*cosc + sina*sinc;
 
-    var Axx = cosa*cosb;
-    var Axy = cosa*sinb*sinc - sina*cosc;
-    var Axz = cosa*sinb*cosc + sina*sinc;
+		var Ayx = sina*cosb;
+		var Ayy = sina*sinb*sinc + cosa*cosc;
+		var Ayz = sina*sinb*cosc - cosa*sinc;
 
-    var Ayx = sina*cosb;
-    var Ayy = sina*sinb*sinc + cosa*cosc;
-    var Ayz = sina*sinb*cosc - cosa*sinc;
+		var Azx = -sinb;
+		var Azy = cosb*sinc;
+		var Azz = cosb*cosc;
 
-    var Azx = -sinb;
-    var Azy = cosb*sinc;
-    var Azz = cosb*cosc;
+		x = Axx*px + Axy*py + Axz*pz;
+		y = Ayx*px + Ayy*py + Ayz*pz;
+		z = Azx*px + Azy*py + Azz*pz;
 
-    x = Axx*px + Axy*py + Axz*pz;
-    y = Ayx*px + Ayy*py + Ayz*pz;
-    z = Azx*px + Azy*py + Azz*pz;
-
-    return {x:x, y:y, z:z};
-}
- */
-
+		return {x:x, y:y, z:z};
+		}
+	 */
 }
