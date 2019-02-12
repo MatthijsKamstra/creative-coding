@@ -59,10 +59,12 @@ class Main {
 				case 'CC026': new CC026(ctx);
 				case 'CC027': new CC027(ctx);
 				case 'CC028': new CC028(ctx);
+				case 'CC029': new CC029(ctx);
+				case 'CC030': new CC030(ctx);
 				default :
 					trace ("case '"+hash+"': new "+hash+"(ctx);");
-					location.hash = 'CC028';
-					new CC028(ctx);
+					location.hash = 'CC030';
+					new CC030(ctx);
 
 			}
 
@@ -96,7 +98,7 @@ class Main {
 				switch (e.key) {
 					case 'ArrowRight': count++;
 					case 'ArrowLeft': count--;
-					case 'ArrowUp': count = 100000;
+					case 'ArrowUp': count = 1000000;
 					case 'ArrowDown': count = 0;
 					// default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
 				}
@@ -108,7 +110,6 @@ class Main {
 
 	function changeHash (){
 		location.hash = 'CC' + Std.string(count).lpad('0',3);
-
 	}
 
 	static public function main () {
