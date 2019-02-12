@@ -13,7 +13,7 @@ class CC013 extends CCBase implements ICCBase {
 	var colorArr:Array<Array<String>> = [];
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		colorArr = ColorUtil.niceColor200;
+		colorArr = ColorUtil.niceColor100;
 		description = 'Create simple pattern with colors';
 
 		super(ctx);
