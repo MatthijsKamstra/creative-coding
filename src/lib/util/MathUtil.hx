@@ -57,15 +57,47 @@ class MathUtil {
 	}
 
 	/**
-	 * random
+	 * calculate the circumference of a circle (omtrek)
+	 * 	Omtrek = pi * diameter = 2 * pi * straal
+	 *
+	 * 	@example
+	 * 		MathUtil.circumferenceCircle(10); // 62.83185307179586
+	 *
+	 * @param radius 	radius of circel
+	 * @return Float	circumference
 	 */
+	static public function circumferenceCircle(radius:Float):Float{
+		return Math.PI * radius * 2;
+	}
+	/**
+		Oppervlakte = 1/4 * pi * diameter2 = pi * straal2
+	 * 	@example
+	 * 		MathUtil.areaCircle(10); // 62.83185307179586
+	 * @param radius
+	 * @return Float
+	 */
+	static public function areaCircle(radius:Float):Float{
+		return Math.PI * Math.sqrt(radius);
+	}
 
+	/**
+	 * Get a random number between `min` and `max`
+	 *
+	 * @example		lib.util.MathUtil.randomInteger(10,100); // producess an number between 10 and 100
+	 *
+	 * @param min 	minimum value
+	 * @param max 	maximum value (optional: if not `max == min` and `min == 0` )
+	 * @return Int	number between `min` and `max`
+	 */
 	static public function randomInteger(min:Int, ?max:Int) : Int {
 		if(max == null) {
 			max = min;
 			min = 0;
 		}
-		return Math.floor(Math.random() * (max+1-min)) + min;
+		return Math.floor(Math.random() * (max + 1 - min)) + min;
+	}
+	static public function randomInt(min, ?max) : Int {
+		return randomInteger(min, max);
 	}
 
 	/**
@@ -99,13 +131,6 @@ class MathUtil {
 		return (Math.random() * (max - min)) + min;
 	};
 
-	static public function randomInt(min, ?max) {
-		if (max == null) {
-			max = min;
-			min = 0;
-		}
-		return Math.floor(Math.random() * (max + 1 - min)) + min;
-	}
 
 
 
