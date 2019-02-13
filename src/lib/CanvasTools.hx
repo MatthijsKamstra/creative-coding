@@ -115,7 +115,19 @@ class CanvasTools {
 		strokePolygon(ctx, x, y, _sides, _size);
 	}
 
-	static public function polygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, sides, size) {
+	/**
+	 * more shaped stuff
+	 *
+	 * @example
+	 *			ctx.fillPolygon(point.x, point.y, 8, _size);
+	 *
+	 * @param ctx		canvas
+	 * @param x			x position of the shape
+	 * @param y			y position of the shape
+	 * @param sides		number of sides (3=triangle, 4=square, etc)
+	 * @param size
+	 */
+	static public function polygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, sides:Int, size:Float) {
 		ctx.beginPath();
 		ctx.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
 		for (i in 0...sides) {
