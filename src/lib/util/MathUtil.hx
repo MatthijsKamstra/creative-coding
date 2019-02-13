@@ -144,7 +144,14 @@ class MathUtil {
 		return randomInt(0, 1) * 2 - 1;
 	}
 
-	static public function angle(cx, cy, ex, ey) {
+	/**
+	 * [Description]
+	 * @param cx
+	 * @param cy
+	 * @param ex
+	 * @param ey
+	 */
+	static public function angle(cx:Float, cy:Float, ex:Float, ey:Float):Float {
 		var dy = ey - cy;
 		var dx = ex - cx;
 		var theta = Math.atan2(dy, dx); // range (-PI, PI]
