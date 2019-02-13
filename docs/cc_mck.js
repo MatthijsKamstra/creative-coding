@@ -243,10 +243,19 @@ var Main = function() {
 		case "CC030":
 			new art_CC030(ctx);
 			break;
+		case "CC031":
+			new art_CC031(ctx);
+			break;
+		case "CC032":
+			new art_CC032(ctx);
+			break;
+		case "CC033":
+			new art_CC033(ctx);
+			break;
 		default:
-			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC030";
-			new art_CC030(ctx);
+			haxe_Log.trace("case '" + hash + "': new " + hash + "(ctx);",{ fileName : "Main.hx", lineNumber : 65, className : "Main", methodName : "new"});
+			window.location.hash = "CC033";
+			new art_CC033(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -255,14 +264,14 @@ var Main = function() {
 		var left = new lib_html_Nav();
 		var ldiv = left.dir("left");
 		ldiv.onclick = function() {
-			console.log("left");
+			haxe_Log.trace("left",{ fileName : "Main.hx", lineNumber : 78, className : "Main", methodName : "new"});
 			_gthis.count--;
 			_gthis.changeHash();
 		};
 		var right = new lib_html_Nav();
 		var rdiv = right.dir("right");
 		rdiv.onclick = function() {
-			console.log("right");
+			haxe_Log.trace("right",{ fileName : "Main.hx", lineNumber : 85, className : "Main", methodName : "new"});
 			_gthis.count++;
 			_gthis.changeHash();
 		};
@@ -452,25 +461,25 @@ Sketch.prototype = {
 		});
 		this.window.addEventListener(lib_Global.KEY_DOWN,function(e3) {
 			if(e3.metaKey == true && e3.key == "r") {
-				console.log("cmd + r");
+				haxe_Log.trace("cmd + r",{ fileName : "Sketch.hx", lineNumber : 151, className : "Sketch", methodName : "init"});
 				window.location.reload();
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == false) {
 				e3.preventDefault();
 				e3.stopPropagation();
-				console.log("cmd + s");
+				haxe_Log.trace("cmd + s",{ fileName : "Sketch.hx", lineNumber : 157, className : "Sketch", methodName : "init"});
 				lib_util_ExportUtil.downloadImage(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == true) {
 				e3.preventDefault();
 				e3.stopPropagation();
-				console.log("cmd + shift + s");
+				haxe_Log.trace("cmd + shift + s",{ fileName : "Sketch.hx", lineNumber : 163, className : "Sketch", methodName : "init"});
 				lib_util_ExportUtil.downloadImage(ctx,false);
 			}
 			if(e3.metaKey == true && (e3.code == "KeyS" && e3.altKey == true)) {
 				e3.preventDefault();
 				e3.stopPropagation();
-				console.log("cmd + alt + s");
+				haxe_Log.trace("cmd + alt + s",{ fileName : "Sketch.hx", lineNumber : 169, className : "Sketch", methodName : "init"});
 				lib_util_ExportUtil.onBase64Handler(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "f") {
@@ -832,7 +841,7 @@ art_CCBase.prototype = {
 	,setup: function() {
 	}
 	,draw: function() {
-		console.log("" + this.toString() + " :: override public function draw()");
+		haxe_Log.trace("" + this.toString() + " :: override public function draw()",{ fileName : "CCBase.hx", lineNumber : 103, className : "art.CCBase", methodName : "draw"});
 	}
 	,pause: function() {
 		this.isDrawActive = !this.isDrawActive;
@@ -882,7 +891,7 @@ art_CC000.__interfaces__ = [art_ICCBase];
 art_CC000.__super__ = art_CCBase;
 art_CC000.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC000.hx", lineNumber : 25, className : "art.CC000", methodName : "draw"});
 		this.rotate++;
 		this.size++;
 		this.ctx.save();
@@ -904,7 +913,7 @@ art_CC001.__interfaces__ = [art_ICCBase];
 art_CC001.__super__ = art_CCBase;
 art_CC001.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC001.hx", lineNumber : 20, className : "art.CC001", methodName : "draw"});
 		lib_CanvasTools.background(this.ctx,0,0,0);
 		lib_CanvasTools.fillColour(this.ctx,255,255,255);
 		lib_CanvasTools.fillCircle(this.ctx,lib_Global.w / 2,lib_Global.h / 2,100);
@@ -920,7 +929,7 @@ art_CC002.__interfaces__ = [art_ICCBase];
 art_CC002.__super__ = art_CCBase;
 art_CC002.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC002.hx", lineNumber : 21, className : "art.CC002", methodName : "draw"});
 		lib_CanvasTools.fillColour(this.ctx,lib_util_ColorUtil.LIME.r,lib_util_ColorUtil.LIME.g,lib_util_ColorUtil.LIME.b);
 		lib_CanvasTools.fillEllipse(this.ctx,lib_Global.w / 2,lib_Global.h / 2,100,200);
 		this.pause();
@@ -938,7 +947,7 @@ art_CC003.__interfaces__ = [art_ICCBase];
 art_CC003.__super__ = art_CCBase;
 art_CC003.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC003.hx", lineNumber : 37, className : "art.CC003", methodName : "setup"});
 		lib_CanvasTools.background(this.ctx,255,255,255,0.2);
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -997,7 +1006,7 @@ art_CC004.__interfaces__ = [art_ICCBase];
 art_CC004.__super__ = art_CCBase;
 art_CC004.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("" + this.toString() + " :: setup()");
+		haxe_Log.trace("" + this.toString() + " :: setup()",{ fileName : "CC004.hx", lineNumber : 36, className : "art.CC004", methodName : "setup"});
 		this.ballArray = [];
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -1067,7 +1076,7 @@ art_CC005.__interfaces__ = [art_ICCBase];
 art_CC005.__super__ = art_CCBase;
 art_CC005.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC005.hx", lineNumber : 30, className : "art.CC005", methodName : "setup"});
 		var padding = 100;
 		var arr = lib_util_GridUtil.create(padding,padding,lib_Global.w - 2 * padding,lib_Global.h - 2 * padding,3,4);
 		var _g1 = 0;
@@ -1115,7 +1124,7 @@ var art_CC006 = function(ctx) {
 	art_CCBase.call(this,ctx);
 	window.addEventListener(lib_Global.KEY_DOWN,function(e) {
 		if(e.key == " ") {
-			console.log("redraw");
+			haxe_Log.trace("redraw",{ fileName : "CC006.hx", lineNumber : 12, className : "art.CC006", methodName : "new"});
 			_gthis.setup();
 		}
 	},false);
@@ -1125,7 +1134,7 @@ art_CC006.__interfaces__ = [art_ICCBase];
 art_CC006.__super__ = art_CCBase;
 art_CC006.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC006.hx", lineNumber : 19, className : "art.CC006", methodName : "setup"});
 		var _size = 50;
 		var _x = 0;
 		var _y = 0;
@@ -1147,7 +1156,7 @@ art_CC006.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC006.hx", lineNumber : 39, className : "art.CC006", methodName : "draw"});
 		this.stop();
 	}
 	,__class__: art_CC006
@@ -1199,10 +1208,10 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 	,onCompleteHandler: function(value) {
 		var totalTime = new Date().getTime() / 1000 - this.startTime;
 		var totalDate = (new Date().getTime() - this.startDate) / 1000;
-		console.log("done: " + value + " seconds - date: " + totalDate + " , time: " + totalTime);
+		haxe_Log.trace("done: " + value + " seconds - date: " + totalDate + " , time: " + totalTime,{ fileName : "CC007.hx", lineNumber : 36, className : "art.CC007", methodName : "onCompleteHandler"});
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC007.hx", lineNumber : 40, className : "art.CC007", methodName : "setup"});
 		this.ballArray = [];
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -1296,7 +1305,7 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC008.hx", lineNumber : 57, className : "art.CC008", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.shapeMax;
@@ -1499,26 +1508,26 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		var _shape = this.shapeArray[value];
 		switch(value) {
 		case 4:
-			console.log("onUpdateHandler - rotation: " + _shape.rotation);
+			haxe_Log.trace("onUpdateHandler - rotation: " + _shape.rotation,{ fileName : "CC008.hx", lineNumber : 85, className : "art.CC008", methodName : "onUpdateHandler"});
 			break;
 		case 5:
-			console.log("onUpdateHandler - foobar: " + _shape.foobar);
+			haxe_Log.trace("onUpdateHandler - foobar: " + _shape.foobar,{ fileName : "CC008.hx", lineNumber : 86, className : "art.CC008", methodName : "onUpdateHandler"});
 			break;
 		default:
-			console.log("case " + value + ": trace ('" + value + "');");
+			haxe_Log.trace("case " + value + ": trace ('" + value + "');",{ fileName : "CC008.hx", lineNumber : 87, className : "art.CC008", methodName : "onUpdateHandler"});
 		}
 	}
 	,onCompleteHandler: function(value) {
 		var _shape = this.shapeArray[value];
 		switch(value) {
 		case 4:
-			console.log("onCompleteHandler - rotation: " + _shape.rotation);
+			haxe_Log.trace("onCompleteHandler - rotation: " + _shape.rotation,{ fileName : "CC008.hx", lineNumber : 94, className : "art.CC008", methodName : "onCompleteHandler"});
 			break;
 		case 5:
-			console.log("onCompleteHandler - foobar: " + _shape.foobar);
+			haxe_Log.trace("onCompleteHandler - foobar: " + _shape.foobar,{ fileName : "CC008.hx", lineNumber : 95, className : "art.CC008", methodName : "onCompleteHandler"});
 			break;
 		default:
-			console.log("case " + value + ": trace ('" + value + "');");
+			haxe_Log.trace("case " + value + ": trace ('" + value + "');",{ fileName : "CC008.hx", lineNumber : 96, className : "art.CC008", methodName : "onCompleteHandler"});
 		}
 	}
 	,draw: function() {
@@ -1654,7 +1663,7 @@ art_CC010.__interfaces__ = [art_ICCBase];
 art_CC010.__super__ = art_CCBase;
 art_CC010.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("Embed: \"" + e + "\"");
+		haxe_Log.trace("Embed: \"" + e + "\"",{ fileName : "CC010.hx", lineNumber : 19, className : "art.CC010", methodName : "onEmbedHandler"});
 	}
 	,createText: function() {
 		var shape = { x : lib_Global.w / 2, y : lib_Global.h / 2 + 20, alpha : 1, size : 60, type : "text"};
@@ -1770,7 +1779,7 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		return shape;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC010.hx", lineNumber : 63, className : "art.CC010", methodName : "setup"});
 		this.shapeArray = [];
 		this.shapeArray.push(this.createBall());
 		this.shapeArray.push(this.createText());
@@ -1854,7 +1863,7 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,onUpdateHandler: function(e) {
-		console.log("update: " + e);
+		haxe_Log.trace("update: " + e,{ fileName : "CC011.hx", lineNumber : 79, className : "art.CC011", methodName : "onUpdateHandler"});
 	}
 	,onCompleteHandler: function(line) {
 		var GoJs = new lets_GoJs(line,lib_util_MathUtil.random(0.5,1.5));
@@ -1910,7 +1919,7 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		_this4._delay = _this4.getDuration(lib_util_MathUtil.random(0,0.5));
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC011.hx", lineNumber : 92, className : "art.CC011", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -1980,7 +1989,7 @@ art_CC012.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,onUpdateHandler: function(e) {
-		console.log("update: " + e);
+		haxe_Log.trace("update: " + e,{ fileName : "CC012.hx", lineNumber : 70, className : "art.CC012", methodName : "onUpdateHandler"});
 	}
 	,onCompleteHandler: function(line) {
 		var GoJs = new lets_GoJs(line,lib_util_MathUtil.random(2,4));
@@ -2003,7 +2012,7 @@ art_CC012.prototype = $extend(art_CCBase.prototype,{
 		_this2._options.onCompleteParams = [line];
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC012.hx", lineNumber : 83, className : "art.CC012", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2042,7 +2051,7 @@ art_CC013.prototype = $extend(art_CCBase.prototype,{
 			break;
 		case 4:
 			var error = _g[2];
-			console.log(error);
+			haxe_Log.trace(error,{ fileName : "CC013.hx", lineNumber : 30, className : "art.CC013", methodName : "loaded"});
 			break;
 		default:
 		}
@@ -2093,7 +2102,7 @@ art_CC013.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC013.hx", lineNumber : 99, className : "art.CC013", methodName : "draw"});
 		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
 		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
 		this.create();
@@ -2116,7 +2125,7 @@ art_CC014.__interfaces__ = [art_ICCBase];
 art_CC014.__super__ = art_CCBase;
 art_CC014.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("Embed: \"" + e + "\"");
+		haxe_Log.trace("Embed: \"" + e + "\"",{ fileName : "CC014.hx", lineNumber : 24, className : "art.CC014", methodName : "onEmbedHandler"});
 		this.draw();
 		this.onFlipColorHandler();
 	}
@@ -2210,7 +2219,7 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC014.hx", lineNumber : 108, className : "art.CC014", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2250,7 +2259,7 @@ art_CC015.prototype = $extend(art_CCBase.prototype,{
 		var centerY = lib_Global.h / 2;
 		var _alpha = 0.1;
 		if(this.isDebug) {
-			console.log("" + hours + ":" + min + ":" + sec);
+			haxe_Log.trace("" + hours + ":" + min + ":" + sec,{ fileName : "CC015.hx", lineNumber : 39, className : "art.CC015", methodName : "drawShape"});
 		}
 		this.ctx.beginPath();
 		var $int = Std.parseInt(StringTools.replace(this.color[0],"#","0x"));
@@ -2320,7 +2329,7 @@ art_CC016.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC016.hx", lineNumber : 48, className : "art.CC016", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2347,8 +2356,8 @@ art_CC017.__name__ = ["art","CC017"];
 art_CC017.__interfaces__ = [art_ICCBase];
 art_CC017.__super__ = art_CCBase;
 art_CC017.prototype = $extend(art_CCBase.prototype,{
-	createShape: function(i) {
-		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.BLACK, alpha : 1 - i * (1 / this.shapeMax), radius : 20, size : 10, angle : i * 10, speed : 4};
+	createShape: function(i,j) {
+		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.BLACK, alpha : 1 - i * (1 / this.shapeMax), radius : 20, size : 10, angle : j * 10 + i * 10, speed : 4};
 		return shape;
 	}
 	,drawShape: function() {
@@ -2374,7 +2383,7 @@ art_CC017.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("init: " + this.toString());
+		haxe_Log.trace("init: " + this.toString(),{ fileName : "CC017.hx", lineNumber : 73, className : "art.CC017", methodName : "setup"});
 		this.grid.setCellSize(this._size);
 		this.grid.setIsCenterPoint(true);
 		var _g1 = 0;
@@ -2386,7 +2395,7 @@ art_CC017.prototype = $extend(art_CCBase.prototype,{
 			var _g2 = this.shapeMax;
 			while(_g3 < _g2) {
 				var i = _g3++;
-				this.arr[j].push(this.createShape(i));
+				this.arr[j].push(this.createShape(i,j));
 			}
 		}
 	}
@@ -2448,7 +2457,7 @@ art_CC018.prototype = $extend(art_CCBase.prototype,{
 		_this3._options.onCompleteParams = [circle];
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC018.hx", lineNumber : 48, className : "art.CC018", methodName : "setup"});
 		this.grid.setCellSize(this._size);
 		this.grid.setIsCenterPoint(true);
 		var _g1 = 0;
@@ -2603,7 +2612,7 @@ art_CC020.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC020.hx", lineNumber : 57, className : "art.CC020", methodName : "setup"});
 		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -2678,7 +2687,7 @@ art_CC021.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC021.hx", lineNumber : 87, className : "art.CC021", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -2751,7 +2760,7 @@ art_CC022.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC022.hx", lineNumber : 91, className : "art.CC022", methodName : "draw"});
 		this.drawShape();
 	}
 	,__class__: art_CC022
@@ -3015,7 +3024,7 @@ art_CC025.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setNumbered(10,10);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC025.hx", lineNumber : 95, className : "art.CC025", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -3087,7 +3096,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 	,onCompleteHandler: function(circle) {
 		this.readyCounter++;
 		if(this.readyCounter >= this.shapeArray.length) {
-			console.log("stop");
+			haxe_Log.trace("stop",{ fileName : "CC026.hx", lineNumber : 46, className : "art.CC026", methodName : "onCompleteHandler"});
 			this.stop();
 		}
 	}
@@ -3124,7 +3133,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 			var circle = { _id : "" + i, _type : "circle", x : xstart + xpos, y : ystart + ypos, radius : 10, colour : rgba};
 			this.shapeArray.push(circle);
 		}
-		console.log(this.shapeArray.length);
+		haxe_Log.trace(this.shapeArray.length,{ fileName : "CC026.hx", lineNumber : 95, className : "art.CC026", methodName : "getPixel"});
 		var _g11 = 0;
 		var _g2 = this.shapeArray.length;
 		while(_g11 < _g2) {
@@ -3135,7 +3144,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC026.hx", lineNumber : 104, className : "art.CC026", methodName : "setup"});
 		var img = new Image();
 		img.src = "assets/img/planb.png";
 		img.onload = function() {
@@ -3224,7 +3233,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 	,onCompleteHandler: function(circle) {
 		this.readyCounter++;
 		if(this.readyCounter >= this.shapeArray.length) {
-			console.log("stop");
+			haxe_Log.trace("stop",{ fileName : "CC027.hx", lineNumber : 49, className : "art.CC027", methodName : "onCompleteHandler"});
 			this.stop();
 		}
 	}
@@ -3243,10 +3252,10 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setPosition(0,0);
 		this.grid.setCellSize(this._cellsize);
 		this.grid.setDimension(this.ctxHidden.canvas.width,this.ctxHidden.canvas.height);
-		console.log("canvas (width,height): " + this.ctxHidden.canvas.width + "," + this.ctxHidden.canvas.height);
-		console.log("grid (width,height): " + this.grid.width + "," + this.grid.height);
-		console.log("grid.array.length: " + this.grid.array.length);
-		console.log("grid cell (width,height): " + this.grid.cellHeight + ", " + this.grid.cellWidth);
+		haxe_Log.trace("canvas (width,height): " + this.ctxHidden.canvas.width + "," + this.ctxHidden.canvas.height,{ fileName : "CC027.hx", lineNumber : 80, className : "art.CC027", methodName : "buildGrid"});
+		haxe_Log.trace("grid (width,height): " + this.grid.width + "," + this.grid.height,{ fileName : "CC027.hx", lineNumber : 81, className : "art.CC027", methodName : "buildGrid"});
+		haxe_Log.trace("grid.array.length: " + this.grid.array.length,{ fileName : "CC027.hx", lineNumber : 82, className : "art.CC027", methodName : "buildGrid"});
+		haxe_Log.trace("grid cell (width,height): " + this.grid.cellHeight + ", " + this.grid.cellWidth,{ fileName : "CC027.hx", lineNumber : 83, className : "art.CC027", methodName : "buildGrid"});
 		var _g1 = 0;
 		var _g = this.grid.array.length;
 		while(_g1 < _g) {
@@ -3268,7 +3277,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 			var circle = { _id : "" + i, _type : "circle", x : xstart + xpos, y : ystart + ypos, radius : this._cellsize / 2, colour : rgba};
 			this.shapeArray.push(circle);
 		}
-		console.log("total shape: " + this.shapeArray.length + " from total grid " + this.grid.array.length);
+		haxe_Log.trace("total shape: " + this.shapeArray.length + " from total grid " + this.grid.array.length,{ fileName : "CC027.hx", lineNumber : 114, className : "art.CC027", methodName : "buildGrid"});
 		var _g11 = 0;
 		var _g2 = this.shapeArray.length;
 		while(_g11 < _g2) {
@@ -3279,7 +3288,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC027.hx", lineNumber : 125, className : "art.CC027", methodName : "setup"});
 		this.shapeArray = [];
 		var img = new Image();
 		img.src = "assets/img/planb.png";
@@ -3329,7 +3338,7 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 			break;
 		case 4:
 			var error = _g[2];
-			console.log(error);
+			haxe_Log.trace(error,{ fileName : "CC028.hx", lineNumber : 38, className : "art.CC028", methodName : "loaded"});
 			break;
 		default:
 		}
@@ -3477,7 +3486,7 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC028.hx", lineNumber : 173, className : "art.CC028", methodName : "setup"});
 		this.grid.setNumbered(4,1);
 		window.addEventListener(lib_Global.KEY_DOWN,function(e) {
 			e.preventDefault();
@@ -3509,12 +3518,12 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 				lib_util_ExportUtil.downloadTextFile(JSON.stringify(_gthis.exportIntArray),"sorted_int_1000.json");
 				lib_util_ExportUtil.downloadTextFile(JSON.stringify(_gthis.exportStringArray),"sorted_1000.json");
 			} else {
-				console.log("case '" + e.key + "': trace ('" + e.key + "');");
+				haxe_Log.trace("case '" + e.key + "': trace ('" + e.key + "');",{ fileName : "CC028.hx", lineNumber : 207, className : "art.CC028", methodName : "setup"});
 			}
 		},false);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC028.hx", lineNumber : 213, className : "art.CC028", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -3560,13 +3569,13 @@ art_CC029.prototype = $extend(art_CCBase.prototype,{
 		var _g = event.type;
 		switch(_g[1]) {
 		case 3:
-			console.log(event.target.content.length);
+			haxe_Log.trace(event.target.content.length,{ fileName : "CC029.hx", lineNumber : 43, className : "art.CC029", methodName : "loaded"});
 			this.colorArr = event.target.content;
 			this.drawShape();
 			break;
 		case 4:
 			var error = _g[2];
-			console.log(error);
+			haxe_Log.trace(error,{ fileName : "CC029.hx", lineNumber : 39, className : "art.CC029", methodName : "loaded"});
 			break;
 		default:
 		}
@@ -3582,7 +3591,7 @@ art_CC029.prototype = $extend(art_CCBase.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			var colorArray = this.colorArr[i];
-			console.log(colorArray);
+			haxe_Log.trace(colorArray,{ fileName : "CC029.hx", lineNumber : 60, className : "art.CC029", methodName : "drawShape"});
 			var point = this.grid.array[i];
 			var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 			var color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -3611,7 +3620,7 @@ art_CC029.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setNumbered(32,32);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC029.hx", lineNumber : 94, className : "art.CC029", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -3628,6 +3637,7 @@ var art_CC030 = function(ctx) {
 	this.shapeArray = [];
 	art_CCBase.call(this,ctx);
 	this.set_description("");
+	window.addEventListener(lib_Global.KEY_DOWN,$bind(this,this.onKeyDown));
 };
 art_CC030.__name__ = ["art","CC030"];
 art_CC030.__interfaces__ = [art_ICCBase];
@@ -3645,7 +3655,7 @@ art_CC030.prototype = $extend(art_CCBase.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			var sh = this.shapeArray[i];
-			sh.rotation += lib_util_MathUtil.radians(lib_util_MathUtil.randomInt(360));
+			sh.rotation = lib_util_MathUtil.radians(lib_util_MathUtil.randomInt(360));
 			this.ctx.strokeStyle = lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.WHITE);
 			this.ctx.lineCap = "butt";
 			this.ctx.lineWidth = this._startLineWidth;
@@ -3653,7 +3663,7 @@ art_CC030.prototype = $extend(art_CCBase.prototype,{
 			this.ctx.setLineDash(this.createDashedArray(_radius));
 			this.ctx.save();
 			this.ctx.translate(sh.x,sh.y);
-			this.ctx.rotate(lib_util_MathUtil.radians(sh.rotation));
+			this.ctx.rotate(sh.rotation);
 			lib_CanvasTools.strokeCircle(this.ctx,0,0,_radius);
 			this.ctx.restore();
 		}
@@ -3684,7 +3694,7 @@ art_CC030.prototype = $extend(art_CCBase.prototype,{
 		return arr;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC030.hx", lineNumber : 98, className : "art.CC030", methodName : "setup"});
 		var colorArray = lib_util_ColorUtil.niceColor100SortedString[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -3703,7 +3713,264 @@ art_CC030.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 		this.stop();
 	}
+	,onKeyDown: function(e) {
+		var _g = e.key;
+		if(_g == " ") {
+			this.drawShape();
+		} else {
+			haxe_Log.trace("case '" + e.key + "': trace ('" + e.key + "');",{ fileName : "CC030.hx", lineNumber : 127, className : "art.CC030", methodName : "onKeyDown"});
+		}
+	}
 	,__class__: art_CC030
+});
+var art_CC031 = function(ctx) {
+	this.maxDistance = lib_Global.h;
+	this.cellsize = 50;
+	this.maxRadius = 35;
+	this.minRadius = 10;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("Circles react to mouse");
+	art_CCBase.call(this,ctx);
+};
+art_CC031.__name__ = ["art","CC031"];
+art_CC031.__interfaces__ = [art_ICCBase];
+art_CC031.__super__ = art_CCBase;
+art_CC031.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this.minRadius};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridDots(this.ctx,this.grid);
+		}
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.BLACK);
+			lib_CanvasTools.fillCircle(this.ctx,sh.x,sh.y,sh.radius);
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC031.hx", lineNumber : 52, className : "art.CC031", methodName : "setup"});
+		this.shapeArray = [];
+		this.grid.setCellSize(this.cellsize);
+		this.grid.setIsCenterPoint(true);
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var point = this.grid.array[i];
+			this.shapeArray.push(this.createShape(i,point));
+		}
+		window.addEventListener("mousemove",$bind(this,this.onMouseMoveHandler));
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,onMouseMoveHandler: function(e) {
+		var point = { x : e.clientX, y : e.clientY};
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var j = _g1++;
+			var b2 = this.shapeArray[j];
+			if(point == b2) {
+				continue;
+			}
+			var currentDistance = lib_util_MathUtil.distance(point.x,point.y,b2.x,b2.y);
+			if(currentDistance < this.maxDistance) {
+				window.console.log("minRadius: " + this.minRadius);
+				window.console.log("maxRadius: " + this.maxRadius);
+				window.console.log("(maxRadius / minRadius): (" + this.maxRadius + " / " + this.minRadius + ") -> " + this.maxRadius / this.minRadius);
+				window.console.log("(maxDistance / currentDistance): (" + this.maxDistance + " / " + currentDistance + ") -> " + this.maxDistance / currentDistance);
+				b2.radius = this.maxRadius - currentDistance / this.maxDistance * (this.maxRadius - this.minRadius);
+			} else {
+				b2.radius = this.minRadius;
+			}
+		}
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,__class__: art_CC031
+});
+var art_CC032 = function(ctx) {
+	this.totalCounter = 100;
+	this.delaycounter = 0.0;
+	this.cellsize = 150;
+	this._speed = 0.5;
+	this._rotation = 0.0;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC032.__name__ = ["art","CC032"];
+art_CC032.__interfaces__ = [art_ICCBase];
+art_CC032.__super__ = art_CCBase;
+art_CC032.prototype = $extend(art_CCBase.prototype,{
+	arrowConverter: function(size) {
+		var _w = size;
+		var _h = size;
+		var pointArray = [];
+		pointArray.push({ x : _w / 2, y : 0});
+		pointArray.push({ x : _w, y : _h / 2});
+		pointArray.push({ x : _w - _w / 4, y : _h / 2});
+		pointArray.push({ x : _w - _w / 4, y : _h});
+		pointArray.push({ x : _w / 4, y : _h});
+		pointArray.push({ x : _w / 4, y : _h / 2});
+		pointArray.push({ x : 0, y : _h / 2});
+		return pointArray;
+	}
+	,arrowDraw: function(pointArray,pos) {
+		this.ctx.save();
+		this.ctx.translate(pos.x + this.cellsize / 2,pos.y + this.cellsize / 2);
+		this.ctx.rotate(lib_util_MathUtil.radians(this._rotation));
+		this.ctx.beginPath();
+		lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = pointArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var _point = pointArray[i];
+			_point.x -= this.cellsize / 2;
+			_point.y -= this.cellsize / 2;
+			if(i == 0) {
+				this.ctx.moveTo(_point.x,_point.y);
+			} else {
+				this.ctx.lineTo(_point.x,_point.y);
+			}
+		}
+		this.ctx.fill();
+		this.ctx.closePath();
+		this.ctx.restore();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var gridPoint = this.grid.array[i];
+			var pointArray = this.arrowConverter(this.cellsize);
+			this.arrowDraw(pointArray,gridPoint);
+		}
+		if(Math.round(this._rotation) == 360) {
+			this._rotation = 0;
+		}
+		if(Math.round(this._rotation) == 0 || Math.round(this._rotation) == 180) {
+			this.delaycounter++;
+			if(this.delaycounter >= this.totalCounter) {
+				this.delaycounter = 0;
+				this._rotation += this._speed;
+			}
+			return;
+		}
+		this._rotation += this._speed;
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC032.hx", lineNumber : 84, className : "art.CC032", methodName : "setup"});
+		this.grid.setCellSize(this.cellsize);
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC032
+});
+var art_CC033 = function(ctx) {
+	this._speed = 0.5;
+	this._rotation = 0.0;
+	this.cellsize = 150;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+	window.addEventListener("mousemove",$bind(this,this.onMouseMoveHandler));
+};
+art_CC033.__name__ = ["art","CC033"];
+art_CC033.__interfaces__ = [art_ICCBase];
+art_CC033.__super__ = art_CCBase;
+art_CC033.prototype = $extend(art_CCBase.prototype,{
+	arrowConverter: function(size) {
+		var _w = size;
+		var _h = size;
+		var pointArray = [];
+		pointArray.push({ x : _w / 2, y : 0});
+		pointArray.push({ x : _w, y : _h / 2});
+		pointArray.push({ x : _w - _w / 4, y : _h / 2});
+		pointArray.push({ x : _w - _w / 4, y : _h});
+		pointArray.push({ x : _w / 4, y : _h});
+		pointArray.push({ x : _w / 4, y : _h / 2});
+		pointArray.push({ x : 0, y : _h / 2});
+		return pointArray;
+	}
+	,arrowDraw: function(pointArray,pos) {
+		this.ctx.save();
+		this.ctx.translate(pos.x + this.cellsize / 2,pos.y + this.cellsize / 2);
+		this.ctx.rotate(lib_util_MathUtil.radians(this._rotation));
+		this.ctx.beginPath();
+		lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = pointArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var _point = pointArray[i];
+			_point.x -= this.cellsize / 2;
+			_point.y -= this.cellsize / 2;
+			if(i == 0) {
+				this.ctx.moveTo(_point.x,_point.y);
+			} else {
+				this.ctx.lineTo(_point.x,_point.y);
+			}
+		}
+		this.ctx.fill();
+		this.ctx.closePath();
+		this.ctx.restore();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var gridPoint = this.grid.array[i];
+			var pointArray = this.arrowConverter(this.cellsize);
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC033.hx", lineNumber : 96, className : "art.CC033", methodName : "setup"});
+		this.isDebug = true;
+		this.grid.setCellSize(this.cellsize);
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,onMouseMoveHandler: function(e) {
+		haxe_Log.trace(e.clientX,{ fileName : "CC033.hx", lineNumber : 117, className : "art.CC033", methodName : "onMouseMoveHandler", customParams : [e.clientY]});
+		var point_y;
+		var point_x = e.clientX;
+		point_y = e.clientY;
+		var firstP = this.grid.array[0];
+		var angle = lib_util_MathUtil.angle(point_x,point_y,firstP.x,firstP.y);
+		haxe_Log.trace(angle,{ fileName : "CC033.hx", lineNumber : 127, className : "art.CC033", methodName : "onMouseMoveHandler"});
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,__class__: art_CC033
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -3856,6 +4123,11 @@ haxe_Http.prototype = {
 	,onStatus: function(status) {
 	}
 	,__class__: haxe_Http
+};
+var haxe_Log = function() { };
+haxe_Log.__name__ = ["haxe","Log"];
+haxe_Log.trace = function(v,infos) {
+	js_Boot.__trace(v,infos);
 };
 var haxe_Timer = function(time_ms) {
 	var me = this;
@@ -6222,6 +6494,35 @@ js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
 });
 var js_Boot = function() { };
 js_Boot.__name__ = ["js","Boot"];
+js_Boot.__unhtml = function(s) {
+	return s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+};
+js_Boot.__trace = function(v,i) {
+	var msg = i != null ? i.fileName + ":" + i.lineNumber + ": " : "";
+	msg += js_Boot.__string_rec(v,"");
+	if(i != null && i.customParams != null) {
+		var _g = 0;
+		var _g1 = i.customParams;
+		while(_g < _g1.length) {
+			var v1 = _g1[_g];
+			++_g;
+			msg += "," + js_Boot.__string_rec(v1,"");
+		}
+	}
+	var d;
+	var tmp;
+	if(typeof(document) != "undefined") {
+		d = document.getElementById("haxe:trace");
+		tmp = d != null;
+	} else {
+		tmp = false;
+	}
+	if(tmp) {
+		d.innerHTML += js_Boot.__unhtml(msg) + "<br/>";
+	} else if(typeof console != "undefined" && console.log != null) {
+		console.log(msg);
+	}
+};
 js_Boot.getClass = function(o) {
 	if((o instanceof Array) && o.__enum__ == null) {
 		return Array;
@@ -6538,7 +6839,7 @@ lets_GoJs.prototype = {
 		if(isTimeBased == null) {
 			isTimeBased = true;
 		}
-		console.log("Fixme: this doesn\t work right now");
+		haxe_Log.trace("Fixme: this doesn\t work right now",{ fileName : "GoJs.hx", lineNumber : 115, className : "lets.GoJs", methodName : "isTimeBased"});
 		this._isTimeBased = isTimeBased;
 		this._duration = this._duration / this.FRAME_RATE | 0;
 		return this;
@@ -6714,7 +7015,7 @@ lets_GoJs.prototype = {
 	}
 	,init: function() {
 		if(this._isTimeBased) {
-			console.log("TODO: build timebased animation");
+			haxe_Log.trace("TODO: build timebased animation",{ fileName : "GoJs.hx", lineNumber : 333, className : "lets.GoJs", methodName : "init"});
 		} else if(lets_GoJs._requestId == null) {
 			lets_GoJs._requestId = window.requestAnimationFrame($bind(this,this.onEnterFrameHandler));
 		}
@@ -6739,7 +7040,7 @@ lets_GoJs.prototype = {
 	}
 	,update: function() {
 		if(this._delay > 0 && this._isTimeBased) {
-			console.log("FIXME this doesn't work yet");
+			haxe_Log.trace("FIXME this doesn't work yet",{ fileName : "GoJs.hx", lineNumber : 372, className : "lets.GoJs", methodName : "update"});
 		}
 		if(this._delay > 0) {
 			this._delay--;
@@ -6776,7 +7077,7 @@ lets_GoJs.prototype = {
 	}
 	,complete: function() {
 		if(this.DEBUG) {
-			console.log("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + lets_GoJs._tweens.length);
+			haxe_Log.trace("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + lets_GoJs._tweens.length,{ fileName : "GoJs.hx", lineNumber : 427, className : "lets.GoJs", methodName : "complete"});
 		}
 		if(this._isYoyo) {
 			var n = this._props.keys();
@@ -7116,7 +7417,7 @@ lib_CanvasTools.eellipse = function(ctx,x,y,width,height) {
 	var i = 0;
 	var counter = 0;
 	while(i < Math.PI * 2) {
-		console.log("" + counter + ". - " + i + " < " + Math.PI * 2);
+		haxe_Log.trace("" + counter + ". - " + i + " < " + Math.PI * 2,{ fileName : "CanvasTools.hx", lineNumber : 146, className : "lib.CanvasTools", methodName : "eellipse"});
 		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
 		i += Math.PI / 16;
 		++counter;
@@ -8726,7 +9027,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-12 22:35:24";
+lib_model_constants_App.BUILD = "2019-02-13 20:36:05";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
