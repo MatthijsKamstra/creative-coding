@@ -145,11 +145,12 @@ class MathUtil {
 	}
 
 	/**
-	 * [Description]
-	 * @param cx
-	 * @param cy
-	 * @param ex
-	 * @param ey
+	 * calculate the angle between two point
+	 * @param cx		center point x
+	 * @param cy		center point y
+	 * @param ex		end point x
+	 * @param ey		end point y
+	 * @return Float
 	 */
 	static public function angle(cx:Float, cy:Float, ex:Float, ey:Float):Float {
 		var dy = ey - cy;
