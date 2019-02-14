@@ -11,6 +11,12 @@ class CCBase {
 	public var isDebug:Bool = false;
 
 	/**
+	 * set types for sketch
+	 */
+	public var type ( get_type , set_type ) : Array<CCType>;
+	private var _type : Array<CCType> = [BASE];
+
+	/**
 	 * title of sketch (default: package.className)
 	 * @example:
 	 * 		trace(title); // "art.CCBase"
@@ -141,6 +147,12 @@ class CCBase {
 		return _title = value;
 	}
 
+	function get_type () : Array<CCType> {
+		return _type;
+	}
+	function set_type(value : Array<CCType>) : Array<CCType> {
+		return _type = value;
+	}
 	// ____________________________________ toString() ____________________________________
 
 	/**
@@ -152,4 +164,14 @@ class CCBase {
 		var className = Type.getClassName(Type.getClass(this));
 		return className;
 	}
+}
+
+@:enum abstract CCType(String) {
+	var ANIMATION = 'Animation';
+	var INTERACTIVE = 'Interactive';
+	var TOOL = 'Tool';
+	var IMAGE = 'Image';
+	var RANDOM = 'Random';
+	var TEST = 'Test';
+	var BASE = 'Base';
 }
