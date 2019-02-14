@@ -68,7 +68,7 @@ class CC032 extends CCBase implements ICCBase {
 
 		if (Math.round(_rotation) == 360)
 			_rotation = 0;
-		if (Math.round(_rotation) == 0 || Math.round(_rotation) == 180) {
+		if (Math.round(_rotation) == 0 || Math.round(_rotation) == 90 || Math.round(_rotation) == 180 || Math.round(_rotation) == 270) {
 			delaycounter++;
 			if (delaycounter >= totalCounter) {
 				delaycounter = 0;
