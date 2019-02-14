@@ -2,13 +2,15 @@
 
 ![](icon.jpg)
 
-Creative code with [Haxe](http://www.haxe.org) (currently only JavaScript target). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
+Creative code library and examples create with [Haxe](http://www.haxe.org) (currently only JavaScript target). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
 
-Most work is inspired by George Gally, Seb Lee-Delisle, Matt DesLauriers (and probably many more) but in a dynamic language. So my start is a little bit slow converting everything to Haxe a stricly typed language, but in the end this will help me to work faster.
+Most of my library code is inspired or based upon the work of George Gally, Seb Lee-Delisle, Matt DesLauriers (and probably many more) but they used a dynamic language (JavaScript) for . I want to So my start is a little bit slow converting everything to Haxe; a strictly typed language, but in the end this will help me to work faster.
 
 You can seen my progress on this page: <https://matthijskamstra.github.io/creative-coding/>.
 
-This is not my first attempt, so if you want to check out my previous attempt: <http://matthijskamstra.github.io/gen-art/>. This attempt was to create pattern in svg.
+But if you don't want to see animations, and mouse interactions: I have created a [gallery](GALLERY.md) document.
+
+This is not my first attempt, so if you want to check out my previous attempt: <http://matthijskamstra.github.io/gen-art/>. This attempt was to create pattern in `.svg`.
 
 ## Inspiration
 
@@ -22,25 +24,33 @@ Read more <https://github.com/GeorgeGally/creative_coding>
 
 ## Color
 
-- heavy lifting doen via `thx.color`
+I want to create mostly in black and white. But colours will be nice.
+To make sure it will not cost too much time, I will be using:
+
+- heavy lifting with colours I will be doing via `thx.color` or `hxColorToolkit`
 - ColorUtil class
 - <https://github.com/mattdesl/nice-color-palettes>
 
 
 ## libs
 
+This is Haxe specific, its just here FYI
+
 -lib hxquicksettings
 -lib thx.color
+-lib hxColorToolkit
 -lib msignal
-
+-lib mloader
+-lib uglifyjs
 
 ## WIP
 
-I am focusing on getting it to work on Chrome... just giving you an headsup!
+I am focusing on getting it to work on Chrome... just giving you a heads-up!
+And I am not concerned with optimisation: you fan will sometimes spike!
 
 ## TODO
 
-I have created a [TODO.MD](TODO.MD), that keeps me in my ide and helps structure progress.
+I have created a [TODO.MD](TODO.MD), that keeps me in my IDE and helps structure progress.
 
 Important stuff:
 
