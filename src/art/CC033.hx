@@ -37,6 +37,7 @@ class CC033 extends CCBase implements ICCBase {
 
 	function arrowDraw(pointArray:Array<Point>, pos:Point) {
 
+		// [mck] hacky, but it gets the job done!
 		var _rotation = lib.util.MathUtil.angle(pos.x+cellsize/2, pos.y+cellsize/2, clientX, clientY);
 		// trace(angle2);
 
@@ -73,17 +74,6 @@ class CC033 extends CCBase implements ICCBase {
 			var pointArray:Array<Point> = arrowConverter(cellsize);
 			arrowDraw(pointArray, gridPoint);
 		}
-
-		// if(Math.round(_rotation) == 360) _rotation = 0;
-		// if(Math.round(_rotation) == 0 || Math.round(_rotation) == 180) {
-		// 	delaycounter ++;
-		// 	if(delaycounter >= totalCounter){
-		// 		delaycounter = 0;
-		// 		_rotation += _speed;
-		// 	}
-		// 	return;
-		// }
-		// _rotation += _speed;
 	}
 
 	// ____________________________________ override ____________________________________
@@ -118,14 +108,10 @@ class CC033 extends CCBase implements ICCBase {
 		clientY = e.clientY;
 
 		// var gridP = grid.array[0];
-
 		// // var angle = lib.util.MathUtil.angle(point.x, point.y, gridP.x, gridP.y);
 		// // trace(angle);
 		// var angle2 = lib.util.MathUtil.angle(gridP.x, gridP.y, point.x, point.y);
 		// trace(angle2);
 	}
 
-	function onAnimateHandler(circle:Circle) {
-		// GoJs.to(circle, 5).x(w/2).y(h/2).ease(lets.easing.Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
-	}
 }
