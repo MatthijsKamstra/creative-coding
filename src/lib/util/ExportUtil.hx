@@ -3,12 +3,18 @@ package lib.util;
 import js.Browser.*;
 import js.html.*;
 
+using StringTools;
+
 class ExportUtil {
 	public function new() {}
 
 	public static function downloadImage(ctx:CanvasRenderingContext2D, ?isJpg:Bool = false, ?fileName:String) {
-		if (fileName == null)
-			fileName = 'CC-art-${Date.now().getTime()}';
+		if (fileName == null){
+			var hash = js.Browser.location.hash;
+			hash = hash.replace('#', '').toLowerCase();
+			fileName = '${hash}-${Date.now().getTime()}';
+			// fileName = 'cc-art-${Date.now().getTime()}';
+		}
 		var link = document.createAnchorElement();
 		link.href = ctx.canvas.toDataURL((isJpg) ? 'image/jpeg' : '', 1);
 		link.download = fileName;
