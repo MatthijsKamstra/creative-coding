@@ -252,10 +252,19 @@ var Main = function() {
 		case "CC033":
 			new art_CC033(ctx);
 			break;
+		case "CC034":
+			new art_CC034(ctx);
+			break;
+		case "CC035":
+			new art_CC035(ctx);
+			break;
+		case "CC036":
+			new art_CC036(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC033";
-			new art_CC033(ctx);
+			window.location.hash = "CC036";
+			new art_CC036(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -824,12 +833,16 @@ var art_CCBase = function(ctx) {
 art_CCBase.__name__ = ["art","CCBase"];
 art_CCBase.prototype = {
 	_keyDown: function(e) {
+		var _g = e.key;
+		if(_g == " ") {
+			this.draw();
+		}
 	}
 	,_keyUp: function(e) {
 	}
 	,_reset: function() {
 		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
-		this.setup();
+		this._draw();
 	}
 	,_draw: function(timestamp) {
 		this.draw();
@@ -840,6 +853,8 @@ art_CCBase.prototype = {
 	,init: function() {
 	}
 	,setup: function() {
+	}
+	,onKeyDown: function(e) {
 	}
 	,draw: function() {
 		console.log("" + this.toString() + " :: override public function draw()");
@@ -3898,9 +3913,9 @@ var art_CC033 = function(ctx) {
 	this.cellsize = 50;
 	this.grid = new lib_util_GridUtil();
 	this.shapeArray = [];
-	art_CCBase.call(this,ctx);
 	this.set_description("Arrows following mouse");
 	this.set_type(["Interactive"]);
+	art_CCBase.call(this,ctx);
 	window.addEventListener("mousemove",$bind(this,this.onMouseMoveHandler));
 };
 art_CC033.__name__ = ["art","CC033"];
@@ -3973,6 +3988,166 @@ art_CC033.prototype = $extend(art_CCBase.prototype,{
 		this.clientY = e.clientY;
 	}
 	,__class__: art_CC033
+});
+var art_CC034 = function(ctx) {
+	this.maxCircleSize = 30;
+	this.minRadius = 100;
+	this.maxRadius = lib_Global.h / 3;
+	this.shapeMax = 25;
+	this.shapeArray = [];
+	this.set_description("Circles in a circle");
+	this.set_type(["Animation"]);
+	art_CCBase.call(this,ctx);
+};
+art_CC034.__name__ = ["art","CC034"];
+art_CC034.__interfaces__ = [art_ICCBase];
+art_CC034.__super__ = art_CCBase;
+art_CC034.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i) {
+		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.BLACK, radius : this.maxRadius + i * (this.minRadius / this.shapeMax), size : this.maxCircleSize / this.shapeMax * i, angle : 360 / this.shapeMax * i, speed : 1};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			sh.angle += sh.speed;
+			sh.x = lib_Global.w / 2 + Math.cos(lib_util_MathUtil.radians(sh.angle)) * sh.radius;
+			sh.y = lib_Global.h / 2 + Math.sin(lib_util_MathUtil.radians(sh.angle)) * sh.radius;
+			this.ctx.fillStyle = lib_util_ColorUtil.getColourObj(sh.rgb);
+			lib_CanvasTools.circle(this.ctx,sh.x,sh.y,sh.size);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var _g1 = 0;
+		var _g = this.shapeMax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC034
+});
+var art_CC035 = function(ctx) {
+	this.divideArray = [360,180];
+	this.lineWidthArray = [60,120];
+	this.startLineWidth = 30;
+	this.startRadius = 200;
+	this.max = 2;
+	this.shapeArray = [];
+	this.set_description("circle lines");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+art_CC035.__name__ = ["art","CC035"];
+art_CC035.__interfaces__ = [art_ICCBase];
+art_CC035.__super__ = art_CCBase;
+art_CC035.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "CircleExtra", x : lib_Global.w / 2, y : lib_Global.h / 2, radius : this.startRadius, rotation : 0, angle : 250, speed : 0.0001};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			sh.rotation += sh.speed;
+			this.ctx.strokeStyle = lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.WHITE);
+			this.ctx.lineCap = "butt";
+			this.ctx.lineWidth = this.lineWidthArray[i];
+			var radius = this.startRadius;
+			var omtrek = lib_util_MathUtil.circumferenceCircle(radius);
+			this.ctx.setLineDash([1,Math.round(omtrek / this.divideArray[i])]);
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(sh.rotation);
+			lib_CanvasTools.strokeCircle(this.ctx,0,0,radius);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC035
+});
+var art_CC036 = function(ctx) {
+	this.divideArray = [60,12];
+	this.lineWidthArray = [30,60,90];
+	this.lineW = 30;
+	this.startLineWidth = 30;
+	this.startRadius = 200;
+	this.max = 2;
+	this.shapeArray = [];
+	this.set_description("circle lines");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+art_CC036.__name__ = ["art","CC036"];
+art_CC036.__interfaces__ = [art_ICCBase];
+art_CC036.__super__ = art_CCBase;
+art_CC036.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "CircleExtra", x : lib_Global.w / 2, y : lib_Global.h / 2, radius : this.startRadius, rotation : -90, angle : 250, speed : 0.0001};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			sh.radius -= this.lineW / 2 * i;
+			this.ctx.strokeStyle = lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.WHITE);
+			this.ctx.lineCap = "butt";
+			this.ctx.lineWidth = this.lineWidthArray[i];
+			var omtrek = lib_util_MathUtil.circumferenceCircle(sh.radius);
+			this.ctx.setLineDash([1,omtrek / this.divideArray[i] - 1]);
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(lib_util_MathUtil.radians(sh.rotation));
+			lib_CanvasTools.strokeCircle(this.ctx,0,0,sh.radius);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC036
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -7694,7 +7869,9 @@ lib_util_ExportUtil.downloadImage = function(ctx,isJpg,fileName) {
 		isJpg = false;
 	}
 	if(fileName == null) {
-		fileName = "CC-art-" + new Date().getTime();
+		var hash = window.location.hash;
+		hash = StringTools.replace(hash,"#","").toLowerCase();
+		fileName = "" + hash + "-" + new Date().getTime();
 	}
 	var link = window.document.createElement("a");
 	link.href = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
@@ -8995,7 +9172,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-14 11:02:20";
+lib_model_constants_App.BUILD = "2019-02-15 13:47:40";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
