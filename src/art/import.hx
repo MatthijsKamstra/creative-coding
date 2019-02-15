@@ -15,6 +15,8 @@ import lib.util.GridUtil;
 // easy access to typedef
 import lib.AST;
 
+import art.CCBase.CCType;
+
 // syntactic sugar to extend CanvasRenderingContext2D
 using lib.CanvasTools;
 using lib.util.ShapeUtil;
