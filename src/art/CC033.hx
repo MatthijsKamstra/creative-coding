@@ -15,9 +15,9 @@ class CC033 extends CCBase implements ICCBase {
 	var clientY:Int;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		super(ctx);
 		description = 'Arrows following mouse';
-		type = [INTERACTIVE];
+		type = [CCType.INTERACTIVE];
+		super(ctx);
 		window.addEventListener("mousemove", onMouseMoveHandler);
 	}
 
