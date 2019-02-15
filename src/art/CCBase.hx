@@ -39,6 +39,7 @@ class CCBase {
 		window.addEventListener(RESIZE, _reset, false);
 		window.addEventListener(KEY_DOWN, _keyDown, false);
 		window.addEventListener(KEY_UP, _keyUp, false);
+		// window.addEventListener(KEY_DOWN, onKeyDown);
 		setup();
 		_draw(); // start draw loop
 	}
@@ -47,7 +48,12 @@ class CCBase {
 
 	// track key functions
 	function _keyDown(e:js.html.KeyboardEvent) {
-		// trace(e.key);
+		switch (e.key) {
+			case ' ':
+				draw();
+			default:
+				// trace("case '" + e.key + "': trace ('" + e.key + "');");
+		}
 	}
 
 	function _keyUp(e:js.html.KeyboardEvent) {}
@@ -55,7 +61,7 @@ class CCBase {
 	// trigger when window resize, draw function is still running, so clear canvas and restart with init
 	function _reset() {
 		ctx.clearRect(0, 0, w, h);
-		setup();
+		_draw();
 	}
 
 	// wrapper around the real `draw` class
@@ -83,6 +89,15 @@ class CCBase {
 	public function setup() {
 		// init();
 		// trace('override public function setup()');
+	}
+
+	public function onKeyDown(e:js.html.KeyboardEvent) {
+		// switch (e.key) {
+		// 	case ' ':
+		// 		drawShape();
+		// 	default:
+		// 		trace("case '" + e.key + "': trace ('" + e.key + "');");
+		// }
 	}
 
 

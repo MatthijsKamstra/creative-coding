@@ -119,7 +119,7 @@ class CC030 extends CCBase implements ICCBase {
 	}
 
 	// ____________________________________ onhandler ____________________________________
-	function onKeyDown(e:js.html.KeyboardEvent) {
+	override function onKeyDown(e:js.html.KeyboardEvent) {
 		switch (e.key) {
 			case ' ':
 				drawShape();
