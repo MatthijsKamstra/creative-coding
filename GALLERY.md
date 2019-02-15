@@ -40,5 +40,8 @@ But here you can see the sketches that I like the most:
 [![](docs/img/sketch/cc031.png)](https://matthijskamstra.github.io/creative-coding/#CC031)
 [![](docs/img/sketch/cc032.png)](https://matthijskamstra.github.io/creative-coding/#CC032)
 [![](docs/img/sketch/cc033.png)](https://matthijskamstra.github.io/creative-coding/#CC033)
+[![](docs/img/sketch/cc034.png)](https://matthijskamstra.github.io/creative-coding/#CC034)
+[![](docs/img/sketch/cc035.png)](https://matthijskamstra.github.io/creative-coding/#CC035) 
+[![](docs/img/sketch/cc036.png)](https://matthijskamstra.github.io/creative-coding/#CC036) 
 
 
