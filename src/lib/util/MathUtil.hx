@@ -19,9 +19,13 @@ package lib.util;
  *
  */
 class MathUtil {
+	static public function radians(deg:Float) {
+		return deg * Math.PI / 180;
+	};
 
-	static public function radians(deg:Float) {return deg * Math.PI / 180;};
-	static public function degrees(rad:Float) {return rad * 180 / Math.PI;};
+	static public function degrees(rad:Float) {
+		return rad * 180 / Math.PI;
+	};
 
 	// public function rotateDegrees(deg) {
 	// 	this.rotate(radians(deg));
@@ -54,6 +58,35 @@ class MathUtil {
 		x2 -= x1;
 		y2 -= y1;
 		return Math.sqrt((x2 * x2) + (y2 * y2));
+	}
+
+	/**
+	 * [pythagoreanTheorem description]
+	 *
+	 * @example
+	 * 			trace (MathUtil.pythagoreanTheorem(0, 5, 10)); // 8.66025403784439
+	 *			trace (MathUtil.pythagoreanTheorem(8.66025403784439, 5, 0)); // 10
+	 *			trace (MathUtil.pythagoreanTheorem(8.66025403784439, 0, 10)); // 5
+	 *
+	 * @param  a 	side A
+	 * @param  b 	side B
+	 * @param  c 	hypotenuse C
+	 */
+	public static function pythagoreanTheorem(a:Float = null, b:Float = null, c:Float = null):Float {
+		if (a == null && b == null && c == null) {
+			trace("Really? Perhaps you should use some data");
+			return 0;
+		}
+		var value = 0.0;
+
+		if (c == null || c == 0)
+			value = Math.sqrt(a * a + b * b);
+		if (a == null || a == 0)
+			value = Math.sqrt(c * c - b * b);
+		if (b == null || b == 0)
+			value = Math.sqrt(c * c - a * a);
+
+		return value;
 	}
 
 	/**
