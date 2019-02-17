@@ -7,7 +7,15 @@ import js.Browser.*;
 class GridUtil {
 	public var array:Array<Point> = [];
 	public var total:Int = null;
+
+	/**
+	 * starting point x
+	 */
 	public var x:Float = null;
+
+	/**
+	 * starting point y
+	 */
 	public var y:Float = null;
 
 	/**
@@ -21,7 +29,20 @@ class GridUtil {
 	public var height:Float = null;
 	public var gridX:Float = 0;
 	public var gridY:Float = 0;
+
+	/**
+	 * create grid with center point as (gridw gridheight center)
+	 */
 	public var isCentered:Bool = false;
+
+	/**
+	 * use fullscreen or bigger to use a grid
+	 */
+	public var isFullscreen:Bool = false;
+
+	/**
+	 * how width is the grid
+	 */
 	public var cellWidth:Float = null;
 
 	/**
@@ -62,6 +83,21 @@ class GridUtil {
 		if (_isDebug)
 			console.log('GridUtil :: setCenterPoint');
 		this.isCentered = isCentered;
+		calculate();
+	}
+
+	/**
+	 * create a grid that is fullscreen, or bigger
+	 *
+	 * works with 	- cellsize (width/height)
+	 * 				- numVer/numHer
+	 *
+	 * @param isFullscreen	(optional) default : true
+	 */
+	public function setIsFullscreen(isFullscreen:Bool = true) {
+		if (_isDebug)
+			console.log('GridUtil :: setIsFullscreen');
+		this.isFullscreen = isFullscreen;
 		calculate();
 	}
 
@@ -221,6 +257,26 @@ class GridUtil {
 				y = (h - height) / 2;
 			}
 		}
+
+		if(isFullscreen && _isCellSize){
+			if (_isDebug)
+				console.info('GridUtil solution #5: fullscreen and cellSize is set');
+
+			width = w;
+			height = h;
+
+			// round up
+			numHor = Math.ceil(width / cellWidth);
+			numVer = Math.ceil(height / cellHeight);
+
+			// calculate again, based upon numHor/numVer
+			width = numHor * cellWidth;
+			height = numVer * cellHeight;
+
+			x = (w - width) / 2;
+			y = (h - height) / 2;
+		}
+
 
 		var cx = 0.0;
 		var cy = 0.0;
