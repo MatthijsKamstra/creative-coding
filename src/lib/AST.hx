@@ -56,6 +56,17 @@ typedef PointInt = {
 
 // ____________________________________ shape typedef  ____________________________________
 
+typedef Polygon = {
+	> Base,
+	> Position,
+	> Appearance,
+	> Rotation,
+	@:optional var radius:Float;
+	@:optional var size:Float;
+	@:optional var sides:Int;
+
+};
+
 typedef CircleExtra = {
 	> Base,
 	> Position,
