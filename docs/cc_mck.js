@@ -261,10 +261,16 @@ var Main = function() {
 		case "CC036":
 			new art_CC036(ctx);
 			break;
+		case "CC037":
+			new art_CC037(ctx);
+			break;
+		case "CC038":
+			new art_CC038(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC036";
-			new art_CC036(ctx);
+			window.location.hash = "CC038";
+			new art_CC038(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -2379,10 +2385,12 @@ art_CC017.__interfaces__ = [art_ICCBase];
 art_CC017.__super__ = art_CCBase;
 art_CC017.prototype = $extend(art_CCBase.prototype,{
 	createShape: function(i,j) {
-		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.BLACK, alpha : 1 - i * (1 / this.shapeMax), radius : 20, size : 10, angle : j * 10 + i * 10, speed : 4};
+		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, rgb : lib_util_ColorUtil.WHITE, alpha : 1 - i * (1 / this.shapeMax), radius : 20, size : 10, angle : j * 10 + i * 10, speed : 4};
 		return shape;
 	}
 	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
 		if(this.isDebug) {
 			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
 		}
@@ -4148,6 +4156,176 @@ art_CC036.prototype = $extend(art_CCBase.prototype,{
 		this.stop();
 	}
 	,__class__: art_CC036
+});
+var art_CC037 = function(ctx) {
+	this.maxSides = 6;
+	this.cellsize = 20;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC037.__name__ = ["art","CC037"];
+art_CC037.__interfaces__ = [art_ICCBase];
+art_CC037.__super__ = art_CCBase;
+art_CC037.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i) {
+		var shape = { _id : "" + i, _type : "polygon", x : 0, y : 0, sides : this.maxSides, size : this.cellsize};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		var hoek = 360 / this.maxSides;
+		var hoek_2 = lib_util_MathUtil.radians(hoek / 2);
+		var horDistSin = Math.sin(hoek_2) * this.cellsize;
+		var horDistCos = Math.cos(hoek_2) * this.cellsize;
+		var horDistTan = Math.tan(hoek_2) * this.cellsize;
+		console.log("schuine zijde: " + this.cellsize);
+		console.log("- horDistSin: " + horDistSin);
+		console.log("> horDistCos: " + horDistCos);
+		console.log("- horDistTan: " + horDistTan);
+		console.log(lib_util_MathUtil.pythagoreanTheorem(0,horDistCos,this.cellsize));
+		var distX = this.cellsize + horDistSin;
+		var distY = horDistCos;
+		this.grid.setIsFullscreen();
+		this.grid.setCellSize(distX,distY);
+		this.grid.setIsCenterPoint(true);
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+		console.log("w: " + lib_Global.w + ", h: " + lib_Global.h);
+		console.log("total: " + this.grid.array.length);
+		console.log("numHor: " + this.grid.numHor + ", numVer: " + this.grid.numVer);
+		console.log("width: " + this.grid.width + ", height: " + this.grid.height);
+		console.log("x: " + this.grid.x + ", y: " + this.grid.y);
+		var startX = this.grid.x;
+		var startY = this.grid.y;
+		var gridCounterY = 0;
+		var gridCounterX = 0;
+		var _g11 = 0;
+		var _g2 = this.shapeArray.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var sh = this.shapeArray[i1];
+			sh.x = startX + gridCounterX * distX;
+			sh.y = startY + gridCounterY * (distY * 2);
+			lib_CanvasTools.strokeColourRGB(this.ctx,lib_util_ColorUtil.BLACK);
+			lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.randomColourObject());
+			lib_CanvasTools.outlinedPolygon(this.ctx,sh.x,sh.y,sh.sides,sh.size,lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.randomColourObject()),lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.BLACK));
+			++gridCounterY;
+			if(gridCounterY >= this.grid.numHor) {
+				++gridCounterX;
+				gridCounterY = 0;
+				startX = this.grid.x;
+				if(gridCounterX % 2 == 1) {
+					startY = this.grid.y + distY;
+				} else {
+					startY = this.grid.y;
+				}
+			}
+		}
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC037
+});
+var art_CC038 = function(ctx) {
+	this.maxSides = 6;
+	this.cellsize = 20;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	art_CCBase.call(this,ctx);
+	this.set_description("");
+};
+art_CC038.__name__ = ["art","CC038"];
+art_CC038.__interfaces__ = [art_ICCBase];
+art_CC038.__super__ = art_CCBase;
+art_CC038.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i) {
+		var shape = { _id : "" + i, _type : "polygon", x : 0, y : 0, sides : this.maxSides, size : this.cellsize};
+		return shape;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		var hoek = 360 / this.maxSides;
+		var hoek_2 = lib_util_MathUtil.radians(hoek / 2);
+		var horDistSin = Math.sin(hoek_2) * this.cellsize;
+		var horDistCos = Math.cos(hoek_2) * this.cellsize;
+		var horDistTan = Math.tan(hoek_2) * this.cellsize;
+		console.log("schuine zijde: " + this.cellsize);
+		console.log("- horDistSin: " + horDistSin);
+		console.log("> horDistCos: " + horDistCos);
+		console.log("- horDistTan: " + horDistTan);
+		console.log(lib_util_MathUtil.pythagoreanTheorem(0,horDistCos,this.cellsize));
+		var distX = this.cellsize + horDistSin;
+		var distY = horDistCos;
+		this.grid.setIsFullscreen();
+		this.grid.setCellSize(distX,distY);
+		this.grid.setIsCenterPoint(true);
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+		console.log("w: " + lib_Global.w + ", h: " + lib_Global.h);
+		console.log("total: " + this.grid.array.length);
+		console.log("numHor: " + this.grid.numHor + ", numVer: " + this.grid.numVer);
+		console.log("width: " + this.grid.width + ", height: " + this.grid.height);
+		console.log("x: " + this.grid.x + ", y: " + this.grid.y);
+		var startX = this.grid.x;
+		var startY = this.grid.y;
+		var gridCounterY = 0;
+		var gridCounterX = 0;
+		var _g11 = 0;
+		var _g2 = this.shapeArray.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var sh = this.shapeArray[i1];
+			sh.x = startX + gridCounterX * distX;
+			sh.y = startY + gridCounterY * (distY * 2);
+			lib_CanvasTools.strokeColourRGB(this.ctx,lib_util_ColorUtil.BLACK);
+			lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.randomColourObject());
+			lib_CanvasTools.outlinedPolygon(this.ctx,sh.x,sh.y,sh.sides,sh.size,lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.randomColourObject()),lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.BLACK));
+			++gridCounterY;
+			if(gridCounterY >= this.grid.numHor) {
+				++gridCounterX;
+				gridCounterY = 0;
+				startX = this.grid.x;
+				if(gridCounterX % 2 == 1) {
+					startY = this.grid.y + distY;
+				} else {
+					startY = this.grid.y;
+				}
+			}
+		}
+		if(this.isDebug) {
+			lib_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC038
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -7554,6 +7732,7 @@ lib_CanvasTools.polygon = function(ctx,x,y,sides,size) {
 		var i = _g1++;
 		ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides),y + size * Math.sin(i * 2 * Math.PI / sides));
 	}
+	ctx.closePath();
 };
 lib_CanvasTools.eellipse = function(ctx,x,y,width,height) {
 	ctx.beginPath();
@@ -7964,6 +8143,7 @@ var lib_util_GridUtil = function() {
 	this.numHor = null;
 	this.cellHeight = null;
 	this.cellWidth = null;
+	this.isFullscreen = false;
 	this.isCentered = false;
 	this.gridY = 0;
 	this.gridX = 0;
@@ -8055,6 +8235,16 @@ lib_util_GridUtil.prototype = {
 			window.console.log("GridUtil :: setCenterPoint");
 		}
 		this.isCentered = isCentered;
+		this.calculate();
+	}
+	,setIsFullscreen: function(isFullscreen) {
+		if(isFullscreen == null) {
+			isFullscreen = true;
+		}
+		if(this._isDebug) {
+			window.console.log("GridUtil :: setIsFullscreen");
+		}
+		this.isFullscreen = isFullscreen;
 		this.calculate();
 	}
 	,setDimension: function(width,height) {
@@ -8154,6 +8344,19 @@ lib_util_GridUtil.prototype = {
 				this.y = (lib_Global.h - this.height) / 2;
 			}
 		}
+		if(this.isFullscreen && this._isCellSize) {
+			if(this._isDebug) {
+				window.console.info("GridUtil solution #5: fullscreen and cellSize is set");
+			}
+			this.width = lib_Global.w;
+			this.height = lib_Global.h;
+			this.numHor = Math.ceil(this.width / this.cellWidth);
+			this.numVer = Math.ceil(this.height / this.cellHeight);
+			this.width = this.numHor * this.cellWidth;
+			this.height = this.numVer * this.cellHeight;
+			this.x = (lib_Global.w - this.width) / 2;
+			this.y = (lib_Global.h - this.height) / 2;
+		}
 		var cx = 0.0;
 		var cy = 0.0;
 		if(this.isCentered) {
@@ -8215,6 +8418,23 @@ lib_util_MathUtil.dist = function(x1,y1,x2,y2) {
 	x2 -= x1;
 	y2 -= y1;
 	return Math.sqrt(x2 * x2 + y2 * y2);
+};
+lib_util_MathUtil.pythagoreanTheorem = function(a,b,c) {
+	if(a == null && b == null && c == null) {
+		console.log("Really? Perhaps you should use some data");
+		return 0;
+	}
+	var value = 0.0;
+	if(c == null || c == 0) {
+		value = Math.sqrt(a * a + b * b);
+	}
+	if(a == null || a == 0) {
+		value = Math.sqrt(c * c - b * b);
+	}
+	if(b == null || b == 0) {
+		value = Math.sqrt(c * c - a * a);
+	}
+	return value;
 };
 lib_util_MathUtil.circumferenceCircle = function(radius) {
 	return Math.PI * radius * 2;
@@ -9172,7 +9392,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-15 13:47:40";
+lib_model_constants_App.BUILD = "2019-02-17 20:44:50";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
