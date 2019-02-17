@@ -21,7 +21,7 @@ class CC017 extends CCBase implements ICCBase {
 			_type: 'circle',
 			x: w / 2,
 			y: h / 2,
-			rgb: BLACK,
+			rgb: WHITE,
 			alpha: 1 - (i * (1 / shapeMax)),
 			radius: 20,
 			size: 10,
@@ -33,6 +33,10 @@ class CC017 extends CCBase implements ICCBase {
 	}
 
 	function drawShape() {
+
+		ctx.clearRect(0, 0, w, h);
+		ctx.backgroundObj(BLACK);
+
 		if (isDebug) {
 			ShapeUtil.gridField(ctx, grid);
 		}
