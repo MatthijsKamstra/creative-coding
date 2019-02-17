@@ -125,7 +125,7 @@ class CanvasTools {
 	 * @param x			x position of the shape
 	 * @param y			y position of the shape
 	 * @param sides		number of sides (3=triangle, 4=square, etc)
-	 * @param size
+	 * @param size		radius of the polygon (length to the corner)
 	 */
 	static public function polygon(ctx:CanvasRenderingContext2D, x:Float, y:Float, sides:Int, size:Float) {
 		ctx.beginPath();
@@ -133,6 +133,7 @@ class CanvasTools {
 		for (i in 0...sides) {
 			ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides), y + size * Math.sin(i * 2 * Math.PI / sides));
 		}
+		ctx.closePath();
 	}
 
 	/**
