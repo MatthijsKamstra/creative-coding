@@ -27,15 +27,15 @@
 - [x] create snackbar that is more subtile
 - [x] nav between sketches (css)
 - [x] exporting images
-- [ ] https://github.com/andyli/hxColorToolkit
-- [ ] https://github.com/fponticelli/thx.color
-- [ ] check svg classes for color classes
+- [x] loading colors
+- [x] exporting video
+- [x] https://github.com/andyli/hxColorToolkit
+- [x] https://github.com/fponticelli/thx.color
+- [x] check svg classes for color classes
 - [ ] choose color vs colour
 - [ ] add controle settings (quick settings)
 - [ ] get scaling canvas image (A4 -> A0)  from `gen-js-art`
 - [ ] loading music
-- [ ] loading colors
-- [ ] exporting video
 - [ ] record state canvas,
 - [ ] website state
 - [ ] "hidden" menu
@@ -96,17 +96,17 @@ test with fonts
 
 stuff I need to look into
 
-- [ ] create movie from canvas
-- [ ] record sound, animation
-- [ ] convert movie to `.mp4`
-- [ ] specs instagram (mp4, 60seconden, sound, video)
-- [ ] airdrop to phone
-- [ ] dropbox
-- [ ] upload
-- [ ] how quickly to do this
-- [ ] RecordRTC (chrome extension)
-- [ ] kap to record screen
-- [ ] different way to do this?
+- [x] create movie from canvas
+- [x] record sound, animation
+- [x] convert movie to `.mp4`
+- [x] specs instagram (mp4, 60seconden, sound, video)
+- [x] airdrop to phone
+- [x] dropbox
+- [x] upload
+- [x] how quickly to do this
+- [x] RecordRTC (chrome extension)
+- [x] kap to record screen
+- [x] different way to do this?
 
 ## instagram posting
 
