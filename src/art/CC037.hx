@@ -80,7 +80,7 @@ class CC037 extends CCBase implements ICCBase {
 			// ctx.strokePolygon(sh.x, sh.y, sh.sides, sh.size);
 			ctx.outlinedPolygon(sh.x, sh.y, sh.sides, sh.size, getColourObj(randomColourObject()), getColourObj(BLACK));
 			gridCounterY++;
-			if (gridCounterY >= grid.numHor) {
+			if (gridCounterY >= grid.numVer) {
 				gridCounterX++;
 				gridCounterY = 0;
 				startX = grid.x;
