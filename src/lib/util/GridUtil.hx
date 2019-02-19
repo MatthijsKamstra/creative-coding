@@ -56,7 +56,7 @@ class GridUtil {
 	var _isNumbered:Bool = false;
 	var _isDimension:Bool = false;
 	var _isPosition:Bool = false;
-	var _isDebug:Bool = false; // fix ugly grid bugs
+	var _isDebug:Bool = true; // fix ugly grid bugs
 
 	public function new() {}
 
@@ -305,7 +305,7 @@ class GridUtil {
 		total = array.length; // just to have easy access to the array lentth
 		if (_isDebug)
 			console
-				.warn('width: $width, height: $height, cellWidth: $cellWidth, cellHeight: $cellHeight, numHor: $numHor, numVer: $numVer, array: ${array.length}');
+				.warn('x: $x, y: $y, width: $width, height: $height, cellWidth: $cellWidth, cellHeight: $cellHeight, numHor: $numHor, numVer: $numVer, array: ${array.length}');
 	}
 
 	/**
