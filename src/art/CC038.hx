@@ -9,6 +9,7 @@ class CC038 extends CCBase implements ICCBase {
 	// var shapeMax = 100;
 	var cellsize = 20;
 	var maxSides = 6;
+	var ctxHidden:CanvasRenderingContext2D;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
@@ -50,7 +51,7 @@ class CC038 extends CCBase implements ICCBase {
 		var distY = horDistCos;
 
 		grid.setIsFullscreen();
-		// grid.setDimension(w, h);
+		// grid.setDimension(w*2, h*2);
 		// grid.setPosition(0, 0);
 		grid.setCellSize(distX, distY);
 		grid.setIsCenterPoint(true);
@@ -78,9 +79,10 @@ class CC038 extends CCBase implements ICCBase {
 			ctx.strokeColourRGB(BLACK);
 			ctx.fillColourRGB(randomColourObject());
 			// ctx.strokePolygon(sh.x, sh.y, sh.sides, sh.size);
-			ctx.outlinedPolygon(sh.x, sh.y, sh.sides, sh.size, getColourObj(randomColourObject()), getColourObj(BLACK));
+			var __color = getPixel(sh.x, sh.y);
+			ctx.outlinedPolygon(sh.x, sh.y, sh.sides, sh.size, __color, getColourObj(BLACK));
 			gridCounterY++;
-			if (gridCounterY >= grid.numHor) {
+			if (gridCounterY >= grid.numVer) {
 				gridCounterX++;
 				gridCounterY = 0;
 				startX = grid.x;
@@ -98,9 +100,43 @@ class CC038 extends CCBase implements ICCBase {
 		}
 	}
 
+	function getPixel(x, y):String{
+		var xpos = x;
+		var ypos = y;
+		var pixel = ctxHidden.getImageData(xpos, ypos, 1, 1);
+		var data = pixel.data;
+		var rgba = 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + (data[3] / 255) + ')';
+		return rgba;
+	}
+
+
 	override function setup() {
 		trace('setup: ${toString()}');
+
 		// isDebug = true;
+
+		var colorArray = lib.util.ColorUtil.niceColor100SortedString[randomInt(lib.util.ColorUtil.niceColor100SortedString.length - 1)];
+		var _color0 = hex2RGB(colorArray[0]);
+		var _color1 = hex2RGB(colorArray[1]);
+		var _color2 = hex2RGB(colorArray[2]);
+		var _color3 = hex2RGB(colorArray[3]);
+		var _color4 = hex2RGB(colorArray[4]);
+
+		var option = new Sketch.SketchOption();
+		option.width = w;
+		option.height = h;
+		ctxHidden = Sketch.createHiddenCanvas('imageholder', option, isDebug);
+		// ctxHidden.drawImage(img, 0, 0, img.width, img.height);
+
+		// create gradient
+		var gradient = ctx.createLinearGradient(0, 0, w, h);
+		// Add three color stops
+		gradient.addColorStop(0, getColourObj(_color0));
+		gradient.addColorStop(1, getColourObj(_color4));
+
+		// Set the fill style and draw a rectangle (on "hidden" canvas)
+		ctxHidden.fillStyle = gradient;
+		ctxHidden.fillRect(0, 0, w, h);
 	}
 
 	override function draw() {
