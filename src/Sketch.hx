@@ -101,7 +101,7 @@ class Sketch {
 	 * @param name
 	 * @param option
 	 */
-	public static function createHiddenCanvas(name, ?option:SketchOption):CanvasRenderingContext2D {
+	public static function createHiddenCanvas(name, ?option:SketchOption, ?isDebug:Bool = false):CanvasRenderingContext2D {
 		if (option == null) {
 			option = new SketchOption();
 		}
@@ -115,9 +115,11 @@ class Sketch {
 		canvas.style.left = "0px";
 		canvas.style.top = "0px";
 		canvas.style.border = "1px solid pink";
+		canvas.style.width = "50%";
 		canvas.width = option.width;
 		canvas.height = option.height;
-		canvas.style.left = -(option.width * 1.5) + "px";
+		if(!isDebug)
+			canvas.style.left = -(option.width * 1.5) + "px";
 
 		var ctx = canvas.getContext('2d');
 		return ctx;
