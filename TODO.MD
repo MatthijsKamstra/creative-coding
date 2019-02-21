@@ -47,7 +47,8 @@
 - [ ] check `fonk-onepressforhappines` for usefull classes
 - [ ] check `web-drawnumbers` for usefull classes
 - [ ] check `project-monofonts` for usefull classes
-- [ ] ....
+- [ ] <http://www.tysoncadenhead.com/blog/exporting-canvas-animation-to-mov/> export video via socket and node/ffmpeg
+- [ ] different canvas size for exporting video
 
 
 
