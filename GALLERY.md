@@ -19,12 +19,14 @@ cmd + shift + s | save image as png
 
 But here you can see the sketches that I like the most:
 
+[![](docs/img/sketch/cc000.png)](https://matthijskamstra.github.io/creative-coding/#CC000)
 [![](docs/img/sketch/cc004.png)](https://matthijskamstra.github.io/creative-coding/#CC004)
 [![](docs/img/sketch/cc007.png)](https://matthijskamstra.github.io/creative-coding/#CC007)
 [![](docs/img/sketch/cc009.png)](https://matthijskamstra.github.io/creative-coding/#CC009)
 [![](docs/img/sketch/cc011.png)](https://matthijskamstra.github.io/creative-coding/#CC011)
 [![](docs/img/sketch/cc012.png)](https://matthijskamstra.github.io/creative-coding/#CC012)
 [![](docs/img/sketch/cc013.png)](https://matthijskamstra.github.io/creative-coding/#CC013)
+[![](docs/img/sketch/cc014.png)](https://matthijskamstra.github.io/creative-coding/#CC014)
 [![](docs/img/sketch/cc015.png)](https://matthijskamstra.github.io/creative-coding/#CC015)
 [![](docs/img/sketch/cc017.png)](https://matthijskamstra.github.io/creative-coding/#CC017)
 [![](docs/img/sketch/cc018.png)](https://matthijskamstra.github.io/creative-coding/#CC018)
@@ -41,7 +43,9 @@ But here you can see the sketches that I like the most:
 [![](docs/img/sketch/cc032.png)](https://matthijskamstra.github.io/creative-coding/#CC032)
 [![](docs/img/sketch/cc033.png)](https://matthijskamstra.github.io/creative-coding/#CC033)
 [![](docs/img/sketch/cc034.png)](https://matthijskamstra.github.io/creative-coding/#CC034)
-[![](docs/img/sketch/cc035.png)](https://matthijskamstra.github.io/creative-coding/#CC035) 
-[![](docs/img/sketch/cc036.png)](https://matthijskamstra.github.io/creative-coding/#CC036) 
+[![](docs/img/sketch/cc035.png)](https://matthijskamstra.github.io/creative-coding/#CC035)
+[![](docs/img/sketch/cc036.png)](https://matthijskamstra.github.io/creative-coding/#CC036)
+[![](docs/img/sketch/cc037.png)](https://matthijskamstra.github.io/creative-coding/#CC037)
+[![](docs/img/sketch/cc038.png)](https://matthijskamstra.github.io/creative-coding/#CC038)
 
 
