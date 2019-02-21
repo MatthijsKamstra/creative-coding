@@ -3,7 +3,7 @@ package art;
 /**
  * short description what this does
  */
-class CC020 extends CCBase implements ICCBase {
+class CC040 extends CCBase implements ICCBase {
 
 	var shapeArray : Array<Circle> = [];
 	var grid : GridUtil = new GridUtil();
