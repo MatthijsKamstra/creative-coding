@@ -270,10 +270,13 @@ var Main = function() {
 		case "CC039":
 			new art_CC039(ctx);
 			break;
+		case "CC040":
+			new art_CC040(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC039";
-			new art_CC039(ctx);
+			window.location.hash = "CC040";
+			new art_CC040(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -4380,41 +4383,134 @@ art_CC039.__name__ = ["art","CC039"];
 art_CC039.__interfaces__ = [art_ICCBase];
 art_CC039.__super__ = art_CCBase;
 art_CC039.prototype = $extend(art_CCBase.prototype,{
-	createQuickSettings: function() {
+	QuicksettingsDefaults: function() {
+		this.panel1.setValue("grayscale",0);
+		this.panel1.setValue("brightness",100);
+		this.panel1.setValue("contrast",100);
+		this.panel1.setValue("invert",0);
+		this.panel1.setValue("opacity",100);
+		this.panel1.setValue("saturate",100);
+		this.panel1.setValue("sepia",0);
+		this.panel1.setValue("mirrorfran",0);
+		this.drawShape();
+	}
+	,createQuickSettings: function() {
 		var _gthis = this;
-		var panel1 = QuickSettings.create(10,10,"Filters").addRange("Grayscale",0,100,0,1,function(value) {
+		this.panel1 = QuickSettings.create(10,10,"Filters").addRange("grayscale",0,100,0,1,function(value) {
 			_gthis.setFilter("grayscale",value);
-		}).addRange("Range",0,100,30,1,function(value1) {
-			window.console.log("Output","Range" + ": " + (value1 == null ? "null" : "" + value1));
-		}).addNumber("Number",0,100,50,1,function(value2) {
-			window.console.log("Output","Number" + ": " + (value2 == null ? "null" : "" + value2));
-		}).addColor("Color","#ff0000",function(value3) {
-			window.console.log("Output","Color" + ": " + (value3 == null ? "null" : "" + value3));
-		}).addBoolean("Boolean",true,function(value4) {
-			window.console.log("Output","Boolean" + ": " + (value4 == null ? "null" : "" + value4));
-		}).addText("Text","some text",function(value5) {
-			window.console.log("Output","Text" + ": " + (value5 == null ? "null" : "" + value5));
-		}).addTextArea("TextArea","a whole bunch of text can go here",function(value6) {
-			window.console.log("Output","TextArea" + ": " + (value6 == null ? "null" : "" + value6));
-		}).addButton("Button",function(value7) {
-			window.console.log("Output","Button" + ": " + "clicked");
-		}).addHTML("Info","Info. This is a description...").setKey("s").saveInLocalStorage("localstoragedemo_v3.0");
+		}).addRange("brightness",0,300,100,1,function(value1) {
+			_gthis.setFilter("brightness",value1);
+		}).addRange("contrast",0,100,100,1,function(value2) {
+			_gthis.setFilter("contrast",value2);
+		}).addRange("invert",0,100,0,1,function(value3) {
+			_gthis.setFilter("invert",value3);
+		}).addRange("opacity",0,100,100,1,function(value4) {
+			_gthis.setFilter("opacity",value4);
+		}).addRange("saturate",0,100,100,1,function(value5) {
+			_gthis.setFilter("saturate",value5);
+		}).addRange("sepia",0,100,0,1,function(value6) {
+			_gthis.setFilter("sepia",value6);
+		}).addDropDown("mirror",["none","horizontal","vertical","both"],function(value7) {
+			_gthis.dropdown("DropDown",value7);
+		}).addBoolean("flip horizonal",false,function(value8) {
+			_gthis.setFlip("flip horizonal",value8);
+		}).addBoolean("flip vertical",false,function(value9) {
+			_gthis.setFlip("flip vertical",value9);
+		}).addButton("Defaults",function(value10) {
+			_gthis.QuicksettingsDefaults();
+		}).addHTML("Info","Info. This is a description...");
 	}
 	,output: function(name,value) {
 		window.console.log("Output","" + name + ": " + Std.string(value));
+	}
+	,dropdown: function(value,index) {
+		var _g = index.label;
+		switch(_g) {
+		case "both":
+			this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
+			lib_util_EffectUtil.mirror(this.ctx,false);
+			lib_util_EffectUtil.mirror(this.ctx,true);
+			console.log("both");
+			break;
+		case "horizontal":
+			this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
+			lib_util_EffectUtil.mirror(this.ctx,true);
+			break;
+		case "none":
+			this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
+			break;
+		case "vertical":
+			this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
+			lib_util_EffectUtil.mirror(this.ctx,false);
+			break;
+		default:
+			console.log("case '" + Std.string(index.label) + "': trace ('" + Std.string(index.label) + "');");
+		}
+	}
+	,setFlip: function(type,isTrue) {
+		var isHorizontal = false;
+		if(type == "flip horizonal") {
+			isHorizontal = true;
+		}
+		if(isTrue) {
+			lib_util_EffectUtil.flip(this.ctx,isHorizontal);
+		} else {
+			this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
+		}
+	}
+	,setMirror: function(type,isTrue) {
+		switch(type) {
+		case "mirror both":
+			console.log("mirror both");
+			break;
+		case "mirror horizontal":
+			console.log("mirror horizontal");
+			break;
+		case "mirror vertical":
+			console.log("mirror vertical");
+			break;
+		default:
+			console.log("case '" + type + "': trace ('" + type + "');");
+		}
+		if(isTrue) {
+			console.log("mirror");
+			lib_util_EffectUtil.mirror(this.ctx);
+		} else {
+			console.log("reset mirror");
+			this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
+		}
 	}
 	,setFilter: function(type,value) {
 		if(this.ctx == null) {
 			return;
 		}
 		var _g = type.toLowerCase();
-		if(_g == "grayscale") {
-			console.log("grayscale");
+		switch(_g) {
+		case "brightness":
+			lib_util_FilterUtil.brightness(this.ctx,value);
+			break;
+		case "contrast":
+			lib_util_FilterUtil.contrast(this.ctx,value);
+			break;
+		case "grayscale":
 			lib_util_FilterUtil.grayscale(this.ctx,value);
-			this.drawShape();
-		} else {
+			break;
+		case "invert":
+			lib_util_FilterUtil.invert(this.ctx,value);
+			break;
+		case "opacity":
+			lib_util_FilterUtil.opacity(this.ctx,value);
+			break;
+		case "saturate":
+			lib_util_FilterUtil.saturate(this.ctx,value);
+			break;
+		case "sepia":
+			lib_util_FilterUtil.sepia(this.ctx,value);
+			break;
+		default:
 			console.log("case '" + type + "': trace ('" + type + "');");
 		}
+		this.drawShape();
 	}
 	,drawShape: function() {
 		if(this.ctxHidden == null) {
@@ -4422,7 +4518,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 		}
 		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
 		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
-		this.ctx.drawImage(this.ctxHidden.canvas,0,0);
+		this.ctx.drawImage(this.ctxHidden.canvas,0,0,lib_Global.w,lib_Global.h);
 	}
 	,setup: function() {
 		var _gthis = this;
@@ -4434,7 +4530,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 			var option = new SketchOption();
 			option.set_width(img.width);
 			option.set_height(img.height);
-			_gthis.ctxHidden = Sketch.createHiddenCanvas("imageholder",option,_gthis.isDebug);
+			_gthis.ctxHidden = Sketch.createHiddenCanvas("imageholder",option,false);
 			_gthis.ctxHidden.drawImage(img,0,0,img.width,img.height);
 			img.style.display = "none";
 			_gthis.drawShape();
@@ -4446,6 +4542,79 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 		this.stop();
 	}
 	,__class__: art_CC039
+});
+var art_CC040 = function(ctx) {
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.startRadius = 200;
+	this.max = 1;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("circle lines");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+art_CC040.__name__ = ["art","CC040"];
+art_CC040.__interfaces__ = [art_ICCBase];
+art_CC040.__super__ = art_CCBase;
+art_CC040.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i) {
+		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, radius : this._radius};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.BLACK);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.strokeStyle = lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.WHITE);
+			this.ctx.lineCap = "butt";
+			this.ctx.lineWidth = 20;
+			var radius = this.startRadius;
+			var omtrek = lib_util_MathUtil.circumferenceCircle(radius);
+			this.ctx.setLineDash([1,Math.round(omtrek / 4)]);
+			lib_CanvasTools.strokeCircle(this.ctx,sh.x,sh.y,radius);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = lib_util_ColorUtil.niceColor100[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC040
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -8160,6 +8329,53 @@ lib_util_ColorUtil.hex2RGB = function(hex) {
 lib_util_ColorUtil.prototype = {
 	__class__: lib_util_ColorUtil
 };
+var lib_util_EffectUtil = function() {
+};
+lib_util_EffectUtil.__name__ = ["lib","util","EffectUtil"];
+lib_util_EffectUtil.flip = function(ctx,isHorizontal) {
+	if(isHorizontal == null) {
+		isHorizontal = true;
+	}
+	if(ctx == null) {
+		return;
+	}
+	var w = ctx.canvas.width;
+	var h = ctx.canvas.height;
+	ctx.save();
+	if(isHorizontal) {
+		ctx.translate(w,0);
+		ctx.scale(-1,1);
+	} else {
+		ctx.translate(0,h);
+		ctx.scale(1,-1);
+	}
+	ctx.drawImage(ctx.canvas,0,0,w,h);
+	ctx.restore();
+};
+lib_util_EffectUtil.mirror = function(ctx,isHorizontal) {
+	if(isHorizontal == null) {
+		isHorizontal = false;
+	}
+	if(ctx == null) {
+		return;
+	}
+	var w = ctx.canvas.width;
+	var h = ctx.canvas.height;
+	ctx.save();
+	if(isHorizontal) {
+		ctx.translate(w,0);
+		ctx.scale(-1,1);
+		ctx.drawImage(ctx.canvas,0,0,w / 2,h,0,0,w / 2,h);
+	} else {
+		ctx.translate(0,h);
+		ctx.scale(1,-1);
+		ctx.drawImage(ctx.canvas,0,0,w,h / 2,0,0,w,h / 2);
+	}
+	ctx.restore();
+};
+lib_util_EffectUtil.prototype = {
+	__class__: lib_util_EffectUtil
+};
 var lib_util_ExportUtil = function() {
 };
 lib_util_ExportUtil.__name__ = ["lib","util","ExportUtil"];
@@ -8214,15 +8430,63 @@ lib_util_ExportUtil.prototype = {
 var lib_util_FilterUtil = function() {
 };
 lib_util_FilterUtil.__name__ = ["lib","util","FilterUtil"];
+lib_util_FilterUtil.convertCSSPercentage = function(value) {
+	if(value > 1) {
+		return "" + value + "%";
+	} else {
+		return "" + value;
+	}
+};
 lib_util_FilterUtil.grayscale = function(ctx,value) {
 	if(value == null) {
 		value = 100;
 	}
-	if(value > 1) {
-		ctx.filter = "grayscale(" + value + "%)";
-	} else {
-		ctx.filter = "grayscale(" + value + ")";
+	ctx.filter = "grayscale( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.brightness = function(ctx,value) {
+	if(value == null) {
+		value = 100;
 	}
+	ctx.filter = "brightness( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.contrast = function(ctx,value) {
+	if(value == null) {
+		value = 100;
+	}
+	ctx.filter = "contrast( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.invert = function(ctx,value) {
+	if(value == null) {
+		value = 100;
+	}
+	ctx.filter = "invert( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.opacity = function(ctx,value) {
+	if(value == null) {
+		value = 100;
+	}
+	ctx.filter = "opacity( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.saturate = function(ctx,value) {
+	if(value == null) {
+		value = 100;
+	}
+	ctx.filter = "saturate( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.sepia = function(ctx,value) {
+	if(value == null) {
+		value = 100;
+	}
+	ctx.filter = "sepia( " + lib_util_FilterUtil.convertCSSPercentage(value) + " )";
+};
+lib_util_FilterUtil.huerotate = function(ctx,angle) {
+	if(angle == null) {
+		angle = 360;
+	}
+	ctx.filter = "hue-rotate( " + angle + " )";
+};
+lib_util_FilterUtil.none = function(ctx) {
+	ctx.filter = null;
 };
 lib_util_FilterUtil.prototype = {
 	__class__: lib_util_FilterUtil
@@ -9528,7 +9792,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-19 11:02:33";
+lib_model_constants_App.BUILD = "2019-02-21 20:53:37";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
