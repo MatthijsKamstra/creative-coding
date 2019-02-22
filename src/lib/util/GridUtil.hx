@@ -56,7 +56,7 @@ class GridUtil {
 	var _isNumbered:Bool = false;
 	var _isDimension:Bool = false;
 	var _isPosition:Bool = false;
-	var _isDebug:Bool = true; // fix ugly grid bugs
+	var _isDebug:Bool = false; // fix ugly grid bugs
 
 	public function new() {}
 
@@ -84,6 +84,17 @@ class GridUtil {
 			console.log('GridUtil :: setCenterPoint');
 		this.isCentered = isCentered;
 		calculate();
+	}
+
+	/**
+	 * use when want to debug the grid
+	 *
+	 * @param isDebug  (default = true)
+	 */
+	public function setDebug(isDebug:Bool = true){
+		this._isDebug = isDebug;
+		if (_isDebug)
+			console.log('GridUtil :: setCenterPoint');
 	}
 
 	/**
@@ -139,7 +150,7 @@ class GridUtil {
 	 * @param cellWidth 	fixed grid width
 	 * @param cellHeight 	(optional) fixed grid height (default is equal to cellWidth)
 	 */
-	public function setCellSize(cellWidth, ?cellHeight) {
+	public function setCellSize(cellWidth:Float, ?cellHeight:Float) {
 		if (cellHeight == null)
 			cellHeight = cellWidth;
 		if (_isDebug)
