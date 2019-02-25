@@ -243,10 +243,10 @@ class CanvasTools {
 		ctx.lineWidth = inPx; // px
 	}
 
-	static public function fillColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Int) {
+	static public function fillColour(ctx:CanvasRenderingContext2D, r:Int, ?g:Int, ?b:Int, ?a:Float) {
 		colour(ctx, r, g, b, a);
 	};
-	static public function fillColourRGB(ctx:CanvasRenderingContext2D, rgb:lib.util.ColorUtil.RGB, ?a:Int) {
+	static public function fillColourRGB(ctx:CanvasRenderingContext2D, rgb:lib.util.ColorUtil.RGB, ?a:Float) {
 		colour(ctx, rgb.r, rgb.g, rgb.b, a);
 	};
 
