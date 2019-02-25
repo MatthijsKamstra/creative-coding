@@ -3,20 +3,21 @@ package art;
 /**
  * short description what this does
  */
-class CC040 extends CCBase implements ICCBase {
+class CC042 extends CCBase implements ICCBase {
 
 	var shapeArray : Array<Circle> = [];
 	var grid : GridUtil = new GridUtil();
 
 	var _radius = 150;
 	var _cellsize = 150;
-	var _bgColor:RGB = null;
-	var _lineColor:RGB = null;
-	var _fillColor:RGB = null;
+	var _color0:RGB = null;
+	var _color1:RGB = null;
+	var _color2:RGB = null;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		super(ctx);
 		description = '';
+		type = [CCType.ANIMATION, CCType.IMAGE];
+		super(ctx);
 	}
 
 	function createShape(i:Int, ?point:Point){
@@ -45,7 +46,7 @@ class CC040 extends CCBase implements ICCBase {
 		}
 
 		for ( i in 0 ... shapeArray.length ) {
-			var circle = shapeArray[i];
+			var sh = shapeArray[i];
 		}
 		var rgb = randomColourObject();
 		ctx.strokeColour(rgb.r, rgb.g, rgb.b);
@@ -57,21 +58,26 @@ class CC040 extends CCBase implements ICCBase {
 		trace('setup: ${toString()}');
 
 		var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length-1)];
-		_bgColor = hex2RGB(colorArray[0]);
-		_lineColor = hex2RGB(colorArray[1]);
-		_fillColor = hex2RGB(colorArray[2]);
+		_color0 = hex2RGB(colorArray[0]);
+		_color1 = hex2RGB(colorArray[1]);
+		_color2 = hex2RGB(colorArray[2]);
 
-		// isDebug = true;
+		isDebug = true;
 
 		// grid.setDimension(w*2.1, h*2.1);
 		// grid.setNumbered(3,3);
 		grid.setCellSize(_cellsize);
 		grid.setIsCenterPoint(true);
+
+		shapeArray = [];
+		for (i in 0...grid.array.length) {
+			shapeArray.push(createShape(i, grid.array[i]));
+		}
 	}
 
 	override function draw(){
 		trace('draw: ${toString()}');
-		// drawShape();
+		drawShape();
 		stop();
 	}
 }
