@@ -26,6 +26,12 @@ class Main {
 			// get hash from url
 			var hash = js.Browser.location.hash;
 			hash = hash.replace('#', '');
+
+			// trace(Type.resolveClass('CCtest00'));
+			// trace(Type.resolveClass('art.CCtest00'));
+
+			// trace(Type.createInstance(Type.resolveClass('art.CCtest00'),[ctx]));
+
 			switch (hash) {
 				case 'CC000': new CC000(ctx);
 				case 'CC001': new CC001(ctx);
@@ -68,10 +74,14 @@ class Main {
 				case 'CC038': new CC038(ctx);
 				case 'CC039': new CC039(ctx);
 				case 'CC040': new CC040(ctx);
+				case 'CC041': new CC041(ctx);
+				case 'CC042': new CC042(ctx);
+				case 'CC043': new CC043(ctx);
+				case 'CC044': new CC044(ctx);
 				default:
 					trace("case '" + hash + "': new " + hash + "(ctx);");
-					location.hash = 'CC040';
-					new CC040(ctx);
+					location.hash = 'CC044';
+					new CC044(ctx);
 			}
 
 			count = Std.parseInt(hash.toLowerCase().replace('cc', ''));
