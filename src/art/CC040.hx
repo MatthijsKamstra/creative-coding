@@ -14,7 +14,7 @@ class CC040 extends CCBase implements ICCBase {
 	var _color4:RGB = null;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = 'circle lines';
+		description = 'Quarter growing circle through dashed lines';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 		super(ctx);
 	}
