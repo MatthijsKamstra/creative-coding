@@ -49,7 +49,8 @@
 - [ ] check `project-monofonts` for usefull classes
 - [ ] <http://www.tysoncadenhead.com/blog/exporting-canvas-animation-to-mov/> export video via socket and node/ffmpeg
 - [ ] different canvas size for exporting video
-
+- [ ] add noise
+- [ ] https://github.com/madhoe/noisehx  or <https://github.com/memilian/libnoise/> or <https://github.com/whuop/hxNoise>
 
 
 ### Miso Regular  replacement

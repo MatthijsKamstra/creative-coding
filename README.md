@@ -2,15 +2,30 @@
 
 ![](icon.jpg)
 
-Creative code library and examples create with [Haxe](http://www.haxe.org) (currently only JavaScript target). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
+Creative code library and examples create with [Haxe](http://www.haxe.org) (I'm currently only focussing on the JavaScript target but with Haxe that could easily change). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
 
-Most of my library code is inspired or based upon the work of George Gally, Seb Lee-Delisle, Matt DesLauriers (and probably many more) but they used a dynamic language (JavaScript) for . I want to So my start is a little bit slow converting everything to Haxe; a strictly typed language, but in the end this will help me to work faster.
+Most of my library code is inspired or based upon the work of George Gally, Seb Lee-Delisle, Matt DesLauriers (and probably many more) but they used a dynamic language (JavaScript) for. I want to us Haxe. So my start is a little bit slower converting everything to Haxe; a strictly typed language, but in the end this will help me to work faster.
 
 You can seen my progress on this page: <https://matthijskamstra.github.io/creative-coding/>.
 
 But if you don't want to see animations, and mouse interactions: I have created a [gallery](GALLERY.md) document.
 
 This is not my first attempt, so if you want to check out my previous attempt: <http://matthijskamstra.github.io/gen-art/>. This attempt was to create pattern in `.svg`.
+
+# Goal
+
+It's good to set some goals when working on something
+
+- [x] get started with creative-coding
+- [x] work on it for 30 days (30 days challenge)
+- [x] Instagram as primary way of distribution my sketches (social platform)
+- [x] connect twitter via IFTTT and Instagram
+- [x] create my own CC (creative coding) library based upon other artist work
+- [x] create [30](GALLERY.md) animation/images that have a creative source
+- [x] some sketches are just trying out code
+- [x] after 30 sketches (animation/visuals), I will focus less on this magical number and focus on sketches with sound/video/api/
+- [ ] have a talk about my experience 
+- [ ] get better at it (daily goal)
 
 ## Inspiration
 
@@ -24,29 +39,32 @@ Read more <https://github.com/GeorgeGally/creative_coding>
 
 ## Color
 
-I want to create mostly in black and white. But colours will be nice.
+I want to create mostly in black and white. But colours will be nice (sometimes... occasionally).
 To make sure it will not cost too much time, I will be using:
 
 - heavy lifting with colours I will be doing via `thx.color` or `hxColorToolkit`
 - ColorUtil class
-- <https://github.com/mattdesl/nice-color-palettes>
+- predifined set of color pallets from Colour lovers: <https://github.com/mattdesl/nice-color-palettes>
 
 
 ## libs
 
-This is Haxe specific, its just here FYI
+This is Haxe specific, it's just here FYI
 
+```
 -lib hxquicksettings
 -lib thx.color
 -lib hxColorToolkit
 -lib msignal
 -lib mloader
 -lib uglifyjs
+```
 
 ## WIP
 
-I am focusing on getting it to work on Chrome... just giving you a heads-up!
+I am only focusing on getting it to work on Chrome... just giving you a heads-up!
 And I am not concerned with optimisation: you fan will sometimes spike!
+Perhaps also useful to know: resizing might have unexpected results... also not really focussing on
 
 ## TODO
 
@@ -81,4 +99,4 @@ dude!
 ### Sources:
 
 
-- <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+- <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
