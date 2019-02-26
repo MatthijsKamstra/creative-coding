@@ -4,13 +4,6 @@ package art;
  * short description what this does
  */
 class CC043 extends CCBase implements ICCBase {
-	var shapeArray:Array<Circle> = [];
-	var grid:GridUtil = new GridUtil();
-	var _radius = 150;
-	var _cellsize = 150;
-	var _color0:RGB = null;
-	var _color1:RGB = null;
-	var _color2:RGB = null;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'First attempt at creating snake like patterns';
@@ -18,49 +11,63 @@ class CC043 extends CCBase implements ICCBase {
 		super(ctx);
 	}
 
-	function createShape(i:Int, ?point:Point) {
-		var shape:Circle = {
-			_id: '$i',
-			_type: 'circle',
-			x: point.x,
-			y: point.y,
-			radius: _radius,
-		}
-		return shape;
-	}
-
+	var xpos :Float = w/2;
+	var ypos :Float = h;
 
 	function drawShape() {
-		// ctx.clearRect(0, 0, w, h);
 
-		ctx.strokeColourRGB(BLACK,0.1);
-		ctx.strokeEllipse(w/2,h/2,random(10,100),random(10,100));
+		/*
+		var r = Math.min(w, h) / 2.3;
+		ctx.strokeColourRGB(BLACK, 0.1);
+		ctx.strokeEllipse(xpos, ypos, random(0, r), random(0, r));
+
+		ypos--;
+
+		if(ypos <= -h) {
+			trace('stop');
+			stop();
+		}
+		*/
 
 
 
-			// ctx.save();
-			// ctx.translate(sh.x, sh.y);
-			// ctx.rotate(radians(sh.rotation) );
-			// ctx.centreFillRect(0, 0, sh.width, sh.height);
-			// ctx.restore();
+		var imageData = ctx.getImageData(0,0, w,h);
+		ctx.putImageData(imageData,0, 1);
+
+		ctx.strokeWeight(2);
+		ctx.fillColourRGB(GRAY);
+		ctx.strokeColourRGB(BLACK);
+
+		// ctx.circleFillStroke(w/2, h/2, 100);
+
+		var r = Math.min(w, h) / 2.3;
+		xpos = w/2;
+		ypos = h/3;
+		// ctx.strokeColourRGB(BLACK, 1);
+		ctx.ellipseFillStroke(xpos, ypos, random(0, r), random(20, 40));
+
+
+
+		// ctx.save();
+		// ctx.translate(sh.x, sh.y);
+		// ctx.rotate(radians(sh.rotation) );
+		// ctx.centreFillRect(0, 0, sh.width, sh.height);
+		// ctx.restore();
 
 	}
 
 	override function setup() {
 		trace('setup: ${toString()}');
 
-		ctx.backgroundObj(WHITE);
-		var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length - 1)];
-		_color0 = hex2RGB(colorArray[0]);
-		_color1 = hex2RGB(colorArray[1]);
-		_color2 = hex2RGB(colorArray[2]);
+		ypos = h;
+
+		ctx.clearRect(0, 0, w, h);
+		ctx.backgroundRGB(WHITE);
 
 		isDebug = true;
 	}
 
 	override function draw() {
-		// trace('draw: ${toString()}');
 		drawShape();
-		// stop();
 	}
 }
