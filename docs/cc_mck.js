@@ -288,10 +288,13 @@ var Main = function() {
 		case "CC045":
 			new art_CC045(ctx);
 			break;
+		case "CC046":
+			new art_CC046(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC045";
-			new art_CC045(ctx);
+			window.location.hash = "CC046";
+			new art_CC046(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -4962,6 +4965,47 @@ art_CC045.prototype = $extend(art_CCBase.prototype,{
 		this.stop();
 	}
 	,__class__: art_CC045
+});
+var art_CC046 = function(ctx) {
+	this.frameRate = 15;
+	this.maxFrameRate = 60;
+	this.counter = 0;
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	lib_util_FontUtil.embedGoogleFont("Share+Tech+Mono",$bind(this,this.onEmbedHandler));
+	art_CCBase.call(this,ctx);
+};
+art_CC046.__name__ = ["art","CC046"];
+art_CC046.__interfaces__ = [art_ICCBase];
+art_CC046.__super__ = art_CCBase;
+art_CC046.prototype = $extend(art_CCBase.prototype,{
+	onEmbedHandler: function(e) {
+		console.log("onEmbedHandler: \"" + e + "\"");
+		this.drawShape();
+	}
+	,drawShape: function() {
+		this.counter++;
+		if(this.counter % (this.maxFrameRate / this.frameRate) != 0) {
+			return;
+		}
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		var time = new Date();
+		var hours = time.getHours();
+		var min = time.getMinutes();
+		var sec = time.getSeconds();
+		var text = "" + StringTools.lpad(hours == null ? "null" : "" + hours,"0",2) + ":" + StringTools.lpad(min == null ? "null" : "" + min,"0",2) + ":" + StringTools.lpad(sec == null ? "null" : "" + sec,"0",2);
+		this.ctx.fillStyle = lib_util_ColorUtil.getColourObj(lib_util_ColorUtil.BLACK);
+		lib_util_FontUtil.centerFillText(this.ctx,text,lib_Global.w / 2,lib_Global.h / 2,"'Share Tech Mono', monospace",160);
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.isDebug = true;
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC046
 });
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
@@ -10456,7 +10500,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-26 14:26:29";
+lib_model_constants_App.BUILD = "2019-02-26 23:55:42";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};

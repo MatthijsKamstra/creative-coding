@@ -79,10 +79,11 @@ class Main {
 				case 'CC043': new CC043(ctx);
 				case 'CC044': new CC044(ctx);
 				case 'CC045': new CC045(ctx);
+				case 'CC046': new CC046(ctx);
 				default:
 					trace("case '" + hash + "': new " + hash + "(ctx);");
-					location.hash = 'CC045';
-					new CC045(ctx);
+					location.hash = 'CC046';
+					new CC046(ctx);
 			}
 
 			count = Std.parseInt(hash.toLowerCase().replace('cc', ''));
