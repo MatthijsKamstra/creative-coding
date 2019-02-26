@@ -1,6 +1,6 @@
 package art;
 
-import noisehx.Perlin;
+import noise.Perlin;
 
 import quicksettings.QuickSettings;
 
@@ -20,6 +20,7 @@ class CC044 extends CCBase implements ICCBase {
 
 
 	var perlin:Perlin = new Perlin();
+
 	var xValue:Float = 50;
 	var yValue:Float = 50;
 	var octaves:Int = 1;
@@ -54,6 +55,8 @@ class CC044 extends CCBase implements ICCBase {
 		panel1 = QuickSettings.create(10, 10, "Perlin Noise")
 			.setGlobalChangeHandler(untyped drawShape)
 
+			.addHTML("About", "I had problems wrapping my head around the patterns created with Perlin Noise. It feels kinda magical and I don't seem to get the images I expect")
+
 			.addRange("perlin", 0, 65536, 50, 1, function(value) perlin = new Perlin (value) )
 
 			.addRange("xValue", 0.0, 100.0, 50.0, 1.0, function(value) xValue = value )
@@ -70,7 +73,6 @@ class CC044 extends CCBase implements ICCBase {
 
 			.addButton("defaults",function (value) quicksetttingsDefault() )
 
-			.addHTML("Info", "Info. This is a description...")
 			.saveInLocalStorage("localstoragedemo_v3.0");
 	}
 
