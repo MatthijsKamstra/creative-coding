@@ -1,4 +1,4 @@
-package noisehx;
+package noise;
 
 /**
  * A speed-improved perlin and simplex noise algorithms for 2D.
