@@ -83,12 +83,21 @@ class CanvasTools {
 		ctx.closePath();
 	};
 
+	static public function circleFillStroke(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
+		makeCircle(ctx, x, y, radius);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+	};
+
+	static public function circleFill(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) fillCircle(ctx, x,y,radius);
 	static public function fillCircle(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
 		makeCircle(ctx, x, y, radius);
 		ctx.fill();
 		ctx.closePath();
 	};
 
+	static public function circleStroke(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) strokeCircle(ctx, x,y,radius);
 	static public function strokeCircle(ctx:CanvasRenderingContext2D, x:Float, y:Float, radius:Float) {
 		makeCircle(ctx, x, y, radius);
 		ctx.stroke();
@@ -156,15 +165,25 @@ class CanvasTools {
 		ctx.closePath();
 	};
 
+	static public function ellipseFill(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) fillEllipse(ctx, x, y, width, height);
 	static public function fillEllipse(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) {
 		ctx.beginPath();
 		ctx.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
 		ctx.fill();
 	};
 
+	static public function ellipseStroke(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) strokeEllipse(ctx, x, y, width, height);
 	static public function strokeEllipse(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) {
 		ctx.beginPath();
 		ctx.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
+		ctx.stroke();
+	};
+
+	static public function ellipseFillStroke(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) fillStrokeEllipse(ctx, x, y, width, height);
+	static public function fillStrokeEllipse(ctx:CanvasRenderingContext2D, x:Float, y:Float, width:Float, height:Float) {
+		ctx.beginPath();
+		ctx.ellipse(x, y, width, height, 0, 0, 2 * Math.PI);
+		ctx.fill();
 		ctx.stroke();
 	};
 
