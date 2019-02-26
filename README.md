@@ -24,8 +24,10 @@ It's good to set some goals when working on something
 - [x] create [30](GALLERY.md) animation/images that have a creative source
 - [x] some sketches are just trying out code
 - [x] after 30 sketches (animation/visuals), I will focus less on this magical number and focus on sketches with sound/video/api/
-- [ ] have a talk about my experience 
+- [ ] have a talk about my experience
 - [ ] get better at it (daily goal)
+
+check my (todo)[TODO.MD] from some indepth todo's about this experiment
 
 ## Inspiration
 
