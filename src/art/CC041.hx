@@ -1,6 +1,6 @@
 package art;
 
-import noisehx.Perlin;
+import noise.OpenSimplexNoise;
 
 /**
  * short description what this does
@@ -13,7 +13,15 @@ class CC041 extends CCBase implements ICCBase {
 	var _bgColor:RGB = null;
 	var _lineColor:RGB = null;
 	var _fillColor:RGB = null;
-	var perlin:Perlin = new Perlin();
+	// var perlin:Perlin = new Perlin();
+	var openSimple:OpenSimplexNoise = new OpenSimplexNoise();
+	var xpos = 0;
+	var ypos = 0;
+	var counter = 0;
+	var maxFrameRate = 60;
+	var frameRate = 15;
+	var _min = 0.0;
+	var _max = 0.0;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'Example of random created with Perlin Noise';
@@ -26,9 +34,7 @@ class CC041 extends CCBase implements ICCBase {
 	}
 
 	function onEmbedHandler(e) {
-		trace('Embed: "${e}"');
-		// FontUtil.centerFillText(ctx, toString(), w/2, h/2, "'UnifrakturMaguntia', cursive", 50);
-		// FontUtil.centerFillText(ctx, description, Math.round(w/2), 20, "'Press Start 2P', cursive;", 8);
+		trace('onEmbedHandler: "${e}"');
 		drawShape();
 	}
 
@@ -43,10 +49,12 @@ class CC041 extends CCBase implements ICCBase {
 		return shape;
 	}
 
-	var xpos = 0;
-	var ypos = 0;
-
 	function drawShape() {
+		counter++;
+		if (counter % (maxFrameRate / frameRate) != 0) {
+			return;
+		}
+
 		ctx.clearRect(0, 0, w, h);
 		ctx.backgroundObj(WHITE);
 
@@ -60,18 +68,29 @@ class CC041 extends CCBase implements ICCBase {
 
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
-			var _randomX = random(-1,1);
-			var _randomY = random(-1,1);
-			var _value = 50;
-			if(i == 0){
-				trace('first');
+			var valx = openSimple.eval(xpos, ypos);
+			var valy = openSimple.eval(xpos * 24, ypos * 24);
+			if (valx < _min)
+				_min = valx;
+			if (valx > _max)
+				_max = valx;
 
-			} else {
-				trace('second +');
-				_randomX= (perlin.noise2d(xpos*1.1,ypos*1.1));
-				_randomY= (perlin.noise2d(xpos*1.1,ypos*1.1));
+			var _randomX = random(_min, _max);
+			var _randomY = random(_min, _max);
+			var _value = 50;
+			if (i == 1) {
+				_randomX = valx;
+				_randomY = valy;
+
+				// trace(_randomX, _randomY);
+
 				xpos++;
-				ypos++;
+				if (xpos >= 100) {
+					ypos++;
+					xpos = 0;
+					if (ypos >= 100)
+						ypos = 0;
+				}
 			}
 			var _xpos = sh.x + (_randomX * _value);
 			var _ypos = sh.y + (_randomY * _value);
@@ -79,42 +98,42 @@ class CC041 extends CCBase implements ICCBase {
 		}
 
 		/*
-		var _width = 100;
-		var _height = 100;
+			var _width = 100;
+			var _height = 100;
 
-		var min = 100000.0;
-		var max = 0.0;
-		var min2 = 100000.0;
-		var max2 = 0.0;
+			var min = 100000.0;
+			var max = 0.0;
+			var min2 = 100000.0;
+			var max2 = 0.0;
 
-		for (x in 0..._width) {
-			for (y in 0..._height) {
-				// var value:Float = perlin.noise2d(x / 10.0, y / 10.0);
-				var value:Float = Math.abs(perlin.noise2d(x / 50, y / 50));
-				// Do stuff with it...
-				value *= 256;
-				// trace('x:$x, y:$y , value: $value');
-				if (value <= min) min = value;
-				if (value >= max) max = value;
+			for (x in 0..._width) {
+				for (y in 0..._height) {
+					// var value:Float = perlin.noise2d(x / 10.0, y / 10.0);
+					var value:Float = Math.abs(perlin.noise2d(x / 50, y / 50));
+					// Do stuff with it...
+					value *= 256;
+					// trace('x:$x, y:$y , value: $value');
+					if (value <= min) min = value;
+					if (value >= max) max = value;
 
-				ctx.colour(Math.round(value), Math.round(value), Math.round(value));
-				// ctx.fillRect(x, y, 1, 1);
+					ctx.colour(Math.round(value), Math.round(value), Math.round(value));
+					// ctx.fillRect(x, y, 1, 1);
 
-				var value2 = (perlin.noise2d(x*1.1,y*1.1));
-				if (value2 <= min2) min2 = value2;
-				if (value2 >= max2) max2 = value2;
-				// trace('x '+m_perlin.OctavePerlin(x, y, 0.1, 1, 0.9, 2));
-				// trace('y '+m_perlin.OctavePerlin(x, y, 0.1, 5, 0.5, 0.25));
-				//  var c = m_perlin.OctavePerlin(x / 8, y / 8, 0.1, 5, 0.5, 0.25);
+					var value2 = (perlin.noise2d(x*1.1,y*1.1));
+					if (value2 <= min2) min2 = value2;
+					if (value2 >= max2) max2 = value2;
+					// trace('x '+m_perlin.OctavePerlin(x, y, 0.1, 1, 0.9, 2));
+					// trace('y '+m_perlin.OctavePerlin(x, y, 0.1, 5, 0.5, 0.25));
+					//  var c = m_perlin.OctavePerlin(x / 8, y / 8, 0.1, 5, 0.5, 0.25);
+				}
 			}
-		}
 
-		trace('min: $min');
-		trace('max: $max');
+			trace('min: $min');
+			trace('max: $max');
 
-		trace('min2: $min2');
-		trace('max2: $max2');
-		*/
+			trace('min2: $min2');
+			trace('max2: $max2');
+		 */
 	}
 
 	override function setup() {
@@ -131,6 +150,8 @@ class CC041 extends CCBase implements ICCBase {
 		// grid.setNumbered(3,3);
 		grid.setCellSize(w / 2, h);
 		grid.setIsCenterPoint(true);
+
+		openSimple.setup(randomInt(0, 6000));
 
 		shapeArray = [];
 		for (i in 0...grid.array.length) {
