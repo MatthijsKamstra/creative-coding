@@ -15,7 +15,12 @@ class FontUtil {
 	//		2 fonts in one <link>
 	// 		resize window and not end up with multiple <links>
 	//		chaining? `ctx.embedFillText().color().multiline()`
-	public static function fillText(ctx:CanvasRenderingContext2D, text:String, x:Float, y:Float, css:String, ?size:Int = 20) {}
+	public static function fillText(ctx:CanvasRenderingContext2D, text:String, x:Float, y:Float, css:String, ?size:Int = 20) {
+		ctx.font = '${size}px ${css.replace(';', '')}';
+		// seems to break something if css has `;`
+		ctx.textAlign = "left";
+		ctx.fillText(text, x, y);
+	}
 
 	/**
 	 * make sure to use Google fonts for this
