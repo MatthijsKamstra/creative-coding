@@ -291,10 +291,13 @@ var Main = function() {
 		case "CC046":
 			new art_CC046(ctx);
 			break;
+		case "CC050":
+			new art_CC050(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC046";
-			new art_CC046(ctx);
+			window.location.hash = "CC050";
+			new art_CC050(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -5007,6 +5010,123 @@ art_CC046.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC046
 });
+var art_CC050 = function(ctx) {
+	this._defaultPaddingTop = 0;
+	this._paddingTop = 0;
+	this._defaultPadding = 0;
+	this._padding = 0;
+	this._defaultLineHeight = 100;
+	this._lineHeight = 100;
+	this._defaultFontSize = 160;
+	this._fontSize = 160;
+	this.isFontLoaded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this.text = "It is impossible to make anything foolproof because fools are so ingenious.";
+	this.set_description("A tool to create quick quotes for Instagram");
+	this.set_type(["Image"]);
+	lib_util_FontUtil.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
+	this.createQuickSettings();
+	art_CCBase.call(this,ctx);
+};
+art_CC050.__name__ = ["art","CC050"];
+art_CC050.__interfaces__ = [art_ICCBase];
+art_CC050.__super__ = art_CCBase;
+art_CC050.prototype = $extend(art_CCBase.prototype,{
+	onEmbedHandler: function(e) {
+		console.log("onEmbedHandler: \"" + e + "\"");
+		this.isFontLoaded = true;
+		this.drawShape();
+	}
+	,createQuickSettings: function() {
+		var _gthis = this;
+		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote",this.text,function(value) {
+			console.log(value);
+		}).addBoolean("All Caps",false,function(value1) {
+			_gthis.setCaps(value1);
+		}).addRange("Font size",10,500,this._defaultFontSize,1,function(value2) {
+			_gthis.setFontSize(value2);
+		}).addRange("Line height",10,500,this._defaultLineHeight,1,function(value3) {
+			_gthis.setLineHeight(value3);
+		}).addRange("Padding left/right",0,500,this._defaultPadding,1,function(value4) {
+			_gthis.setPadding(value4);
+		}).addRange("Padding top",-100,500,this._defaultPaddingTop,1,function(value5) {
+			_gthis.setPaddingTop(value5);
+		}).addButton("Random Color",function(value6) {
+			_gthis.randomColorize();
+		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,setCaps: function(isCaps) {
+		if(isCaps) {
+			this.text = this.text.toUpperCase();
+		} else {
+			this.text = this.text.toLowerCase();
+		}
+	}
+	,setFontSize: function(value) {
+		this._fontSize = value;
+	}
+	,setLineHeight: function(value) {
+		this._lineHeight = value;
+	}
+	,setPadding: function(value) {
+		this._padding = value;
+	}
+	,setPaddingTop: function(value) {
+		this._paddingTop = value;
+	}
+	,randomColorize: function() {
+		var colorArray = lib_util_ColorUtil.niceColor100SortedString[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+	}
+	,drawShape: function() {
+		if(!this.isFontLoaded) {
+			return;
+		}
+		this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+		lib_CanvasTools.backgroundObj(this.ctx,this._color0);
+		this.ctx.fillStyle = lib_util_ColorUtil.getColourObj(this._color4);
+		lib_util_FontUtil.fillText(this.ctx,this.text,lib_Global.w / 2,-lib_Global.h,"'Oswald', sans-serif;",this._fontSize);
+		var lines = lib_util_TextUtil.getLines(this.ctx,this.text,this.square - 2 * this._padding);
+		var _g1 = 0;
+		var _g = lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var line = lines[i];
+			lib_util_FontUtil.fillText(this.ctx,line,this._padding,this._paddingTop + (i + 1) * this._lineHeight,"'Oswald', sans-serif;",this._fontSize);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.randomColorize();
+		this.isDebug = true;
+		var canvas = window.document.getElementById("creative_code_mck");
+		this.square = Math.round(Math.min(lib_Global.w,lib_Global.h));
+		console.log("w: " + lib_Global.w + ", h: " + lib_Global.h);
+		console.log("square: " + this.square);
+		canvas.width = this.square - 2;
+		canvas.height = this.square - 2;
+		canvas.style.border = "1px solid silver";
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC050
+});
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
 haxe_IMap.prototype = {
@@ -8916,6 +9036,9 @@ lib_util_FontUtil.fillText = function(ctx,text,x,y,css,size) {
 	if(size == null) {
 		size = 20;
 	}
+	ctx.font = "" + size + "px " + StringTools.replace(css,";","");
+	ctx.textAlign = "left";
+	ctx.fillText(text,x,y);
 };
 lib_util_FontUtil.centerFillText = function(ctx,text,x,y,css,size) {
 	if(size == null) {
@@ -9393,6 +9516,32 @@ lib_util_ShapeUtil.gridDots = function(ctx,grid) {
 	ctx.lineWidth = 1;
 	lib_CanvasTools.lineColour(ctx,lib_util_ColorUtil.GRAY.r,lib_util_ColorUtil.GRAY.g,lib_util_ColorUtil.GRAY.b,0.5);
 	ctx.strokeRect(grid.x,grid.y,grid.width,grid.height);
+};
+var lib_util_TextUtil = function() {
+};
+lib_util_TextUtil.__name__ = ["lib","util","TextUtil"];
+lib_util_TextUtil.getLines = function(ctx,text,maxWidth) {
+	var words = text.split(" ");
+	var lines = [];
+	var currentLine = words[0];
+	var _g1 = 1;
+	var _g = words.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var word = words[i];
+		var width = ctx.measureText(currentLine + " " + word).width;
+		if(width < maxWidth) {
+			currentLine += " " + word;
+		} else {
+			lines.push(currentLine);
+			currentLine = word;
+		}
+	}
+	lines.push(currentLine);
+	return lines;
+};
+lib_util_TextUtil.prototype = {
+	__class__: lib_util_TextUtil
 };
 var mloader_Loader = function() { };
 mloader_Loader.__name__ = ["mloader","Loader"];
@@ -10500,7 +10649,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-26 23:55:42";
+lib_model_constants_App.BUILD = "2019-02-27 23:47:48";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
