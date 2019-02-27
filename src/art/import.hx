@@ -12,6 +12,7 @@ import lib.util.AnimateUtil.*;
 import lib.util.FontUtil;
 import lib.util.GridUtil;
 import lib.util.MathUtil;
+import lib.util.TextUtil;
 // import lib.util.*;
 // easy access to typedef
 import lib.AST;
@@ -26,3 +27,5 @@ using lib.util.ShapeUtil;
 import lets.GoJs;
 import lets.easing.*;
 
+
+import quicksettings.QuickSettings;
