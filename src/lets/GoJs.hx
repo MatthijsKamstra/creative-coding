@@ -461,6 +461,7 @@ class GoJs {
 		if (_isTimeBased) {
 			d = Std.int(duration * 1000); // convert seconds to miliseconds
 		} else {
+			if(duration <= 0) duration = 0.1;
 			d = Std.int(duration * FRAME_RATE); // seconds * FPS = frames
 		}
 		return d;
