@@ -291,6 +291,9 @@ var Main = function() {
 		case "CC046":
 			new art_CC046(ctx);
 			break;
+		case "CC047":
+			new art_CC047(ctx);
+			break;
 		case "CC050":
 			new art_CC050(ctx);
 			break;
@@ -5010,6 +5013,173 @@ art_CC046.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC046
 });
+var art_CC047 = function(ctx) {
+	this.padding = 50;
+	this.leaderY = lib_Global.h / 2;
+	this.leaderX = lib_Global.w / 2;
+	this.counter = 0;
+	this.defaultBounce = 0.75;
+	this.bounce = 0.9;
+	this.defaultSpeed = 6.0;
+	this.speed = 6.0;
+	this.momentumy = 0.0;
+	this.momentumx = 0.0;
+	this.isAutoDefault = false;
+	this.isAuto = false;
+	this.isClearDefault = true;
+	this.isClear = true;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._max = 1;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new lib_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("Mouse trailer with elasticy");
+	this.set_type(["Animation","Image","Interactive"]);
+	this.createQuickSettings();
+	art_CCBase.call(this,ctx);
+};
+art_CC047.__name__ = ["art","CC047"];
+art_CC047.__interfaces__ = [art_ICCBase];
+art_CC047.__super__ = art_CCBase;
+art_CC047.prototype = $extend(art_CCBase.prototype,{
+	createQuickSettings: function() {
+		var _gthis = this;
+		this.panel1 = QuickSettings.create(10,10,"Elastic mouse").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Speed and Bounce","<b>speed</b> changes the speed of the movement (1=high, 9=slow),<br><b>bounce</b> the elasticy (0.5=less, 0.9=more)").addRange("Speed",0.0,100.0,this.defaultSpeed,1.0,function(value) {
+			_gthis.setSpeed(value);
+		}).addRange("Bounce",0.0,0.99,this.defaultBounce,0.01,function(value1) {
+			_gthis.setBounce(value1);
+		}).addBoolean("Auto",this.isAutoDefault,function(value2) {
+			_gthis.setAutomatic(value2);
+		}).addBoolean("Clear",this.isClearDefault,function(value3) {
+			_gthis.setClear(value3);
+		}).addButton("Reset",function(e) {
+			_gthis.setReset();
+		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,setBounce: function(value) {
+		this.bounce = value;
+	}
+	,setSpeed: function(value) {
+		this.speed = value;
+	}
+	,setClear: function($is) {
+		this.isClear = $is;
+	}
+	,setAutomatic: function(isAutomatic) {
+		this.isAuto = isAutomatic;
+		if(this.isAuto) {
+			this.onAnimateHandler();
+		} else if(this.go != null) {
+			this.go.stop();
+		}
+	}
+	,setReset: function() {
+		this.speed = this.defaultSpeed;
+		this.bounce = this.defaultBounce;
+		this.isAuto = this.isAutoDefault;
+		this.panel1.setValue("Speed",this.defaultSpeed);
+		this.panel1.setValue("Bounce",this.defaultBounce);
+		this.panel1.setValue("Auto",this.isAutoDefault);
+	}
+	,createShape: function(i) {
+		var shape = { _id : "" + i, _type : "circle", x : lib_Global.w / 2, y : lib_Global.h / 2, radius : this._radius};
+		return shape;
+	}
+	,onAnimateHandler: function() {
+		if(this._leader == null) {
+			console.log("no leader");
+			var GoJs = new lets_GoJs({ },1);
+			var _this = GoJs;
+			_this._options.onComplete = $bind(this,this.onAnimateHandler);
+			_this._options.onCompleteParams = null;
+			return;
+		}
+		var xpos = lib_util_MathUtil.random(this.padding,lib_Global.w - this.padding * 2);
+		var ypos = lib_util_MathUtil.random(this.padding,lib_Global.h - this.padding * 2);
+		var GoJs1 = new lets_GoJs(this._leader,lib_util_MathUtil.random(0.1,0.5));
+		GoJs1._isFrom = false;
+		var _this1 = GoJs1;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range = { key : "x", from : _this1._isFrom ? xpos : objValue, to : !_this1._isFrom ? xpos : objValue};
+		_this1._props.set("x",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this2._target,"y")) {
+			objValue1 = Reflect.getProperty(_this2._target,"y");
+		}
+		var _range1 = { key : "y", from : _this2._isFrom ? ypos : objValue1, to : !_this2._isFrom ? ypos : objValue1};
+		_this2._props.set("y",_range1);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
+		var _this3 = _this2;
+		_this3._easing = lets_easing_Sine.get_easeInOut();
+		var _this4 = _this3;
+		_this4._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this4._options.onCompleteParams = null;
+		this.go = _this4;
+	}
+	,drawShape: function() {
+		if(!this.isAuto && lib_Global.mouseX == null) {
+			return;
+		}
+		if(this.isClear) {
+			this.ctx.clearRect(0,0,lib_Global.w,lib_Global.h);
+			lib_CanvasTools.backgroundObj(this.ctx,lib_util_ColorUtil.WHITE);
+		}
+		if(this.isAuto) {
+			this.leaderX = this._leader.x;
+			this.leaderY = this._leader.y;
+			lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.RED);
+			lib_util_ShapeUtil.registerPoint(this.ctx,this.leaderX,this.leaderY);
+		} else {
+			this.leaderX = lib_Global.mouseX;
+			this.leaderY = lib_Global.mouseY;
+		}
+		var distx = this._follow.x - this.leaderX;
+		var disty = this._follow.y - this.leaderY;
+		this.momentumx -= distx / this.speed;
+		this.momentumy -= disty / this.speed;
+		this.momentumx *= this.bounce;
+		this.momentumy *= this.bounce;
+		this._follow.x += this.momentumx;
+		this._follow.y += this.momentumy;
+		lib_CanvasTools.fillColourRGB(this.ctx,lib_util_ColorUtil.BLACK);
+		lib_CanvasTools.circleFill(this.ctx,this._follow.x,this._follow.y,10);
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = lib_util_ColorUtil.niceColor100SortedString[lib_util_MathUtil.randomInt(lib_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+		this._follow = this.createShape(0);
+		this._leader = this.createShape(1);
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC047
+});
 var art_CC050 = function(ctx) {
 	this._defaultPaddingTop = 0;
 	this._paddingTop = 0;
@@ -8234,6 +8404,9 @@ lets_GoJs.prototype = {
 		if(this._isTimeBased) {
 			d = duration * 1000 | 0;
 		} else {
+			if(duration <= 0) {
+				duration = 0.1;
+			}
 			d = duration * this.FRAME_RATE | 0;
 		}
 		return d;
@@ -10649,7 +10822,7 @@ lib_Global.mouseReleased = 0;
 lib_Global.isFullscreen = false;
 lib_Global.TWO_PI = Math.PI * 2;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-02-27 23:47:48";
+lib_model_constants_App.BUILD = "2019-02-28 16:49:18";
 lib_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 lib_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 lib_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
