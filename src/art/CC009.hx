@@ -47,7 +47,7 @@ class CC009 extends CCBase implements ICCBase {
 		shape.alpha = 0;
 		var point = point();
 		var time = random(2);
-		GoJs.to(shape, time).x(point.x).y(point.y).alpha(1).prop('size',randomInt(10)).ease(Sine.easeInOut).delay(time).onComplete(onCompleteHandler,[shape]);
+		Go.to(shape, time).x(point.x).y(point.y).alpha(1).prop('size',randomInt(10)).ease(Sine.easeInOut).delay(time).onComplete(onCompleteHandler,[shape]);
 	}
 
 	function drawShape(){

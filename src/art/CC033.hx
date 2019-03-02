@@ -38,7 +38,7 @@ class CC033 extends CCBase implements ICCBase {
 	function arrowDraw(pointArray:Array<Point>, pos:Point) {
 
 		// [mck] hacky, but it gets the job done!
-		var _rotation = lib.util.MathUtil.angle(pos.x+cellsize/2, pos.y+cellsize/2, clientX, clientY);
+		var _rotation = MathUtil.angle(pos.x+cellsize/2, pos.y+cellsize/2, clientX, clientY);
 		// trace(angle2);
 
 		ctx.save();
@@ -108,9 +108,9 @@ class CC033 extends CCBase implements ICCBase {
 		clientY = e.clientY;
 
 		// var gridP = grid.array[0];
-		// // var angle = lib.util.MathUtil.angle(point.x, point.y, gridP.x, gridP.y);
+		// // var angle = MathUtil.angle(point.x, point.y, gridP.x, gridP.y);
 		// // trace(angle);
-		// var angle2 = lib.util.MathUtil.angle(gridP.x, gridP.y, point.x, point.y);
+		// var angle2 = MathUtil.angle(gridP.x, gridP.y, point.x, point.y);
 		// trace(angle2);
 	}
 

@@ -14,7 +14,7 @@ class CC008 extends CCBase implements ICCBase {
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 		description = 'lets.Go tests with rotation, delay, easing';
-		lib.util.HelperUtil.stats();
+		HelperUtil.stats();
 	}
 
 	function createShape(y) : AnimateObj{
@@ -61,21 +61,21 @@ class CC008 extends CCBase implements ICCBase {
 			shapeArray.push( sh );
 		}
 		var _shape = shapeArray[0];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2));
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2));
 		var _shape = shapeArray[1];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).yoyo();
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).yoyo();
 		var _shape = shapeArray[2];
-		GoJs.from(_shape, 2).x(_shape.x + (w - _shape.x*2)).yoyo();
+		Go.from(_shape, 2).x(_shape.x + (w - _shape.x*2)).yoyo();
 		var _shape = shapeArray[3];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).y(_shape.y+100).yoyo();
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).y(_shape.y+100).yoyo();
 		var _shape = shapeArray[4];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).rotation(180).yoyo().onUpdate(onUpdateHandler, [4]);
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).rotation(180).yoyo().onUpdate(onUpdateHandler, [4]);
 		var _shape = shapeArray[5];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).prop('foobar',180).onUpdate(onUpdateHandler, [5]).onComplete(onCompleteHandler, [5]);
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).prop('foobar',180).onUpdate(onUpdateHandler, [5]).onComplete(onCompleteHandler, [5]);
 		var _shape = shapeArray[6];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).delay(.7).rotation(360).yoyo();
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).delay(.7).rotation(360).yoyo();
 		var _shape = shapeArray[7];
-		GoJs.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).rotation(360).yoyo().ease(Sine.easeInOut);
+		Go.to(_shape, 2).x(_shape.x + (w - _shape.x*2)).rotation(360).yoyo().ease(Sine.easeInOut);
 	}
 
 	function onUpdateHandler (value) : Void {

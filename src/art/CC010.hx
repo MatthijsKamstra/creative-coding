@@ -37,8 +37,8 @@ class CC010 extends CCBase implements ICCBase {
 		var ypos1 = shape.y - 100;
 		var ypos2 = shape.y + 100;
 
-		GoJs.from(shape, 1.0).x(shape.x).y(ypos1).alpha(0).prop('size',50).ease(Sine.easeOut).delay(2);
-		GoJs.to(shape, 1.0).x(shape.x).y(ypos2).alpha(0).prop('size',50).ease(Sine.easeIn).delay(5.5);
+		Go.from(shape, 1.0).x(shape.x).y(ypos1).alpha(0).prop('size',50).ease(Sine.easeOut).delay(2);
+		Go.to(shape, 1.0).x(shape.x).y(ypos2).alpha(0).prop('size',50).ease(Sine.easeIn).delay(5.5);
 
 		return shape;
 	}

@@ -43,7 +43,7 @@ class CC024 extends CCBase implements ICCBase {
 	}
 
 	// function onAnimateHandler(circle:Circle){
-	// 	// GoJs.to(circle, 5).x(w/2).y(centerY).ease(lets.easing.Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
+	// 	// Go.to(circle, 5).x(w/2).y(centerY).ease(Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
 	// }
 	function drawShape() {
 		ctx.clearRect(0, 0, w, h);
@@ -89,8 +89,8 @@ class CC024 extends CCBase implements ICCBase {
 	override function setup() {
 		// trace('setup: ${toString()}');
 
-		// var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length-1)];
-		var colorArray = lib.util.ColorUtil.niceColor100[2];
+		// var colorArray = ColorUtil.niceColor100[randomInt(ColorUtil.niceColor100.length-1)];
+		var colorArray = ColorUtil.niceColor100[2];
 		_bgColor = hex2RGB(colorArray[0]);
 		_lineColor = hex2RGB(colorArray[1]);
 		_fillColor = hex2RGB(colorArray[2]);

@@ -2,7 +2,7 @@ package art;
 
 import quicksettings.QuickSettings;
 
-using lib.util.FilterUtil;
+using cc.util.FilterUtil;
 
 /**
  * short description what this does
@@ -75,14 +75,14 @@ class CC039 extends CCBase implements ICCBase {
 				ctx.drawImage(ctxHidden.canvas, 0, 0, w, h);
 			case 'horizontal':
 				ctx.drawImage(ctxHidden.canvas, 0, 0, w, h);
-				lib.util.EffectUtil.mirror(ctx, true);
+				EffectUtil.mirror(ctx, true);
 			case 'vertical':
 				ctx.drawImage(ctxHidden.canvas, 0, 0, w, h);
-				lib.util.EffectUtil.mirror(ctx, false);
+				EffectUtil.mirror(ctx, false);
 			case 'both':
 				ctx.drawImage(ctxHidden.canvas, 0, 0, w, h);
-				lib.util.EffectUtil.mirror(ctx, false);
-				lib.util.EffectUtil.mirror(ctx, true);
+				EffectUtil.mirror(ctx, false);
+				EffectUtil.mirror(ctx, true);
 				trace ('both');
 			default : trace ("case '"+index.label+"': trace ('"+index.label+"');");
 		}
@@ -92,7 +92,7 @@ class CC039 extends CCBase implements ICCBase {
 		var isHorizontal = false;
 		if (type == 'flip horizonal') isHorizontal = true;
 		if (isTrue) {
-			lib.util.EffectUtil.flip(ctx, isHorizontal);
+			EffectUtil.flip(ctx, isHorizontal);
 		} else {
 			ctx.drawImage(ctxHidden.canvas, 0, 0, w, h);
 		}
@@ -106,7 +106,7 @@ class CC039 extends CCBase implements ICCBase {
 		}
 		if (isTrue) {
 			trace('mirror');
-			lib.util.EffectUtil.mirror(ctx);
+			EffectUtil.mirror(ctx);
 		} else {
 			trace('reset mirror');
 			ctx.drawImage(ctxHidden.canvas, 0, 0, w, h);

@@ -3,12 +3,9 @@ package art;
 import js.html.CanvasRenderingContext2D;
 import js.Browser.window;
 import js.Browser.document;
-import lib.Global.*;
+import Sketch.Global.*;
 
-class CCBase {
-	public var ctx:CanvasRenderingContext2D;
-	public var isDrawActive:Bool = true;
-	public var isDebug:Bool = false;
+class CCBase extends Sketch.SketchBase implements ICCBase {
 
 	/**
 	 * set types for sketch
@@ -35,115 +32,9 @@ class CCBase {
 	 * @param ctx
 	 */
 	public function new(ctx:CanvasRenderingContext2D) {
-		this.ctx = ctx;
-		window.addEventListener(RESIZE, _reset, false);
-		window.addEventListener(KEY_DOWN, _keyDown, false);
-		window.addEventListener(KEY_UP, _keyUp, false);
-		// window.addEventListener(KEY_DOWN, onKeyDown);
-		setup();
-		_draw(); // start draw loop
+		super(ctx);
 	}
 
-	// ____________________________________ private ____________________________________
-
-	// track key functions
-	function _keyDown(e:js.html.KeyboardEvent) {
-		switch (e.key) {
-			case ' ':
-				draw();
-			default:
-				// trace("case '" + e.key + "': trace ('" + e.key + "');");
-		}
-	}
-
-	function _keyUp(e:js.html.KeyboardEvent) {}
-
-	// trigger when window resize, draw function is still running, so clear canvas and restart with init
-	function _reset() {
-		ctx.clearRect(0, 0, w, h);
-		_draw();
-	}
-
-	// wrapper around the real `draw` class
-	function _draw(?timestamp:Float) {
-		draw();
-		if (isDrawActive)
-			window.requestAnimationFrame(_draw);
-	}
-
-	// ____________________________________ public ____________________________________
-
-	/**
-	 * setup your art here, is also the best place to reset data
-	 * when the browser resizes
-	 */
-	@:deprecated("use 'setup' instead")
-	public function init() {
-		// trace('override public function init()');
-	}
-
-	/**
-	 * setup your art here, is also the best place to reset data
-	 * when the browser resizes
-	 */
-	public function setup() {
-		// init();
-		// trace('override public function setup()');
-	}
-
-	public function onKeyDown(e:js.html.KeyboardEvent) {
-		// switch (e.key) {
-		// 	case ' ':
-		// 		drawShape();
-		// 	default:
-		// 		trace("case '" + e.key + "': trace ('" + e.key + "');");
-		// }
-	}
-
-
-	// setup
-	// update
-	// draw
-	// touchstart
-	// touchmove
-	// touchend
-	// mouseover
-	// mousedown
-	// mousemove
-	// mouseout
-	// mouseup
-	// click
-	// keydown
-	// keyup
-	// resize
-
-	/**
-	 * the magic happens here, every class should have a `draw` function
-	 */
-	public function draw() {
-		trace('${toString()} :: override public function draw()');
-	}
-
-	/**
-	 * pause the draw function (toggle function)
-	 */
-	public function pause() {
-		isDrawActive = !isDrawActive;
-	}
-
-	/**
-	 * stop draw function
-	 */
-	public function stop() {
-		isDrawActive = false;
-	}
-
-	/**
-	 * play draw function
-	 */
-	public function play() {
-		isDrawActive = true;
-	}
 
 	// ____________________________________ getter/setter ____________________________________
 
@@ -168,17 +59,7 @@ class CCBase {
 	function set_type(value : Array<CCType>) : Array<CCType> {
 		return _type = value;
 	}
-	// ____________________________________ toString() ____________________________________
 
-	/**
-	 * Get className, with package
-	 * @example:
-	 * 		trace(toString()); // this file would be "art.CCBase"
-	 */
-	public function toString() {
-		var className = Type.getClassName(Type.getClass(this));
-		return className;
-	}
 }
 
 @:enum abstract CCType(String) {

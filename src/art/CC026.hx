@@ -13,7 +13,7 @@ class CC026 extends CCBase implements ICCBase {
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 		description = '';
-		lib.util.HelperUtil.stats();
+		HelperUtil.stats();
 	}
 
 	// ____________________________________ handlers ____________________________________
@@ -32,11 +32,11 @@ class CC026 extends CCBase implements ICCBase {
 		var time = random(1, 3);
 		var delay = random(0, 3);
 
-		GoJs.from(circle, time)
+		Go.from(circle, time)
 			.delay(delay)
 			.x(startx)
 			.y(starty)
-			.ease(lets.easing.Sine.easeOut)
+			.ease(Sine.easeOut)
 			.onComplete(onCompleteHandler, [circle]);
 	}
 

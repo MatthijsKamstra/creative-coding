@@ -5,16 +5,16 @@ import js.Browser.*;
 import js.html.*;
 
 // easy access to Globals
-import lib.Global.*;
+import Sketch.Global.*;
 // easy access to the utils
-import lib.util.MathUtil.*;
-import lib.util.ColorUtil.*;
-import lib.util.AnimateUtil.*;
+// import MathUtil.*;
+// import ColorUtil.*;
+// import lib.util.AnimateUtil.*;
 // easy access to typedef
-import lib.AST;
+// import lib.AST;
 
 // syntactic sugar to extend CanvasRenderingContext2D
-using lib.CanvasTools;
+// using lib.CanvasTools;
 
 
 /**

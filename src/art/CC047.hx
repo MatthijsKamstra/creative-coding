@@ -107,13 +107,13 @@ class CC047 extends CCBase implements ICCBase {
 	var counter = 0;
 	var leaderX = w / 2;
 	var leaderY = h / 2;
-	var go:GoJs;
+	var go:Go;
 	var padding = 50;
 
 	function onAnimateHandler() {
 		if (_leader == null){
 			trace('no leader');
-			GoJs.timer(1).onComplete(onAnimateHandler);
+			Go.timer(1).onComplete(onAnimateHandler);
 			return;
 		}
 
@@ -122,10 +122,10 @@ class CC047 extends CCBase implements ICCBase {
 
 		// trace('GO: xpos: $xpos, ypos: $ypos, _leader.x: ${_leader.x}, _leader.y: ${_leader.y}');
 
-		go = GoJs.to(_leader, random(0.1, 0.5))
+		go = Go.to(_leader, random(0.1, 0.5))
 			.x(xpos)
 			.y(ypos)
-			.ease(lets.easing.Sine.easeInOut)
+			.ease(Sine.easeInOut)
 			.onComplete(onAnimateHandler);
 	}
 
@@ -134,9 +134,8 @@ class CC047 extends CCBase implements ICCBase {
 			return;
 
 		if(isClear){
-		ctx.clearRect(0, 0, w, h);
-		ctx.backgroundObj(WHITE);
-
+			ctx.clearRect(0, 0, w, h);
+			ctx.backgroundObj(WHITE);
 		}
 
 		if (isAuto) {
@@ -185,7 +184,7 @@ class CC047 extends CCBase implements ICCBase {
 	override function setup() {
 		trace('setup: ${toString()}');
 
-		var colorArray = lib.util.ColorUtil.niceColor100SortedString[randomInt(lib.util.ColorUtil.niceColor100SortedString.length - 1)];
+		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length - 1)];
 		_color0 = hex2RGB(colorArray[0]);
 		_color1 = hex2RGB(colorArray[1]);
 		_color2 = hex2RGB(colorArray[2]);

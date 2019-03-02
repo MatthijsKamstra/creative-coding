@@ -11,7 +11,7 @@ class CC015 extends CCBase implements ICCBase {
 		description = 'clock';
 	}
 
-	var color = lib.util.ColorUtil.niceColor100[0];
+	var color = ColorUtil.niceColor100[0];
 
 	override function setup() {
 		// isDebug = true;

@@ -1,10 +1,10 @@
 package art;
 
-import noise.Perlin;
+import cc.noise.Perlin;
 
 import quicksettings.QuickSettings;
 
-using lib.util.FilterUtil;
+// using lib.util.FilterUtil;
 
 /**
  * short description what this does
@@ -150,7 +150,7 @@ class CC044 extends CCBase implements ICCBase {
 	override function setup() {
 		trace('setup: ${toString()}');
 
-		var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length - 1)];
+		var colorArray = ColorUtil.niceColor100[randomInt(ColorUtil.niceColor100.length - 1)];
 		_bgColor = hex2RGB(colorArray[0]);
 		_lineColor = hex2RGB(colorArray[1]);
 		_fillColor = hex2RGB(colorArray[2]);

@@ -84,7 +84,7 @@ class CC050 extends CCBase implements ICCBase {
 	}
 
 	function randomColorize() {
-		var colorArray = lib.util.ColorUtil.niceColor100SortedString[randomInt(lib.util.ColorUtil.niceColor100SortedString.length - 1)];
+		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length - 1)];
 		_color0 = hex2RGB(colorArray[0]);
 		_color1 = hex2RGB(colorArray[1]);
 		_color2 = hex2RGB(colorArray[2]);

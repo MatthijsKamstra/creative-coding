@@ -15,7 +15,7 @@ class CC027 extends CCBase implements ICCBase {
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 		description = 'dots bombard plan b';
-		lib.util.HelperUtil.stats();
+		HelperUtil.stats();
 	}
 
 	// ____________________________________ handlers ____________________________________
@@ -35,11 +35,11 @@ class CC027 extends CCBase implements ICCBase {
 		var time = random(1, 3);
 		var delay = random(0, 3) + 2; // wait for 2 seconds
 
-		GoJs.from(circle, time)
+		Go.from(circle, time)
 			.delay(delay)
 			.x(startx)
 			.y(starty)
-			.ease(lets.easing.Quart.easeOut)
+			.ease(Quart.easeOut)
 			.onComplete(onCompleteHandler, [circle]);
 	}
 

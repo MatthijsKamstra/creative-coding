@@ -45,7 +45,7 @@ class CC026 {
 		ctx2 = Sketch.createHiddenCanvas('imageholder', option);
 
 
-		GoJs.timer(1).onComplete(testFun);
+		Go.timer(1).onComplete(testFun);
 		// ctx2.fillColourRGB(BLACK);
 		// ctx2.fillCircle(0,0,100);
 

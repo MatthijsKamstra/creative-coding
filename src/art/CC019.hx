@@ -56,15 +56,15 @@ class CC019 extends CCBase implements ICCBase {
 			circle.x = point.x;
 			circle.y = point.y;
 		}
-		GoJs.to(circle, 5)
+		Go.to(circle, 5)
 			.x(w / 2)
 			.y(h / 2)
-			.ease(lets.easing.Sine.easeInOut)
+			.ease(Sine.easeInOut)
 			.onComplete(onAnimateHandler, [circle]);
 	}
 
 	override function setup() {
-		var colorArray = lib.util.ColorUtil.niceColor100[randomInt(lib.util.ColorUtil.niceColor100.length - 1)];
+		var colorArray = ColorUtil.niceColor100[randomInt(ColorUtil.niceColor100.length - 1)];
 		_bgColor = hex2RGB(colorArray[0]);
 		_lineColor = hex2RGB(colorArray[1]);
 

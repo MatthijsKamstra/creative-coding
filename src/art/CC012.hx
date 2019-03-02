@@ -72,7 +72,7 @@ class CC012 extends CCBase implements ICCBase {
 
 	function onCompleteHandler(line) {
 		// trace('complete: $e');
-		GoJs.to(line, random(2, 4))
+		Go.to(line, random(2, 4))
 			.prop('radius', random(radius0, radius1))
 			.ease(Sine.easeInOut)
 			.onComplete(onCompleteHandler, [line]);

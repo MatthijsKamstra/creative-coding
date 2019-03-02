@@ -3,29 +3,29 @@ import js.Browser.*;
 import js.html.*;
 
 // easy access to Globals
-import lib.Global.*;
+import Sketch.Global.*;
 // easy access to the utils
-import lib.util.MathUtil.*;
-import lib.util.ColorUtil.*;
-import lib.util.ColorUtil;
-import lib.util.AnimateUtil.*;
-import lib.util.FontUtil;
-import lib.util.GridUtil;
-import lib.util.MathUtil;
-import lib.util.TextUtil;
-// import lib.util.*;
+import cc.util.MathUtil.*;
+import cc.util.ColorUtil.*;
+import cc.util.ColorUtil;
+import cc.util.AnimateUtil.*;
+import cc.util.FontUtil;
+import cc.util.GridUtil;
+import cc.util.MathUtil;
+import cc.util.TextUtil;
+import cc.util.*;
 // easy access to typedef
-import lib.AST;
+import cc.AST;
 
 import art.CCBase.CCType;
 
 // syntactic sugar to extend CanvasRenderingContext2D
-using lib.CanvasTools;
-using lib.util.ShapeUtil;
+using cc.CanvasTools;
+using cc.util.ShapeUtil;
 
 // animation lib
-import lets.GoJs;
-import lets.easing.*;
+import cc.lets.Go;
+import cc.lets.easing.*;
 
 
 import quicksettings.QuickSettings;

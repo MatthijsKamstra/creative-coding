@@ -61,7 +61,7 @@ class CC042 extends CCBase implements ICCBase {
 	}
 
 	function onAnimateHandler(circle:Circle){
-		// GoJs.to(circle, 5).x(w/2).y(h/2).ease(lets.easing.Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
+		// Go.to(circle, 5).x(w/2).y(h/2).ease(Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
 	}
 
 	function drawShape(){
@@ -87,7 +87,7 @@ class CC042 extends CCBase implements ICCBase {
 	override function setup(){
 		trace('setup: ${toString()}');
 
-		var colorArray = lib.util.ColorUtil.niceColor100SortedString[randomInt(lib.util.ColorUtil.niceColor100SortedString.length-1)];
+		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length-1)];
 		_color0 = hex2RGB(colorArray[0]);
 		_color1 = hex2RGB(colorArray[1]);
 		_color2 = hex2RGB(colorArray[2]);

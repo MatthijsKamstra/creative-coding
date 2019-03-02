@@ -1,6 +1,6 @@
 package art;
 
-import lib.util.ColorUtil;
+// import ColorUtil;
 
 /**
  * short description what this does
@@ -34,7 +34,7 @@ class CC014 extends CCBase implements ICCBase {
 			flipColorB = WHITE;
 			flipColorW = BLACK;
 		}
-		GoJs.timer(random(0, .7)).onComplete(onFlipColorHandler);
+		Go.timer(random(0, .7)).onComplete(onFlipColorHandler);
 	}
 
 	function createShape(i:Int) {
@@ -53,7 +53,7 @@ class CC014 extends CCBase implements ICCBase {
 	function onCircleHandler(circle:Circle) {
 		// trace(untyped circle.stroke);
 		var r = Math.round(random(1, 20));
-		GoJs.to(circle, random(1, 5))
+		Go.to(circle, random(1, 5))
 			.x(random(0, w))
 			.y(random(0, h))
 			.prop('size', Math.round(random(10, 100)))

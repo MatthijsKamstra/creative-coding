@@ -80,10 +80,10 @@ class CC011 extends CCBase implements ICCBase {
 	}
 	function onCompleteHandler(line){
 		// trace('complete: $e');
-		GoJs.to(line, random(0.5, 1.5)).prop('radius',random(radius0, radius1)).ease(Sine.easeInOut).onComplete(onCompleteHandler,[line]);
+		Go.to(line, random(0.5, 1.5)).prop('radius',random(radius0, radius1)).ease(Sine.easeInOut).onComplete(onCompleteHandler,[line]);
 	}
 	function onXHandler(obj){
-		GoJs.to(obj, random(0.5, 1.5)).prop('rotation',random(0, 360)).prop('size',random(150,160)).ease(Sine.easeInOut).onComplete(onXHandler,[obj]).delay(random(0,0.5));
+		Go.to(obj, random(0.5, 1.5)).prop('rotation',random(0, 360)).prop('size',random(150,160)).ease(Sine.easeInOut).onComplete(onXHandler,[obj]).delay(random(0,0.5));
 	}
 
 	// ____________________________________ override ____________________________________

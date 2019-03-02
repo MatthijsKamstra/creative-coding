@@ -40,7 +40,7 @@ class CC018 extends CCBase implements ICCBase {
 	}
 
 	function onYoYoHandler(circle:Circle){
-		GoJs.to(circle, random(0.1,2)).prop('radius',random (5,(_size/2)) ).yoyo().ease(lets.easing.Sine.easeInOut).onComplete(onYoYoHandler, [circle]);
+		Go.to(circle, random(0.1,2)).prop('radius',random (5,(_size/2)) ).yoyo().ease(Sine.easeInOut).onComplete(onYoYoHandler, [circle]);
 	}
 
 

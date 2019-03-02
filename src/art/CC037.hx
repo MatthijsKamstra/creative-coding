@@ -43,9 +43,9 @@ class CC037 extends CCBase implements ICCBase {
 		trace('> horDistCos: $horDistCos');
 		trace('- horDistTan: $horDistTan');
 
-		trace((lib.util.MathUtil.pythagoreanTheorem(0, horDistCos, cellsize)));
+		trace((MathUtil.pythagoreanTheorem(0, horDistCos, cellsize)));
 
-		// var distX = cellsize + (lib.util.MathUtil.pythagoreanTheorem(0,horDistCos,cellsize));
+		// var distX = cellsize + (MathUtil.pythagoreanTheorem(0,horDistCos,cellsize));
 		var distX = cellsize + horDistSin;
 		var distY = horDistCos;
 

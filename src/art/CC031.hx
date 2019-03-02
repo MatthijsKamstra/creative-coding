@@ -106,6 +106,6 @@ class CC031 extends CCBase implements ICCBase {
 	}
 
 	function onAnimateHandler(circle:Circle) {
-		// GoJs.to(circle, 5).x(w/2).y(h/2).ease(lets.easing.Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
+		// Go.to(circle, 5).x(w/2).y(h/2).ease(Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
 	}
 }

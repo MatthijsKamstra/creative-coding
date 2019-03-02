@@ -1,6 +1,6 @@
 package art;
 
-import lib.util.MathUtil;
+// import MathUtil;
 
 /**
  * short description what this does
@@ -38,7 +38,7 @@ class CC030 extends CCBase implements ICCBase {
 	}
 
 	// function onAnimateHandler(arc:Arc){
-	// 	GoJs.to(arc, random).x(w/2).y(h/2).ease(lets.easing.Sine.easeInOut).onComplete(onAnimateHandler, [arc]);
+	// 	Go.to(arc, random).x(w/2).y(h/2).ease(Sine.easeInOut).onComplete(onAnimateHandler, [arc]);
 	// }
 	function drawShape() {
 		ctx.clearRect(0, 0, w, h);
@@ -96,7 +96,7 @@ class CC030 extends CCBase implements ICCBase {
 
 	override function setup() {
 		trace('setup: ${toString()}');
-		var colorArray = lib.util.ColorUtil.niceColor100SortedString[randomInt(lib.util.ColorUtil.niceColor100SortedString.length - 1)];
+		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length - 1)];
 		_bgColor = hex2RGB(colorArray[0]);
 		_lineColor = hex2RGB(colorArray[1]);
 		_lineColor2 = hex2RGB(colorArray[2]);

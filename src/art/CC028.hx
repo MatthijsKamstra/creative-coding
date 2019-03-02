@@ -3,7 +3,7 @@ package art;
 using hxColorToolkit.ColorToolkit;
 using StringTools;
 
-import lib.util.ColorUtil;
+// // import ColorUtil;
 import mloader.Loader;
 import mloader.JsonLoader;
 
@@ -90,7 +90,7 @@ class CC028
 		// 	ShapeUtil.gridDots(ctx, grid);
 		// }
 
-		var colorArray = lib.util.ColorUtil.niceColor100[10];
+		var colorArray = ColorUtil.niceColor100[10];
 		var _color0 = hex2RGB(colorArray[0]);
 		var _color1 = hex2RGB(colorArray[1]);
 		var _color2 = hex2RGB(colorArray[2]);
@@ -197,13 +197,13 @@ class CC028
 
 					}
 
-					// lib.util.ExportUtil.downloadTextFile("This is the content of my file :)", "hello.json");
-					lib.util.ExportUtil.downloadTextFile(haxe.Json.stringify(arrayInt100), "sorted_int_100.json");
-					lib.util.ExportUtil.downloadTextFile(haxe.Json.stringify(arrayString100), "sorted_100.json");
-					lib.util.ExportUtil.downloadTextFile(haxe.Json.stringify(arrayInt500), "sorted_int_500.json");
-					lib.util.ExportUtil.downloadTextFile(haxe.Json.stringify(arrayString500), "sorted_500.json");
-					lib.util.ExportUtil.downloadTextFile(haxe.Json.stringify(exportIntArray), "sorted_int_1000.json");
-					lib.util.ExportUtil.downloadTextFile(haxe.Json.stringify(exportStringArray), "sorted_1000.json");
+					// ExportUtil.downloadTextFile("This is the content of my file :)", "hello.json");
+					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayInt100), "sorted_int_100.json");
+					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayString100), "sorted_100.json");
+					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayInt500), "sorted_int_500.json");
+					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayString500), "sorted_500.json");
+					ExportUtil.downloadTextFile(haxe.Json.stringify(exportIntArray), "sorted_int_1000.json");
+					ExportUtil.downloadTextFile(haxe.Json.stringify(exportStringArray), "sorted_1000.json");
 				default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
 			}
 		}, false);

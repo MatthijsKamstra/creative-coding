@@ -28,7 +28,7 @@ class CC006 extends CCBase implements ICCBase {
 		for (i in 0...arr.length) {
 			var p:Point = arr[i];
 
-			var c = lib.util.ColorUtil.randomColour();
+			var c = ColorUtil.randomColour();
 			ctx.fillStyle = c;
 			ctx.strokeWeight (0);
 			ctx.centreFillRect(p.x, p.y, _size, _size);

@@ -5,10 +5,10 @@ import js.Browser.*;
 import js.html.*;
 
 //	quick and dirtier way to create Globals
-import lib.Global.*;
+import Sketch.Global.*;
 
 //  syntactic sugar to extend CanvasRenderingContext2D
-using lib.CanvasTools;
+// using lib.CanvasTools;
 
 class CC001 extends CCBase implements ICCBase {
 

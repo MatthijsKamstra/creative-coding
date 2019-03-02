@@ -14,7 +14,7 @@ class CC007 extends CCBase implements ICCBase {
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
-		// lib.util.HelperUtil.stats();
+		// HelperUtil.stats();
 		// trace('wait 3 seconds');
 		// haxe.Timer.delay(testTimer, 3000); // 1 milisecond delay
 	}
@@ -22,13 +22,13 @@ class CC007 extends CCBase implements ICCBase {
 		startTime = haxe.Timer.stamp();
 		startDate = Date.now().getTime();
 		onCompleteHandler(null);
-		lets.GoJs.timer(1).onComplete(onCompleteHandler,[1]);
-		lets.GoJs.timer(2).onComplete(onCompleteHandler,[2]);
-		lets.GoJs.timer(5).onComplete(onCompleteHandler,[5]);
-		lets.GoJs.timer(1.5).onComplete(onCompleteHandler,[1.5]);
-		lets.GoJs.timer(2).onComplete(onCompleteHandler,[2]);
-		lets.GoJs.timer(4).onComplete(onCompleteHandler,[4]);
-		lets.GoJs.timer(8).onComplete(onCompleteHandler,[8]);
+		Go.timer(1).onComplete(onCompleteHandler,[1]);
+		Go.timer(2).onComplete(onCompleteHandler,[2]);
+		Go.timer(5).onComplete(onCompleteHandler,[5]);
+		Go.timer(1.5).onComplete(onCompleteHandler,[1.5]);
+		Go.timer(2).onComplete(onCompleteHandler,[2]);
+		Go.timer(4).onComplete(onCompleteHandler,[4]);
+		Go.timer(8).onComplete(onCompleteHandler,[8]);
 	}
 	function onCompleteHandler(value){
 		var totalTime = (haxe.Timer.stamp()- startTime);
@@ -46,12 +46,12 @@ class CC007 extends CCBase implements ICCBase {
 			var ball = createBall();
 			ballArray.push( ball );
 			ballAnimate(ball);
-			// GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]);
+			// Go.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]);
 		}
 	}
 
 	function ballAnimate(ball:AnimateObj){
-		GoJs.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]).ease(Sine.easeInOut);
+		Go.to(ball, random(1,10)).x(random(0,w)).y(random(0,h)).onComplete(ballAnimate,[ball]).ease(Sine.easeInOut);
 	}
 
 	function createBall() : AnimateObj{

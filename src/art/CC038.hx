@@ -44,9 +44,9 @@ class CC038 extends CCBase implements ICCBase {
 		trace('> horDistCos: $horDistCos');
 		trace('- horDistTan: $horDistTan');
 
-		trace((lib.util.MathUtil.pythagoreanTheorem(0, horDistCos, cellsize)));
+		trace((MathUtil.pythagoreanTheorem(0, horDistCos, cellsize)));
 
-		// var distX = cellsize + (lib.util.MathUtil.pythagoreanTheorem(0,horDistCos,cellsize));
+		// var distX = cellsize + (MathUtil.pythagoreanTheorem(0,horDistCos,cellsize));
 		var distX = cellsize + horDistSin;
 		var distY = horDistCos;
 
@@ -115,7 +115,7 @@ class CC038 extends CCBase implements ICCBase {
 
 		// isDebug = true;
 
-		var colorArray = lib.util.ColorUtil.niceColor100SortedString[randomInt(lib.util.ColorUtil.niceColor100SortedString.length - 1)];
+		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length - 1)];
 		var _color0 = hex2RGB(colorArray[0]);
 		var _color1 = hex2RGB(colorArray[1]);
 		var _color2 = hex2RGB(colorArray[2]);
