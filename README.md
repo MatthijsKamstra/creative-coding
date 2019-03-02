@@ -1,8 +1,10 @@
 # Creative Coding
 
-![](icon.jpg)
+<p align="center">
+  <img src="icon.jpg" />
+</p>
 
-Creative code library and examples create with [Haxe](http://www.haxe.org) (I'm currently only focussing on the JavaScript target but with Haxe that could easily change). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
+I started this creative code library as a 30-days-chellange. I split the code up in [cc-sketch](https://github.com/MatthijsKamstra/cc-sketch) and examples that stayed here. I create the code with [Haxe](http://www.haxe.org) (I'm currently only focussing on the JavaScript target but with Haxe that could easily change). Do you want to know more about this beautiful programming language: [README_HAXE.MD](README_HAXE.MD)!
 
 Most of my library code is inspired or based upon the work of George Gally, Seb Lee-Delisle, Matt DesLauriers (and probably many more) but they used a dynamic language (JavaScript) for. I want to us Haxe. So my start is a little bit slower converting everything to Haxe; a strictly typed language, but in the end this will help me to work faster.
 
@@ -24,6 +26,7 @@ It's good to set some goals when working on something
 - [x] create [30](GALLERY.md) animation/images that have a creative source
 - [x] some sketches are just trying out code
 - [x] after 30 sketches (animation/visuals), I will focus less on this magical number and focus on sketches with sound/video/api/
+- [x] split code up ([cc-sketch](https://github.com/MatthijsKamstra/cc-sketch))
 - [ ] have a talk about my experience
 - [ ] get better at it (daily goal)
 
@@ -61,6 +64,14 @@ This is Haxe specific, it's just here FYI
 -lib mloader
 -lib uglifyjs
 ```
+
+and my own lib
+
+```
+-lib cc-sketch
+```
+
+[Read more about it](https://github.com/MatthijsKamstra/cc-sketch/blob/master/README.md)
 
 ## WIP
 
