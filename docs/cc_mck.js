@@ -546,7 +546,7 @@ Sketch.prototype = {
 	createCanvas: function(name) {
 		var body = this.document.querySelector("body");
 		var container = this.document.createElement("div");
-		container.className = "container";
+		container.setAttribute("id","canvas-wrapper");
 		this.canvas = this.document.createElement("canvas");
 		this.canvas.setAttribute("id",name);
 		body.appendChild(container);
@@ -10911,7 +10911,7 @@ haxe_xml_Parser.escapes = (function($this) {
 hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75,41],[90,48],[105,54],[120,60],[135,81],[150,103],[165,123],[180,138],[195,155],[210,171],[225,187],[240,204],[255,219],[270,234],[285,251],[300,267],[315,282],[330,298],[345,329],[360,0]];
 js_Boot.__toStr = ({ }).toString;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-02 21:42:49";
+lib_model_constants_App.BUILD = "2019-03-03 21:24:48";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 

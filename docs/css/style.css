@@ -1,11 +1,10 @@
 canvas {
-	/* border: 1px solid pink; */
-	/* width: 500px; */
-	background-color: white;
-
+    /* border: 1px solid pink; */
+    /* width: 500px; */
+    background-color: white;
 }
 
-.container {
+#canvas-wrapper {
     height: 100%;
     padding: 0;
     margin: 0;
@@ -15,7 +14,7 @@ canvas {
 }
 
 body {
-	background-color: #fafafa;
+    background-color: #F5F5F5;
 }
 html, body {
     height: 100%;
@@ -25,11 +24,9 @@ body {
 }
 
 
-
 /**
 * ---------------------------------- nav ----------------------------------
 */
-
 .nav {
 	display: block;
 	width: 60px;
