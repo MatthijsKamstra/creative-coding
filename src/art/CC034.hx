@@ -9,7 +9,7 @@ class CC034 extends CCBase implements ICCBase {
 	var shapeMax : Int = 25;
 
 	var maxRadius = h/3;
-	var minRadius = 100;
+	var minRadius = -50;
 	var maxCircleSize = 30;
 
 	public function new(ctx:CanvasRenderingContext2D) {
