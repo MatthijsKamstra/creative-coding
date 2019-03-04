@@ -81,6 +81,8 @@ class Main {
 				case 'CC045': new CC045(ctx);
 				case 'CC046': new CC046(ctx);
 				case 'CC047': new CC047(ctx);
+				case 'CC048': new CC048(ctx);
+				case 'CC049': new CC049(ctx);
 				case 'CC050': new CC050(ctx);
 				default:
 					trace("case '" + hash + "': new " + hash + "(ctx);");
