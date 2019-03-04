@@ -294,6 +294,12 @@ var Main = function() {
 		case "CC047":
 			new art_CC047(ctx);
 			break;
+		case "CC048":
+			new art_CC048(ctx);
+			break;
+		case "CC049":
+			new art_CC049(ctx);
+			break;
 		case "CC050":
 			new art_CC050(ctx);
 			break;
@@ -527,12 +533,13 @@ Sketch.createHiddenCanvas = function(name,option,isDebug) {
 	var body = window.document.querySelector("body");
 	var canvas = window.document.createElement("canvas");
 	body.appendChild(canvas);
+	var __w = Math.min(Global.w * 0.50,option.get_width());
 	canvas.setAttribute("id","hiddencanvas-" + name);
 	canvas.style.position = "absolute";
 	canvas.style.left = "0px";
 	canvas.style.top = "0px";
 	canvas.style.border = "1px solid pink";
-	canvas.style.width = "50%";
+	canvas.style.width = "" + __w + "px";
 	canvas.width = option.get_width();
 	canvas.height = option.get_height();
 	if(!isDebug) {
@@ -547,6 +554,7 @@ Sketch.prototype = {
 		var body = this.document.querySelector("body");
 		var container = this.document.createElement("div");
 		container.setAttribute("id","canvas-wrapper");
+		container.className = "canvas-wrapper-container";
 		this.canvas = this.document.createElement("canvas");
 		this.canvas.setAttribute("id",name);
 		body.appendChild(container);
@@ -4087,7 +4095,7 @@ art_CC033.prototype = $extend(art_CCBase.prototype,{
 });
 var art_CC034 = function(ctx) {
 	this.maxCircleSize = 30;
-	this.minRadius = 100;
+	this.minRadius = -50;
 	this.maxRadius = Global.h / 3;
 	this.shapeMax = 25;
 	this.shapeArray = [];
@@ -5232,6 +5240,273 @@ art_CC047.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC047
 });
+var art_CC048 = function(ctx) {
+	this.pixelCounter = 0;
+	this._scale = 0.2;
+	this._padding = 0;
+	this._total = 0;
+	this._sizeY = 0;
+	this._sizeX = 0;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+art_CC048.__name__ = ["art","CC048"];
+art_CC048.__interfaces__ = [art_ICCBase];
+art_CC048.__super__ = art_CCBase;
+art_CC048.prototype = $extend(art_CCBase.prototype,{
+	startCanvasImage: function() {
+		console.log("startCanvasImage :: start");
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		if(this.shapeArray.length <= 0) {
+			return;
+		}
+		this._padding = Math.round((Global.w - this.ctxHidden.canvas.width) / 2);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			var xpos = this._padding + sh.x;
+			var ypos = this._padding + sh.y;
+			cc_CanvasTools.fillColour(this.ctx,sh.rgba.r,sh.rgba.g,sh.rgba.b,sh.rgba.a);
+			this.ctx.fillRect(xpos,ypos,1,1);
+		}
+		console.log("startCanvasImage :: done");
+	}
+	,drawShape: function() {
+		if(this.shapeArray.length <= 0) {
+			return;
+		}
+		var _g1 = 0;
+		var _g = this._sizeX;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[this.pixelCounter];
+			sh.x += cc_util_MathUtil.randomInt(-1,1);
+			sh.y -= 1;
+			var __size = 5;
+			var xpos = this._padding + sh.x;
+			var ypos = this._padding + sh.y;
+			cc_CanvasTools.fillColour(this.ctx,sh.rgba.r,sh.rgba.g,sh.rgba.b,sh.rgba.a);
+			this.ctx.fillRect(xpos,ypos,1,1);
+			this.pixelCounter++;
+			if(this.pixelCounter >= this._total) {
+				this.pixelCounter = 0;
+			}
+		}
+	}
+	,setup: function() {
+		var _gthis = this;
+		console.log("setup: " + this.toString());
+		console.log("setup: start loading image");
+		var img = new Image();
+		img.src = "assets/img/hairy/xiaolong-wong-1297576-unsplash_square500x500.jpg";
+		img.onload = function() {
+			console.log("setup: image loaded");
+			var option = new SketchOption();
+			option.set_width(Math.round(img.width * _gthis._scale));
+			option.set_height(Math.round(img.height * _gthis._scale));
+			_gthis._sizeX = option.get_width();
+			_gthis._sizeY = option.get_height();
+			_gthis._total = _gthis._sizeX * _gthis._sizeY;
+			console.log("setup -> _sizeX: " + _gthis._sizeX + ", _sizeY: " + _gthis._sizeY + ", total pixels: " + _gthis._total);
+			_gthis.ctxHidden = Sketch.createHiddenCanvas("imageholder",option,_gthis.isDebug);
+			var _gthis1 = _gthis.ctxHidden;
+			var tmp = option.get_width();
+			var tmp1 = option.get_height();
+			_gthis1.drawImage(img,0,0,tmp,tmp1);
+			img.style.display = "none";
+			var tmp2 = option.get_width();
+			var tmp3 = option.get_height();
+			_gthis.setupDataArray(tmp2,tmp3);
+		};
+	}
+	,setupDataArray: function(xdir,ydir) {
+		console.log("convert image: Start converting pixels to data");
+		var _g1 = 0;
+		var _g = ydir;
+		while(_g1 < _g) {
+			var y = _g1++;
+			var _g3 = 0;
+			var _g2 = xdir;
+			while(_g3 < _g2) {
+				var x = _g3++;
+				var pixel = { x : x, y : y, colour : this.getPixel(x,y), rgb : this.getPixelRGB(x,y), rgba : this.getPixelRGBA(x,y)};
+				this.shapeArray.push(pixel);
+			}
+		}
+		console.log("convert image: DONE");
+		this.pixelCounter = 0;
+		this.startCanvasImage();
+	}
+	,getPixel: function(x,y) {
+		var xpos = x;
+		var ypos = y;
+		var pixel = this.ctxHidden.getImageData(xpos,ypos,1,1);
+		var data = pixel.data;
+		var rgba = "rgba(" + data[0] + ", " + data[1] + ", " + data[2] + ", " + data[3] / 255 + ")";
+		return rgba;
+	}
+	,getPixelRGB: function(x,y) {
+		var xpos = x;
+		var ypos = y;
+		var pixel = this.ctxHidden.getImageData(xpos,ypos,1,1);
+		var data = pixel.data;
+		var RGBA = { r : data[0], g : data[1], b : data[2]};
+		return RGBA;
+	}
+	,getPixelRGBA: function(x,y) {
+		var xpos = x;
+		var ypos = y;
+		var pixel = this.ctxHidden.getImageData(xpos,ypos,1,1);
+		var data = pixel.data;
+		var RGBA = { r : data[0], g : data[1], b : data[2], a : data[3] / 255};
+		return RGBA;
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC048
+});
+var art_CC049 = function(ctx) {
+	this.onom = new lib_model_constants_Onom();
+	this._gridY = 10;
+	this._gridX = 10;
+	this._grid = 10;
+	this._stroke = 20;
+	this._text = "[mck]";
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	this.createQuickSettings();
+	art_CCBase.call(this,ctx);
+};
+art_CC049.__name__ = ["art","CC049"];
+art_CC049.__interfaces__ = [art_ICCBase];
+art_CC049.__super__ = art_CCBase;
+art_CC049.prototype = $extend(art_CCBase.prototype,{
+	createQuickSettings: function() {
+		var _gthis = this;
+		this.panel1 = QuickSettings.create(10,10,"Onom font").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Onom","how to draw fonts from scratch").addText("Text","[mck]",function(value) {
+			_gthis.setText(value);
+		}).addRange("Stroke",1,100,this._stroke,1,function(e) {
+			_gthis.setStroke(e);
+		}).addRange("Grid",1,100,this._grid,1,function(e1) {
+			_gthis.setGrid(e1);
+		}).addRange("GridX",1,100,this._grid,1,function(e2) {
+			_gthis.setGridX(e2);
+		}).addRange("GridY",1,100,this._grid,1,function(e3) {
+			_gthis.setGridY(e3);
+		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,setText: function(value) {
+		this._text = value;
+	}
+	,setStroke: function(value) {
+		this._stroke = value;
+	}
+	,setGrid: function(value) {
+		if(this.panel1 != null) {
+			this.panel1.setValue("GridX",value);
+			this.panel1.setValue("GridY",value);
+		}
+		this._grid = value;
+	}
+	,setGridX: function(value) {
+		this._gridX = value;
+	}
+	,setGridY: function(value) {
+		this._gridY = value;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var xpadding = 100;
+		var ypadding = 100;
+		var offsetx = 0;
+		var offsety = 0;
+		var inputArray = this._text.split("");
+		var _g1 = 0;
+		var _g = inputArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var $char = inputArray[i];
+			var charPointArray = null;
+			charPointArray = this.onom.getChar($char);
+			this.ctx.beginPath();
+			this.ctx.lineCap = "round";
+			this.ctx.lineJoin = "round";
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokeWeight(this.ctx,this._stroke);
+			var _g3 = 0;
+			var _g2 = charPointArray.length;
+			while(_g3 < _g2) {
+				var i1 = _g3++;
+				var m = charPointArray[i1];
+				var xpos = offsetx * (9 * this._gridX) + m.x * this._gridX;
+				var ypos = offsety * (15 * this._gridY) + m.y * this._gridY;
+				if(i1 == 0) {
+					this.ctx.moveTo(xpos + xpadding,ypos + ypadding);
+				} else {
+					this.ctx.lineTo(xpos + xpadding,ypos + ypadding);
+				}
+			}
+			this.ctx.stroke();
+			++offsetx;
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.isDebug = true;
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,testMe: function() {
+		var m = this.onom.getChar("x");
+		var xpadding = 100;
+		var ypadding = 100;
+		var scale = 50;
+		console.log(m);
+		this.ctx.beginPath();
+		this.ctx.lineCap = "round";
+		this.ctx.lineJoin = "round";
+		cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+		cc_CanvasTools.strokeWeight(this.ctx,this._stroke);
+		var _g1 = 0;
+		var _g = m.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var _m = m[i];
+			var xpos = _m.x * scale;
+			var ypos = _m.y * scale;
+			if(i == 0) {
+				this.ctx.moveTo(xpos + xpadding,ypos + ypadding);
+			} else {
+				this.ctx.lineTo(xpos + xpadding,ypos + ypadding);
+			}
+		}
+		this.ctx.stroke();
+	}
+	,__class__: art_CC049
+});
 var art_CC050 = function(ctx) {
 	this._defaultPaddingTop = 0;
 	this._paddingTop = 0;
@@ -5576,6 +5851,9 @@ cc_CanvasTools.colourObj = function(ctx,rgb,a) {
 	ctx.fillStyle = c;
 };
 cc_CanvasTools.strokeColourObj = function(ctx,rgb,a) {
+	cc_CanvasTools.lineColour(ctx,rgb.r,rgb.g,rgb.b,a);
+};
+cc_CanvasTools.lineColourRGB = function(ctx,rgb,a) {
 	cc_CanvasTools.lineColour(ctx,rgb.r,rgb.g,rgb.b,a);
 };
 cc_CanvasTools.strokeColourRGB = function(ctx,rgb,a) {
@@ -10047,6 +10325,373 @@ lib_html_Snackbar.prototype = $extend(lib_html_CSSinjector.prototype,{
 });
 var lib_model_constants_App = function() { };
 lib_model_constants_App.__name__ = ["lib","model","constants","App"];
+var lib_model_constants_Onom = function() {
+	this.char_z = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(6,0),new lib_model_constants_Point(0,12),new lib_model_constants_Point(6,12)];
+	this.char_y = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(3,6),new lib_model_constants_Point(6,0),new lib_model_constants_Point(3,6),new lib_model_constants_Point(3,12)];
+	this.char_x = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(3,6),new lib_model_constants_Point(6,0),new lib_model_constants_Point(3,6),new lib_model_constants_Point(0,12),new lib_model_constants_Point(3,6),new lib_model_constants_Point(6,12)];
+	this.char_w = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,11),new lib_model_constants_Point(1,12),new lib_model_constants_Point(2,12),new lib_model_constants_Point(3,11),new lib_model_constants_Point(3,6),new lib_model_constants_Point(3,11),new lib_model_constants_Point(4,12),new lib_model_constants_Point(5,12),new lib_model_constants_Point(6,11),new lib_model_constants_Point(6,0)];
+	this.char_v = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(3,12),new lib_model_constants_Point(6,0)];
+	this.char_u = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,11),new lib_model_constants_Point(1,12),new lib_model_constants_Point(6,12),new lib_model_constants_Point(6,0)];
+	this.char_t = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(6,0),new lib_model_constants_Point(3,0),new lib_model_constants_Point(3,12)];
+	this.char_s = [new lib_model_constants_Point(6,1),new lib_model_constants_Point(5,0),new lib_model_constants_Point(1,0),new lib_model_constants_Point(0,1),new lib_model_constants_Point(0,5),new lib_model_constants_Point(1,6),new lib_model_constants_Point(5,6),new lib_model_constants_Point(6,7),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11)];
+	this.char_r = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,5),new lib_model_constants_Point(5,6),new lib_model_constants_Point(0,6),new lib_model_constants_Point(5,6),new lib_model_constants_Point(6,7),new lib_model_constants_Point(6,12)];
+	this.char_q = [new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,1),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(3,8)];
+	this.char_p = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,5),new lib_model_constants_Point(5,6),new lib_model_constants_Point(0,6)];
+	this.char_o = [new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,1)];
+	this.char_n = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,12)];
+	this.char_m = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(2,0),new lib_model_constants_Point(3,1),new lib_model_constants_Point(3,7),new lib_model_constants_Point(3,1),new lib_model_constants_Point(4,0),new lib_model_constants_Point(6,0),new lib_model_constants_Point(6,12)];
+	this.char_l = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,12),new lib_model_constants_Point(6,12),new lib_model_constants_Point(6,10)];
+	this.char_k = [new lib_model_constants_Point(6,0),new lib_model_constants_Point(6,5),new lib_model_constants_Point(5,6),new lib_model_constants_Point(0,6),new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,6),new lib_model_constants_Point(5,6),new lib_model_constants_Point(6,7),new lib_model_constants_Point(6,12)];
+	this.char_j = [new lib_model_constants_Point(3,0),new lib_model_constants_Point(6,0),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,9)];
+	this.char_i = [new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(3,0),new lib_model_constants_Point(3,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(5,12)];
+	this.char_h = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,6),new lib_model_constants_Point(6,6),new lib_model_constants_Point(6,0),new lib_model_constants_Point(6,12)];
+	this.char_g = [new lib_model_constants_Point(6,3),new lib_model_constants_Point(6,1),new lib_model_constants_Point(5,0),new lib_model_constants_Point(1,0),new lib_model_constants_Point(0,1),new lib_model_constants_Point(0,11),new lib_model_constants_Point(1,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(5,12),new lib_model_constants_Point(6,11),new lib_model_constants_Point(6,6),new lib_model_constants_Point(3,6)];
+	this.char_f = [new lib_model_constants_Point(6,0),new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,6),new lib_model_constants_Point(3,6),new lib_model_constants_Point(0,6),new lib_model_constants_Point(0,12)];
+	this.char_e = [new lib_model_constants_Point(6,0),new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,6),new lib_model_constants_Point(3,6),new lib_model_constants_Point(0,6),new lib_model_constants_Point(0,12),new lib_model_constants_Point(6,12)];
+	this.char_d = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(0,12)];
+	this.char_c = [new lib_model_constants_Point(6,3),new lib_model_constants_Point(6,1),new lib_model_constants_Point(5,0),new lib_model_constants_Point(1,0),new lib_model_constants_Point(0,1),new lib_model_constants_Point(0,11),new lib_model_constants_Point(1,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(5,12),new lib_model_constants_Point(6,11),new lib_model_constants_Point(6,9)];
+	this.char_b = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,5),new lib_model_constants_Point(5,6),new lib_model_constants_Point(0,6),new lib_model_constants_Point(5,6),new lib_model_constants_Point(6,7),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(0,12)];
+	this.char_a = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,6),new lib_model_constants_Point(0,6),new lib_model_constants_Point(6,6),new lib_model_constants_Point(6,12)];
+	this.char_not = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(0,0),new lib_model_constants_Point(6,0),new lib_model_constants_Point(6,12),new lib_model_constants_Point(0,12),new lib_model_constants_Point(6,0),new lib_model_constants_Point(0,0),new lib_model_constants_Point(6,12)];
+	this.char_comma = [new lib_model_constants_Point(3,12),new lib_model_constants_Point(4,11)];
+	this.char_dot = [new lib_model_constants_Point(3,12),new lib_model_constants_Point(3,12)];
+	this.char_devide = [new lib_model_constants_Point(3,12),new lib_model_constants_Point(4,11)];
+	this.char_is = [new lib_model_constants_Point(0,4),new lib_model_constants_Point(6,4),new lib_model_constants_Point(6,8),new lib_model_constants_Point(0,8)];
+	this.char_plus = [new lib_model_constants_Point(0,6),new lib_model_constants_Point(6,6),new lib_model_constants_Point(3,6),new lib_model_constants_Point(3,3),new lib_model_constants_Point(3,9)];
+	this.char_min = [new lib_model_constants_Point(0,6),new lib_model_constants_Point(6,6)];
+	this.char__ = [new lib_model_constants_Point(0,12),new lib_model_constants_Point(6,12)];
+	this.char_space = [new lib_model_constants_Point(0,0)];
+	this.char_block_right = [new lib_model_constants_Point(1,0),new lib_model_constants_Point(4,0),new lib_model_constants_Point(4,12),new lib_model_constants_Point(1,12)];
+	this.char_block_left = [new lib_model_constants_Point(5,0),new lib_model_constants_Point(2,0),new lib_model_constants_Point(2,12),new lib_model_constants_Point(5,12)];
+	this.char_9 = [new lib_model_constants_Point(6,6),new lib_model_constants_Point(1,6),new lib_model_constants_Point(0,5),new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,10)];
+	this.char_8 = [new lib_model_constants_Point(1,6),new lib_model_constants_Point(0,5),new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,5),new lib_model_constants_Point(5,6),new lib_model_constants_Point(1,6),new lib_model_constants_Point(0,7),new lib_model_constants_Point(0,11),new lib_model_constants_Point(1,12),new lib_model_constants_Point(5,12),new lib_model_constants_Point(6,11),new lib_model_constants_Point(6,7),new lib_model_constants_Point(5,6)];
+	this.char_7 = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(6,0),new lib_model_constants_Point(0,12)];
+	this.char_6 = [new lib_model_constants_Point(6,2),new lib_model_constants_Point(6,1),new lib_model_constants_Point(5,0),new lib_model_constants_Point(1,0),new lib_model_constants_Point(0,1),new lib_model_constants_Point(0,11),new lib_model_constants_Point(1,12),new lib_model_constants_Point(5,12),new lib_model_constants_Point(6,11),new lib_model_constants_Point(6,7),new lib_model_constants_Point(5,6),new lib_model_constants_Point(0,6)];
+	this.char_5 = [new lib_model_constants_Point(6,0),new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,6),new lib_model_constants_Point(5,6),new lib_model_constants_Point(6,7),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11)];
+	this.char_4 = [new lib_model_constants_Point(0,0),new lib_model_constants_Point(0,5),new lib_model_constants_Point(1,6),new lib_model_constants_Point(6,6),new lib_model_constants_Point(6,6),new lib_model_constants_Point(6,0),new lib_model_constants_Point(6,12)];
+	this.char_3 = [new lib_model_constants_Point(0,3),new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,5),new lib_model_constants_Point(5,6),new lib_model_constants_Point(3,6),new lib_model_constants_Point(5,6),new lib_model_constants_Point(6,7),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,9)];
+	this.char_2 = [new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,3),new lib_model_constants_Point(0,9),new lib_model_constants_Point(0,12),new lib_model_constants_Point(6,12)];
+	this.char_1 = [new lib_model_constants_Point(2,0),new lib_model_constants_Point(3,0),new lib_model_constants_Point(3,12)];
+	this.char_0 = [new lib_model_constants_Point(0,1),new lib_model_constants_Point(1,0),new lib_model_constants_Point(5,0),new lib_model_constants_Point(6,1),new lib_model_constants_Point(6,11),new lib_model_constants_Point(5,12),new lib_model_constants_Point(1,12),new lib_model_constants_Point(0,11),new lib_model_constants_Point(0,1),new lib_model_constants_Point(6,11)];
+	var _g = new haxe_ds_StringMap();
+	var value = this.char_0;
+	if(__map_reserved["0"] != null) {
+		_g.setReserved("0",value);
+	} else {
+		_g.h["0"] = value;
+	}
+	var value1 = this.char_1;
+	if(__map_reserved["1"] != null) {
+		_g.setReserved("1",value1);
+	} else {
+		_g.h["1"] = value1;
+	}
+	var value2 = this.char_2;
+	if(__map_reserved["2"] != null) {
+		_g.setReserved("2",value2);
+	} else {
+		_g.h["2"] = value2;
+	}
+	var value3 = this.char_3;
+	if(__map_reserved["3"] != null) {
+		_g.setReserved("3",value3);
+	} else {
+		_g.h["3"] = value3;
+	}
+	var value4 = this.char_4;
+	if(__map_reserved["4"] != null) {
+		_g.setReserved("4",value4);
+	} else {
+		_g.h["4"] = value4;
+	}
+	var value5 = this.char_5;
+	if(__map_reserved["5"] != null) {
+		_g.setReserved("5",value5);
+	} else {
+		_g.h["5"] = value5;
+	}
+	var value6 = this.char_6;
+	if(__map_reserved["6"] != null) {
+		_g.setReserved("6",value6);
+	} else {
+		_g.h["6"] = value6;
+	}
+	var value7 = this.char_7;
+	if(__map_reserved["7"] != null) {
+		_g.setReserved("7",value7);
+	} else {
+		_g.h["7"] = value7;
+	}
+	var value8 = this.char_8;
+	if(__map_reserved["8"] != null) {
+		_g.setReserved("8",value8);
+	} else {
+		_g.h["8"] = value8;
+	}
+	var value9 = this.char_9;
+	if(__map_reserved["9"] != null) {
+		_g.setReserved("9",value9);
+	} else {
+		_g.h["9"] = value9;
+	}
+	var value10 = this.char_block_left;
+	if(__map_reserved["["] != null) {
+		_g.setReserved("[",value10);
+	} else {
+		_g.h["["] = value10;
+	}
+	var value11 = this.char_block_right;
+	if(__map_reserved["]"] != null) {
+		_g.setReserved("]",value11);
+	} else {
+		_g.h["]"] = value11;
+	}
+	var value12 = this.char_space;
+	if(__map_reserved[" "] != null) {
+		_g.setReserved(" ",value12);
+	} else {
+		_g.h[" "] = value12;
+	}
+	var value13 = this.char__;
+	if(__map_reserved["_"] != null) {
+		_g.setReserved("_",value13);
+	} else {
+		_g.h["_"] = value13;
+	}
+	var value14 = this.char_min;
+	if(__map_reserved["-"] != null) {
+		_g.setReserved("-",value14);
+	} else {
+		_g.h["-"] = value14;
+	}
+	var value15 = this.char_plus;
+	if(__map_reserved["+"] != null) {
+		_g.setReserved("+",value15);
+	} else {
+		_g.h["+"] = value15;
+	}
+	var value16 = this.char_is;
+	if(__map_reserved["="] != null) {
+		_g.setReserved("=",value16);
+	} else {
+		_g.h["="] = value16;
+	}
+	var value17 = this.char_dot;
+	if(__map_reserved["."] != null) {
+		_g.setReserved(".",value17);
+	} else {
+		_g.h["."] = value17;
+	}
+	var value18 = this.char_comma;
+	if(__map_reserved[","] != null) {
+		_g.setReserved(",",value18);
+	} else {
+		_g.h[","] = value18;
+	}
+	var value19 = this.char_a;
+	if(__map_reserved["a"] != null) {
+		_g.setReserved("a",value19);
+	} else {
+		_g.h["a"] = value19;
+	}
+	var value20 = this.char_b;
+	if(__map_reserved["b"] != null) {
+		_g.setReserved("b",value20);
+	} else {
+		_g.h["b"] = value20;
+	}
+	var value21 = this.char_c;
+	if(__map_reserved["c"] != null) {
+		_g.setReserved("c",value21);
+	} else {
+		_g.h["c"] = value21;
+	}
+	var value22 = this.char_d;
+	if(__map_reserved["d"] != null) {
+		_g.setReserved("d",value22);
+	} else {
+		_g.h["d"] = value22;
+	}
+	var value23 = this.char_e;
+	if(__map_reserved["e"] != null) {
+		_g.setReserved("e",value23);
+	} else {
+		_g.h["e"] = value23;
+	}
+	var value24 = this.char_f;
+	if(__map_reserved["f"] != null) {
+		_g.setReserved("f",value24);
+	} else {
+		_g.h["f"] = value24;
+	}
+	var value25 = this.char_g;
+	if(__map_reserved["g"] != null) {
+		_g.setReserved("g",value25);
+	} else {
+		_g.h["g"] = value25;
+	}
+	var value26 = this.char_h;
+	if(__map_reserved["h"] != null) {
+		_g.setReserved("h",value26);
+	} else {
+		_g.h["h"] = value26;
+	}
+	var value27 = this.char_i;
+	if(__map_reserved["i"] != null) {
+		_g.setReserved("i",value27);
+	} else {
+		_g.h["i"] = value27;
+	}
+	var value28 = this.char_j;
+	if(__map_reserved["j"] != null) {
+		_g.setReserved("j",value28);
+	} else {
+		_g.h["j"] = value28;
+	}
+	var value29 = this.char_k;
+	if(__map_reserved["k"] != null) {
+		_g.setReserved("k",value29);
+	} else {
+		_g.h["k"] = value29;
+	}
+	var value30 = this.char_l;
+	if(__map_reserved["l"] != null) {
+		_g.setReserved("l",value30);
+	} else {
+		_g.h["l"] = value30;
+	}
+	var value31 = this.char_m;
+	if(__map_reserved["m"] != null) {
+		_g.setReserved("m",value31);
+	} else {
+		_g.h["m"] = value31;
+	}
+	var value32 = this.char_n;
+	if(__map_reserved["n"] != null) {
+		_g.setReserved("n",value32);
+	} else {
+		_g.h["n"] = value32;
+	}
+	var value33 = this.char_o;
+	if(__map_reserved["o"] != null) {
+		_g.setReserved("o",value33);
+	} else {
+		_g.h["o"] = value33;
+	}
+	var value34 = this.char_p;
+	if(__map_reserved["p"] != null) {
+		_g.setReserved("p",value34);
+	} else {
+		_g.h["p"] = value34;
+	}
+	var value35 = this.char_q;
+	if(__map_reserved["q"] != null) {
+		_g.setReserved("q",value35);
+	} else {
+		_g.h["q"] = value35;
+	}
+	var value36 = this.char_r;
+	if(__map_reserved["r"] != null) {
+		_g.setReserved("r",value36);
+	} else {
+		_g.h["r"] = value36;
+	}
+	var value37 = this.char_t;
+	if(__map_reserved["t"] != null) {
+		_g.setReserved("t",value37);
+	} else {
+		_g.h["t"] = value37;
+	}
+	var value38 = this.char_s;
+	if(__map_reserved["s"] != null) {
+		_g.setReserved("s",value38);
+	} else {
+		_g.h["s"] = value38;
+	}
+	var value39 = this.char_u;
+	if(__map_reserved["u"] != null) {
+		_g.setReserved("u",value39);
+	} else {
+		_g.h["u"] = value39;
+	}
+	var value40 = this.char_v;
+	if(__map_reserved["v"] != null) {
+		_g.setReserved("v",value40);
+	} else {
+		_g.h["v"] = value40;
+	}
+	var value41 = this.char_w;
+	if(__map_reserved["w"] != null) {
+		_g.setReserved("w",value41);
+	} else {
+		_g.h["w"] = value41;
+	}
+	var value42 = this.char_x;
+	if(__map_reserved["x"] != null) {
+		_g.setReserved("x",value42);
+	} else {
+		_g.h["x"] = value42;
+	}
+	var value43 = this.char_y;
+	if(__map_reserved["y"] != null) {
+		_g.setReserved("y",value43);
+	} else {
+		_g.h["y"] = value43;
+	}
+	var value44 = this.char_z;
+	if(__map_reserved["z"] != null) {
+		_g.setReserved("z",value44);
+	} else {
+		_g.h["z"] = value44;
+	}
+	this.mono = _g;
+};
+lib_model_constants_Onom.__name__ = ["lib","model","constants","Onom"];
+lib_model_constants_Onom.prototype = {
+	getChar: function(value) {
+		var pointsArray = this.char_not;
+		var _this = this.mono;
+		if(__map_reserved[value] != null ? _this.existsReserved(value) : _this.h.hasOwnProperty(value)) {
+			var _this1 = this.mono;
+			if(__map_reserved[value] != null) {
+				pointsArray = _this1.getReserved(value);
+			} else {
+				pointsArray = _this1.h[value];
+			}
+		}
+		var temp = [];
+		var _g1 = 0;
+		var _g = pointsArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var oldP = pointsArray[i];
+			var newP = new lib_model_constants_Point(oldP.x,oldP.y);
+			temp.push(newP);
+		}
+		return temp;
+	}
+	,getAvailable: function() {
+		var str = "";
+		var value = this.mono.keys();
+		while(value.hasNext()) {
+			var value1 = value.next();
+			str += value1;
+		}
+		return str;
+	}
+	,__class__: lib_model_constants_Onom
+};
+var lib_model_constants_Point = function(x,y) {
+	this.x = x;
+	this.y = y;
+};
+lib_model_constants_Point.__name__ = ["lib","model","constants","Point"];
+lib_model_constants_Point.prototype = {
+	toString: function() {
+		return "Point(" + this.x + "," + this.y + ")";
+	}
+	,__class__: lib_model_constants_Point
+};
 var mloader_Loader = function() { };
 mloader_Loader.__name__ = ["mloader","Loader"];
 mloader_Loader.prototype = {
@@ -10911,7 +11556,7 @@ haxe_xml_Parser.escapes = (function($this) {
 hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75,41],[90,48],[105,54],[120,60],[135,81],[150,103],[165,123],[180,138],[195,155],[210,171],[225,187],[240,204],[255,219],[270,234],[285,251],[300,267],[315,282],[330,298],[345,329],[360,0]];
 js_Boot.__toStr = ({ }).toString;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-03 21:24:48";
+lib_model_constants_App.BUILD = "2019-03-05 00:17:46";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
