@@ -89,7 +89,7 @@ class CC048 extends CCBase implements ICCBase {
 
 		// start loading image
 		var img = new Image();
-		img.src = 'assets/img/hairy/xiaolong-wong-1297576-unsplash_square500x500.jpg';
+		img.src = 'assets/img/fresh/xiaolong-wong-1297576-unsplash_square500x500.jpg';
 		img.onload = function() {
 			trace('setup: image loaded');
 			var option = new Sketch.SketchOption();
