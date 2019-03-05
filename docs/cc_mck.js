@@ -5309,7 +5309,7 @@ art_CC048.prototype = $extend(art_CCBase.prototype,{
 		console.log("setup: " + this.toString());
 		console.log("setup: start loading image");
 		var img = new Image();
-		img.src = "assets/img/hairy/xiaolong-wong-1297576-unsplash_square500x500.jpg";
+		img.src = "assets/img/fresh/xiaolong-wong-1297576-unsplash_square500x500.jpg";
 		img.onload = function() {
 			console.log("setup: image loaded");
 			var option = new SketchOption();
@@ -11556,7 +11556,7 @@ haxe_xml_Parser.escapes = (function($this) {
 hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75,41],[90,48],[105,54],[120,60],[135,81],[150,103],[165,123],[180,138],[195,155],[210,171],[225,187],[240,204],[255,219],[270,234],[285,251],[300,267],[315,282],[330,298],[345,329],[360,0]];
 js_Boot.__toStr = ({ }).toString;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-05 00:17:46";
+lib_model_constants_App.BUILD = "2019-03-05 19:26:22";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
