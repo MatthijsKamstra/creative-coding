@@ -6,7 +6,7 @@
 	"private": true,
 	"author": "Matthijs Kamstra aka [mck]",
 	"scripts": {
-		"start": "npm run watch & npm run server:haxe",
+		"start": "npm run server:haxe & npm run watch",
 		"server:haxe": "cd 'docs' && open http://localhost:2000/ && nekotools server",
 
 		"prewatch": "haxe build_all.hxml",
