@@ -303,10 +303,13 @@ var Main = function() {
 		case "CC050":
 			new art_CC050(ctx);
 			break;
+		case "CC051":
+			new art_CC051(ctx);
+			break;
 		default:
 			console.log("case '" + hash + "': new " + hash + "(ctx);");
-			window.location.hash = "CC050";
-			new art_CC050(ctx);
+			window.location.hash = "CC051";
+			new art_CC051(ctx);
 		}
 		var tmp = StringTools.replace(hash.toLowerCase(),"cc","");
 		_gthis.count = Std.parseInt(tmp);
@@ -684,6 +687,14 @@ var SketchBase = function(ctx) {
 	this.isDebug = false;
 	this.isDrawActive = true;
 	console.log("START :: " + this.toString());
+	if(ctx == null) {
+		var option = new SketchOption();
+		option.set_width(1080);
+		option.set_autostart(true);
+		option.set_padding(10);
+		option.set_scale(true);
+		ctx = Sketch.create("creative_code_mck",option);
+	}
 	this.ctx = ctx;
 	window.addEventListener(Global.RESIZE,$bind(this,this._reset),false);
 	window.addEventListener(Global.KEY_DOWN,$bind(this,this._keyDown),false);
@@ -5624,6 +5635,69 @@ art_CC050.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC050
 });
+var art_CC051 = function(ctx) {
+	this.isFondEmbedded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	var _gthis = this;
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+	var font = new FontFace("Gunplay","url(assets/font/gunplay/Gunplay-Regular.woff2)",{ style : "normal", weight : "400"});
+	window.document.fonts.add(font);
+	font.load();
+	font.loaded.then(function(fontface) {
+		console.log(fontface.family);
+		_gthis.isFondEmbedded = true;
+		_gthis.drawShape();
+	});
+};
+art_CC051.__name__ = ["art","CC051"];
+art_CC051.__interfaces__ = [art_ICCBase];
+art_CC051.__super__ = art_CCBase;
+art_CC051.prototype = $extend(art_CCBase.prototype,{
+	drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,this._color4);
+		if(this.isFondEmbedded) {
+			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color0);
+			cc_util_FontUtil.centerFillText(this.ctx,"GUNPLAY",Global.w / 2,Global.h / 2,"'Gunplay', sans-serif;",160);
+			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color1);
+			this.ctx.font = "100px Gunplay";
+			this.ctx.textAlign = "center";
+			this.ctx.textBaseline = "middle";
+			this.ctx.fillText("TEQ63: RAVAGER",Global.w / 2,Global.h / 2 + 200);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC051
+});
 var cc_AST = function() { };
 cc_AST.__name__ = ["cc","AST"];
 var cc_CanvasTools = function() { };
@@ -10240,6 +10314,111 @@ js_Browser.createXMLHttpRequest = function() {
 	}
 	throw new js__$Boot_HaxeError("Unable to create XMLHttpRequest object.");
 };
+var js_html_compat_ArrayBuffer = function(a) {
+	if((a instanceof Array) && a.__enum__ == null) {
+		this.a = a;
+		this.byteLength = a.length;
+	} else {
+		var len = a;
+		this.a = [];
+		var _g1 = 0;
+		var _g = len;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.a[i] = 0;
+		}
+		this.byteLength = len;
+	}
+};
+js_html_compat_ArrayBuffer.__name__ = ["js","html","compat","ArrayBuffer"];
+js_html_compat_ArrayBuffer.sliceImpl = function(begin,end) {
+	var u = new Uint8Array(this,begin,end == null ? null : end - begin);
+	var result = new ArrayBuffer(u.byteLength);
+	var resultArray = new Uint8Array(result);
+	resultArray.set(u);
+	return result;
+};
+js_html_compat_ArrayBuffer.prototype = {
+	slice: function(begin,end) {
+		return new js_html_compat_ArrayBuffer(this.a.slice(begin,end));
+	}
+	,__class__: js_html_compat_ArrayBuffer
+};
+var js_html_compat_Uint8Array = function() { };
+js_html_compat_Uint8Array.__name__ = ["js","html","compat","Uint8Array"];
+js_html_compat_Uint8Array._new = function(arg1,offset,length) {
+	var arr;
+	if(typeof(arg1) == "number") {
+		arr = [];
+		var _g1 = 0;
+		var _g = arg1;
+		while(_g1 < _g) {
+			var i = _g1++;
+			arr[i] = 0;
+		}
+		arr.byteLength = arr.length;
+		arr.byteOffset = 0;
+		arr.buffer = new js_html_compat_ArrayBuffer(arr);
+	} else if(js_Boot.__instanceof(arg1,js_html_compat_ArrayBuffer)) {
+		var buffer = arg1;
+		if(offset == null) {
+			offset = 0;
+		}
+		if(length == null) {
+			length = buffer.byteLength - offset;
+		}
+		if(offset == 0) {
+			arr = buffer.a;
+		} else {
+			arr = buffer.a.slice(offset,offset + length);
+		}
+		arr.byteLength = arr.length;
+		arr.byteOffset = offset;
+		arr.buffer = buffer;
+	} else if((arg1 instanceof Array) && arg1.__enum__ == null) {
+		arr = arg1.slice();
+		arr.byteLength = arr.length;
+		arr.byteOffset = 0;
+		arr.buffer = new js_html_compat_ArrayBuffer(arr);
+	} else {
+		throw new js__$Boot_HaxeError("TODO " + Std.string(arg1));
+	}
+	arr.subarray = js_html_compat_Uint8Array._subarray;
+	arr.set = js_html_compat_Uint8Array._set;
+	return arr;
+};
+js_html_compat_Uint8Array._set = function(arg,offset) {
+	if(js_Boot.__instanceof(arg.buffer,js_html_compat_ArrayBuffer)) {
+		var a = arg;
+		if(arg.byteLength + offset > this.byteLength) {
+			throw new js__$Boot_HaxeError("set() outside of range");
+		}
+		var _g1 = 0;
+		var _g = arg.byteLength;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this[i + offset] = a[i];
+		}
+	} else if((arg instanceof Array) && arg.__enum__ == null) {
+		var a1 = arg;
+		if(a1.length + offset > this.byteLength) {
+			throw new js__$Boot_HaxeError("set() outside of range");
+		}
+		var _g11 = 0;
+		var _g2 = a1.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			this[i1 + offset] = a1[i1];
+		}
+	} else {
+		throw new js__$Boot_HaxeError("TODO");
+	}
+};
+js_html_compat_Uint8Array._subarray = function(start,end) {
+	var a = js_html_compat_Uint8Array._new(this.slice(start,end));
+	a.byteOffset = start;
+	return a;
+};
 var lib_html_CSSinjector = function(styles,elementID) {
 	if(elementID == null) {
 		elementID = "inject-" + new Date().getTime();
@@ -11464,6 +11643,11 @@ Bool.__ename__ = ["Bool"];
 var Class = { __name__ : ["Class"]};
 var Enum = { };
 var __map_reserved = {};
+var ArrayBuffer = $global.ArrayBuffer || js_html_compat_ArrayBuffer;
+if(ArrayBuffer.prototype.slice == null) {
+	ArrayBuffer.prototype.slice = js_html_compat_ArrayBuffer.sliceImpl;
+}
+var Uint8Array = $global.Uint8Array || js_html_compat_Uint8Array._new;
 msignal_SlotList.NIL = new msignal_SlotList(null,null);
 Sketch.option = new SketchOption();
 Global.MOUSE_DOWN = "mousedown";
@@ -11555,8 +11739,9 @@ haxe_xml_Parser.escapes = (function($this) {
 }(this));
 hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75,41],[90,48],[105,54],[120,60],[135,81],[150,103],[165,123],[180,138],[195,155],[210,171],[225,187],[240,204],[255,219],[270,234],[285,251],[300,267],[315,282],[330,298],[345,329],[360,0]];
 js_Boot.__toStr = ({ }).toString;
+js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-05 19:26:22";
+lib_model_constants_App.BUILD = "2019-03-06 12:56:43";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
