@@ -149,7 +149,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -168,7 +168,6 @@ Main.prototype = {
 		this.hash = window.location.hash;
 		this.hash = StringTools.replace(this.hash,"#","");
 		var clazz = Type.resolveClass("art." + this.hash);
-		console.log(clazz);
 		if(clazz == null) {
 			clazz = this.ccTypeArray[this.ccTypeArray.length - 1];
 		}
@@ -5688,13 +5687,9 @@ var art_CC051 = function(ctx) {
 	this._color2 = null;
 	this._color1 = null;
 	this._color0 = null;
-	this._cellsize = 150;
-	this._radius = 150;
-	this.grid = new cc_util_GridUtil();
-	this.shapeArray = [];
 	var _gthis = this;
 	this.set_description("");
-	this.set_type(["Animation","Image"]);
+	this.set_type(["Tool","Image"]);
 	art_CCBase.call(this,ctx);
 	var font = new FontFace("Gunplay","url(assets/font/gunplay/Gunplay-Regular.woff2)",{ style : "normal", weight : "400"});
 	window.document.fonts.add(font);
@@ -5744,6 +5739,66 @@ art_CC051.prototype = $extend(art_CCBase.prototype,{
 		this.stop();
 	}
 	,__class__: art_CC051
+});
+var art_CC051a = function(ctx) {
+	this.isFondEmbedded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	var _gthis = this;
+	this.set_description("");
+	this.set_type(["Tool","Image"]);
+	art_CCBase.call(this,ctx);
+	var font = new FontFace("Miso","url(assets/font/miso/Miso.ttf)",{ style : "normal", weight : "400"});
+	window.document.fonts.add(font);
+	font.load();
+	font.loaded.then(function(fontface) {
+		console.log(fontface.family);
+		_gthis.isFondEmbedded = true;
+		_gthis.drawShape();
+	});
+};
+$hxClasses["art.CC051a"] = art_CC051a;
+art_CC051a.__name__ = ["art","CC051a"];
+art_CC051a.__interfaces__ = [art_ICCBase];
+art_CC051a.__super__ = art_CCBase;
+art_CC051a.prototype = $extend(art_CCBase.prototype,{
+	drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,this._color4);
+		if(this.isFondEmbedded) {
+			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color0);
+			cc_util_FontUtil.centerFillText(this.ctx,"Miso MISO",Global.w / 2,Global.h / 2,"'Miso', sans-serif;",160);
+			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color1);
+			this.ctx.font = "100px Miso";
+			this.ctx.textAlign = "center";
+			this.ctx.textBaseline = "middle";
+			this.ctx.fillText("1234567890",Global.w / 2,Global.h / 2 + 200);
+		}
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC051a
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -11879,7 +11934,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-08 09:55:37";
+lib_model_constants_App.BUILD = "2019-03-08 10:28:45";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
