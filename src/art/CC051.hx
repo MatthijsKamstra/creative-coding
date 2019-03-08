@@ -6,18 +6,14 @@ import js.Browser.*;
  * short description what this does
  */
 class CC051 extends CCBase implements ICCBase {
-	var shapeArray:Array<Circle> = [];
-	var grid:GridUtil = new GridUtil();
-	// sizes
-	var _radius = 150;
-	var _cellsize = 150;
+
 	// colors
 	var _color0:RGB = null;
 	var _color1:RGB = null;
 	var _color2:RGB = null;
 	var _color3:RGB = null;
 	var _color4:RGB = null;
-	var panel1:QuickSettings;
+	// font
 	var isFondEmbedded = false;
 
 	/**
@@ -32,7 +28,7 @@ class CC051 extends CCBase implements ICCBase {
 	 */
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = '';
-		type = [CCType.ANIMATION, CCType.IMAGE];
+		type = [CCType.TOOL, CCType.IMAGE];
 
 		super(ctx);
 
