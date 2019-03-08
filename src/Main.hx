@@ -69,6 +69,7 @@ class Main {
 			CC049,
 			CC050,
 			CC051,
+			CC051a,
 			// CCtest01,
 			// CCtest00,
 		];
@@ -91,9 +92,8 @@ class Main {
 		hash = hash.replace('#', '');
 
 		var clazz = Type.resolveClass('art.${hash}');
-		trace(clazz);
 		if(clazz == null) {
-			// make sure if it's not in the list, to show the latest
+			// make sure if it's not in the list, show the latest Sketch
 			clazz = ccTypeArray[ccTypeArray.length-1];
 		}
 		count = ccTypeArray.indexOf(clazz);
