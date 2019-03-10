@@ -70,6 +70,8 @@ class Main {
 			CC050,
 			CC051,
 			CC051a,
+			CC052,
+			CC052a,
 			// CCtest01,
 			// CCtest00,
 		];
