@@ -50,16 +50,31 @@ class CC051a extends CCBase implements ICCBase {
 		ctx.backgroundObj(_color4);
 		if (isFondEmbedded) {
 			ctx.fillStyle = getColourObj(_color0);
-			FontUtil.centerFillText(ctx, 'Miso MISO', w / 2, h / 2, "'Miso', sans-serif;", 160);
+			FontUtil.centerFillText(ctx, 'Miso MISO', w / 2, h / 2, "'Miso', sans-serif;", scaling(160));
 
 			ctx.fillStyle = getColourObj(_color1);
-			ctx.font = '100px Miso';
+			ctx.font = '${scaling(100)}px Miso';
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
-			ctx.fillText('1234567890', w / 2, (h / 2) + 200);
+			ctx.fillText('1234567890', w / 2, (h / 2) + scaling(200));
+
+			var text = 'Matthijs Kamstra aka [mck]';
+			ctx.fillStyle = getColourObj(_color2);
+			FontUtil.create(ctx, text)
+				.font('Miso')
+				.centerAlign()
+				.pos(w / 2, scaling(100))
+				// .size(Math.round(w / 2))
+				// .size(Math.round(w / text.split('').length))
+				.size(scaling(50))
+				.draw();
 
 			// FontUtil.centerFillText(ctx, 'TEQ63: RAVAGER', w/2, (h/2)+200, "'Miso', sans-serif;", 160);
 		}
+	}
+
+	function scaling (value){
+		return value;
 	}
 
 	override function setup() {
