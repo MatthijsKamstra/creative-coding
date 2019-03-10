@@ -27,5 +27,8 @@ using cc.util.ShapeUtil;
 import cc.lets.Go;
 import cc.lets.easing.*;
 
+// custom ast
+import AST;
 
+// settings
 import quicksettings.QuickSettings;
