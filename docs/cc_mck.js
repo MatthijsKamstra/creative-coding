@@ -617,11 +617,30 @@ SketchBase.prototype = {
 	,play: function() {
 		this.isDrawActive = true;
 	}
+	,get_w2: function() {
+		return Global.w / 2;
+	}
+	,get_h2: function() {
+		return Global.h / 2;
+	}
+	,get_w4: function() {
+		return Global.w / 4;
+	}
+	,get_h4: function() {
+		return Global.h / 4;
+	}
+	,get_w3: function() {
+		return Global.w / 3;
+	}
+	,get_h3: function() {
+		return Global.h / 3;
+	}
 	,toString: function() {
 		var className = Type.getClassName(js_Boot.getClass(this));
 		return className;
 	}
 	,__class__: SketchBase
+	,__properties__: {get_h3:"get_h3",get_w3:"get_w3",get_h4:"get_h4",get_w4:"get_w4",get_h2:"get_h2",get_w2:"get_w2"}
 };
 var Global = function() { };
 $hxClasses["Global"] = Global;
@@ -943,7 +962,7 @@ art_CCBase.prototype = $extend(SketchBase.prototype,{
 		return this._type = value;
 	}
 	,__class__: art_CCBase
-	,__properties__: {set_description:"set_description",get_description:"get_description",set_title:"set_title",get_title:"get_title",set_type:"set_type",get_type:"get_type"}
+	,__properties__: $extend(SketchBase.prototype.__properties__,{set_description:"set_description",get_description:"get_description",set_title:"set_title",get_title:"get_title",set_type:"set_type",get_type:"get_type"})
 });
 var art_CC000 = function(ctx) {
 	this.size = 10;
@@ -1150,7 +1169,7 @@ art_CC005.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
 		console.log("setup: " + this.toString());
 		var padding = 100;
-		var arr = cc_util_GridUtil.create(padding,padding,Global.w - 2 * padding,Global.h - 2 * padding,3,4);
+		var arr = cc_util_GridUtil.createGrid(padding,padding,Global.w - 2 * padding,Global.h - 2 * padding,3,4);
 		var _g1 = 0;
 		var _g = arr.length;
 		while(_g1 < _g) {
@@ -1213,7 +1232,7 @@ art_CC006.prototype = $extend(art_CCBase.prototype,{
 		var _y = 0;
 		var _numHor = Math.ceil(Global.w / _size);
 		var _numVer = Math.ceil(Global.h / _size);
-		var arr = cc_util_GridUtil.create(_x,_y,Global.w - 2 * _x,Global.h - 2 * _y,_numHor,_numVer);
+		var arr = cc_util_GridUtil.createGrid(_x,_y,Global.w - 2 * _x,Global.h - 2 * _y,_numHor,_numVer);
 		if(this.isDebug) {
 			cc_util_ShapeUtil.gridRegister(this.ctx,arr);
 		}
@@ -5810,10 +5829,19 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 			var _this3 = _this2;
 			_this3._size = this.scaling(50);
 			var _this4 = _this3;
+			_this4._ctx.save();
+			var previousColor = _this4._ctx.fillStyle;
+			if(_this4._color != null) {
+				cc_CanvasTools.fillColourRGB(_this4._ctx,_this4._color);
+			}
 			_this4._ctx.font = "" + _this4._size + "px " + _this4._font;
 			_this4._ctx.textAlign = _this4._textAlign;
 			_this4._ctx.textBaseline = _this4._textBaseline;
-			_this4._ctx.fillText(_this4._text,_this4._x,_this4._y);
+			_this4._ctx.translate(_this4._x,_this4._y);
+			_this4._ctx.rotate(cc_util_MathUtil.radians(_this4._rotate));
+			_this4._ctx.fillText(_this4._text,0,0);
+			_this4._ctx.restore();
+			_this4._ctx.fillStyle = previousColor;
 		}
 	}
 	,scaling: function(value) {
@@ -5916,10 +5944,19 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 			var _this2 = _this1;
 			_this2._size = 20;
 			var _this3 = _this2;
+			_this3._ctx.save();
+			var previousColor = _this3._ctx.fillStyle;
+			if(_this3._color != null) {
+				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color);
+			}
 			_this3._ctx.font = "" + _this3._size + "px " + _this3._font;
 			_this3._ctx.textAlign = _this3._textAlign;
 			_this3._ctx.textBaseline = _this3._textBaseline;
-			_this3._ctx.fillText(_this3._text,_this3._x,_this3._y);
+			_this3._ctx.translate(_this3._x,_this3._y);
+			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3._rotate));
+			_this3._ctx.fillText(_this3._text,0,0);
+			_this3._ctx.restore();
+			_this3._ctx.fillStyle = previousColor;
 		}
 		this.stop();
 	}
@@ -6001,7 +6038,7 @@ var art_CC052a = function(ctx) {
 	this.max = 100;
 	this.grid = new cc_util_GridUtil();
 	this.shapeArray = [];
-	this.set_description("");
+	this.set_description("Get a lot of likes animation");
 	this.set_type(["Animation","Image"]);
 	art_CCBase.call(this,ctx);
 	this.initSVG();
@@ -6112,10 +6149,19 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 			var _this2 = _this1;
 			_this2._size = 20;
 			var _this3 = _this2;
+			_this3._ctx.save();
+			var previousColor = _this3._ctx.fillStyle;
+			if(_this3._color != null) {
+				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color);
+			}
 			_this3._ctx.font = "" + _this3._size + "px " + _this3._font;
 			_this3._ctx.textAlign = _this3._textAlign;
 			_this3._ctx.textBaseline = _this3._textBaseline;
-			_this3._ctx.fillText(_this3._text,_this3._x,_this3._y);
+			_this3._ctx.translate(_this3._x,_this3._y);
+			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3._rotate));
+			_this3._ctx.fillText(_this3._text,0,0);
+			_this3._ctx.restore();
+			_this3._ctx.fillStyle = previousColor;
 			this.ctx.globalAlpha = 1;
 			this.ctx.restore();
 		}
@@ -7393,6 +7439,9 @@ cc_util_ColorUtil.rgba = function(r,g,b,a) {
 		return "rgba(" + cc_util_MathUtil.clamp(Math.round(r),0,255) + ", " + cc_util_MathUtil.clamp(Math.round(g),0,255) + ", " + cc_util_MathUtil.clamp(Math.round(b),0,255) + ", " + cc_util_MathUtil.clamp(a,0,1) + ")";
 	}
 };
+cc_util_ColorUtil.rgbToHex = function(r,g,b) {
+	return StringTools.hex(r,2) + StringTools.hex(g,2) + StringTools.hex(b,2);
+};
 cc_util_ColorUtil.rgb2hex = function(r,g,b,a) {
 	if(a == null) {
 		a = 255;
@@ -7596,6 +7645,7 @@ var cc_util_FontUtil = function(ctx,text) {
 	this._textBaseline = "alphabetic";
 	this._textAlign = "left";
 	this._font = "Arial";
+	this._rotate = 0;
 	this._size = 100;
 	this._y = 100;
 	this._x = 100;
@@ -7705,16 +7755,45 @@ cc_util_FontUtil.prototype = {
 		this._textBaseline = pos;
 		return this;
 	}
+	,rotate: function(degree) {
+		this._rotate = degree;
+		return this;
+	}
+	,rotateLeft: function() {
+		this._rotate = -90;
+		return this;
+	}
+	,rotateRight: function() {
+		this._rotate = 90;
+		return this;
+	}
+	,rotateDown: function() {
+		this._rotate = 180;
+		return this;
+	}
+	,color: function(value) {
+		this._color = value;
+		return this;
+	}
 	,draw: function() {
+		this._ctx.save();
+		var previousColor = this._ctx.fillStyle;
+		if(this._color != null) {
+			cc_CanvasTools.fillColourRGB(this._ctx,this._color);
+		}
 		this._ctx.font = "" + this._size + "px " + this._font;
 		this._ctx.textAlign = this._textAlign;
 		this._ctx.textBaseline = this._textBaseline;
-		this._ctx.fillText(this._text,this._x,this._y);
+		this._ctx.translate(this._x,this._y);
+		this._ctx.rotate(cc_util_MathUtil.radians(this._rotate));
+		this._ctx.fillText(this._text,0,0);
+		this._ctx.restore();
+		this._ctx.fillStyle = previousColor;
 		return this;
 	}
 	,__class__: cc_util_FontUtil
 };
-var cc_util_GridUtil = function() {
+var cc_util_GridUtil = function(ctx) {
 	this._isDebug = false;
 	this._isPosition = false;
 	this._isDimension = false;
@@ -7734,10 +7813,17 @@ var cc_util_GridUtil = function() {
 	this.x = null;
 	this.total = null;
 	this.array = [];
+	if(ctx != null) {
+		this._ctx = ctx;
+	}
 };
 $hxClasses["cc.util.GridUtil"] = cc_util_GridUtil;
 cc_util_GridUtil.__name__ = ["cc","util","GridUtil"];
-cc_util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
+cc_util_GridUtil.create = function(ctx) {
+	var GridUtil = new cc_util_GridUtil(ctx);
+	return GridUtil;
+};
+cc_util_GridUtil.createGrid = function(x,y,width,height,numHor,numVer) {
 	if(numVer == null) {
 		numVer = 1;
 	}
@@ -7764,7 +7850,7 @@ cc_util_GridUtil.create = function(x,y,width,height,numHor,numVer) {
 	}
 	return arr;
 };
-cc_util_GridUtil.calc = function(x,y,width,height,gridX,gridY,numHor,numVer) {
+cc_util_GridUtil.calcGrid = function(x,y,width,height,gridX,gridY,numHor,numVer) {
 	if(numVer == null) {
 		numVer = 1;
 	}
@@ -7800,7 +7886,62 @@ cc_util_GridUtil.calc = function(x,y,width,height,gridX,gridY,numHor,numVer) {
 	return grid;
 };
 cc_util_GridUtil.prototype = {
-	setPosition: function(x,y) {
+	xpos: function(x) {
+		this._x = x;
+		return this;
+	}
+	,ypos: function(y) {
+		this._y = y;
+		return this;
+	}
+	,pos: function(x,y) {
+		this._x = x;
+		this._y = y;
+		return this;
+	}
+	,dimension: function(w,h) {
+		this._w = w;
+		this._h = h;
+		return this;
+	}
+	,grid: function(hor,ver) {
+		this._hor = hor;
+		this._ver = ver;
+		return this;
+	}
+	,size: function(w,h) {
+		this._cellw = w;
+		this._cellh = h;
+		return this;
+	}
+	,centered: function() {
+		this._center = true;
+		return this;
+	}
+	,debug: function() {
+		this._debug = true;
+		return this;
+	}
+	,fullscreen: function() {
+		this._fullscreen = true;
+		return this;
+	}
+	,color: function(value) {
+		this._color = value;
+		return this;
+	}
+	,calc: function() {
+		console.log("WIP");
+		return this;
+	}
+	,draw: function(isDebug) {
+		if(isDebug == null) {
+			isDebug = false;
+		}
+		var isDebug1 = isDebug;
+		return this;
+	}
+	,setPosition: function(x,y) {
 		if(this._isDebug) {
 			window.console.log("GridUtil :: setPostion");
 		}
@@ -12401,7 +12542,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-10 19:53:25";
+lib_model_constants_App.BUILD = "2019-03-12 09:52:42";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
