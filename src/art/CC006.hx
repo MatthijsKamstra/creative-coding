@@ -22,7 +22,7 @@ class CC006 extends CCBase implements ICCBase {
 		var _y = 0;
 		var _numHor = Math.ceil(w / _size); // 100;
 		var _numVer = Math.ceil(h / _size); // 100;
-		var arr:Array<Point> = GridUtil.create(_x, _y, w - (2 * _x), h - (2 * _y), _numHor, _numVer);
+		var arr:Array<Point> = GridUtil.createGrid(_x, _y, w - (2 * _x), h - (2 * _y), _numHor, _numVer);
 		if (isDebug) ShapeUtil.gridRegister(ctx, arr);
 
 		for (i in 0...arr.length) {
