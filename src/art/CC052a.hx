@@ -4,6 +4,7 @@ package art;
  * short description what this does
  */
 class CC052a extends CCBase implements ICCBase {
+	// store stuff here
 	var shapeArray:Array<InstaLikes> = [];
 	var grid:GridUtil = new GridUtil();
 	var max = 100;
@@ -16,19 +17,23 @@ class CC052a extends CCBase implements ICCBase {
 	var _color2:RGB = null;
 	var _color3:RGB = null;
 	var _color4:RGB = null;
+	// settings
 	var panel1:QuickSettings;
+	// svg
 	var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 71"><path d="M70.6.31H10.78C5.06.31.38 4.99.38 10.71v33.53c0 5.72 4.68 10.4 10.4 10.4H21.3c1.08 0 2.11.43 2.88 1.19l13.6 13.6a4.062 4.062 0 0 0 5.75 0l13.6-13.6a4.08 4.08 0 0 1 2.88-1.19H70.6c5.72 0 10.4-4.68 10.4-10.4V10.71C81 4.99 76.32.31 70.6.31z" fill="#f4555a"/><path d="M43.5 22.04c0-4.03-3.26-7.29-7.29-7.29-3.39 0-6.23 2.31-7.05 5.44a7.288 7.288 0 0 0-7.05-5.44c-4.03 0-7.29 3.26-7.29 7.29 0 1.98.79 3.77 2.07 5.09l.03.03.06.06 11.66 11.66 12.29-11.31a7.178 7.178 0 0 0 2.57-5.53z" fill="#fff"/></svg>';
 	var svgImage:Image;
 	// image for some reason looses its size
 	var svgWidth = 81;
 	var svgHeight = 71;
 	var isSvgReady = false;
+	// make sure font is loaded
 	var isFontReady = false; // doesn't work offline...
+	// pos
 	var padding = 5;
 	var yoffset = 50;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = '';
+		description = 'Get a lot of likes animation';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// _cellsize = svgWidth;
