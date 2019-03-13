@@ -1,5 +1,11 @@
 package art;
 
+import cc.*;
+import cc.tool.Export;
+import Sketch;
+
+using StringTools;
+
 /**
  * short description what this does
  */
@@ -31,12 +37,23 @@ class CC052a extends CCBase implements ICCBase {
 	// pos
 	var padding = 5;
 	var yoffset = 50;
+	// export video
+	var export : Export;
+
 
 	public function new(ctx:CanvasRenderingContext2D) {
+
+		// setup Sketch
+		var option = new SketchOption();
+		option.width = 1080; // 1080
+		// option.height = 1000;
+		option.autostart = true;
+		option.padding = 10;
+		option.scale = true;
+		ctx = Sketch.create("creative_code_mck", option);
+
 		description = 'Get a lot of likes animation';
 		type = [CCType.ANIMATION, CCType.IMAGE];
-
-		// _cellsize = svgWidth;
 
 		// <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
 		// FontUtil.embedGoogleFont('Roboto:300', onEmbedHandler);
@@ -44,6 +61,8 @@ class CC052a extends CCBase implements ICCBase {
 		super(ctx);
 
 		initSVG();
+
+
 	}
 
 	function initSVG() {
@@ -174,6 +193,16 @@ class CC052a extends CCBase implements ICCBase {
 		for (i in 0...max) {
 			shapeArray.push(createLike(i, grid.array[i]));
 		}
+
+		// settings export
+		export = new Export(ctx);
+		export.time(30);
+		export.name('${toString()}');
+		export.folder('${toString()}');
+		export.debug(isDebug);
+		export.clear(true);
+		export.start();
+
 	}
 
 	override function draw() {
@@ -226,4 +255,9 @@ class CC052a extends CCBase implements ICCBase {
 		// img.src = "http://upload.wikimedia.org/wikipedia/commons/d/d2/Svg_example_square.svg";
 		trace(img.src);
 	}
+
+	override function toString():String {
+		return 'cc052a';
+	}
+
 }
