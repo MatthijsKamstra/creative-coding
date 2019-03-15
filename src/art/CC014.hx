@@ -12,8 +12,8 @@ class CC014 extends CCBase implements ICCBase {
 	var shapeMax = 10;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		FontUtil.embedGoogleFont('Six+Caps', onEmbedHandler);
-		FontUtil.embedGoogleFont('Barlow+Condensed', onEmbedHandler);
+		Text.embedGoogleFont('Six+Caps', onEmbedHandler);
+		Text.embedGoogleFont('Barlow+Condensed', onEmbedHandler);
 
 		super(ctx);
 
@@ -67,8 +67,8 @@ class CC014 extends CCBase implements ICCBase {
 
 
 		ctx.fillStyle = getColourObj(flipColorW);
-		// FontUtil.centerFillText(ctx, '[MCK]', w/2, h/2+200, "'Six Caps', sans-serif", 500);
-		FontUtil.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
+		// Text.centerFillText(ctx, '[MCK]', w/2, h/2+200, "'Six Caps', sans-serif", 500);
+		Text.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
 
 		ctx.globalCompositeOperation = 'xor';
 
@@ -83,7 +83,7 @@ class CC014 extends CCBase implements ICCBase {
 		}
 		// ctx.restore();
 
-		// FontUtil.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
+		// Text.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
 
 		// ctx.save();
 
@@ -92,7 +92,7 @@ class CC014 extends CCBase implements ICCBase {
 		// ctx.circle(w/2, h/2, 100);
 		// ctx.globalCompositeOperation = 'xor';
 		// ctx.fillStyle = getColourObj(FUCHSIA);
-		// FontUtil.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
+		// Text.centerFillText(ctx, '[mck]', w / 2, h / 2 + 50, "'Barlow Condensed', sans-serif", 300);
 
 
 		// ctx.globalCompositeOperation = "source-over";

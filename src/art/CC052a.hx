@@ -56,7 +56,7 @@ class CC052a extends CCBase implements ICCBase {
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
-		// FontUtil.embedGoogleFont('Roboto:300', onEmbedHandler);
+		// Text.embedGoogleFont('Roboto:300', onEmbedHandler);
 
 		super(ctx);
 
@@ -161,7 +161,7 @@ class CC052a extends CCBase implements ICCBase {
 			ctx.drawImage(svgImage, xpos , ypos, sh.width, sh.height);
 			// ctx.drawImage(svgImage, sh.x , sh.y, sh.width, sh.height);
 			ctx.fillColourRGB(WHITE);
-			FontUtil.create(ctx, Std.string(sh.count + 1))
+			Text.create(ctx, Std.string(sh.count + 1))
 				.centerAlign()
 				.pos(xpos + (sh.width/2) + 20, ypos + (sh.height/2))
 				.size(20)

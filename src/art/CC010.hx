@@ -12,13 +12,13 @@ class CC010 extends CCBase implements ICCBase {
 	public function new(ctx:CanvasRenderingContext2D) {
 		super(ctx);
 		description = 'Animating text';
-		FontUtil.embedGoogleFont('UnifrakturMaguntia', onEmbedHandler);
-		FontUtil.embedGoogleFont('Press+Start+2P', onEmbedHandler);
+		Text.embedGoogleFont('UnifrakturMaguntia', onEmbedHandler);
+		Text.embedGoogleFont('Press+Start+2P', onEmbedHandler);
 	}
 	function onEmbedHandler(e){
 		trace('Embed: "${e}"');
-		// FontUtil.centerFillText(ctx, toString(), w/2, h/2, "'UnifrakturMaguntia', cursive", 50);
-		// FontUtil.centerFillText(ctx, description, Math.round(w/2), 20, "'Press Start 2P', cursive;", 8);
+		// Text.centerFillText(ctx, toString(), w/2, h/2, "'UnifrakturMaguntia', cursive", 50);
+		// Text.centerFillText(ctx, description, Math.round(w/2), 20, "'Press Start 2P', cursive;", 8);
 	}
 
 	function createText(){
@@ -77,7 +77,7 @@ class CC010 extends CCBase implements ICCBase {
 			var sh = shapeArray[i];
 			if(sh.type == 'text'){
 				ctx.fillStyle = getColour(untyped sh.r, untyped sh.g, untyped sh.b, sh.alpha);
-				FontUtil.centerFillText(ctx, untyped sh.text, sh.x, sh.y, "'UnifrakturMaguntia', cursive", Math.round(sh.size));
+				Text.centerFillText(ctx, untyped sh.text, sh.x, sh.y, "'UnifrakturMaguntia', cursive", Math.round(sh.size));
 			}
 			if(sh.type == 'ball') {
 				// var xpos = sh.x

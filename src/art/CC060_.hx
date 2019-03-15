@@ -25,7 +25,7 @@ class CC053 extends CCBase implements ICCBase {
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
-		FontUtil.embedGoogleFont('Oswald:200,300,400,500,600,700', onEmbedHandler);
+		Text.embedGoogleFont('Oswald:200,300,400,500,600,700', onEmbedHandler);
 
 		super(ctx);
 	}
@@ -69,7 +69,7 @@ class CC053 extends CCBase implements ICCBase {
 		ctx.backgroundObj(WHITE);
 
 		ctx.fillStyle = getColourObj(_color4);
-		FontUtil.centerFillText(ctx, 'text', w/2, h/2, "'Oswald', sans-serif;", 160);
+		Text.centerFillText(ctx, 'text', w/2, h/2, "'Oswald', sans-serif;", 160);
 
 		if (isDebug) {
 			ShapeUtil.gridField(ctx, grid);

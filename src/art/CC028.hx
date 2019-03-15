@@ -7,6 +7,9 @@ using StringTools;
 import mloader.Loader;
 import mloader.JsonLoader;
 
+
+import cc.tool.Export;
+
 /**
  * short description what this does
  */
@@ -197,13 +200,13 @@ class CC028
 
 					}
 
-					// ExportUtil.downloadTextFile("This is the content of my file :)", "hello.json");
-					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayInt100), "sorted_int_100.json");
-					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayString100), "sorted_100.json");
-					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayInt500), "sorted_int_500.json");
-					ExportUtil.downloadTextFile(haxe.Json.stringify(arrayString500), "sorted_500.json");
-					ExportUtil.downloadTextFile(haxe.Json.stringify(exportIntArray), "sorted_int_1000.json");
-					ExportUtil.downloadTextFile(haxe.Json.stringify(exportStringArray), "sorted_1000.json");
+					// Export.downloadTextFile("This is the content of my file :)", "hello.json");
+					Export.downloadTextFile(haxe.Json.stringify(arrayInt100), "sorted_int_100.json");
+					Export.downloadTextFile(haxe.Json.stringify(arrayString100), "sorted_100.json");
+					Export.downloadTextFile(haxe.Json.stringify(arrayInt500), "sorted_int_500.json");
+					Export.downloadTextFile(haxe.Json.stringify(arrayString500), "sorted_500.json");
+					Export.downloadTextFile(haxe.Json.stringify(exportIntArray), "sorted_int_1000.json");
+					Export.downloadTextFile(haxe.Json.stringify(exportStringArray), "sorted_1000.json");
 				default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
 			}
 		}, false);

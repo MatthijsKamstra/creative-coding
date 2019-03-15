@@ -28,7 +28,7 @@ class CC041a extends CCBase implements ICCBase {
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700
-		FontUtil.embedGoogleFont('Open+Sans+Condensed:300,300i,700', onEmbedHandler);
+		Text.embedGoogleFont('Open+Sans+Condensed:300,300i,700', onEmbedHandler);
 
 		super(ctx);
 	}
@@ -59,8 +59,8 @@ class CC041a extends CCBase implements ICCBase {
 		ctx.backgroundObj(WHITE);
 
 		ctx.fillStyle = getColourObj(BLACK);
-		FontUtil.centerFillText(ctx, 'Math.random', grid.array[0].x, grid.array[0].y - (_radius * 1.5), "'Open Sans Condensed', sans-serif", 60);
-		FontUtil.centerFillText(ctx, 'Perlin noise', grid.array[1].x, grid.array[1].y - (_radius * 1.5), "'Open Sans Condensed', sans-serif", 60);
+		Text.centerFillText(ctx, 'Math.random', grid.array[0].x, grid.array[0].y - (_radius * 1.5), "'Open Sans Condensed', sans-serif", 60);
+		Text.centerFillText(ctx, 'Perlin noise', grid.array[1].x, grid.array[1].y - (_radius * 1.5), "'Open Sans Condensed', sans-serif", 60);
 
 		if (isDebug) {
 			ShapeUtil.gridField(ctx, grid);

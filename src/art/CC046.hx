@@ -16,7 +16,7 @@ class CC046 extends CCBase implements ICCBase {
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
-		FontUtil.embedGoogleFont('Share+Tech+Mono', onEmbedHandler);
+		Text.embedGoogleFont('Share+Tech+Mono', onEmbedHandler);
 
 		super(ctx);
 	}
@@ -49,7 +49,7 @@ class CC046 extends CCBase implements ICCBase {
 		var text = '${Std.string(hours).lpad('0',2)}:${Std.string(min).lpad('0',2)}:${Std.string(sec).lpad('0',2)}';
 
 		ctx.fillStyle = getColourObj(BLACK);
-		FontUtil.centerFillText(ctx, text, w/2, h/2, "'Share Tech Mono', monospace", 160);
+		Text.centerFillText(ctx, text, w/2, h/2, "'Share Tech Mono', monospace", 160);
 
 
 

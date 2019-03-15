@@ -9,13 +9,14 @@ import cc.util.MathUtil.*;
 import cc.util.ColorUtil.*;
 import cc.util.ColorUtil;
 import cc.util.AnimateUtil.*;
-import cc.util.FontUtil;
 import cc.util.GridUtil;
 import cc.util.MathUtil;
 import cc.util.TextUtil;
 import cc.util.*;
 // easy access to typedef
 import cc.AST;
+// draw package
+import cc.draw.Text;
 
 import art.CCBase.CCType;
 

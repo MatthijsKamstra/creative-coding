@@ -50,7 +50,7 @@ class CC051 extends CCBase implements ICCBase {
 		ctx.backgroundObj(_color4);
 		if (isFondEmbedded) {
 			ctx.fillStyle = getColourObj(_color0);
-			FontUtil.centerFillText(ctx, 'GUNPLAY', w / 2, h / 2, "'Gunplay', sans-serif;", 160);
+			Text.centerFillText(ctx, 'GUNPLAY', w / 2, h / 2, "'Gunplay', sans-serif;", 160);
 
 			ctx.fillStyle = getColourObj(_color1);
 			ctx.font = '100px Gunplay';
@@ -58,7 +58,7 @@ class CC051 extends CCBase implements ICCBase {
 			ctx.textBaseline = 'middle';
 			ctx.fillText('TEQ63: RAVAGER', w / 2, (h / 2) + 200);
 
-			// FontUtil.centerFillText(ctx, 'TEQ63: RAVAGER', w/2, (h/2)+200, "'Gunplay', sans-serif;", 160);
+			// Text.centerFillText(ctx, 'TEQ63: RAVAGER', w/2, (h/2)+200, "'Gunplay', sans-serif;", 160);
 		}
 	}
 

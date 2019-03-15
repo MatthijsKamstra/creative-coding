@@ -34,7 +34,7 @@ class CC052 extends CCBase implements ICCBase {
 		// _cellsize = svgWidth;
 
 		// <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
-		// FontUtil.embedGoogleFont('Roboto:300', onEmbedHandler);
+		// Text.embedGoogleFont('Roboto:300', onEmbedHandler);
 
 		super(ctx);
 
@@ -111,7 +111,7 @@ class CC052 extends CCBase implements ICCBase {
 			var sh = shapeArray[i];
 			ctx.drawImage(svgImage, sh.x - (sh.width / 2), sh.y - (sh.height / 2), sh.width, sh.height);
 			ctx.fillColourRGB(WHITE);
-			FontUtil.create(ctx, Std.string(sh.count + 1))
+			Text.create(ctx, Std.string(sh.count + 1))
 				// .font('Miso')
 				.centerAlign()
 				.pos(sh.x + 20, sh.y)
