@@ -509,19 +509,19 @@ Sketch.prototype = {
 				e3.preventDefault();
 				e3.stopPropagation();
 				console.log("cmd + s");
-				cc_util_ExportUtil.downloadImage(ctx,true);
+				cc_tool_Export.downloadImage(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == true) {
 				e3.preventDefault();
 				e3.stopPropagation();
 				console.log("cmd + shift + s");
-				cc_util_ExportUtil.downloadImage(ctx,false);
+				cc_tool_Export.downloadImage(ctx,false);
 			}
 			if(e3.metaKey == true && (e3.code == "KeyS" && e3.altKey == true)) {
 				e3.preventDefault();
 				e3.stopPropagation();
 				console.log("cmd + alt + s");
-				cc_util_ExportUtil.onBase64Handler(ctx,true);
+				cc_tool_Export.onBase64Handler(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "f") {
 				if(!Global.isFullscreen) {
@@ -1202,8 +1202,8 @@ art_CC005.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.eqDownTriangle(this.ctx,point9.x,point9.y,_size);
 		var point10 = arr[9];
 		cc_CanvasTools.roundRect(this.ctx,point10.x,point10.y,100,100,10);
-		cc_util_FontUtil.fillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
-		cc_util_FontUtil.fillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
+		cc_draw_Text.fillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding / 2,"Unica+One");
+		cc_draw_Text.fillText(this.ctx,"Matthijs Kamstra aka [mck]",padding / 2,padding * 2,"Nova+Mono");
 	}
 	,draw: function() {
 		this.stop();
@@ -1750,8 +1750,8 @@ var art_CC010 = function(ctx) {
 	this.shapeArray = [];
 	art_CCBase.call(this,ctx);
 	this.set_description("Animating text");
-	cc_util_FontUtil.embedGoogleFont("UnifrakturMaguntia",$bind(this,this.onEmbedHandler));
-	cc_util_FontUtil.embedGoogleFont("Press+Start+2P",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("UnifrakturMaguntia",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("Press+Start+2P",$bind(this,this.onEmbedHandler));
 };
 $hxClasses["art.CC010"] = art_CC010;
 art_CC010.__name__ = ["art","CC010"];
@@ -1888,7 +1888,7 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 			var sh = this.shapeArray[i];
 			if(sh.type == "text") {
 				this.ctx.fillStyle = cc_util_ColorUtil.getColour(sh.r,sh.g,sh.b,sh.alpha);
-				cc_util_FontUtil.centerFillText(this.ctx,sh.text,sh.x,sh.y,"'UnifrakturMaguntia', cursive",Math.round(sh.size));
+				cc_draw_Text.centerFillText(this.ctx,sh.text,sh.x,sh.y,"'UnifrakturMaguntia', cursive",Math.round(sh.size));
 			}
 			if(sh.type == "ball") {
 				var radius = 50;
@@ -2214,8 +2214,8 @@ var art_CC014 = function(ctx) {
 	this.flipColorW = cc_util_ColorUtil.WHITE;
 	this.flipColorB = cc_util_ColorUtil.BLACK;
 	this.shapeArray = [];
-	cc_util_FontUtil.embedGoogleFont("Six+Caps",$bind(this,this.onEmbedHandler));
-	cc_util_FontUtil.embedGoogleFont("Barlow+Condensed",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("Six+Caps",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("Barlow+Condensed",$bind(this,this.onEmbedHandler));
 	art_CCBase.call(this,ctx);
 	this.set_description("Blink black and white");
 };
@@ -2306,7 +2306,7 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 	}
 	,drawShape: function() {
 		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this.flipColorW);
-		cc_util_FontUtil.centerFillText(this.ctx,"[mck]",Global.w / 2,Global.h / 2 + 50,"'Barlow Condensed', sans-serif",300);
+		cc_draw_Text.centerFillText(this.ctx,"[mck]",Global.w / 2,Global.h / 2 + 50,"'Barlow Condensed', sans-serif",300);
 		this.ctx.globalCompositeOperation = "xor";
 		var _g1 = 0;
 		var _g = this.shapeArray.length;
@@ -3627,12 +3627,12 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 						arrayString500.push(_exportStringArray);
 					}
 				}
-				cc_util_ExportUtil.downloadTextFile(JSON.stringify(arrayInt100),"sorted_int_100.json");
-				cc_util_ExportUtil.downloadTextFile(JSON.stringify(arrayString100),"sorted_100.json");
-				cc_util_ExportUtil.downloadTextFile(JSON.stringify(arrayInt500),"sorted_int_500.json");
-				cc_util_ExportUtil.downloadTextFile(JSON.stringify(arrayString500),"sorted_500.json");
-				cc_util_ExportUtil.downloadTextFile(JSON.stringify(_gthis.exportIntArray),"sorted_int_1000.json");
-				cc_util_ExportUtil.downloadTextFile(JSON.stringify(_gthis.exportStringArray),"sorted_1000.json");
+				cc_tool_Export.downloadTextFile(JSON.stringify(arrayInt100),"sorted_int_100.json");
+				cc_tool_Export.downloadTextFile(JSON.stringify(arrayString100),"sorted_100.json");
+				cc_tool_Export.downloadTextFile(JSON.stringify(arrayInt500),"sorted_int_500.json");
+				cc_tool_Export.downloadTextFile(JSON.stringify(arrayString500),"sorted_500.json");
+				cc_tool_Export.downloadTextFile(JSON.stringify(_gthis.exportIntArray),"sorted_int_1000.json");
+				cc_tool_Export.downloadTextFile(JSON.stringify(_gthis.exportStringArray),"sorted_1000.json");
 			} else {
 				console.log("case '" + e.key + "': trace ('" + e.key + "');");
 			}
@@ -4805,7 +4805,7 @@ var art_CC041 = function(ctx) {
 	this.shapeArray = [];
 	this.set_description("Example of random created with Perlin Noise");
 	this.set_type(["Animation","Image"]);
-	cc_util_FontUtil.embedGoogleFont("Open+Sans+Condensed:300,300i,700",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("Open+Sans+Condensed:300,300i,700",$bind(this,this.onEmbedHandler));
 	art_CCBase.call(this,ctx);
 };
 $hxClasses["art.CC041"] = art_CC041;
@@ -4829,8 +4829,8 @@ art_CC041.prototype = $extend(art_CCBase.prototype,{
 		this.ctx.clearRect(0,0,Global.w,Global.h);
 		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
 		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(cc_util_ColorUtil.BLACK);
-		cc_util_FontUtil.centerFillText(this.ctx,"Math.random",this.grid.array[0].x,this.grid.array[0].y - this._radius * 1.5,"'Open Sans Condensed', sans-serif",60);
-		cc_util_FontUtil.centerFillText(this.ctx,"Perlin noise",this.grid.array[1].x,this.grid.array[1].y - this._radius * 1.5,"'Open Sans Condensed', sans-serif",60);
+		cc_draw_Text.centerFillText(this.ctx,"Math.random",this.grid.array[0].x,this.grid.array[0].y - this._radius * 1.5,"'Open Sans Condensed', sans-serif",60);
+		cc_draw_Text.centerFillText(this.ctx,"Perlin noise",this.grid.array[1].x,this.grid.array[1].y - this._radius * 1.5,"'Open Sans Condensed', sans-serif",60);
 		if(this.isDebug) {
 			cc_util_ShapeUtil.gridField(this.ctx,this.grid);
 		}
@@ -5126,7 +5126,7 @@ var art_CC046 = function(ctx) {
 	this.counter = 0;
 	this.set_description("");
 	this.set_type(["Animation","Image"]);
-	cc_util_FontUtil.embedGoogleFont("Share+Tech+Mono",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("Share+Tech+Mono",$bind(this,this.onEmbedHandler));
 	art_CCBase.call(this,ctx);
 };
 $hxClasses["art.CC046"] = art_CC046;
@@ -5151,7 +5151,7 @@ art_CC046.prototype = $extend(art_CCBase.prototype,{
 		var sec = time.getSeconds();
 		var text = "" + StringTools.lpad(hours == null ? "null" : "" + hours,"0",2) + ":" + StringTools.lpad(min == null ? "null" : "" + min,"0",2) + ":" + StringTools.lpad(sec == null ? "null" : "" + sec,"0",2);
 		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(cc_util_ColorUtil.BLACK);
-		cc_util_FontUtil.centerFillText(this.ctx,text,Global.w / 2,Global.h / 2,"'Share Tech Mono', monospace",160);
+		cc_draw_Text.centerFillText(this.ctx,text,Global.w / 2,Global.h / 2,"'Share Tech Mono', monospace",160);
 	}
 	,setup: function() {
 		console.log("setup: " + this.toString());
@@ -5617,7 +5617,7 @@ var art_CC050 = function(ctx) {
 	this.text = "It is impossible to make anything foolproof because fools are so ingenious.";
 	this.set_description("A tool to create quick quotes for Instagram");
 	this.set_type(["Image"]);
-	cc_util_FontUtil.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
 	this.createQuickSettings();
 	art_CCBase.call(this,ctx);
 };
@@ -5688,14 +5688,14 @@ art_CC050.prototype = $extend(art_CCBase.prototype,{
 		this.ctx.clearRect(0,0,Global.w,Global.h);
 		cc_CanvasTools.backgroundObj(this.ctx,this._color0);
 		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color4);
-		cc_util_FontUtil.fillText(this.ctx,this.text,Global.w / 2,-Global.h,"'Oswald', sans-serif;",this._fontSize);
+		cc_draw_Text.fillText(this.ctx,this.text,Global.w / 2,-Global.h,"'Oswald', sans-serif;",this._fontSize);
 		var lines = cc_util_TextUtil.getLines(this.ctx,this.text,this.square - 2 * this._padding);
 		var _g1 = 0;
 		var _g = lines.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			var line = lines[i];
-			cc_util_FontUtil.fillText(this.ctx,line,this._padding,this._paddingTop + (i + 1) * this._lineHeight,"'Oswald', sans-serif;",this._fontSize);
+			cc_draw_Text.fillText(this.ctx,line,this._padding,this._paddingTop + (i + 1) * this._lineHeight,"'Oswald', sans-serif;",this._fontSize);
 		}
 	}
 	,setup: function() {
@@ -5747,7 +5747,7 @@ art_CC051.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.backgroundObj(this.ctx,this._color4);
 		if(this.isFondEmbedded) {
 			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color0);
-			cc_util_FontUtil.centerFillText(this.ctx,"GUNPLAY",Global.w / 2,Global.h / 2,"'Gunplay', sans-serif;",160);
+			cc_draw_Text.centerFillText(this.ctx,"GUNPLAY",Global.w / 2,Global.h / 2,"'Gunplay', sans-serif;",160);
 			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color1);
 			this.ctx.font = "100px Gunplay";
 			this.ctx.textAlign = "center";
@@ -5807,7 +5807,7 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.backgroundObj(this.ctx,this._color4);
 		if(this.isFondEmbedded) {
 			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color0);
-			cc_util_FontUtil.centerFillText(this.ctx,"Miso MISO",Global.w / 2,Global.h / 2,"'Miso', sans-serif;",this.scaling(160));
+			cc_draw_Text.centerFillText(this.ctx,"Miso MISO",Global.w / 2,Global.h / 2,"'Miso', sans-serif;",this.scaling(160));
 			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color1);
 			var tmp = "" + this.scaling(100);
 			this.ctx.font = tmp + "px Miso";
@@ -5816,8 +5816,8 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 			this.ctx.fillText("1234567890",Global.w / 2,Global.h / 2 + this.scaling(200));
 			var text = "Matthijs Kamstra aka [mck]";
 			this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color2);
-			var FontUtil = new cc_util_FontUtil(this.ctx,text);
-			var _this = FontUtil;
+			var Text = new cc_draw_Text(this.ctx,text);
+			var _this = Text;
 			_this._font = StringTools.replace("Miso",";","");
 			var _this1 = _this;
 			_this1._textAlign = "center";
@@ -5935,8 +5935,8 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 			var sh = this.shapeArray[i];
 			this.ctx.drawImage(this.svgImage,sh.x - sh.width / 2,sh.y - sh.height / 2,sh.width,sh.height);
 			cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.WHITE);
-			var FontUtil = new cc_util_FontUtil(this.ctx,Std.string(sh.count + 1));
-			var _this = FontUtil;
+			var Text = new cc_draw_Text(this.ctx,Std.string(sh.count + 1));
+			var _this = Text;
 			_this._textAlign = "center";
 			var _this1 = _this;
 			_this1._x = sh.x + 20;
@@ -6146,8 +6146,8 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 			var ypos = sh.y + Math.sin(cc_util_MathUtil.radians(sh.angle)) * sh.radius;
 			this.ctx.drawImage(this.svgImage,xpos,ypos,sh.width,sh.height);
 			cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.WHITE);
-			var FontUtil = new cc_util_FontUtil(this.ctx,Std.string(sh.count + 1));
-			var _this = FontUtil;
+			var Text = new cc_draw_Text(this.ctx,Std.string(sh.count + 1));
+			var _this = Text;
 			_this._textAlign = "center";
 			var _this1 = _this;
 			_this1._x = xpos + sh.width / 2 + 20;
@@ -6508,6 +6508,158 @@ cc_CanvasTools.backgroundObj = function(ctx,rgb) {
 };
 cc_CanvasTools.backgroundRGB = function(ctx,rgb) {
 	cc_CanvasTools.background(ctx,rgb.r,rgb.g,rgb.b);
+};
+var cc_draw_Text = function(ctx,text) {
+	this._textBaseline = "alphabetic";
+	this._textAlign = "left";
+	this._font = "Arial";
+	this._rotate = 0;
+	this._size = 100;
+	this._y = 100;
+	this._x = 100;
+	this._ctx = ctx;
+	this._text = text;
+};
+$hxClasses["cc.draw.Text"] = cc_draw_Text;
+cc_draw_Text.__name__ = ["cc","draw","Text"];
+cc_draw_Text.create = function(ctx,text) {
+	var Text = new cc_draw_Text(ctx,text);
+	return Text;
+};
+cc_draw_Text.fillText = function(ctx,text,x,y,css,size) {
+	if(size == null) {
+		size = 20;
+	}
+	ctx.font = "" + size + "px " + StringTools.replace(css,";","");
+	ctx.textAlign = "left";
+	ctx.fillText(text,x,y);
+};
+cc_draw_Text.centerFillText = function(ctx,text,x,y,css,size) {
+	if(size == null) {
+		size = 20;
+	}
+	ctx.font = "" + size + "px " + StringTools.replace(css,";","");
+	ctx.textAlign = "center";
+	ctx.fillText(text,x,y);
+};
+cc_draw_Text.embedGoogleFont = function(family,callback,callbackArray) {
+	var _id = "embededGoogleFonts";
+	var _url = "https://fonts.googleapis.com/css?family=";
+	var link = window.document.getElementById(_id);
+	if(link != null) {
+		var temp = StringTools.replace(link.href,_url,"");
+		family = temp + "|" + family;
+	} else {
+		link = window.document.createElement("link");
+	}
+	if(callbackArray == null) {
+		callbackArray = [family];
+	}
+	link.href = "" + _url + family;
+	link.rel = "stylesheet";
+	link.id = _id;
+	link.onload = function() {
+		if(callback != null) {
+			callback.apply(callback,callbackArray);
+		}
+	};
+	window.document.head.appendChild(link);
+};
+cc_draw_Text.prototype = {
+	text: function(text) {
+		this._text = text;
+		return this;
+	}
+	,x: function(x) {
+		this._x = x;
+		return this;
+	}
+	,y: function(y) {
+		this._y = y;
+		return this;
+	}
+	,pos: function(x,y) {
+		this._x = x;
+		this._y = y;
+		return this;
+	}
+	,font: function(font) {
+		this._font = StringTools.replace(font,";","");
+		return this;
+	}
+	,size: function(px) {
+		this._size = px;
+		return this;
+	}
+	,textAlign: function(pos) {
+		this._textAlign = pos;
+		return this;
+	}
+	,leftAlign: function() {
+		this._textAlign = "left";
+		return this;
+	}
+	,rightAlign: function() {
+		this._textAlign = "right";
+		return this;
+	}
+	,centerAlign: function() {
+		this._textAlign = "center";
+		return this;
+	}
+	,topBaseline: function() {
+		this._textBaseline = "top";
+		return this;
+	}
+	,middleBaseline: function() {
+		this._textBaseline = "middle";
+		return this;
+	}
+	,bottomBaseline: function() {
+		this._textBaseline = "bottom";
+		return this;
+	}
+	,textBaseline: function(pos) {
+		this._textBaseline = pos;
+		return this;
+	}
+	,rotate: function(degree) {
+		this._rotate = degree;
+		return this;
+	}
+	,rotateLeft: function() {
+		this._rotate = -90;
+		return this;
+	}
+	,rotateRight: function() {
+		this._rotate = 90;
+		return this;
+	}
+	,rotateDown: function() {
+		this._rotate = 180;
+		return this;
+	}
+	,color: function(value) {
+		this._color = value;
+		return this;
+	}
+	,draw: function() {
+		this._ctx.save();
+		var previousColor = this._ctx.fillStyle;
+		if(this._color != null) {
+			cc_CanvasTools.fillColourRGB(this._ctx,this._color);
+		}
+		this._ctx.font = "" + this._size + "px " + this._font;
+		this._ctx.textAlign = this._textAlign;
+		this._ctx.textBaseline = this._textBaseline;
+		this._ctx.translate(this._x,this._y);
+		this._ctx.rotate(cc_util_MathUtil.radians(this._rotate));
+		this._ctx.fillText(this._text,0,0);
+		this._ctx.restore();
+		this._ctx.fillStyle = previousColor;
+		return this;
+	}
+	,__class__: cc_draw_Text
 };
 var cc_lets_Easing = function() { };
 $hxClasses["cc.lets.Easing"] = cc_lets_Easing;
@@ -7391,13 +7543,17 @@ cc_noise_Perlin.prototype = {
 	}
 	,__class__: cc_noise_Perlin
 };
-var cc_tool_Export = function(ctx,port) {
+var cc_tool_Export = function(ctx,host,port) {
 	if(port == null) {
 		port = "5000";
+	}
+	if(host == null) {
+		host = "http://localhost";
 	}
 	this.FPS = 60;
 	this._isRecording = false;
 	this._durationFrames = 0;
+	this._currentFrame = 0;
 	this._frameCounter = 0;
 	this._folder = "sequence";
 	this._name = "frame";
@@ -7414,6 +7570,7 @@ var cc_tool_Export = function(ctx,port) {
 	this._isEmbedded = false;
 	this._ctx = ctx;
 	this._canvas = ctx.canvas;
+	this._host = host;
 	this._port = port;
 	if(this.checkScript()) {
 		this.initSocket();
@@ -7425,6 +7582,54 @@ $hxClasses["cc.tool.Export"] = cc_tool_Export;
 cc_tool_Export.__name__ = ["cc","tool","Export"];
 cc_tool_Export.embedScript = function(callback,callbackArray) {
 };
+cc_tool_Export.downloadImage = function(ctx,isJpg,fileName) {
+	if(isJpg == null) {
+		isJpg = false;
+	}
+	if(fileName == null) {
+		var hash = window.location.hash;
+		hash = StringTools.replace(hash,"#","").toLowerCase();
+		if(hash == "") {
+			hash = "image";
+		}
+		fileName = "" + hash + "-" + new Date().getTime();
+	}
+	var link = window.document.createElement("a");
+	link.href = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
+	link.download = fileName;
+	link.click();
+};
+cc_tool_Export.onBase64Handler = function(ctx,isJpg) {
+	if(isJpg == null) {
+		isJpg = false;
+	}
+	var base64 = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
+	cc_tool_Export.clipboard(base64);
+};
+cc_tool_Export.downloadTextFile = function(text,fileName) {
+	if(fileName == null) {
+		fileName = "CC-txt-" + new Date().getTime() + ".txt";
+	}
+	var element = window.document.createElement("a");
+	element.setAttribute("href","data:text/plain;charset=utf-8," + encodeURIComponent(text));
+	element.setAttribute("download",fileName);
+	element.style.display = "none";
+	window.document.body.appendChild(element);
+	element.click();
+	window.document.body.removeChild(element);
+};
+cc_tool_Export.clipboard = function(text) {
+	var win = "Ctrl+C";
+	var mac = "Cmd+C";
+	var copyCombo = win;
+	var userAgent = window.navigator.userAgent;
+	var ereg = new EReg("iPhone|iPod|iPad|Android|BlackBerry","i");
+	var ismac = ereg.match(userAgent);
+	if(ismac) {
+		copyCombo = mac;
+	}
+	window.prompt("Copy to clipboard: " + copyCombo + ", Enter",text);
+};
 cc_tool_Export.prototype = {
 	start: function() {
 		var _gthis = this;
@@ -7434,8 +7639,7 @@ cc_tool_Export.prototype = {
 			this.reset();
 			if(this._isTimer) {
 				this.startTime = new Date().getTime() / 1000;
-				window.console.log("" + this.toString() + " TIMER");
-				window.console.log("START time base recording (delay: " + this._delay + "second, frames: " + this._durationFrames + ")");
+				window.console.log("" + this.toString() + " START time base recording (delay: " + this._delay + "second, frames: " + this._durationFrames + ")");
 				haxe_Timer.delay(function() {
 					console.log("delay time " + (new Date().getTime() / 1000 - _gthis.startTime));
 					_gthis._isRecording = true;
@@ -7459,6 +7663,7 @@ cc_tool_Export.prototype = {
 		this._currentDuration = 0;
 		this._currentDelay = 0;
 		this._frameCounter = 0;
+		this._currentFrame = 0;
 		if(this._isClear) {
 			this.deleteFolder();
 		}
@@ -7467,21 +7672,27 @@ cc_tool_Export.prototype = {
 		if(delay == null) {
 			delay = 0;
 		}
-		console.log("" + this.toString() + " time(" + duration + ", " + delay + ")");
+		console.log("" + this.toString() + " Set time: duration:" + duration + " seconds, delay: " + delay + " seconds");
 		this._isTimer = true;
 		this._duration = cc_util_MathUtil.clamp(duration,3.0,60.0);
 		this._durationFrames = Math.round(this._duration * this.FPS);
 		this._delay = delay;
 	}
 	,name: function(name) {
+		if(name == null) {
+			name = "frame";
+		}
 		this._name = name;
 	}
 	,folder: function(folder) {
+		if(folder == null) {
+			folder = "sequence";
+		}
 		this._folder = folder;
 	}
 	,debug: function(isDebug) {
 		if(isDebug == null) {
-			isDebug = true;
+			isDebug = false;
 		}
 		this._isDebug = isDebug;
 	}
@@ -7499,12 +7710,13 @@ cc_tool_Export.prototype = {
 			console.log("" + this.toString() + " renderSequence : " + data._id);
 		}
 		this._socket.emit(cc_tool_Export.SEQUENCE,data);
+		if(this._frameCounter % 60 == 1) {
+			console.log("current frame render: " + this._frameCounter + "/" + this._durationFrames);
+		}
 		if(this._frameCounter >= this._durationFrames) {
 			this._isRecording = false;
 			console.log("" + this.toString() + " STOP recording base on frames");
-			console.log("_framecounter: " + this._frameCounter);
-			console.log("_name: " + this._name);
-			console.log("_folder: " + this._folder);
+			console.log(this.settings());
 			this.convertRecording();
 			this._frameCounter--;
 		}
@@ -7523,8 +7735,8 @@ cc_tool_Export.prototype = {
 	}
 	,initSocket: function() {
 		var _gthis = this;
-		console.log("" + this.toString() + " initSocket");
-		this._socket = io.connect("http://localhost:" + this._port);
+		console.log("" + this.toString() + " Init Socket");
+		this._socket = io.connect("" + this._host + ":" + this._port,{upgradeTimeout: 30000});
 		this._socket.on("connect_error",function(err) {
 			window.console.group("Connection error export server");
 			window.console.warn("" + _gthis.toString() + " Error connecting to server \"" + err + "\", closing connection");
@@ -7535,13 +7747,20 @@ cc_tool_Export.prototype = {
 			_gthis._isExportServerReady = false;
 		});
 		this._socket.on("connect",function(err1) {
-			console.log("" + _gthis.toString() + " connect: " + err1);
+			if(err1 == "undefined") {
+				console.log("" + _gthis.toString() + " connect: " + err1);
+			} else {
+				console.log("" + _gthis.toString() + " connect");
+			}
+			console.log("_currentFrame : " + _gthis._currentFrame);
 			if(err1 == null) {
 				_gthis._isSocketReady = true;
 			}
 		});
 		this._socket.on("disconnect",function(err2) {
 			console.log("" + _gthis.toString() + " disconnect: " + err2);
+			_gthis._currentFrame = _gthis._frameCounter;
+			console.log("_currentFrame : " + _gthis._currentFrame);
 		});
 		this._socket.on("connect_failed",function(err3) {
 			console.log("" + _gthis.toString() + " connect_failed: " + err3);
@@ -7622,6 +7841,17 @@ cc_tool_Export.prototype = {
 	}
 	,get_duration: function() {
 		return this._duration;
+	}
+	,settings: function() {
+		var str = "";
+		str += "_name: " + this._name + "\n";
+		str += "_folder: " + this._folder + "\n";
+		str += "count: " + this.get_count() + "\n";
+		str += "_framecounter: " + this._frameCounter + "\n";
+		str += "frames: " + this.get_frames() + "\n";
+		str += "delay: " + this.get_delay() + " sec\n";
+		str += "duration: " + this.get_duration() + " sec\n";
+		return str;
 	}
 	,toString: function() {
 		return "[Export]";
@@ -7775,61 +8005,6 @@ cc_util_EffectUtil.mirror = function(ctx,isHorizontal) {
 cc_util_EffectUtil.prototype = {
 	__class__: cc_util_EffectUtil
 };
-var cc_util_ExportUtil = function() {
-};
-$hxClasses["cc.util.ExportUtil"] = cc_util_ExportUtil;
-cc_util_ExportUtil.__name__ = ["cc","util","ExportUtil"];
-cc_util_ExportUtil.downloadImage = function(ctx,isJpg,fileName) {
-	if(isJpg == null) {
-		isJpg = false;
-	}
-	if(fileName == null) {
-		var hash = window.location.hash;
-		hash = StringTools.replace(hash,"#","").toLowerCase();
-		if(hash == "") {
-			hash = "image";
-		}
-		fileName = "" + hash + "-" + new Date().getTime();
-	}
-	var link = window.document.createElement("a");
-	link.href = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
-	link.download = fileName;
-	link.click();
-};
-cc_util_ExportUtil.onBase64Handler = function(ctx,isJpg) {
-	if(isJpg == null) {
-		isJpg = false;
-	}
-	var base64 = ctx.canvas.toDataURL(isJpg ? "image/jpeg" : "",1);
-	cc_util_ExportUtil.clipboard(base64);
-};
-cc_util_ExportUtil.downloadTextFile = function(text,fileName) {
-	if(fileName == null) {
-		fileName = "CC-txt-" + new Date().getTime() + ".txt";
-	}
-	var element = window.document.createElement("a");
-	element.setAttribute("href","data:text/plain;charset=utf-8," + encodeURIComponent(text));
-	element.setAttribute("download",fileName);
-	element.style.display = "none";
-	window.document.body.appendChild(element);
-	element.click();
-	window.document.body.removeChild(element);
-};
-cc_util_ExportUtil.clipboard = function(text) {
-	var win = "Ctrl+C";
-	var mac = "Cmd+C";
-	var copyCombo = win;
-	var userAgent = window.navigator.userAgent;
-	var ereg = new EReg("iPhone|iPod|iPad|Android|BlackBerry","i");
-	var ismac = ereg.match(userAgent);
-	if(ismac) {
-		copyCombo = mac;
-	}
-	window.prompt("Copy to clipboard: " + copyCombo + ", Enter",text);
-};
-cc_util_ExportUtil.prototype = {
-	__class__: cc_util_ExportUtil
-};
 var cc_util_FilterUtil = function() {
 };
 $hxClasses["cc.util.FilterUtil"] = cc_util_FilterUtil;
@@ -7894,158 +8069,6 @@ cc_util_FilterUtil.none = function(ctx) {
 };
 cc_util_FilterUtil.prototype = {
 	__class__: cc_util_FilterUtil
-};
-var cc_util_FontUtil = function(ctx,text) {
-	this._textBaseline = "alphabetic";
-	this._textAlign = "left";
-	this._font = "Arial";
-	this._rotate = 0;
-	this._size = 100;
-	this._y = 100;
-	this._x = 100;
-	this._ctx = ctx;
-	this._text = text;
-};
-$hxClasses["cc.util.FontUtil"] = cc_util_FontUtil;
-cc_util_FontUtil.__name__ = ["cc","util","FontUtil"];
-cc_util_FontUtil.create = function(ctx,text) {
-	var FontUtil = new cc_util_FontUtil(ctx,text);
-	return FontUtil;
-};
-cc_util_FontUtil.fillText = function(ctx,text,x,y,css,size) {
-	if(size == null) {
-		size = 20;
-	}
-	ctx.font = "" + size + "px " + StringTools.replace(css,";","");
-	ctx.textAlign = "left";
-	ctx.fillText(text,x,y);
-};
-cc_util_FontUtil.centerFillText = function(ctx,text,x,y,css,size) {
-	if(size == null) {
-		size = 20;
-	}
-	ctx.font = "" + size + "px " + StringTools.replace(css,";","");
-	ctx.textAlign = "center";
-	ctx.fillText(text,x,y);
-};
-cc_util_FontUtil.embedGoogleFont = function(family,callback,callbackArray) {
-	var _id = "embededGoogleFonts";
-	var _url = "https://fonts.googleapis.com/css?family=";
-	var link = window.document.getElementById(_id);
-	if(link != null) {
-		var temp = StringTools.replace(link.href,_url,"");
-		family = temp + "|" + family;
-	} else {
-		link = window.document.createElement("link");
-	}
-	if(callbackArray == null) {
-		callbackArray = [family];
-	}
-	link.href = "" + _url + family;
-	link.rel = "stylesheet";
-	link.id = _id;
-	link.onload = function() {
-		if(callback != null) {
-			callback.apply(callback,callbackArray);
-		}
-	};
-	window.document.head.appendChild(link);
-};
-cc_util_FontUtil.prototype = {
-	text: function(text) {
-		this._text = text;
-		return this;
-	}
-	,x: function(x) {
-		this._x = x;
-		return this;
-	}
-	,y: function(y) {
-		this._y = y;
-		return this;
-	}
-	,pos: function(x,y) {
-		this._x = x;
-		this._y = y;
-		return this;
-	}
-	,font: function(font) {
-		this._font = StringTools.replace(font,";","");
-		return this;
-	}
-	,size: function(px) {
-		this._size = px;
-		return this;
-	}
-	,textAlign: function(pos) {
-		this._textAlign = pos;
-		return this;
-	}
-	,leftAlign: function() {
-		this._textAlign = "left";
-		return this;
-	}
-	,rightAlign: function() {
-		this._textAlign = "right";
-		return this;
-	}
-	,centerAlign: function() {
-		this._textAlign = "center";
-		return this;
-	}
-	,topBaseline: function() {
-		this._textBaseline = "top";
-		return this;
-	}
-	,middleBaseline: function() {
-		this._textBaseline = "middle";
-		return this;
-	}
-	,bottomBaseline: function() {
-		this._textBaseline = "bottom";
-		return this;
-	}
-	,textBaseline: function(pos) {
-		this._textBaseline = pos;
-		return this;
-	}
-	,rotate: function(degree) {
-		this._rotate = degree;
-		return this;
-	}
-	,rotateLeft: function() {
-		this._rotate = -90;
-		return this;
-	}
-	,rotateRight: function() {
-		this._rotate = 90;
-		return this;
-	}
-	,rotateDown: function() {
-		this._rotate = 180;
-		return this;
-	}
-	,color: function(value) {
-		this._color = value;
-		return this;
-	}
-	,draw: function() {
-		this._ctx.save();
-		var previousColor = this._ctx.fillStyle;
-		if(this._color != null) {
-			cc_CanvasTools.fillColourRGB(this._ctx,this._color);
-		}
-		this._ctx.font = "" + this._size + "px " + this._font;
-		this._ctx.textAlign = this._textAlign;
-		this._ctx.textBaseline = this._textBaseline;
-		this._ctx.translate(this._x,this._y);
-		this._ctx.rotate(cc_util_MathUtil.radians(this._rotate));
-		this._ctx.fillText(this._text,0,0);
-		this._ctx.restore();
-		this._ctx.fillStyle = previousColor;
-		return this;
-	}
-	,__class__: cc_util_FontUtil
 };
 var cc_util_GridUtil = function(ctx) {
 	this._isDebug = false;
@@ -8197,7 +8220,7 @@ cc_util_GridUtil.prototype = {
 	}
 	,setPosition: function(x,y) {
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setPostion");
+			window.console.log("" + this.toString() + " setPostion");
 		}
 		this.x = x;
 		this.y = y;
@@ -8209,7 +8232,7 @@ cc_util_GridUtil.prototype = {
 			isCentered = true;
 		}
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setCenterPoint");
+			window.console.log("" + this.toString() + " setCenterPoint");
 		}
 		this.isCentered = isCentered;
 		this.calculate();
@@ -8220,7 +8243,7 @@ cc_util_GridUtil.prototype = {
 		}
 		this._isDebug = isDebug;
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setCenterPoint");
+			window.console.log("" + this.toString() + " setDebug");
 		}
 	}
 	,setIsFullscreen: function(isFullscreen) {
@@ -8228,14 +8251,14 @@ cc_util_GridUtil.prototype = {
 			isFullscreen = true;
 		}
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setIsFullscreen");
+			window.console.log("" + this.toString() + " setIsFullscreen");
 		}
 		this.isFullscreen = isFullscreen;
 		this.calculate();
 	}
 	,setDimension: function(width,height) {
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setDimension");
+			window.console.log("" + this.toString() + " setDimension (width: " + width + ", height: " + height + ")");
 		}
 		this.width = width;
 		this.height = height;
@@ -8244,7 +8267,7 @@ cc_util_GridUtil.prototype = {
 	}
 	,setNumbered: function(numHor,numVer) {
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setNumbers");
+			window.console.log("" + this.toString() + " setNumbers (numHor: " + numHor + ", numVer: " + numVer + ")");
 		}
 		this.numHor = numHor;
 		this.numVer = numVer;
@@ -8256,7 +8279,7 @@ cc_util_GridUtil.prototype = {
 			cellHeight = cellWidth;
 		}
 		if(this._isDebug) {
-			window.console.log("GridUtil :: setCellSize");
+			window.console.log("" + this.toString() + " setCellSize (cellWidth: " + cellWidth + ", cellHeight: " + cellHeight + ")");
 		}
 		this.cellWidth = cellWidth;
 		this.cellHeight = cellHeight;
@@ -8268,11 +8291,11 @@ cc_util_GridUtil.prototype = {
 	}
 	,calculate: function() {
 		if(this._isDebug) {
-			window.console.log("GridUtil.calculate");
+			window.console.log("" + this.toString() + " calculate()");
 		}
 		if(this._isCellSize && !this._isDimension) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #1: cellSize is set");
+				window.console.info("" + this.toString() + " solution #1: cellSize is set");
 			}
 			this.numHor = Math.floor(Global.w / this.cellWidth);
 			this.numVer = Math.floor(Global.h / this.cellHeight);
@@ -8283,7 +8306,7 @@ cc_util_GridUtil.prototype = {
 		}
 		if(this._isNumbered && !this._isDimension) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #2: numbered cells set");
+				window.console.info("" + this.toString() + " solution #2: numbered cells set");
 			}
 			var _w = this.width != null ? this.width : Global.w;
 			var _h = this.height != null ? this.height : Global.h;
@@ -8293,10 +8316,11 @@ cc_util_GridUtil.prototype = {
 			this.height = this.numVer * this.cellHeight;
 			this.x = (Global.w - this.width) / 2;
 			this.y = (Global.h - this.height) / 2;
+			window.console.info("cellWidth: " + this.cellWidth + ", cellHeight: " + this.cellHeight + ", width: " + this.width + ", height: " + this.height + ", x: " + this.x + ", y: " + this.y);
 		}
 		if(this._isDimension && !this._isNumbered && !this._isCellSize) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #3: width/height set (" + this.width + ", " + this.height + ")");
+				window.console.info("" + this.toString() + " solution #3: width/height set (" + this.width + ", " + this.height + ")");
 			}
 			var _cellWidth = this.cellWidth != null ? this.cellWidth : 50;
 			var _cellHeight = this.cellHeight != null ? this.cellHeight : 50;
@@ -8309,9 +8333,9 @@ cc_util_GridUtil.prototype = {
 			this.x = (Global.w - this.width) / 2;
 			this.y = (Global.h - this.height) / 2;
 		}
-		if(this._isDimension && this._isNumbered && !this._isCellSize) {
+		if(this._isDimension && !this._isCellSize) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #3a: width/height set (" + this.width + ", " + this.height + ") AND number row/cols (" + this.numHor + ", " + this.numVer + ")");
+				window.console.info("" + this.toString() + " solution #3a: width/height set (" + this.width + ", " + this.height + ") AND number row/cols (" + this.numHor + ", " + this.numVer + ")");
 			}
 			this.cellWidth = Math.floor(this.width / this.numHor);
 			this.cellHeight = Math.floor(this.height / this.numVer);
@@ -8322,9 +8346,19 @@ cc_util_GridUtil.prototype = {
 				this.y = (Global.h - this.height) / 2;
 			}
 		}
+		if(this._isDimension && this._isNumbered && !this._isCellSize) {
+			if(this._isDebug) {
+				window.console.info("" + this.toString() + " solution #3b: w/h set (" + this.width + ", " + this.height + ") AND number row/cols (" + this.numHor + ", " + this.numVer + ")");
+				window.console.info("" + this.toString() + "  (" + Global.w + ", " + Global.h + ")");
+			}
+			this.cellWidth = Math.floor(this.width / this.numHor);
+			this.cellHeight = Math.floor(this.height / this.numVer);
+			this.width = this.numHor * this.cellWidth;
+			this.height = this.numVer * this.cellHeight;
+		}
 		if(this._isCellSize && this._isDimension) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #4: cellSize is set and width/height");
+				window.console.info("" + this.toString() + " solution #4: cellSize is set and width/height");
 			}
 			this.numHor = Math.floor(this.width / this.cellWidth);
 			this.numVer = Math.floor(this.height / this.cellHeight);
@@ -8337,7 +8371,7 @@ cc_util_GridUtil.prototype = {
 		}
 		if(this.isFullscreen && this._isCellSize) {
 			if(this._isDebug) {
-				window.console.info("GridUtil solution #5: fullscreen and cellSize is set");
+				window.console.info("" + this.toString() + " solution #5: fullscreen and cellSize is set");
 			}
 			this.width = Global.w;
 			this.height = Global.h;
@@ -8372,8 +8406,14 @@ cc_util_GridUtil.prototype = {
 		}
 		total = this.array.length;
 		if(this._isDebug) {
-			window.console.warn("x: " + this.x + ", y: " + this.y + ", width: " + this.width + ", height: " + this.height + ", cellWidth: " + this.cellWidth + ", cellHeight: " + this.cellHeight + ", numHor: " + this.numHor + ", numVer: " + this.numVer + ", array: " + this.array.length);
+			window.console.groupCollapsed("" + this.toString() + " Sata");
+			window.console.log("x: " + this.x + ", y: " + this.y + ", width: " + this.width + ", height: " + this.height + ", cellWidth: " + this.cellWidth + ", cellHeight: " + this.cellHeight + ", numHor: " + this.numHor + ", numVer: " + this.numVer + ", array: " + this.array.length);
+			window.console.table(this.array);
+			window.console.groupEnd();
 		}
+	}
+	,toString: function() {
+		return "[GridUtil]";
 	}
 	,__class__: cc_util_GridUtil
 };
@@ -8505,6 +8545,7 @@ cc_util_ShapeUtil.cross = function(ctx,x,y,width,height) {
 	if(width == null) {
 		width = 20;
 	}
+	cc_CanvasTools.colour(ctx,cc_util_ColorUtil.PINK.r,cc_util_ColorUtil.PINK.g,cc_util_ColorUtil.PINK.b,1);
 	ctx.fillRect(x - width / 2,y - height / 2,width,height);
 	ctx.fillRect(x - height / 2,y - width / 2,height,width);
 };
@@ -8534,6 +8575,15 @@ cc_util_ShapeUtil.gridRegister = function(ctx,arr) {
 		var i = _g1++;
 		var point = arr[i];
 		cc_util_ShapeUtil.registerPoint(ctx,point.x,point.y);
+	}
+};
+cc_util_ShapeUtil.gridRegisters = function(ctx,grid) {
+	var _g1 = 0;
+	var _g = grid.array.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var point = grid.array[i];
+		cc_util_ShapeUtil.cross(ctx,point.x,point.y,5,20);
 	}
 };
 cc_util_ShapeUtil.gridField = function(ctx,grid) {
@@ -12808,7 +12858,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-13 21:26:29";
+lib_model_constants_App.BUILD = "2019-03-15 01:04:21";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
