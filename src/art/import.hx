@@ -16,6 +16,7 @@ import cc.util.*;
 // easy access to typedef
 import cc.AST;
 // draw package
+import cc.draw.*;
 import cc.draw.Text;
 
 import art.CCBase.CCType;

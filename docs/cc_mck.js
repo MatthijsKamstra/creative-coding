@@ -149,7 +149,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -6239,6 +6239,216 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC052a
 });
+var art_CC053 = function(ctx) {
+	this.lyrics = "I said a hip hop\nHippie to the hippie\nThe hip, hip a hop, and you don't stop, a rock it out\nBubba to the bang bang boogie, boobie to the boogie\nTo the rhythm of the boogie the beat\nNow, what you hear is not a test I'm rappin' to the beat\nAnd me, the groove, and my friends are gonna try to move your feet\nSee, I am Wonder Mike, and I'd like to say hello\nTo the black, to the white, the red and the brown\nThe purple and yellow, but first, I gotta\nBang bang, the boogie to the boogie\nSay up jump the boogie to the bang bang boogie\nLet's rock, you don't stop\nRock the rhythm that'll make your body rock\nWell so far you've heard my voice but I brought two friends along\nAnd the next on the mic is my man Hank\nC'mon, Hank, sing that song, check it out\nWell, I'm Imp the Dimp, the ladies' pimp\nThe women fight for my delight\nBut I'm the grandmaster with the three MCs\nThat shock the house for the young ladies\nAnd when you come inside, into the front\nYou do the Freak, Spank, and do the Bump\nAnd when the sucker MC's try to prove a point\nWe're Treacherous Trio, we're the serious joint\nA from sun to sun and day to day\nI sit down and write a brand new rhyme\nBecause they say that miracles never cease\nI've created a devastating masterpiece\nI'm gonna rock the mic 'til you can't resist\nEverybody, I say it goes like this\nWell, I was coming home late one dark afternoon\nA reporter stopped me for an interview\nShe said she's heard stories and she's heard fables\nThat I'm vicious on the mic and the turntable\nThis young reporter I did adore\nSo I rocked some vicious rhymes like I never did before\nShe said, \"damn, fly guy, I'm in love with you\nThe Casanova legend must have been true\"\nI said, \"by the way, baby, what's your name?\"\nSaid, \"I go by name of Lois Lane\"\n\"And you could be my boyfriend, you surely can\nJust let me quit my boyfriend called Superman\"\nI said, \"he's a fairy, I do suppose\nFlyin' through the air in pantyhose\nHe may be very sexy, or even cute\nBut he looks like a sucker in a blue and red suit\"\nI said, \"you need a man man who's got finesse\nAnd his whole name across his chest\nHe may be able to fly all through the night\nBut can he rock a party 'til the early light?\nHe can't satisfy you with his little worm\nBut I can bust you out with my super sperm!\"\nI go do it, I go do it, I go do it, do it, do it\nAn' I'm here an' I'm there, I'm Big Ban Hank, I'm everywhere\nJust throw your hands up in the air\nAnd party hardy like you just don't care\nLet's do it, don't stop, y'all, a tick tock, y'all, you don't stop!\nGo ho-tel, mo-tel, whatcha gonna do today? (say what?)\nI'm gonna get a fly girl, gonna get some spank, drive off in a def OJ\nEverybody go, \"ho-tel, mo-tel, Holiday Inn\"\nYou say if your girl starts actin' up, then you take her friend\nI say skip, dive, what can I say?\nI can't fit 'em all inside my OJ\nSo I just take half, and bust 'em out\nI give the rest to Master Gee so he can shock the house\nI said M-A-S, T-E-R, a G with a double E\nI said I go by the unforgettable name\nOf the man they call the Master Gee\nWell, my name is known all over the world\nBy all the foxy ladies and the pretty girls\nI'm goin' down in history\nAs the baddest rapper there ever could be\nNow I'm feelin' the highs and you're feelin' the lows\nThe beat starts gettin' into your toes\nYou start poppin' your fingers and stompin' your feet\nAnd movin' your body while while you're sitting in your seat\nAnd then damn! Ya start doin' the freak, I said\nDamn! Right outta your seat\nThen you throw your hands high in the air\nYa rockin' to the rhythm, shake your derriere\nYa rockin' to the beat without a care\nWith the sureshot MCs for the affair\nNow, I'm not as tall as the rest of the gang\nBut I rap to the beat just the same\nI got a little face, and a pair of brown eyes\nAll I'm here to do, ladies, is hypnotize\nSingin' on'n'n'on'n'on on'n'on\nThe beat don't stop until the break of dawn\nSingin' on'n'n'on'n'on on'n'on\nLike a hot buttered pop da pop da pop dibbie dibbie\nPop da pop pop, don't you dare stop\nCome alive y'all, gimme whatcha got\nI guess by now you can take a hunch\nAnd find that I am the baby of the bunch\nBut that's okay, I still keep in stride\n'Cause all I'm here to do is just wiggle your behind\nSingin' on'n'n'on'n'on on'n'on\nThe beat don't stop until the break of dawn\nSingin' on'n'n'on'n'on on'n'on\nRock rock, y'all, throw it on the floor\nI'm gonna freak you here, I'm gona freak you there\nI'm gonna move you outta this atmosphere\n'Cause I'm one of a kind and I'll shock your mind\nI'll put TNT in your behind. I said\nOne, two, three, four, come on, girls, get on the floor\nA-come alive, y'all, a-gimme whatcha got\n'Cause I'm guaranteed to make you rock\nI said one, two, three, four, tell me, Wonder Mike\nWhat are you waiting for?\nI said a hip hop\nThe hippie to the hippie\nThe hip hip a hop, and you don't stop, a rock it\nTo the bang bang boogie, say up jump the boogie\nTo the rhythm of the boogie, the beat\nA skiddleebebop, we rock, scooby doo\nAnd guess what, America, we love you\n'Cause you rocked and a rolled with so much soul\nYou could rock 'til a hundred and one years old\nI don't mean to brag, I don't mean to boast\nBut we like hot butter on our breakfast toast\nRock it up, Baby Bubba!\nBaby Bubba to the boogie da bang bang da boogie\nTo the beat, beat, it's unique\nCome on everybody and dance to the beat!\nHave you ever went over a friends house to eat\nAnd the food just ain't no good?\nI mean the macaroni's soggy, the peas are mushed\nAnd the chicken tastes like wood\nSo you try to play it off like you think you can\nBy saying that you're full\nAnd then your friend says, \"mama, he's just being polite\nHe ain't finished, uh-uh, that's bull!\"\nSo your heart starts pumpin' and you think of a lie\nAnd you say that you already ate\nAnd your friend says \"man, there's plenty of food\"\nSo you pile some more on your plate\nWhile the stinky food's steamin', your mind starts to dreamin'\nOf the moment that it's time to leave\nAnd then you look at your plate and your chicken's slowly rottin'\nInto something that looks like cheese\nOh so you say \"that's it, I gotta leave this place\nI don't care what these people think\nI'm just sittin' here makin' myself nauseous\nWith this ugly food that stinks\"\nSo you bust out the door while it's still closed\nStill sick from the food you ate\nAnd then you run to the store for quick relief\nFrom a bottle of Kaopectate\nAnd then you call your friend two weeks later\nTo see how he has been\nAnd he says, \"I understand about the food\nBaby Bubba, but we're still friends\"\nWith a hip hop the hippie to the hippie\nThe hip hip a hop, a you don't stop the rockin'\nTo the bang bang boogie\nSay up jump the boogie to the rhythm of the boogie the beat";
+	this.preformer = "The Sugarhill Gang";
+	this.song = "Rapper's Delight";
+	this._isEmbedded = false;
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	cc_draw_Text.embedGoogleFont("Source+Code+Pro",$bind(this,this.onEmbedHandler));
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC053"] = art_CC053;
+art_CC053.__name__ = ["art","CC053"];
+art_CC053.__interfaces__ = [art_ICCBase];
+art_CC053.__super__ = art_CCBase;
+art_CC053.prototype = $extend(art_CCBase.prototype,{
+	onEmbedHandler: function(e) {
+		console.log("onEmbedHandler: \"" + e + "\"");
+		this._isEmbedded = true;
+		this.drawShape();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		if(!this._isEmbedded) {
+			return;
+		}
+		var centerX = this.get_w2();
+		var centerY = this.get_h2();
+		var angle = Math.PI * 0.8;
+		var radius = 180;
+		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+		this.ctx.textAlign = "center";
+		this.ctx.textBaseline = "bottom";
+		this.ctx.font = "20px Source Code Pro";
+		cc_util_TextUtil.drawTextAlongArc(this.ctx,"Hier moet iets staan dat de moeite waard is",centerX,centerY,radius,angle);
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		this.isDebug = true;
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC053
+});
+var art_CC054 = function(ctx) {
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC054"] = art_CC054;
+art_CC054.__name__ = ["art","CC054"];
+art_CC054.__interfaces__ = [art_ICCBase];
+art_CC054.__super__ = art_CCBase;
+art_CC054.prototype = $extend(art_CCBase.prototype,{
+	onEmbedHandler: function(e) {
+		console.log("onEmbedHandler: \"" + e + "\"");
+		this.drawShape();
+	}
+	,createQuickSettings: function() {
+		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote","text",function(value) {
+			console.log(value);
+		}).addBoolean("All Caps",false,function(value1) {
+			console.log(value1);
+		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		this.createEye();
+	}
+	,createEye: function() {
+		var outerR = 120;
+		var innerR = 50;
+		var c = new cc_draw_Circle(this.ctx);
+		var _this = c;
+		var x = this.get_w2() + 4;
+		var y = this.get_h2() + 2;
+		_this._x = x;
+		_this._y = y;
+		var _this1 = _this;
+		_this1._color = cc_util_ColorUtil.BLACK;
+		var _this2 = _this1;
+		_this2._radius = outerR + 10;
+		var _this3 = _this2;
+		_this3._ctx.save();
+		var previousColor = _this3._ctx.fillStyle;
+		if(_this3._color != null) {
+			cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3._alpha);
+		}
+		_this3.circle(_this3._ctx,_this3._x,_this3._y,_this3._radius);
+		_this3._ctx.restore();
+		_this3._ctx.fillStyle = previousColor;
+		var c1 = new cc_draw_Circle(this.ctx);
+		var _this4 = c1;
+		var x1 = this.get_w2();
+		var y1 = this.get_h2();
+		_this4._x = x1;
+		_this4._y = y1;
+		var _this5 = _this4;
+		_this5._color = cc_util_ColorUtil.BLUE;
+		var _this6 = _this5;
+		_this6._radius = outerR;
+		var _this7 = _this6;
+		_this7._ctx.save();
+		var previousColor1 = _this7._ctx.fillStyle;
+		if(_this7._color != null) {
+			cc_CanvasTools.fillColourRGB(_this7._ctx,_this7._color,_this7._alpha);
+		}
+		_this7.circle(_this7._ctx,_this7._x,_this7._y,_this7._radius);
+		_this7._ctx.restore();
+		_this7._ctx.fillStyle = previousColor1;
+		cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.WHITE,0.1);
+		var _g = 0;
+		while(_g < 1000) {
+			var i = _g++;
+			var point = cc_util_MathUtil.orbit(this.get_w2(),this.get_h2(),cc_util_MathUtil.random(360),cc_util_MathUtil.random(innerR,outerR - 5));
+			cc_CanvasTools.line(this.ctx,this.get_w2(),this.get_h2(),point.x,point.y);
+		}
+		var c2 = new cc_draw_Circle(this.ctx);
+		var _this8 = c2;
+		var x2 = this.get_w2();
+		var y2 = this.get_h2();
+		_this8._x = x2;
+		_this8._y = y2;
+		var _this9 = _this8;
+		_this9._color = cc_util_ColorUtil.BLACK;
+		var _this10 = _this9;
+		_this10._radius = innerR;
+		var _this11 = _this10;
+		_this11._ctx.save();
+		var previousColor2 = _this11._ctx.fillStyle;
+		if(_this11._color != null) {
+			cc_CanvasTools.fillColourRGB(_this11._ctx,_this11._color,_this11._alpha);
+		}
+		_this11.circle(_this11._ctx,_this11._x,_this11._y,_this11._radius);
+		_this11._ctx.restore();
+		_this11._ctx.fillStyle = previousColor2;
+		var c3 = new cc_draw_Circle(this.ctx);
+		var _this12 = c3;
+		var x3 = this.get_w2() - innerR + 10;
+		var y3 = this.get_h2() - innerR + 20;
+		_this12._x = x3;
+		_this12._y = y3;
+		var _this13 = _this12;
+		_this13._color = cc_util_ColorUtil.WHITE;
+		var _this14 = _this13;
+		_this14._radius = 20;
+		var _this15 = _this14;
+		_this15._alpha = 0.7;
+		var _this16 = _this15;
+		_this16._ctx.save();
+		var previousColor3 = _this16._ctx.fillStyle;
+		if(_this16._color != null) {
+			cc_CanvasTools.fillColourRGB(_this16._ctx,_this16._color,_this16._alpha);
+		}
+		_this16.circle(_this16._ctx,_this16._x,_this16._y,_this16._radius);
+		_this16._ctx.restore();
+		_this16._ctx.fillStyle = previousColor3;
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+		this.grid.setCellSize(this._cellsize);
+		this.grid.setIsCenterPoint(true);
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
+		}
+	}
+	,draw: function() {
+		console.log("draw: " + this.toString());
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC054
+});
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
 cc_AST.__name__ = ["cc","AST"];
@@ -6508,6 +6718,119 @@ cc_CanvasTools.backgroundObj = function(ctx,rgb) {
 };
 cc_CanvasTools.backgroundRGB = function(ctx,rgb) {
 	cc_CanvasTools.background(ctx,rgb.r,rgb.g,rgb.b);
+};
+var cc_draw_Circle = function(ctx) {
+	this._rotate = 0;
+	this._alpha = 1;
+	this._radius = 100;
+	this._size = 100;
+	this._y = 100;
+	this._x = 100;
+	this._ctx = ctx;
+};
+$hxClasses["cc.draw.Circle"] = cc_draw_Circle;
+cc_draw_Circle.__name__ = ["cc","draw","Circle"];
+cc_draw_Circle.create = function(ctx) {
+	var c = new cc_draw_Circle(ctx);
+	return c;
+};
+cc_draw_Circle.prototype = {
+	x: function(x) {
+		this._x = x;
+		return this;
+	}
+	,y: function(y) {
+		this._y = y;
+		return this;
+	}
+	,pos: function(x,y) {
+		this._x = x;
+		this._y = y;
+		return this;
+	}
+	,size: function(px) {
+		this._size = px;
+		return this;
+	}
+	,radius: function(px) {
+		this._radius = px;
+		return this;
+	}
+	,rotate: function(degree) {
+		this._rotate = degree;
+		return this;
+	}
+	,rotateLeft: function() {
+		this._rotate = -90;
+		return this;
+	}
+	,rotateRight: function() {
+		this._rotate = 90;
+		return this;
+	}
+	,rotateDown: function() {
+		this._rotate = 180;
+		return this;
+	}
+	,color: function(value) {
+		this._color = value;
+		return this;
+	}
+	,fill: function(value) {
+		this._color = value;
+		return this;
+	}
+	,stroke: function(value) {
+		this._colorstoke = value;
+		return this;
+	}
+	,alpha: function(value) {
+		this._alpha = value;
+		return this;
+	}
+	,draw: function() {
+		this._ctx.save();
+		var previousColor = this._ctx.fillStyle;
+		if(this._color != null) {
+			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this._alpha);
+		}
+		this.circle(this._ctx,this._x,this._y,this._radius);
+		this._ctx.restore();
+		this._ctx.fillStyle = previousColor;
+		return this;
+	}
+	,makeCircle: function(ctx,x,y,radius) {
+		ctx.beginPath();
+		ctx.arc(x,y,radius,0,Math.PI * 2,true);
+	}
+	,circle: function(ctx,x,y,radius) {
+		this.makeCircle(ctx,x,y,radius);
+		ctx.fill();
+		ctx.closePath();
+	}
+	,circleFillStroke: function(ctx,x,y,radius) {
+		this.makeCircle(ctx,x,y,radius);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+	}
+	,circleFill: function(ctx,x,y,radius) {
+		this.fillCircle(ctx,x,y,radius);
+	}
+	,fillCircle: function(ctx,x,y,radius) {
+		this.makeCircle(ctx,x,y,radius);
+		ctx.fill();
+		ctx.closePath();
+	}
+	,circleStroke: function(ctx,x,y,radius) {
+		this.strokeCircle(ctx,x,y,radius);
+	}
+	,strokeCircle: function(ctx,x,y,radius) {
+		this.makeCircle(ctx,x,y,radius);
+		ctx.stroke();
+		ctx.closePath();
+	}
+	,__class__: cc_draw_Circle
 };
 var cc_draw_Text = function(ctx,text) {
 	this._textBaseline = "alphabetic";
@@ -8532,6 +8855,11 @@ cc_util_MathUtil.map = function(value,min1,max1,min2,max2,clampResult) {
 		return returnvalue;
 	}
 };
+cc_util_MathUtil.orbit = function(xpos,ypos,angle,radius) {
+	var _xpos = xpos + Math.cos(cc_util_MathUtil.radians(angle)) * radius;
+	var _ypos = ypos + Math.sin(cc_util_MathUtil.radians(angle)) * radius;
+	return { x : _xpos, y : _ypos};
+};
 cc_util_MathUtil.clamp = function(value,min,max) {
 	return Math.min(Math.max(value,Math.min(min,max)),Math.max(min,max));
 };
@@ -8634,6 +8962,25 @@ cc_util_TextUtil.getLines = function(ctx,text,maxWidth) {
 	}
 	lines.push(currentLine);
 	return lines;
+};
+cc_util_TextUtil.drawTextAlongArc = function(ctx,str,centerX,centerY,radius,angle) {
+	var charArr = str.split("");
+	ctx.save();
+	ctx.translate(centerX,centerY);
+	ctx.rotate(-1 * angle / 2);
+	ctx.rotate(-1 * (angle / charArr.length) / 2);
+	var _g1 = 0;
+	var _g = charArr.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var _char = charArr[i];
+		ctx.rotate(angle / charArr.length);
+		ctx.save();
+		ctx.translate(0,-1 * radius);
+		ctx.fillText(_char,0,0);
+		ctx.restore();
+	}
+	ctx.restore();
 };
 cc_util_TextUtil.prototype = {
 	__class__: cc_util_TextUtil
@@ -12858,7 +13205,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-15 01:04:21";
+lib_model_constants_App.BUILD = "2019-03-15 09:47:48";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
