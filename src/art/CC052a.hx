@@ -38,11 +38,9 @@ class CC052a extends CCBase implements ICCBase {
 	var padding = 5;
 	var yoffset = 50;
 	// export video
-	var export : Export;
-
+	var export:Export;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-
 		// setup Sketch
 		var option = new SketchOption();
 		option.width = 1080; // 1080
@@ -61,8 +59,6 @@ class CC052a extends CCBase implements ICCBase {
 		super(ctx);
 
 		initSVG();
-
-
 	}
 
 	function initSVG() {
@@ -104,19 +100,18 @@ class CC052a extends CCBase implements ICCBase {
 	}
 
 	function createLike(i:Int, ?point:Point):InstaLikes {
-
 		var sh:InstaLikes = {
 			_id: '$i',
-			x: w/2,
-			y: h /2,
+			x: w / 2,
+			y: h / 2,
 			// x: random(w) - (svgWidth / 2),
 			// y: h + yoffset - (svgHeight / 2),
 			width: svgWidth,
 			height: svgHeight,
 			count: i,
 			percentage: 0,
-			radius : random(20,50),
-			speed : random(-3,3),
+			radius: random(20, 50),
+			speed: random(-3, 3),
 			alpha: 2,
 			angle: random(360),
 		}
@@ -132,17 +127,12 @@ class CC052a extends CCBase implements ICCBase {
 
 	function onAnimateHandler(sh:InstaLikes) {
 		resetInstaLike(sh);
-		Go.to(sh, random(3,8))
-			.delay(random(0.1, 7))
-			.x(sh.x)
-			.y(random(h/2, 0))
-			.prop('alpha', 0)
-			.ease(Sine.easeOut)
-			.onComplete(onAnimateHandler, [sh]);
+		Go.to(sh, random(3, 8)).delay(random(0.1, 7)).x(sh.x).y(random(h / 2, 0)).prop('alpha', 0).ease(Sine.easeOut).onComplete(onAnimateHandler, [sh]);
 	}
 
 	function drawShape() {
-		if (!isSvgReady) return;
+		if (!isSvgReady)
+			return;
 
 		ctx.clearRect(0, 0, w, h);
 		ctx.backgroundObj(WHITE);
@@ -154,16 +144,16 @@ class CC052a extends CCBase implements ICCBase {
 
 			sh.angle += sh.speed;
 			// plot the balls x to cos and y to sin
-			var xpos = sh.x + Math.cos(radians(sh.angle))*sh.radius;
-			var ypos = sh.y + Math.sin(radians(sh.angle))*sh.radius;
+			var xpos = sh.x + Math.cos(radians(sh.angle)) * sh.radius;
+			var ypos = sh.y + Math.sin(radians(sh.angle)) * sh.radius;
 
 			// trace('x: ${sh.x}, y: ${sh.y}, angle: ${sh.angle}, radius: ${sh.radius}' );
-			ctx.drawImage(svgImage, xpos , ypos, sh.width, sh.height);
+			ctx.drawImage(svgImage, xpos, ypos, sh.width, sh.height);
 			// ctx.drawImage(svgImage, sh.x , sh.y, sh.width, sh.height);
 			ctx.fillColourRGB(WHITE);
 			Text.create(ctx, Std.string(sh.count + 1))
 				.centerAlign()
-				.pos(xpos + (sh.width/2) + 20, ypos + (sh.height/2))
+				.pos(xpos + (sh.width / 2) + 20, ypos + (sh.height / 2))
 				.size(20)
 				.draw();
 
@@ -202,7 +192,6 @@ class CC052a extends CCBase implements ICCBase {
 		export.debug(isDebug);
 		export.clear(true);
 		export.start();
-
 	}
 
 	override function draw() {
@@ -259,5 +248,4 @@ class CC052a extends CCBase implements ICCBase {
 	override function toString():String {
 		return 'cc052a';
 	}
-
 }
