@@ -5824,21 +5824,22 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 			var _this2 = _this1;
 			var x = Global.w / 2;
 			var y = this.scaling(100);
-			_this2._x = x;
-			_this2._y = y;
+			_this2.set__x(x);
+			_this2.set__y(y);
 			var _this3 = _this2;
-			_this3._size = this.scaling(50);
+			_this3.set__size(this.scaling(50));
 			var _this4 = _this3;
 			_this4._ctx.save();
 			var previousColor = _this4._ctx.fillStyle;
 			if(_this4._color != null) {
-				cc_CanvasTools.fillColourRGB(_this4._ctx,_this4._color,_this4._alpha);
+				cc_CanvasTools.fillColourRGB(_this4._ctx,_this4._color,_this4.get__alpha());
 			}
-			_this4._ctx.font = "" + _this4._size + "px " + _this4._font;
+			var tmp1 = "" + _this4.get__size() + "px ";
+			_this4._ctx.font = tmp1 + _this4._font;
 			_this4._ctx.textAlign = _this4._textAlign;
 			_this4._ctx.textBaseline = _this4._textBaseline;
-			_this4._ctx.translate(_this4._x,_this4._y);
-			_this4._ctx.rotate(cc_util_MathUtil.radians(_this4._rotate));
+			_this4._ctx.translate(_this4.get__x(),_this4.get__y());
+			_this4._ctx.rotate(cc_util_MathUtil.radians(_this4.get__rotate()));
 			_this4._ctx.fillText(_this4._text,0,0);
 			_this4._ctx.restore();
 			_this4._ctx.fillStyle = previousColor;
@@ -5939,21 +5940,23 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 			var _this = Text;
 			_this._textAlign = "center";
 			var _this1 = _this;
-			_this1._x = sh.x + 20;
-			_this1._y = sh.y;
+			var y = sh.y;
+			_this1.set__x(sh.x + 20);
+			_this1.set__y(y);
 			var _this2 = _this1;
-			_this2._size = 20;
+			_this2.set__size(20);
 			var _this3 = _this2;
 			_this3._ctx.save();
 			var previousColor = _this3._ctx.fillStyle;
 			if(_this3._color != null) {
-				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3._alpha);
+				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3.get__alpha());
 			}
-			_this3._ctx.font = "" + _this3._size + "px " + _this3._font;
+			var tmp = "" + _this3.get__size() + "px ";
+			_this3._ctx.font = tmp + _this3._font;
 			_this3._ctx.textAlign = _this3._textAlign;
 			_this3._ctx.textBaseline = _this3._textBaseline;
-			_this3._ctx.translate(_this3._x,_this3._y);
-			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3._rotate));
+			_this3._ctx.translate(_this3.get__x(),_this3.get__y());
+			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3.get__rotate()));
 			_this3._ctx.fillText(_this3._text,0,0);
 			_this3._ctx.restore();
 			_this3._ctx.fillStyle = previousColor;
@@ -6150,21 +6153,23 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 			var _this = Text;
 			_this._textAlign = "center";
 			var _this1 = _this;
-			_this1._x = xpos + sh.width / 2 + 20;
-			_this1._y = ypos + sh.height / 2;
+			var y = ypos + sh.height / 2;
+			_this1.set__x(xpos + sh.width / 2 + 20);
+			_this1.set__y(y);
 			var _this2 = _this1;
-			_this2._size = 20;
+			_this2.set__size(20);
 			var _this3 = _this2;
 			_this3._ctx.save();
 			var previousColor = _this3._ctx.fillStyle;
 			if(_this3._color != null) {
-				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3._alpha);
+				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3.get__alpha());
 			}
-			_this3._ctx.font = "" + _this3._size + "px " + _this3._font;
+			var tmp = "" + _this3.get__size() + "px ";
+			_this3._ctx.font = tmp + _this3._font;
 			_this3._ctx.textAlign = _this3._textAlign;
 			_this3._ctx.textBaseline = _this3._textBaseline;
-			_this3._ctx.translate(_this3._x,_this3._y);
-			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3._rotate));
+			_this3._ctx.translate(_this3.get__x(),_this3.get__y());
+			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3.get__rotate()));
 			_this3._ctx.fillText(_this3._text,0,0);
 			_this3._ctx.restore();
 			_this3._ctx.fillStyle = previousColor;
@@ -6336,44 +6341,44 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		var _this = c;
 		var x = this.get_w2() + 4;
 		var y = this.get_h2() + 2;
-		_this._x = x;
-		_this._y = y;
+		_this.set__x(x);
+		_this.set__y(y);
 		var _this1 = _this;
 		_this1._color = cc_util_ColorUtil.BLACK;
 		var _this2 = _this1;
-		_this2._radius = outerR + 10;
+		_this2.set__radius(outerR + 10);
 		var _this3 = _this2;
 		_this3._ctx.save();
 		var previousColor = _this3._ctx.fillStyle;
-		if(_this3._color != null && _this3._gradient == null) {
-			cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3._alpha);
+		if(_this3._color != null && _this3.get__gradient() == null) {
+			cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3.get__alpha());
 		}
-		if(_this3._gradient != null) {
-			_this3._ctx.fillStyle = _this3._gradient;
+		if(_this3.get__gradient() != null) {
+			_this3._ctx.fillStyle = _this3.get__gradient();
 		}
-		_this3.circleFill(_this3._ctx,_this3._x,_this3._y,_this3._radius);
+		_this3.circleFill(_this3._ctx,_this3.get__x(),_this3.get__y(),_this3.get__radius());
 		_this3._ctx.restore();
 		_this3._ctx.fillStyle = previousColor;
 		var c1 = new cc_draw_Circle(this.ctx);
 		var _this4 = c1;
 		var x1 = this.get_w2();
 		var y1 = this.get_h2();
-		_this4._x = x1;
-		_this4._y = y1;
+		_this4.set__x(x1);
+		_this4.set__y(y1);
 		var _this5 = _this4;
 		_this5._color = cc_util_ColorUtil.BLUE;
 		var _this6 = _this5;
-		_this6._radius = outerR;
+		_this6.set__radius(outerR);
 		var _this7 = _this6;
 		_this7._ctx.save();
 		var previousColor1 = _this7._ctx.fillStyle;
-		if(_this7._color != null && _this7._gradient == null) {
-			cc_CanvasTools.fillColourRGB(_this7._ctx,_this7._color,_this7._alpha);
+		if(_this7._color != null && _this7.get__gradient() == null) {
+			cc_CanvasTools.fillColourRGB(_this7._ctx,_this7._color,_this7.get__alpha());
 		}
-		if(_this7._gradient != null) {
-			_this7._ctx.fillStyle = _this7._gradient;
+		if(_this7.get__gradient() != null) {
+			_this7._ctx.fillStyle = _this7.get__gradient();
 		}
-		_this7.circleFill(_this7._ctx,_this7._x,_this7._y,_this7._radius);
+		_this7.circleFill(_this7._ctx,_this7.get__x(),_this7.get__y(),_this7.get__radius());
 		_this7._ctx.restore();
 		_this7._ctx.fillStyle = previousColor1;
 		cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.WHITE,0.1);
@@ -6387,22 +6392,22 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		var _this8 = c2;
 		var x2 = this.get_w2();
 		var y2 = this.get_h2();
-		_this8._x = x2;
-		_this8._y = y2;
+		_this8.set__x(x2);
+		_this8.set__y(y2);
 		var _this9 = _this8;
 		_this9._color = cc_util_ColorUtil.BLACK;
 		var _this10 = _this9;
-		_this10._radius = innerR;
+		_this10.set__radius(innerR);
 		var _this11 = _this10;
 		_this11._ctx.save();
 		var previousColor2 = _this11._ctx.fillStyle;
-		if(_this11._color != null && _this11._gradient == null) {
-			cc_CanvasTools.fillColourRGB(_this11._ctx,_this11._color,_this11._alpha);
+		if(_this11._color != null && _this11.get__gradient() == null) {
+			cc_CanvasTools.fillColourRGB(_this11._ctx,_this11._color,_this11.get__alpha());
 		}
-		if(_this11._gradient != null) {
-			_this11._ctx.fillStyle = _this11._gradient;
+		if(_this11.get__gradient() != null) {
+			_this11._ctx.fillStyle = _this11.get__gradient();
 		}
-		_this11.circleFill(_this11._ctx,_this11._x,_this11._y,_this11._radius);
+		_this11.circleFill(_this11._ctx,_this11.get__x(),_this11.get__y(),_this11.get__radius());
 		_this11._ctx.restore();
 		_this11._ctx.fillStyle = previousColor2;
 		var xpos = this.get_w2() - innerR + 10;
@@ -6411,22 +6416,22 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		var _this12 = c3;
 		_this12._color = cc_util_ColorUtil.WHITE;
 		var _this13 = _this12;
-		_this13._x = xpos;
-		_this13._y = ypos;
+		_this13.set__x(xpos);
+		_this13.set__y(ypos);
 		var _this14 = _this13;
-		_this14._radius = 20;
+		_this14.set__radius(20);
 		var _this15 = _this14;
-		_this15._alpha = 0.7;
+		_this15.set__alpha(0.7);
 		var _this16 = _this15;
 		_this16._ctx.save();
 		var previousColor3 = _this16._ctx.fillStyle;
-		if(_this16._color != null && _this16._gradient == null) {
-			cc_CanvasTools.fillColourRGB(_this16._ctx,_this16._color,_this16._alpha);
+		if(_this16._color != null && _this16.get__gradient() == null) {
+			cc_CanvasTools.fillColourRGB(_this16._ctx,_this16._color,_this16.get__alpha());
 		}
-		if(_this16._gradient != null) {
-			_this16._ctx.fillStyle = _this16._gradient;
+		if(_this16.get__gradient() != null) {
+			_this16._ctx.fillStyle = _this16.get__gradient();
 		}
-		_this16.circleFill(_this16._ctx,_this16._x,_this16._y,_this16._radius);
+		_this16.circleFill(_this16._ctx,_this16.get__x(),_this16.get__y(),_this16.get__radius());
 		_this16._ctx.restore();
 		_this16._ctx.fillStyle = previousColor3;
 	}
@@ -6747,36 +6752,36 @@ cc_draw_Circle.create = function(ctx) {
 };
 cc_draw_Circle.prototype = {
 	x: function(x) {
-		this._x = x;
+		this.set__x(x);
 		return this;
 	}
 	,y: function(y) {
-		this._y = y;
+		this.set__y(y);
 		return this;
 	}
 	,pos: function(x,y) {
-		this._x = x;
-		this._y = y;
+		this.set__x(x);
+		this.set__y(y);
 		return this;
 	}
 	,radius: function(px) {
-		this._radius = px;
+		this.set__radius(px);
 		return this;
 	}
 	,rotate: function(degree) {
-		this._rotate = degree;
+		this.set__rotate(degree);
 		return this;
 	}
 	,rotateLeft: function() {
-		this._rotate = -90;
+		this.set__rotate(-90);
 		return this;
 	}
 	,rotateRight: function() {
-		this._rotate = 90;
+		this.set__rotate(90);
 		return this;
 	}
 	,rotateDown: function() {
-		this._rotate = 180;
+		this.set__rotate(180);
 		return this;
 	}
 	,color: function(value) {
@@ -6784,7 +6789,7 @@ cc_draw_Circle.prototype = {
 		return this;
 	}
 	,gradient: function(value) {
-		this._gradient = value;
+		this.set__gradient(value);
 		return this;
 	}
 	,fill: function(value) {
@@ -6796,19 +6801,19 @@ cc_draw_Circle.prototype = {
 		return this;
 	}
 	,alpha: function(value) {
-		this._alpha = value;
+		this.set__alpha(value);
 		return this;
 	}
 	,draw: function() {
 		this._ctx.save();
 		var previousColor = this._ctx.fillStyle;
-		if(this._color != null && this._gradient == null) {
-			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this._alpha);
+		if(this._color != null && this.get__gradient() == null) {
+			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this.get__alpha());
 		}
-		if(this._gradient != null) {
-			this._ctx.fillStyle = this._gradient;
+		if(this.get__gradient() != null) {
+			this._ctx.fillStyle = this.get__gradient();
 		}
-		this.circleFill(this._ctx,this._x,this._y,this._radius);
+		this.circleFill(this._ctx,this.get__x(),this.get__y(),this.get__radius());
 		this._ctx.restore();
 		this._ctx.fillStyle = previousColor;
 		return this;
@@ -6833,20 +6838,47 @@ cc_draw_Circle.prototype = {
 		ctx.stroke();
 		ctx.closePath();
 	}
-	,get_rad: function() {
-		return this._radius;
-	}
-	,get_xpos: function() {
+	,get__x: function() {
 		return this._x;
 	}
-	,get_ypos: function() {
+	,set__x: function(value) {
+		return this._x = value;
+	}
+	,get__y: function() {
 		return this._y;
+	}
+	,set__y: function(value) {
+		return this._y = value;
+	}
+	,get__radius: function() {
+		return this._radius;
+	}
+	,set__radius: function(value) {
+		return this._radius = value;
+	}
+	,get__alpha: function() {
+		return this._alpha;
+	}
+	,set__alpha: function(value) {
+		return this._alpha = value;
+	}
+	,get__rotate: function() {
+		return this._rotate;
+	}
+	,set__rotate: function(value) {
+		return this._rotate = value;
+	}
+	,get__gradient: function() {
+		return this._gradient;
+	}
+	,set__gradient: function(value) {
+		return this._gradient = value;
 	}
 	,toString: function() {
 		return "Circle: " + Std.string(JSON.parse(JSON.stringify(this)));
 	}
 	,__class__: cc_draw_Circle
-	,__properties__: {get_ypos:"get_ypos",get_xpos:"get_xpos",get_rad:"get_rad"}
+	,__properties__: {set__gradient:"set__gradient",get__gradient:"get__gradient",set__rotate:"set__rotate",get__rotate:"get__rotate",set__alpha:"set__alpha",get__alpha:"get__alpha",set__radius:"set__radius",get__radius:"get__radius",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
 };
 var cc_draw_Gradient = function(ctx) {
 	this._radial = false;
@@ -6900,10 +6932,10 @@ cc_draw_Gradient.prototype = {
 	,circle: function(circle) {
 		this._circle = circle;
 		console.log(circle.toString());
-		this._x = circle.get_xpos() - circle.get_rad();
-		this._y = circle.get_ypos() - circle.get_rad();
-		this._width = circle.get_rad() * 2;
-		this._height = circle.get_rad() * 2;
+		this._x = circle.get__x() - circle.get__radius();
+		this._y = circle.get__y() - circle.get__radius();
+		this._width = circle.get__radius() * 2;
+		this._height = circle.get__radius() * 2;
 		return this;
 	}
 	,left: function() {
@@ -7027,8 +7059,8 @@ var cc_draw_Text = function(ctx,text) {
 	this._textAlign = "left";
 	this._font = "Arial";
 	this._rotate = 0;
-	this._size = 100;
 	this._alpha = 1;
+	this._radius = 100;
 	this._y = 100;
 	this._x = 100;
 	this._ctx = ctx;
@@ -7085,16 +7117,16 @@ cc_draw_Text.prototype = {
 		return this;
 	}
 	,x: function(x) {
-		this._x = x;
+		this.set__x(x);
 		return this;
 	}
 	,y: function(y) {
-		this._y = y;
+		this.set__y(y);
 		return this;
 	}
 	,pos: function(x,y) {
-		this._x = x;
-		this._y = y;
+		this.set__x(x);
+		this.set__y(y);
 		return this;
 	}
 	,font: function(font) {
@@ -7102,7 +7134,7 @@ cc_draw_Text.prototype = {
 		return this;
 	}
 	,size: function(px) {
-		this._size = px;
+		this.set__size(px);
 		return this;
 	}
 	,textAlign: function(pos) {
@@ -7138,19 +7170,19 @@ cc_draw_Text.prototype = {
 		return this;
 	}
 	,rotate: function(degree) {
-		this._rotate = degree;
+		this.set__rotate(degree);
 		return this;
 	}
 	,rotateLeft: function() {
-		this._rotate = -90;
+		this.set__rotate(-90);
 		return this;
 	}
 	,rotateRight: function() {
-		this._rotate = 90;
+		this.set__rotate(90);
 		return this;
 	}
 	,rotateDown: function() {
-		this._rotate = 180;
+		this.set__rotate(180);
 		return this;
 	}
 	,color: function(value,alpha) {
@@ -7158,30 +7190,77 @@ cc_draw_Text.prototype = {
 			alpha = 1;
 		}
 		this._color = value;
-		this._alpha = cc_util_MathUtil.clamp(alpha,0,1);
+		this.set__alpha(cc_util_MathUtil.clamp(alpha,0,1));
 		return this;
 	}
 	,alpha: function(alpha) {
-		this._alpha = cc_util_MathUtil.clamp(alpha,0,1);
+		this.set__alpha(cc_util_MathUtil.clamp(alpha,0,1));
 		return this;
 	}
 	,draw: function() {
 		this._ctx.save();
 		var previousColor = this._ctx.fillStyle;
 		if(this._color != null) {
-			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this._alpha);
+			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this.get__alpha());
 		}
-		this._ctx.font = "" + this._size + "px " + this._font;
+		var tmp = "" + this.get__size() + "px ";
+		this._ctx.font = tmp + this._font;
 		this._ctx.textAlign = this._textAlign;
 		this._ctx.textBaseline = this._textBaseline;
-		this._ctx.translate(this._x,this._y);
-		this._ctx.rotate(cc_util_MathUtil.radians(this._rotate));
+		this._ctx.translate(this.get__x(),this.get__y());
+		this._ctx.rotate(cc_util_MathUtil.radians(this.get__rotate()));
 		this._ctx.fillText(this._text,0,0);
 		this._ctx.restore();
 		this._ctx.fillStyle = previousColor;
 		return this;
 	}
+	,get__x: function() {
+		return this._x;
+	}
+	,set__x: function(value) {
+		return this._x = value;
+	}
+	,get__y: function() {
+		return this._y;
+	}
+	,set__y: function(value) {
+		return this._y = value;
+	}
+	,get__radius: function() {
+		return this._radius;
+	}
+	,set__radius: function(value) {
+		return this._radius = value;
+	}
+	,get__alpha: function() {
+		return this._alpha;
+	}
+	,set__alpha: function(value) {
+		return this._alpha = value;
+	}
+	,get__rotate: function() {
+		return this._rotate;
+	}
+	,set__rotate: function(value) {
+		return this._rotate = value;
+	}
+	,get__gradient: function() {
+		return this._gradient;
+	}
+	,set__gradient: function(value) {
+		return this._gradient = value;
+	}
+	,get__size: function() {
+		return this._size;
+	}
+	,set__size: function(value) {
+		return this._size = value;
+	}
+	,toString: function() {
+		return "Text: " + Std.string(JSON.parse(JSON.stringify(this)));
+	}
 	,__class__: cc_draw_Text
+	,__properties__: {set__gradient:"set__gradient",get__gradient:"get__gradient",set__size:"set__size",get__size:"get__size",set__rotate:"set__rotate",get__rotate:"get__rotate",set__alpha:"set__alpha",get__alpha:"get__alpha",set__radius:"set__radius",get__radius:"get__radius",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
 };
 var cc_lets_Easing = function() { };
 $hxClasses["cc.lets.Easing"] = cc_lets_Easing;
@@ -13431,7 +13510,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-16 11:27:36";
+lib_model_constants_App.BUILD = "2019-03-16 11:45:10";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
