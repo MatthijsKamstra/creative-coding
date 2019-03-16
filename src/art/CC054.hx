@@ -64,13 +64,23 @@ class CC054 extends CCBase implements ICCBase {
 	}
 
 	function createEye() {
+		var colorArr = [GREEN, PINK, BLUE, AQUA, TEAL, OLIVE];
+
 		var outerR = 120;
 		var innerR = 50;
 		// outline
-		cc.draw.Circle.create(ctx).pos(w2 + 4, h2 + 2).fill(BLACK).radius(outerR + 10).draw();
+		cc.draw.Circle.create(ctx)
+			.pos(w2 + random(-3, 3), h2 + random(-3, 3))
+			.fill(BLACK)
+			.radius(outerR + 10)
+			.draw();
 
 		// eye color
-		cc.draw.Circle.create(ctx).pos(w2, h2).fill(BLUE).radius(outerR).draw();
+		cc.draw.Circle.create(ctx)
+			.pos(w2, h2)
+			.fill(colorArr[randomInt(colorArr.length - 1)])
+			.radius(outerR)
+			.draw();
 
 		// pattern
 		ctx.strokeColourRGB(WHITE, 0.1);
@@ -85,9 +95,17 @@ class CC054 extends CCBase implements ICCBase {
 		var ypos = h2 - innerR + 20;
 		cc.draw.Circle.create(ctx) // .pos(w2 + random(-innerR, innerR), h2 + random(-innerR, innerR))
 			.color(WHITE).pos(xpos, ypos).radius(20).alpha(0.7).draw();
+		// random blink
+		var out = outerR - 50;
+		cc.draw.Circle.create(ctx)
+			.pos(w2 + random(-out, out), h2 + random(-out, out))
+			.color(WHITE)
+			.radius(10)
+			.alpha(0.7)
+			.draw();
 
 		// // try gradient circle
-		// var circle = cc.draw.Circle.create(ctx).radius(20).pos(55, 55).radius(20);
+		// var circle = cc.draw.Circle.create(ctx).radius(20).pos(55,55).radius(20);
 		// var grad = cc.draw.Gradient.create(ctx).circle(circle).draw();
 		// circle.gradient(grad.get).draw();
 

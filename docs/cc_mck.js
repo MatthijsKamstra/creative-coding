@@ -6335,12 +6335,13 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		this.createEye();
 	}
 	,createEye: function() {
+		var colorArr = [cc_util_ColorUtil.GREEN,cc_util_ColorUtil.PINK,cc_util_ColorUtil.BLUE,cc_util_ColorUtil.AQUA,cc_util_ColorUtil.TEAL,cc_util_ColorUtil.OLIVE];
 		var outerR = 120;
 		var innerR = 50;
 		var c = new cc_draw_Circle(this.ctx);
 		var _this = c;
-		var x = this.get_w2() + 4;
-		var y = this.get_h2() + 2;
+		var x = this.get_w2() + cc_util_MathUtil.random(-3,3);
+		var y = this.get_h2() + cc_util_MathUtil.random(-3,3);
 		_this.set__x(x);
 		_this.set__y(y);
 		var _this1 = _this;
@@ -6366,7 +6367,7 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		_this4.set__x(x1);
 		_this4.set__y(y1);
 		var _this5 = _this4;
-		_this5._color = cc_util_ColorUtil.BLUE;
+		_this5._color = colorArr[cc_util_MathUtil.randomInt(colorArr.length - 1)];
 		var _this6 = _this5;
 		_this6.set__radius(outerR);
 		var _this7 = _this6;
@@ -6434,6 +6435,31 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		_this16.circleFill(_this16._ctx,_this16.get__x(),_this16.get__y(),_this16.get__radius());
 		_this16._ctx.restore();
 		_this16._ctx.fillStyle = previousColor3;
+		var out = outerR - 50;
+		var c4 = new cc_draw_Circle(this.ctx);
+		var _this17 = c4;
+		var x3 = this.get_w2() + cc_util_MathUtil.random(-out,out);
+		var y3 = this.get_h2() + cc_util_MathUtil.random(-out,out);
+		_this17.set__x(x3);
+		_this17.set__y(y3);
+		var _this18 = _this17;
+		_this18._color = cc_util_ColorUtil.WHITE;
+		var _this19 = _this18;
+		_this19.set__radius(10);
+		var _this20 = _this19;
+		_this20.set__alpha(0.7);
+		var _this21 = _this20;
+		_this21._ctx.save();
+		var previousColor4 = _this21._ctx.fillStyle;
+		if(_this21._color != null && _this21.get__gradient() == null) {
+			cc_CanvasTools.fillColourRGB(_this21._ctx,_this21._color,_this21.get__alpha());
+		}
+		if(_this21.get__gradient() != null) {
+			_this21._ctx.fillStyle = _this21.get__gradient();
+		}
+		_this21.circleFill(_this21._ctx,_this21.get__x(),_this21.get__y(),_this21.get__radius());
+		_this21._ctx.restore();
+		_this21._ctx.fillStyle = previousColor4;
 	}
 	,setup: function() {
 		console.log("setup: " + this.toString());
@@ -13510,7 +13536,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-16 11:45:10";
+lib_model_constants_App.BUILD = "2019-03-16 11:56:41";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
