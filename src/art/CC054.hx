@@ -81,13 +81,24 @@ class CC054 extends CCBase implements ICCBase {
 		// inner black eye..
 		cc.draw.Circle.create(ctx).pos(w2, h2).fill(BLACK).radius(innerR).draw();
 		// high light
-		cc.draw.Circle.create(ctx)
-			.pos(w2 - innerR + 10, h2 - innerR + 20)
-			.fill(WHITE)
-			.radius(20)
-			.alpha(0.7)
-			.draw();
-		// .pos(w2 + random(-innerR, innerR), h2 + random(-innerR, innerR))
+		var xpos = w2 - innerR + 10;
+		var ypos = h2 - innerR + 20;
+		cc.draw.Circle.create(ctx) // .pos(w2 + random(-innerR, innerR), h2 + random(-innerR, innerR))
+			.color(WHITE).pos(xpos, ypos).radius(20).alpha(0.7).draw();
+
+		// // try gradient circle
+		// var circle = cc.draw.Circle.create(ctx).radius(20).pos(55, 55).radius(20);
+		// var grad = cc.draw.Gradient.create(ctx).circle(circle).draw();
+		// circle.gradient(grad.get).draw();
+
+		// trace(circle.toString());
+		// trace(grad.toString());
+
+		// ctx.fillStyle = grad.get;
+		// ctx.fillRect(grad.xpos, grad.ypos, grad.width, grad.height);
+
+		// trace('gradient.xpos: ${grad.xpos} , gradient.ypos: ${grad.ypos}');
+		// trace('gradient.width: ${grad.width}  , gradient.height: ${grad.height}');
 	}
 
 	override function setup() {
