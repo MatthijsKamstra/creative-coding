@@ -15,68 +15,11 @@ using StringTools;
 class Main {
 	var count:Int;
 	var hash:String;
-	var ccTypeArray : Array <Class<Dynamic>> = [
-			CC000,
-			CC001,
-			CC002,
-			CC003,
-			CC004,
-			CC005,
-			CC006,
-			CC007,
-			CC008,
-			CC009,
-			CC010,
-			CC011,
-			CC012,
-			CC013,
-			CC014,
-			CC015,
-			CC016,
-			CC017,
-			CC018,
-			CC019,
-			CC020,
-			CC021,
-			CC022,
-			CC023,
-			CC024,
-			CC025,
-			CC026,
-			CC027,
-			CC028,
-			CC029,
-			CC030,
-			CC031,
-			CC031a,
-			CC032,
-			CC033,
-			CC034,
-			CC035,
-			CC036,
-			CC037,
-			CC038,
-			CC039,
-			CC040,
-			CC041,
-			CC042,
-			CC043,
-			CC044,
-			CC045,
-			CC046,
-			CC047,
-			CC048,
-			CC049,
-			CC050,
-			CC051,
-			CC051a,
-			CC052,
-			CC052a,
-			CC053,
-			CC054,
-			// CCtest01,
-			// CCtest00,
-		];
+	var ccTypeArray:Array<Class<Dynamic>> = [
+		CC000, CC001, CC002, CC003, CC004, CC005, CC006, CC007, CC008, CC009, CC010, CC011, CC012, CC013, CC014, CC015, CC016, CC017, CC018, CC019, CC020,
+		CC021, CC022, CC023, CC024, CC025, CC026, CC027, CC028, CC029, CC030, CC031, CC031a, CC032, CC033, CC034, CC035, CC036, CC037, CC038, CC039, CC040,
+		CC041, CC042, CC043, CC044, CC045, CC046, CC047, CC048, CC049, CC050, CC051, CC051a, CC052, CC052a, CC053, CC054, CC054a, // CCtest01, // CCtest00,
+	];
 
 	public function new() {
 		document.addEventListener("DOMContentLoaded", function(event) {
@@ -87,7 +30,7 @@ class Main {
 		});
 	}
 
-	function setupCC(){
+	function setupCC() {
 		// setup canvas
 		var ctx:CanvasRenderingContext2D = Sketch.create("creative_code_mck");
 
@@ -96,16 +39,16 @@ class Main {
 		hash = hash.replace('#', '');
 
 		var clazz = Type.resolveClass('art.${hash}');
-		if(clazz == null) {
+		if (clazz == null) {
 			// make sure if it's not in the list, show the latest Sketch
-			clazz = ccTypeArray[ccTypeArray.length-1];
+			clazz = ccTypeArray[ccTypeArray.length - 1];
 		}
 		count = ccTypeArray.indexOf(clazz);
-		var cc = Type.createInstance(clazz,[ctx]);
+		var cc = Type.createInstance(clazz, [ctx]);
 		changeHash();
 	}
 
-	function setupNav(){
+	function setupNav() {
 		var snackbar = new lib.html.Snackbar();
 		snackbar.show('sketch $hash');
 
@@ -137,18 +80,17 @@ class Main {
 				case 'ArrowLeft':
 					count--;
 				case 'ArrowUp':
-					count = ccTypeArray.length-1;
+					count = ccTypeArray.length - 1;
 				case 'ArrowDown':
 					count = 0;
 					// default : trace ("case '"+e.key+"': trace ('"+e.key+"');");
 			}
 			changeHash();
 		}, false);
-
 	}
 
 	function changeHash() {
-		location.hash = Type.getClassName(ccTypeArray[count]).replace('art.','');
+		location.hash = Type.getClassName(ccTypeArray[count]).replace('art.', '');
 	}
 
 	static public function main() {
