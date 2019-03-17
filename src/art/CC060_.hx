@@ -4,9 +4,8 @@ package art;
  * short description what this does
  */
 class CC053 extends CCBase implements ICCBase {
-
-	var shapeArray : Array<Circle> = [];
-	var grid : GridUtil = new GridUtil();
+	var shapeArray:Array<Circle> = [];
+	var grid:GridUtil = new GridUtil();
 	// sizes
 	var _radius = 150;
 	var _cellsize = 150;
@@ -16,9 +15,7 @@ class CC053 extends CCBase implements ICCBase {
 	var _color2:RGB = null;
 	var _color3:RGB = null;
 	var _color4:RGB = null;
-
 	var panel1:QuickSettings;
-
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = '';
@@ -37,57 +34,52 @@ class CC053 extends CCBase implements ICCBase {
 
 	function createQuickSettings() {
 		// demo/basic example
-		panel1 = QuickSettings.create(10, 10, "Quote generator")
-			.setGlobalChangeHandler(untyped drawShape)
-			.addHTML("Reason", "Sometimes I need a quick quote, to post on Instagram")
+		panel1 = QuickSettings.create(10, 10, "Quote generator").setGlobalChangeHandler(untyped drawShape)
+			.addHTML("Reason", "Sometimes I need a quick quote, to post on Instagram").addTextArea('Quote', 'text', function(value) trace(value))
 
-			.addTextArea('Quote', 'text', function (value) trace(value) )
-			.addBoolean('All Caps', false, function (value) trace(value) )
+			.addBoolean('All Caps', false, function(value) trace(value)).saveInLocalStorage('store-data-${toString()}');
 
-			.saveInLocalStorage('store-data-${toString()}');
 	}
 
-
-	function createShape(i:Int, ?point:Point){
-		var shape : Circle = {
+	function createShape(i:Int, ?point:Point) {
+		var shape:Circle = {
 			_id: '$i',
 			_type: 'circle',
 			x: point.x,
 			y: point.y,
-			radius:_radius,
+			radius: _radius,
 		}
 		onAnimateHandler(shape);
 		return shape;
 	}
 
-	function onAnimateHandler(circle:Circle){
+	function onAnimateHandler(circle:Circle) {
 		// Go.to(circle, 5).x(w/2).y(h/2).ease(Sine.easeInOut).onComplete(onAnimateHandler, [circle]);
 	}
 
-	function drawShape(){
-		ctx.clearRect(0,0,w,h);
+	function drawShape() {
+		ctx.clearRect(0, 0, w, h);
 		ctx.backgroundObj(WHITE);
 
 		ctx.fillStyle = getColourObj(_color4);
-		Text.centerFillText(ctx, 'text', w/2, h/2, "'Oswald', sans-serif;", 160);
+		Text.centerFillText(ctx, 'text', w / 2, h / 2, "'Oswald', sans-serif;", 160);
 
 		if (isDebug) {
 			ShapeUtil.gridField(ctx, grid);
 		}
 
-		for ( i in 0 ... shapeArray.length ) {
+		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 		}
 		var rgb = randomColourObject();
 		ctx.strokeColour(rgb.r, rgb.g, rgb.b);
-		ctx.xcross(w/2, h/2, 200);
+		ctx.xcross(w / 2, h / 2, 200);
 	}
 
-
-	override function setup(){
+	override function setup() {
 		trace('setup: ${toString()}');
 
-		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length-1)];
+		var colorArray = ColorUtil.niceColor100SortedString[randomInt(ColorUtil.niceColor100SortedString.length - 1)];
 		_color0 = hex2RGB(colorArray[0]);
 		_color1 = hex2RGB(colorArray[1]);
 		_color2 = hex2RGB(colorArray[2]);
@@ -107,7 +99,7 @@ class CC053 extends CCBase implements ICCBase {
 		}
 	}
 
-	override function draw(){
+	override function draw() {
 		trace('draw: ${toString()}');
 		drawShape();
 		stop();
