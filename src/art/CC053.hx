@@ -5,14 +5,34 @@ package art;
  */
 class CC053 extends CCBase implements ICCBase {
 	var _isEmbedded = false;
+	var panel1:QuickSettings;
+	var defaultText = "Hier moet iets staan dat de moeite waard is";
+	var _text:String;
+	var _radius:Int = 180;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = '';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
-		Text.embedGoogleFont('Source+Code+Pro', onEmbedHandler);
+		_text = defaultText;
 
+		Text.embedGoogleFont('Source+Code+Pro', onEmbedHandler);
+		createQuickSettings();
 		super(ctx);
+	}
+
+	function createQuickSettings() {
+		// demo/basic example
+		panel1 = QuickSettings.create(10, 10, "Test rotation")
+			.setGlobalChangeHandler(untyped drawShape)
+			.addTextArea('Quote', _text, function(value) trace(value))
+			.addRange('radius', 50, 300, 180, 1, function(value) setRadius(value))
+			.saveInLocalStorage('store-data-${toString()}');
+		// .addBoolean('All Caps', false, function(value) trace(value))
+	}
+
+	function setRadius(px:Int):Void {
+		this._radius = px;
 	}
 
 	function onEmbedHandler(e) {
@@ -30,14 +50,23 @@ class CC053 extends CCBase implements ICCBase {
 
 		var centerX = w2;
 		var centerY = h2;
-		var angle = Math.PI * 0.8; // radians
-		var radius = 180;
+		// var angle = Math.PI * 0.8; // radians
+		// var radius = 180;
 		ctx.fillColourRGB(BLACK);
 
+		// important to have a example text in the canvas, otherwise the measurement don't work
+		// important to have the font loaded
+		ctx.fillStyle = getColourObj(PINK);
+		Text.fillText(ctx, _text, w2, h2, "Source Code Pro", 20);
+
+		ctx.fillColourRGB(BLACK);
 		ctx.textAlign = "center";
 		ctx.textBaseline = "bottom";
 		ctx.font = '20px Source Code Pro';
-		TextUtil.drawTextAlongArc(ctx, "Hier moet iets staan dat de moeite waard is", centerX, centerY, radius, angle);
+		TextUtil.drawTextAlongArc2(ctx, _text, centerX, centerY, this._radius);
+
+		ctx.strokeColourRGB(GRAY);
+		ctx.circleStroke(centerX, centerY, this._radius);
 	}
 
 	override function setup() {
