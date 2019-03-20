@@ -16,6 +16,7 @@ class CC053 extends CCBase implements ICCBase {
 	var _color3:RGB = null;
 	var _color4:RGB = null;
 	var panel1:QuickSettings;
+	var isFontLoaded:Bool = false;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = '';
@@ -24,21 +25,32 @@ class CC053 extends CCBase implements ICCBase {
 		// <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
 		Text.embedGoogleFont('Oswald:200,300,400,500,600,700', onEmbedHandler);
 
+		// // setup Sketch
+		// var option = new Sketch.SketchOption();
+		// option.width = 1080; // 1080
+		// // option.height = 1000;
+		// option.autostart = true;
+		// option.padding = 10;
+		// option.scale = true;
+		// ctx = Sketch.create("creative_code_mck", option);
+
 		super(ctx);
 	}
 
 	function onEmbedHandler(e) {
 		trace('onEmbedHandler: "${e}"');
+		isFontLoaded = true;
 		drawShape();
 	}
 
 	function createQuickSettings() {
 		// demo/basic example
-		panel1 = QuickSettings.create(10, 10, "Quote generator").setGlobalChangeHandler(untyped drawShape)
-			.addHTML("Reason", "Sometimes I need a quick quote, to post on Instagram").addTextArea('Quote', 'text', function(value) trace(value))
-
-			.addBoolean('All Caps', false, function(value) trace(value)).saveInLocalStorage('store-data-${toString()}');
-
+		panel1 = QuickSettings.create(10, 10, "Quote generator")
+			.setGlobalChangeHandler(untyped drawShape)
+			.addHTML("Reason", "Sometimes I need a quick quote, to post on Instagram")
+			.addTextArea('Quote', 'text', function(value) trace(value))
+			.addBoolean('All Caps', false, function(value) trace(value))
+			.saveInLocalStorage('store-data-${toString()}');
 	}
 
 	function createShape(i:Int, ?point:Point) {
