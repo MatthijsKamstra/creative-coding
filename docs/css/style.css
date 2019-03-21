@@ -2,6 +2,8 @@ canvas {
     /* border: 1px solid pink; */
     /* width: 500px; */
     background-color: white;
+    background-image: url(../img/pattern/bg.gif);
+    background-repeat: repeat;
 }
 
 #canvas-wrapper {
