@@ -57,24 +57,68 @@ class CC055 extends CCBase implements ICCBase {
 		isImageLoaded = true;
 		drawShape();
 
-		spritesheet = new Spritesheet(ctx, _img);
+		var _scale = 4;
 
-		spritesheet.debug(isDebug)
-			.index(10)
-			.cell(100, 100)
-			.scale(1)
-			.center(); // .pulse(draw)
+		// spritesheet = new Spritesheet(ctx, _img);
 
-		spritesheet
+		// spritesheet.debug(isDebug)
+		// 	.index(0)
+		// 	.cell(100, 100)
+		// 	.scale(_scale)
+		// 	.center();
+
+		// spritesheet
+		// 	.fps(15)
+		// 	.pos(w3 * 2, h3 * 2)
+		// 	.animate()
+		// 	.draw();
+
+		// spritesheet
+		// 	.pos(w3, h3)
+		// 	.index(10) // .animate()
+		// 	.draw();
+
+		haxe.Timer.delay(function() {
+			delayCallHandler();
+		}, 2000);
+	}
+
+	function delayCallHandler() {
+		var _scale = 4;
+		Spritesheet.create(ctx, _img)
+			.debug(isDebug)
 			.fps(15)
-			.pos(w2, h2)
+			.cell(100, 100)
+			.scale(_scale)
+			.pos(w - (100 * _scale), 0)
 			.animate()
 			.draw();
 
-		spritesheet
+		Spritesheet.create(ctx, _img)
+			.debug(isDebug)
+			.fps(30)
+			.cell(100, 100)
+			.scale(_scale)
+			.center()
 			.pos(w3, h3)
 			.animate()
 			.draw();
+
+		Spritesheet.create(ctx, _img)
+			.debug(isDebug)
+			.fps(60)
+			.cell(100, 100)
+			.scale(_scale)
+			.center()
+			.pos(w3 * 2, h3 * 2)
+			.animate()
+			.draw();
+
+		ctx.strokeWeight(2);
+		ctx.strokeColourRGB(_color2);
+		ctx.centreStrokeRect(w3 * 2, h3 * 2, 100 * _scale, 100 * _scale);
+		ctx.strokeColourRGB(_color3);
+		ctx.centreStrokeRect(w3, h3, 100 * _scale, 100 * _scale);
 	}
 
 	function onEmbedHandler(e) {
@@ -85,7 +129,7 @@ class CC055 extends CCBase implements ICCBase {
 
 	function drawShape() {
 		ctx.clearRect(0, 0, w, h);
-		ctx.backgroundObj(WHITE);
+		ctx.backgroundObj(_color0);
 
 		// if (isDebug) {
 		// 	ShapeUtil.gridField(ctx, grid);
