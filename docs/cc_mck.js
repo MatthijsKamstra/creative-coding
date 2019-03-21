@@ -26,6 +26,14 @@ EReg.prototype = {
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = ["HxOverrides"];
+HxOverrides.dateStr = function(date) {
+	var m = date.getMonth() + 1;
+	var d = date.getDate();
+	var h = date.getHours();
+	var mi = date.getMinutes();
+	var s = date.getSeconds();
+	return date.getFullYear() + "-" + (m < 10 ? "0" + m : "" + m) + "-" + (d < 10 ? "0" + d : "" + d) + " " + (h < 10 ? "0" + h : "" + h) + ":" + (mi < 10 ? "0" + mi : "" + mi) + ":" + (s < 10 ? "0" + s : "" + s);
+};
 HxOverrides.cca = function(s,index) {
 	var x = s.charCodeAt(index);
 	if(x != x) {
@@ -149,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -6761,104 +6769,198 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 		cc_draw_Text.embedGoogleFont("Berkshire+Swash",$bind(this,this.onEmbedHandler));
 	}
 	,onLoadedComplete: function(img) {
+		var _gthis = this;
 		this._img = img;
 		this.isImageLoaded = true;
 		this.drawShape();
-		this.spritesheet = new cc_draw_Spritesheet(this.ctx,this._img);
-		var _this = this.spritesheet;
+		var _scale = 4;
+		haxe_Timer.delay(function() {
+			_gthis.delayCallHandler();
+		},2000);
+	}
+	,delayCallHandler: function() {
+		var _scale = 4;
+		var spritesheet = new cc_draw_Spritesheet(this.ctx,this._img);
+		var _this = spritesheet;
 		_this.set__isDebug(this.isDebug);
 		var _this1 = _this;
-		_this1.set__index(10);
+		_this1.set__fps(15);
 		var _this2 = _this1;
 		_this2.set__cellWidth(100);
 		_this2.set__cellHeight(100);
 		_this2._totalFrame = Math.round(_this2.get__width() / _this2.get__cellWidth());
 		var _this3 = _this2;
-		_this3.set__scale(1);
+		_this3.set__scale(_scale);
 		var _this4 = _this3;
-		_this4.set__isCentered(true);
-		var _this5 = this.spritesheet;
-		_this5.set__fps(15);
+		_this4.set__x(Global.w - 100 * _scale);
+		_this4.set__y(0);
+		var _this5 = _this4;
+		_this5._isAnimation = true;
+		_this5._isActive = true;
 		var _this6 = _this5;
-		var x = this.get_w2();
-		var y = this.get_h2();
-		_this6.set__x(x);
-		_this6.set__y(y);
-		var _this7 = _this6;
-		_this7._isAnimation = true;
-		var _this8 = _this7;
+		if(_this6._isActive && _this6._pulse == null) {
+			window.console.warn("this should happen only once! (" + _this6._pulse + " == null)");
+			console.log(_this6.toString());
+			_this6._pulse = window.requestAnimationFrame($bind(_this6,_this6.pulseHandler));
+		}
 		var xpos = 0;
 		var ypos = 0;
-		if(_this8.get__isCentered()) {
-			xpos = -Math.round(_this8.get__cellWidth() / 2);
-			ypos = -Math.round(_this8.get__cellHeight() / 2);
+		if(_this6.get__isCentered()) {
+			xpos = -Math.round(_this6.get__cellWidth() / 2);
+			ypos = -Math.round(_this6.get__cellHeight() / 2);
 		}
-		_this8._ctx.save();
-		_this8._ctx.translate(_this8.get__x(),_this8.get__y());
-		_this8._ctx.rotate(cc_util_MathUtil.radians(_this8.get__rotate()));
-		_this8._ctx.clearRect(xpos,ypos,_this8.get__cellWidth() * _this8.get__scale(),_this8.get__cellHeight() * _this8.get__scale());
-		var shiftX = _this8._currentSprite * _this8.get__cellWidth();
+		_this6._ctx.save();
+		_this6._ctx.translate(_this6.get__x(),_this6.get__y());
+		_this6._ctx.rotate(cc_util_MathUtil.radians(_this6.get__rotate()));
+		_this6._ctx.clearRect(xpos * _this6.get__scale(),ypos * _this6.get__scale(),_this6.get__cellWidth() * _this6.get__scale(),_this6.get__cellHeight() * _this6.get__scale());
+		var shiftX = _this6._currentSprite * _this6.get__cellWidth();
 		var shiftY = 0;
-		_this8._ctx.scale(_this8.get__scale(),_this8.get__scale());
-		_this8._ctx.drawImage(_this8.get__img(),shiftX,shiftY,_this8.get__cellWidth(),_this8.get__cellHeight(),xpos,ypos,_this8.get__cellWidth(),_this8.get__cellHeight());
-		_this8._ctx.restore();
-		_this8._fpsCounter++;
-		_this8._currentSprite++;
-		if(_this8._currentSprite > _this8._totalFrame) {
-			if(_this8._isLoop) {
-				_this8._currentSprite = _this8.get__index();
-			} else {
-				_this8._isAnimation = false;
-				_this8._currentSprite = _this8._totalFrame - 1;
-				_this8.draw();
+		_this6._ctx.scale(_this6.get__scale(),_this6.get__scale());
+		_this6._ctx.drawImage(_this6.get__img(),shiftX,shiftY,_this6.get__cellWidth(),_this6.get__cellHeight(),xpos,ypos,_this6.get__cellWidth(),_this6.get__cellHeight());
+		_this6._ctx.restore();
+		if(_this6._isAnimation) {
+			_this6._currentSprite++;
+			if(_this6._currentSprite > _this6._totalFrame) {
+				if(_this6._isLoop) {
+					if(_this6.get__isDebug()) {
+						console.log("start loop");
+					}
+					_this6._currentSprite = _this6.get__index();
+				} else {
+					if(_this6.get__isDebug()) {
+						console.log("stop animation");
+					}
+					_this6._isAnimation = false;
+					_this6._currentSprite = _this6._totalFrame - 1;
+					_this6.draw();
+				}
 			}
 		}
-		if(_this8._isAnimation) {
-			console.log("_fpsCounter: " + _this8._fpsCounter + " % 60 / " + _this8.get__fps() + " -> " + _this8._fpsCounter % (60 / _this8.get__fps()));
-			if(_this8._fpsCounter % 60 / _this8.get__fps() == 0) {
-				window.requestAnimationFrame($bind(_this8,_this8.redraw));
-			}
-		}
-		var _this9 = this.spritesheet;
-		var x1 = this.get_w3();
-		var y1 = this.get_h3();
-		_this9.set__x(x1);
-		_this9.set__y(y1);
+		var spritesheet1 = new cc_draw_Spritesheet(this.ctx,this._img);
+		var _this7 = spritesheet1;
+		_this7.set__isDebug(this.isDebug);
+		var _this8 = _this7;
+		_this8.set__fps(30);
+		var _this9 = _this8;
+		_this9.set__cellWidth(100);
+		_this9.set__cellHeight(100);
+		_this9._totalFrame = Math.round(_this9.get__width() / _this9.get__cellWidth());
 		var _this10 = _this9;
-		_this10._isAnimation = true;
+		_this10.set__scale(_scale);
 		var _this11 = _this10;
+		_this11.set__isCentered(true);
+		var _this12 = _this11;
+		var x = this.get_w3();
+		var y = this.get_h3();
+		_this12.set__x(x);
+		_this12.set__y(y);
+		var _this13 = _this12;
+		_this13._isAnimation = true;
+		_this13._isActive = true;
+		var _this14 = _this13;
+		if(_this14._isActive && _this14._pulse == null) {
+			window.console.warn("this should happen only once! (" + _this14._pulse + " == null)");
+			console.log(_this14.toString());
+			_this14._pulse = window.requestAnimationFrame($bind(_this14,_this14.pulseHandler));
+		}
 		var xpos1 = 0;
 		var ypos1 = 0;
-		if(_this11.get__isCentered()) {
-			xpos1 = -Math.round(_this11.get__cellWidth() / 2);
-			ypos1 = -Math.round(_this11.get__cellHeight() / 2);
+		if(_this14.get__isCentered()) {
+			xpos1 = -Math.round(_this14.get__cellWidth() / 2);
+			ypos1 = -Math.round(_this14.get__cellHeight() / 2);
 		}
-		_this11._ctx.save();
-		_this11._ctx.translate(_this11.get__x(),_this11.get__y());
-		_this11._ctx.rotate(cc_util_MathUtil.radians(_this11.get__rotate()));
-		_this11._ctx.clearRect(xpos1,ypos1,_this11.get__cellWidth() * _this11.get__scale(),_this11.get__cellHeight() * _this11.get__scale());
-		var shiftX1 = _this11._currentSprite * _this11.get__cellWidth();
+		_this14._ctx.save();
+		_this14._ctx.translate(_this14.get__x(),_this14.get__y());
+		_this14._ctx.rotate(cc_util_MathUtil.radians(_this14.get__rotate()));
+		_this14._ctx.clearRect(xpos1 * _this14.get__scale(),ypos1 * _this14.get__scale(),_this14.get__cellWidth() * _this14.get__scale(),_this14.get__cellHeight() * _this14.get__scale());
+		var shiftX1 = _this14._currentSprite * _this14.get__cellWidth();
 		var shiftY1 = 0;
-		_this11._ctx.scale(_this11.get__scale(),_this11.get__scale());
-		_this11._ctx.drawImage(_this11.get__img(),shiftX1,shiftY1,_this11.get__cellWidth(),_this11.get__cellHeight(),xpos1,ypos1,_this11.get__cellWidth(),_this11.get__cellHeight());
-		_this11._ctx.restore();
-		_this11._fpsCounter++;
-		_this11._currentSprite++;
-		if(_this11._currentSprite > _this11._totalFrame) {
-			if(_this11._isLoop) {
-				_this11._currentSprite = _this11.get__index();
-			} else {
-				_this11._isAnimation = false;
-				_this11._currentSprite = _this11._totalFrame - 1;
-				_this11.draw();
+		_this14._ctx.scale(_this14.get__scale(),_this14.get__scale());
+		_this14._ctx.drawImage(_this14.get__img(),shiftX1,shiftY1,_this14.get__cellWidth(),_this14.get__cellHeight(),xpos1,ypos1,_this14.get__cellWidth(),_this14.get__cellHeight());
+		_this14._ctx.restore();
+		if(_this14._isAnimation) {
+			_this14._currentSprite++;
+			if(_this14._currentSprite > _this14._totalFrame) {
+				if(_this14._isLoop) {
+					if(_this14.get__isDebug()) {
+						console.log("start loop");
+					}
+					_this14._currentSprite = _this14.get__index();
+				} else {
+					if(_this14.get__isDebug()) {
+						console.log("stop animation");
+					}
+					_this14._isAnimation = false;
+					_this14._currentSprite = _this14._totalFrame - 1;
+					_this14.draw();
+				}
 			}
 		}
-		if(_this11._isAnimation) {
-			console.log("_fpsCounter: " + _this11._fpsCounter + " % 60 / " + _this11.get__fps() + " -> " + _this11._fpsCounter % (60 / _this11.get__fps()));
-			if(_this11._fpsCounter % 60 / _this11.get__fps() == 0) {
-				window.requestAnimationFrame($bind(_this11,_this11.redraw));
+		var spritesheet2 = new cc_draw_Spritesheet(this.ctx,this._img);
+		var _this15 = spritesheet2;
+		_this15.set__isDebug(this.isDebug);
+		var _this16 = _this15;
+		_this16.set__fps(60);
+		var _this17 = _this16;
+		_this17.set__cellWidth(100);
+		_this17.set__cellHeight(100);
+		_this17._totalFrame = Math.round(_this17.get__width() / _this17.get__cellWidth());
+		var _this18 = _this17;
+		_this18.set__scale(_scale);
+		var _this19 = _this18;
+		_this19.set__isCentered(true);
+		var _this20 = _this19;
+		var x1 = this.get_w3() * 2;
+		var y1 = this.get_h3() * 2;
+		_this20.set__x(x1);
+		_this20.set__y(y1);
+		var _this21 = _this20;
+		_this21._isAnimation = true;
+		_this21._isActive = true;
+		var _this22 = _this21;
+		if(_this22._isActive && _this22._pulse == null) {
+			window.console.warn("this should happen only once! (" + _this22._pulse + " == null)");
+			console.log(_this22.toString());
+			_this22._pulse = window.requestAnimationFrame($bind(_this22,_this22.pulseHandler));
+		}
+		var xpos2 = 0;
+		var ypos2 = 0;
+		if(_this22.get__isCentered()) {
+			xpos2 = -Math.round(_this22.get__cellWidth() / 2);
+			ypos2 = -Math.round(_this22.get__cellHeight() / 2);
+		}
+		_this22._ctx.save();
+		_this22._ctx.translate(_this22.get__x(),_this22.get__y());
+		_this22._ctx.rotate(cc_util_MathUtil.radians(_this22.get__rotate()));
+		_this22._ctx.clearRect(xpos2 * _this22.get__scale(),ypos2 * _this22.get__scale(),_this22.get__cellWidth() * _this22.get__scale(),_this22.get__cellHeight() * _this22.get__scale());
+		var shiftX2 = _this22._currentSprite * _this22.get__cellWidth();
+		var shiftY2 = 0;
+		_this22._ctx.scale(_this22.get__scale(),_this22.get__scale());
+		_this22._ctx.drawImage(_this22.get__img(),shiftX2,shiftY2,_this22.get__cellWidth(),_this22.get__cellHeight(),xpos2,ypos2,_this22.get__cellWidth(),_this22.get__cellHeight());
+		_this22._ctx.restore();
+		if(_this22._isAnimation) {
+			_this22._currentSprite++;
+			if(_this22._currentSprite > _this22._totalFrame) {
+				if(_this22._isLoop) {
+					if(_this22.get__isDebug()) {
+						console.log("start loop");
+					}
+					_this22._currentSprite = _this22.get__index();
+				} else {
+					if(_this22.get__isDebug()) {
+						console.log("stop animation");
+					}
+					_this22._isAnimation = false;
+					_this22._currentSprite = _this22._totalFrame - 1;
+					_this22.draw();
+				}
 			}
 		}
+		cc_CanvasTools.strokeWeight(this.ctx,2);
+		cc_CanvasTools.strokeColourRGB(this.ctx,this._color2);
+		cc_CanvasTools.centreStrokeRect(this.ctx,this.get_w3() * 2,this.get_h3() * 2,100 * _scale,100 * _scale);
+		cc_CanvasTools.strokeColourRGB(this.ctx,this._color3);
+		cc_CanvasTools.centreStrokeRect(this.ctx,this.get_w3(),this.get_h3(),100 * _scale,100 * _scale);
 	}
 	,onEmbedHandler: function(e) {
 		console.log("onEmbedHandler: \"" + e + "\"");
@@ -6867,7 +6969,7 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 	}
 	,drawShape: function() {
 		this.ctx.clearRect(0,0,Global.w,Global.h);
-		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		cc_CanvasTools.backgroundObj(this.ctx,this._color0);
 	}
 	,setup: function() {
 		console.log("setup: " + this.toString());
@@ -6965,6 +7067,11 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 				var _this5 = _this4;
 				_this5.set__isCentered(true);
 				var _this6 = _this5;
+				if(_this6._isActive && _this6._pulse == null) {
+					window.console.warn("this should happen only once! (" + _this6._pulse + " == null)");
+					console.log(_this6.toString());
+					_this6._pulse = window.requestAnimationFrame($bind(_this6,_this6.pulseHandler));
+				}
 				var xpos = 0;
 				var ypos = 0;
 				if(_this6.get__isCentered()) {
@@ -6974,27 +7081,28 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 				_this6._ctx.save();
 				_this6._ctx.translate(_this6.get__x(),_this6.get__y());
 				_this6._ctx.rotate(cc_util_MathUtil.radians(_this6.get__rotate()));
-				_this6._ctx.clearRect(xpos,ypos,_this6.get__cellWidth() * _this6.get__scale(),_this6.get__cellHeight() * _this6.get__scale());
+				_this6._ctx.clearRect(xpos * _this6.get__scale(),ypos * _this6.get__scale(),_this6.get__cellWidth() * _this6.get__scale(),_this6.get__cellHeight() * _this6.get__scale());
 				var shiftX = _this6._currentSprite * _this6.get__cellWidth();
 				var shiftY = 0;
 				_this6._ctx.scale(_this6.get__scale(),_this6.get__scale());
 				_this6._ctx.drawImage(_this6.get__img(),shiftX,shiftY,_this6.get__cellWidth(),_this6.get__cellHeight(),xpos,ypos,_this6.get__cellWidth(),_this6.get__cellHeight());
 				_this6._ctx.restore();
-				_this6._fpsCounter++;
-				_this6._currentSprite++;
-				if(_this6._currentSprite > _this6._totalFrame) {
-					if(_this6._isLoop) {
-						_this6._currentSprite = _this6.get__index();
-					} else {
-						_this6._isAnimation = false;
-						_this6._currentSprite = _this6._totalFrame - 1;
-						_this6.draw();
-					}
-				}
 				if(_this6._isAnimation) {
-					console.log("_fpsCounter: " + _this6._fpsCounter + " % 60 / " + _this6.get__fps() + " -> " + _this6._fpsCounter % (60 / _this6.get__fps()));
-					if(_this6._fpsCounter % 60 / _this6.get__fps() == 0) {
-						window.requestAnimationFrame($bind(_this6,_this6.redraw));
+					_this6._currentSprite++;
+					if(_this6._currentSprite > _this6._totalFrame) {
+						if(_this6._isLoop) {
+							if(_this6.get__isDebug()) {
+								console.log("start loop");
+							}
+							_this6._currentSprite = _this6.get__index();
+						} else {
+							if(_this6.get__isDebug()) {
+								console.log("stop animation");
+							}
+							_this6._isAnimation = false;
+							_this6._currentSprite = _this6._totalFrame - 1;
+							_this6.draw();
+						}
 					}
 				}
 			}
@@ -7086,6 +7194,240 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		this.stop();
 	}
 	,__class__: art_CC055a
+});
+var art_CC056 = function(ctx) {
+	this.imageStringArray = [];
+	this._record = 600;
+	this._delay = 120;
+	this._recordCounter = 0;
+	this._delayCounter = 0;
+	this.isExportActive = false;
+	this.isFileLoaded = false;
+	this.isZipLoaded = false;
+	this.isFontLoaded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 20;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("Zip test");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	this.init();
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC056"] = art_CC056;
+art_CC056.__name__ = ["art","CC056"];
+art_CC056.__interfaces__ = [art_ICCBase];
+art_CC056.__super__ = art_CCBase;
+art_CC056.prototype = $extend(art_CCBase.prototype,{
+	init: function() {
+		cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
+		var zip = new cc_tool_Zip();
+		zip.embedScripts($bind(this,this.onZipHandler));
+	}
+	,onEmbedHandler: function(e) {
+		console.log("onEmbedHandler: \"" + e + "\"");
+		this.isFontLoaded = true;
+		this.drawShape();
+	}
+	,onZipHandler: function(str) {
+		switch(str) {
+		case "jsfilesaver":
+			console.log("jsfilesaver");
+			this.isFileLoaded = true;
+			break;
+		case "jszip":
+			console.log("jszip");
+			this.isZipLoaded = true;
+			break;
+		default:
+			console.log("case '" + str + "': trace ('" + str + "');");
+		}
+		if(this.isFileLoaded && this.isZipLoaded) {
+			this.startExport();
+		}
+	}
+	,startExport: function() {
+		this.startT = new Date().getTime();
+		this.isExportActive = true;
+		this.imageStringArray = [];
+		console.log(this.toString() + " - start export - 0ms");
+	}
+	,stopExport: function() {
+		var _gthis = this;
+		this.endT = new Date().getTime();
+		this.isExportActive = false;
+		console.log(this.toString() + (" - stop export - " + (this.endT - this.startT) / 1000 + "sec"));
+		var timeStamp = this.endT;
+		var md = "# " + this.toString() + "\n\n- Generated on: " + Std.string(new Date()) + "\n- total images: " + this.imageStringArray.length + "\n- file name: + _" + this.toString() + "_" + timeStamp + ".zip\n- delay: " + this._delay + " frames (" + this._delay / 60 + " sec)\n- record: " + this._record + " frames (" + this._record / 60 + " sec)\n\n\n\n## Instagram\n\n```\nsketch." + this.toString() + " :: " + this.get_description() + "\n\n\n#codeart #coding #creativecode #generative #generativeArt\n#minimalism #minimalist #minimal\n#haxe #javascript #js #nodejs\n```\n\n## convert\n\nopen terminal\n\n```\nsh convert.sh\n```\n\n## Folder structure\n\n```\n+ _" + this.toString() + "_" + timeStamp + ".zip\n\t+ _" + this.toString() + "\n\t\t- convert.sh\n\t\t- README.MD\n\t\t+ sequence\n\t\t\t- image_" + StringTools.lpad("0","0",4) + ".png\n\t\t\t- image_" + StringTools.lpad("1","0",4) + ".png\n\t\t\t- ...\n```\n";
+		var bash = "#!/bin/bash\n\necho 'Start convertions png sequens to mp4'\n\nffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  " + this.toString() + "_output_30fps.mp4\n# ffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  sequence/_output_30fps.mp4\n\necho 'End convertions png sequens to mp4'\n\n";
+		console.log("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec");
+		var zip = new JSZip();
+		zip.file("_" + this.toString() + "/README.MD",md);
+		zip.file("_" + this.toString() + "/convert.sh",bash);
+		var _g1 = 0;
+		var _g = this.imageStringArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			console.log("/" + this.imageStringArray.length + ". add image to file");
+			var img = this.imageStringArray[i];
+			zip.file("_" + this.toString() + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
+		}
+		console.log("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec");
+		zip.generateAsync({ type : "blob"}).then(function(blob) {
+			window.console.log("Save zip file complete - " + (new Date().getTime() - _gthis.startT) / 1000 + "sec");
+			saveAs(blob,"_" + _gthis.toString() + "_" + timeStamp + ".zip");
+		},function(err) {
+			window.console.log(err);
+		});
+	}
+	,createQuickSettings: function() {
+		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote","text",function(value) {
+			console.log(value);
+		}).addBoolean("All Caps",false,function(value1) {
+			console.log(value1);
+		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius, rgb : cc_util_ColorUtil.randomColourObject()};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+		var Go = new cc_lets_Go(circle,cc_util_MathUtil.random(3,5));
+		Go._isFrom = false;
+		var _this = Go;
+		var value = cc_util_MathUtil.random(0,Global.w);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
+			objValue = Reflect.getProperty(_this._target,"x");
+		}
+		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("x",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
+		var _this1 = _this;
+		var value1 = cc_util_MathUtil.random(0,Global.h);
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
+			objValue1 = Reflect.getProperty(_this1._target,"y");
+		}
+		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
+		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this3._options.onCompleteParams = [circle];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		if(this.isDebug) {
+			cc_util_ShapeUtil.gridField(this.ctx,this.grid);
+		}
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			cc_CanvasTools.fillColourRGB(this.ctx,sh.rgb);
+			cc_CanvasTools.circleFill(this.ctx,sh.x,sh.y,sh.radius);
+		}
+		var rgb = cc_util_ColorUtil.randomColourObject();
+		cc_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
+		cc_util_ShapeUtil.xcross(this.ctx,Global.w / 2,Global.h / 2,200);
+		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color4);
+		var Text = new cc_draw_Text(this.ctx,"Zip export test");
+		var _this = Text;
+		_this._textAlign = "center";
+		var _this1 = _this;
+		_this1._textBaseline = "middle";
+		var _this2 = _this1;
+		_this2._font = StringTools.replace(StringTools.replace("Oswald",";",""),"+"," ");
+		var _this3 = _this2;
+		_this3.set__size(160);
+		var _this4 = _this3;
+		var x = this.get_w2();
+		var y = this.get_h2();
+		_this4.set__x(x);
+		_this4.set__y(y);
+		var _this5 = _this4;
+		_this5._ctx.save();
+		var previousColor = _this5._ctx.fillStyle;
+		if(_this5._color != null) {
+			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
+		}
+		var tmp = "" + _this5.get__size() + "px ";
+		_this5._ctx.font = tmp + _this5._font;
+		_this5._ctx.textAlign = _this5._textAlign;
+		_this5._ctx.textBaseline = _this5._textBaseline;
+		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
+		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
+		_this5._ctx.fillText(_this5._text,0,0);
+		_this5._ctx.restore();
+		_this5._ctx.fillStyle = previousColor;
+		if(this.isExportActive) {
+			if(this._delayCounter < this._delay) {
+				console.log("delay: " + this._delayCounter + " >= " + this._delay);
+			}
+			if(this._delayCounter >= this._delay) {
+				if(this._recordCounter < this._record) {
+					console.log("recording: " + this._recordCounter + " <  " + this._record);
+					this.imageStringArray.push(this.ctx.canvas.toDataURL("image/png").split("base64,")[1]);
+					this._recordCounter++;
+				} else {
+					this.stopExport();
+				}
+			}
+		}
+		this._delayCounter++;
+	}
+	,setup: function() {
+		console.log("setup: " + this.toString());
+		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+		this.grid.setCellSize(this._cellsize);
+		this.grid.setIsCenterPoint(true);
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,toString: function() {
+		return "cc056";
+	}
+	,__class__: art_CC056
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -7676,10 +8018,12 @@ cc_draw_Gradient.prototype = {
 	,__properties__: {get_ypos:"get_ypos",get_xpos:"get_xpos",get_get:"get_get",set_height:"set_height",get_height:"get_height",set_width:"set_width",get_width:"get_width",set__radial:"set__radial",get__radial:"get__radial",set__linear:"set__linear",get__linear:"get__linear"}
 };
 var cc_draw_Spritesheet = function(ctx,img) {
+	this._pulse = null;
 	this._delayCounter = 0;
 	this._fpsCounter = 0;
 	this._currentSprite = 0;
 	this._isLoop = false;
+	this._isActive = false;
 	this._isAnimation = false;
 	this._scale = 1;
 	this._fps = 60;
@@ -7693,6 +8037,8 @@ var cc_draw_Spritesheet = function(ctx,img) {
 	this._x = 100;
 	this._ctx = ctx;
 	this.set__img(img);
+	cc_draw_Spritesheet._idCounter++;
+	this.set__id("spritesheet-" + cc_draw_Spritesheet._idCounter + "-" + new Date().getTime());
 	this.set__width(this.get__img().width);
 	this.set__height(this.get__img().height);
 	this._totalFrame = Math.round(this.get__width() / this.get__cellWidth());
@@ -7702,6 +8048,10 @@ var cc_draw_Spritesheet = function(ctx,img) {
 };
 $hxClasses["cc.draw.Spritesheet"] = cc_draw_Spritesheet;
 cc_draw_Spritesheet.__name__ = ["cc","draw","Spritesheet"];
+cc_draw_Spritesheet.create = function(ctx,img) {
+	var spritesheet = new cc_draw_Spritesheet(ctx,img);
+	return spritesheet;
+};
 cc_draw_Spritesheet.load = function(src,onLoadComplete) {
 	var _img = new Image();
 	_img.crossOrigin = "Anonymous";
@@ -7712,12 +8062,12 @@ cc_draw_Spritesheet.load = function(src,onLoadComplete) {
 		}
 	};
 };
-cc_draw_Spritesheet.create = function(ctx,img) {
-	var spritesheet = new cc_draw_Spritesheet(ctx,img);
-	return spritesheet;
-};
 cc_draw_Spritesheet.prototype = {
-	x: function(x) {
+	img: function(img) {
+		this.set__img(img);
+		return this;
+	}
+	,x: function(x) {
 		this.set__x(x);
 		return this;
 	}
@@ -7736,6 +8086,14 @@ cc_draw_Spritesheet.prototype = {
 		this._totalFrame = Math.round(this.get__width() / this.get__cellWidth());
 		return this;
 	}
+	,center: function() {
+		this.set__isCentered(true);
+		return this;
+	}
+	,scale: function(scale) {
+		this.set__scale(scale);
+		return this;
+	}
 	,show: function(index) {
 		if(index == null) {
 			index = 0;
@@ -7752,33 +8110,7 @@ cc_draw_Spritesheet.prototype = {
 	}
 	,animate: function() {
 		this._isAnimation = true;
-		return this;
-	}
-	,center: function() {
-		this.set__isCentered(true);
-		return this;
-	}
-	,img: function(img) {
-		this.set__img(img);
-		return this;
-	}
-	,scale: function(scale) {
-		this.set__scale(scale);
-		return this;
-	}
-	,debug: function(value) {
-		this.set__isDebug(value);
-		return this;
-	}
-	,fps: function(value) {
-		this.set__fps(value);
-		return this;
-	}
-	,pulseFun: function() {
-		console.log("pulse: " + new Date().getTime());
-	}
-	,pulse: function(func) {
-		func.apply($bind(this,this.pulseFun),[]);
+		this._isActive = true;
 		return this;
 	}
 	,loop: function(nr) {
@@ -7787,6 +8119,22 @@ cc_draw_Spritesheet.prototype = {
 		}
 		this._isLoop = true;
 		this._loopRepeat = nr;
+		return this;
+	}
+	,start: function() {
+		this._isActive = true;
+		return this;
+	}
+	,stop: function() {
+		this._isActive = false;
+		return this;
+	}
+	,debug: function(value) {
+		this.set__isDebug(value);
+		return this;
+	}
+	,fps: function(value) {
+		this.set__fps(value);
 		return this;
 	}
 	,rotate: function(degree) {
@@ -7810,6 +8158,11 @@ cc_draw_Spritesheet.prototype = {
 		return this;
 	}
 	,draw: function() {
+		if(this._isActive && this._pulse == null) {
+			window.console.warn("this should happen only once! (" + this._pulse + " == null)");
+			console.log(this.toString());
+			this._pulse = window.requestAnimationFrame($bind(this,this.pulseHandler));
+		}
 		var xpos = 0;
 		var ypos = 0;
 		if(this.get__isCentered()) {
@@ -7819,33 +8172,45 @@ cc_draw_Spritesheet.prototype = {
 		this._ctx.save();
 		this._ctx.translate(this.get__x(),this.get__y());
 		this._ctx.rotate(cc_util_MathUtil.radians(this.get__rotate()));
-		this._ctx.clearRect(xpos,ypos,this.get__cellWidth() * this.get__scale(),this.get__cellHeight() * this.get__scale());
+		this._ctx.clearRect(xpos * this.get__scale(),ypos * this.get__scale(),this.get__cellWidth() * this.get__scale(),this.get__cellHeight() * this.get__scale());
 		var shiftX = this._currentSprite * this.get__cellWidth();
 		var shiftY = 0;
 		this._ctx.scale(this.get__scale(),this.get__scale());
 		this._ctx.drawImage(this.get__img(),shiftX,shiftY,this.get__cellWidth(),this.get__cellHeight(),xpos,ypos,this.get__cellWidth(),this.get__cellHeight());
 		this._ctx.restore();
-		this._fpsCounter++;
-		this._currentSprite++;
-		if(this._currentSprite > this._totalFrame) {
-			if(this._isLoop) {
-				this._currentSprite = this.get__index();
-			} else {
-				this._isAnimation = false;
-				this._currentSprite = this._totalFrame - 1;
-				this.draw();
-			}
-		}
 		if(this._isAnimation) {
-			console.log("_fpsCounter: " + this._fpsCounter + " % 60 / " + this.get__fps() + " -> " + this._fpsCounter % (60 / this.get__fps()));
-			if(this._fpsCounter % 60 / this.get__fps() == 0) {
-				window.requestAnimationFrame($bind(this,this.redraw));
+			this._currentSprite++;
+			if(this._currentSprite > this._totalFrame) {
+				if(this._isLoop) {
+					if(this.get__isDebug()) {
+						console.log("start loop");
+					}
+					this._currentSprite = this.get__index();
+				} else {
+					if(this.get__isDebug()) {
+						console.log("stop animation");
+					}
+					this._isAnimation = false;
+					this._currentSprite = this._totalFrame - 1;
+					this.draw();
+				}
 			}
 		}
 		return this;
 	}
-	,redraw: function(nr) {
-		this.draw();
+	,pulseHandler: function(nr) {
+		if(this._isActive) {
+			if(this._isAnimation) {
+				if(this.get__isDebug()) {
+					console.log("_fpsCounter: " + this._fpsCounter + " % 60 / " + this.get__fps() + " -> " + this._fpsCounter % (60 / this.get__fps()));
+				}
+				if(this._fpsCounter % (60 / this.get__fps()) == 0) {
+					this.draw();
+				}
+			}
+			window.requestAnimationFrame($bind(this,this.pulseHandler));
+			this._fpsCounter++;
+		}
 	}
 	,get__x: function() {
 		return this._x;
@@ -7938,11 +8303,17 @@ cc_draw_Spritesheet.prototype = {
 	,set__scale: function(value) {
 		return this._scale = value;
 	}
+	,get__id: function() {
+		return this._id;
+	}
+	,set__id: function(value) {
+		return this._id = value;
+	}
 	,toString: function() {
 		return "Spritesheet: " + Std.string(JSON.parse(JSON.stringify(this)));
 	}
 	,__class__: cc_draw_Spritesheet
-	,__properties__: {set__scale:"set__scale",get__scale:"get__scale",set__fps:"set__fps",get__fps:"get__fps",set__img:"set__img",get__img:"get__img",set__isCentered:"set__isCentered",get__isCentered:"get__isCentered",set__isDebug:"set__isDebug",get__isDebug:"get__isDebug",set__index:"set__index",get__index:"get__index",set__cellHeight:"set__cellHeight",get__cellHeight:"get__cellHeight",set__cellWidth:"set__cellWidth",get__cellWidth:"get__cellWidth",set__height:"set__height",get__height:"get__height",set__width:"set__width",get__width:"get__width",set__rotate:"set__rotate",get__rotate:"get__rotate",set__alpha:"set__alpha",get__alpha:"get__alpha",set__radius:"set__radius",get__radius:"get__radius",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
+	,__properties__: {set__id:"set__id",get__id:"get__id",set__scale:"set__scale",get__scale:"get__scale",set__fps:"set__fps",get__fps:"get__fps",set__img:"set__img",get__img:"get__img",set__isCentered:"set__isCentered",get__isCentered:"get__isCentered",set__isDebug:"set__isDebug",get__isDebug:"get__isDebug",set__index:"set__index",get__index:"get__index",set__cellHeight:"set__cellHeight",get__cellHeight:"get__cellHeight",set__cellWidth:"set__cellWidth",get__cellWidth:"get__cellWidth",set__height:"set__height",get__height:"get__height",set__width:"set__width",get__width:"get__width",set__rotate:"set__rotate",get__rotate:"get__rotate",set__alpha:"set__alpha",get__alpha:"get__alpha",set__radius:"set__radius",get__radius:"get__radius",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
 };
 var cc_draw_Text = function(ctx,text) {
 	this._textBaseline = "alphabetic";
@@ -9034,6 +9405,30 @@ cc_noise_Perlin.prototype = {
 	}
 	,__class__: cc_noise_Perlin
 };
+var cc_tool_Embed = function() {
+};
+$hxClasses["cc.tool.Embed"] = cc_tool_Embed;
+cc_tool_Embed.__name__ = ["cc","tool","Embed"];
+cc_tool_Embed.script = function(id,src,callback,callbackArray) {
+	var el = window.document.createElement("script");
+	el.id = id;
+	el.src = src;
+	el.crossOrigin = "anonymous";
+	el.onload = function() {
+		cc_tool_Zip.isZipLoaded = true;
+		if(callback != null) {
+			if(callbackArray == null) {
+				callback.apply(callback,[id]);
+			} else {
+				callback.apply(callback,callbackArray);
+			}
+		}
+	};
+	window.document.body.appendChild(el);
+};
+cc_tool_Embed.prototype = {
+	__class__: cc_tool_Embed
+};
 var cc_tool_Export = function(ctx,host,port) {
 	if(port == null) {
 		port = "5000";
@@ -9376,6 +9771,17 @@ cc_tool_Export.prototype = {
 	}
 	,__class__: cc_tool_Export
 	,__properties__: {get_duration:"get_duration",get_frames:"get_frames",get_delay:"get_delay",get_count:"get_count"}
+};
+var cc_tool_Zip = function() {
+};
+$hxClasses["cc.tool.Zip"] = cc_tool_Zip;
+cc_tool_Zip.__name__ = ["cc","tool","Zip"];
+cc_tool_Zip.prototype = {
+	embedScripts: function(callback,callbackArray) {
+		cc_tool_Embed.script("jszip","https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.0/jszip.min.js",callback);
+		cc_tool_Embed.script("jsfilesaver","https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js",callback);
+	}
+	,__class__: cc_tool_Zip
 };
 var cc_util_AnimateUtil = function() {
 };
@@ -14349,6 +14755,7 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
+cc_draw_Spritesheet._idCounter = -1;
 cc_lets_Go._tweens = [];
 cc_noise_OpenSimplexNoise.STRETCH_CONSTANT_2D = -0.211324865405187;
 cc_noise_OpenSimplexNoise.SQUISH_CONSTANT_2D = 0.366025403784439;
@@ -14377,6 +14784,8 @@ cc_tool_Export.RENDER_CLEAR = "render-clear";
 cc_tool_Export.RENDER_FRAME = "render-frame";
 cc_tool_Export.RENDER_DONE = "render-done";
 cc_tool_Export.TEST = "test";
+cc_tool_Zip.isZipLoaded = false;
+cc_tool_Zip.isFileLoaded = false;
 cc_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 cc_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 cc_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
@@ -14435,7 +14844,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-20 13:51:56";
+lib_model_constants_App.BUILD = "2019-03-21 23:56:00";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
