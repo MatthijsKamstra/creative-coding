@@ -48,35 +48,52 @@ class CC055 extends CCBase implements ICCBase {
 	 *
 	**/
 	function init() {
-		Spritesheet.load(src, onLoadedComplete);
-		Text.embedGoogleFont('Berkshire+Swash', onEmbedHandler);
+		createQuickSettings();
+		Spritesheet.load(src, onSpritesheetComplete);
+		Text.embedGoogleFont('Berkshire+Swash', onFontComplete);
 	}
 
-	function onLoadedComplete(img:Image) {
+	function createQuickSettings() {
+		// demo/basic example
+		panel1 = QuickSettings.create(10, 10, "Zip exporter")
+			.setGlobalChangeHandler(untyped drawShape)
+			.addRange('delay', 0.0, 5.0, 2.0, 0.5, function(e) setDelay(e))
+			.addRange('record', 0.0, 30.0, 2.0, 0.5, function(e) setRecord(e))
+
+			.addButton('init recording', function(e) onClickHandler(e))
+			.addButton('start recording', function(e) onClickHandler(e))
+			.addButton('stop recording', function(e) onClickHandler(e))
+
+			.saveInLocalStorage('store-data-${toString()}');
+	}
+
+	function setDelay(e) {
+		trace(e);
+	}
+
+	function setRecord(e) {
+		trace(e);
+	}
+
+	function onClickHandler(e:js.html.MouseEvent) {
+		var input:js.html.InputElement = cast(e);
+
+		switch (input.value) {
+			case 'init recording':
+				trace('init recording');
+			case 'start recording':
+				trace('start recording');
+			case 'stop recording':
+				trace('stop recording');
+			default:
+				trace("case '" + input.value + "': trace ('" + input.value + "');");
+		}
+	}
+
+	function onSpritesheetComplete(img:Image) {
 		this._img = img;
 		isImageLoaded = true;
 		drawShape();
-
-		var _scale = 4;
-
-		// spritesheet = new Spritesheet(ctx, _img);
-
-		// spritesheet.debug(isDebug)
-		// 	.index(0)
-		// 	.cell(100, 100)
-		// 	.scale(_scale)
-		// 	.center();
-
-		// spritesheet
-		// 	.fps(15)
-		// 	.pos(w3 * 2, h3 * 2)
-		// 	.animate()
-		// 	.draw();
-
-		// spritesheet
-		// 	.pos(w3, h3)
-		// 	.index(10) // .animate()
-		// 	.draw();
 
 		haxe.Timer.delay(function() {
 			delayCallHandler();
@@ -84,13 +101,31 @@ class CC055 extends CCBase implements ICCBase {
 	}
 
 	function delayCallHandler() {
+		for (i in 0...10) {
+			Spritesheet.create(ctx, _img)
+				.cell(100, 100)
+				.pos(i * 110, 0)
+				.animate()
+				.delay(60 * i)
+				.draw();
+		}
+
 		var _scale = 4;
+		Spritesheet.create(ctx, _img)
+			.debug(isDebug)
+			.fps(5)
+			.cell(100, 100)
+			.scale(_scale)
+			.pos(w - (100 * _scale), 0)
+			.animate()
+			.draw();
+
 		Spritesheet.create(ctx, _img)
 			.debug(isDebug)
 			.fps(15)
 			.cell(100, 100)
 			.scale(_scale)
-			.pos(w - (100 * _scale), 0)
+			.pos(0, h - (100 * _scale))
 			.animate()
 			.draw();
 
@@ -121,8 +156,8 @@ class CC055 extends CCBase implements ICCBase {
 		ctx.centreStrokeRect(w3, h3, 100 * _scale, 100 * _scale);
 	}
 
-	function onEmbedHandler(e) {
-		trace('onEmbedHandler: "${e}"');
+	function onFontComplete(e) {
+		trace('onFontComplete: "${e}"');
 		isFontLoaded = true;
 		drawShape();
 	}
