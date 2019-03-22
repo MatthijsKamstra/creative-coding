@@ -1,6 +1,7 @@
 package art;
 
 import cc.draw.Spritesheet;
+import cc.tool.export.Zip;
 
 /**
  * short description what this does
@@ -17,9 +18,14 @@ class CC055a extends CCBase implements ICCBase {
 	var _color3:RGB = null;
 	var _color4:RGB = null;
 	var panel1:QuickSettings;
-	var isEmbedded:Bool = false;
+	var isFont:Bool = false;
+	var isZip:Bool = false;
+	var isSpritesheet:Bool = false;
+	var isFirstRun:Bool = false;
 	var spritesheet:Spritesheet; // hmm doesn't work like expected
 	var src = '/assets/img/spritesheet/web_heart_animation_edge.png';
+	var zip:Zip;
+	var _img:Image;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = '';
@@ -34,6 +40,12 @@ class CC055a extends CCBase implements ICCBase {
 		option.scale = true;
 		ctx = Sketch.create("creative_code_mck", option);
 
+		zip = new Zip(ctx, '${toString()}');
+		zip.menu(false);
+		zip.delay(0);
+		zip.recordInSeconds(11);
+		zip.embedScripts(onZipHandler);
+
 		init();
 
 		super(ctx);
@@ -46,22 +58,25 @@ class CC055a extends CCBase implements ICCBase {
 	 *
 	**/
 	function init() {
-		Spritesheet.load(src, onLoadedComplete);
-		Text.embedGoogleFont('Berkshire+Swash', onEmbedHandler);
+		Spritesheet.load(src, onSpritesheetHandler);
+		Text.embedGoogleFont('Berkshire+Swash', onFontHandler);
 	}
 
-	var isImageLoaded = false;
-	var _img:Image;
-
-	function onLoadedComplete(img:Image) {
-		this._img = img;
-		isImageLoaded = true;
+	function onZipHandler(?value:String) {
+		trace(value);
+		isZip = true;
 		drawShape();
 	}
 
-	function onEmbedHandler(e) {
-		trace('onEmbedHandler: "${e}"');
-		isEmbedded = true;
+	function onSpritesheetHandler(img:Image) {
+		this._img = img;
+		isSpritesheet = true;
+		drawShape();
+	}
+
+	function onFontHandler(e) {
+		trace('onFontHandler: "${e}"');
+		isFont = true;
 		drawShape();
 	}
 
@@ -73,38 +88,43 @@ class CC055a extends CCBase implements ICCBase {
 			ShapeUtil.gridField(ctx, grid);
 		}
 
-		if (isImageLoaded) {
+		if (isSpritesheet) {
 			for (i in 0...grid.array.length) {
 				var point = grid.array[i];
 
 				Spritesheet.create(ctx, _img)
 					.fps(30)
-					.debug(isDebug)
+					.debug(false)
 					.cell(100, 100)
 					.pos(point.x, point.y)
-					.show(0)
+					.animate()
+					.delay(5 * i)
 					.center()
 					.draw();
 			}
 		}
-
-		if (isEmbedded) {
-			var size = 100;
-			Text.create(ctx, "Like me or not,")
-				.color(_color4)
-				.font('Berkshire+Swash')
-				.centerAlign()
-				.size(size)
-				.pos(w2, h2)
-				.draw();
-			Text.create(ctx, "that is the question!")
-				.color(_color4)
-				.font('Berkshire+Swash')
-				.centerAlign()
-				.size(size)
-				.pos(w2, h2 + size)
-				.draw();
+		if (isSpritesheet && isFont && isZip && !isFirstRun) {
+			zip.start();
+			isFirstRun = true;
 		}
+
+		// if (isFont) {
+		// 	var size = 100;
+		// 	Text.create(ctx, "Like me or not,")
+		// 		.color(_color4)
+		// 		.font('Berkshire+Swash')
+		// 		.centerAlign()
+		// 		.size(size)
+		// 		.pos(w2, h2)
+		// 		.draw();
+		// 	Text.create(ctx, "that is the question!")
+		// 		.color(_color4)
+		// 		.font('Berkshire+Swash')
+		// 		.centerAlign()
+		// 		.size(size)
+		// 		.pos(w2, h2 + size)
+		// 		.draw();
+		// }
 
 		// for (i in 0...shapeArray.length) {
 		// 	var sh = shapeArray[i];
@@ -124,7 +144,7 @@ class CC055a extends CCBase implements ICCBase {
 		_color3 = hex2RGB(colorArray[3]);
 		_color4 = hex2RGB(colorArray[4]);
 
-		isDebug = true;
+		// isDebug = true;
 
 		// grid.setDimension(w*2.1, h*2.1);
 		// grid.setNumbered(3,3);
@@ -138,8 +158,9 @@ class CC055a extends CCBase implements ICCBase {
 	}
 
 	override function draw() {
-		trace('draw: ${toString()}');
-		drawShape();
-		stop();
+		// trace('draw: ${toString()}');
+		zip.pulse();
+		// drawShape();
+		// stop();
 	}
 }
