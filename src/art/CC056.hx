@@ -1,6 +1,7 @@
 package art;
 
 import js.JSZip;
+import cc.tool.export.Zip;
 
 using StringTools;
 
@@ -57,7 +58,7 @@ class CC056 extends CCBase implements ICCBase {
 	function init() {
 		// <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
 		Text.embedGoogleFont('Oswald:200,300,400,500,600,700', onEmbedHandler);
-		var zip = new cc.tool.Zip();
+		var zip = new Zip(ctx);
 		zip.embedScripts(onZipHandler);
 	}
 
@@ -67,61 +68,61 @@ class CC056 extends CCBase implements ICCBase {
 		drawShape();
 	}
 
-	function onZipHandler(str:String) {
-		// trace(str);
-		switch (str) {
-			case 'jsfilesaver':
-				trace('jsfilesaver');
-				isFileLoaded = true;
-			case 'jszip':
-				trace('jszip');
-				isZipLoaded = true;
-			default:
-				trace("case '" + str + "': trace ('" + str + "');");
-		}
-		if (isFileLoaded && isZipLoaded) {
-			startExport();
-			// haxe.Timer.delay(function() {
-			// 	var img = ctx.canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
-			// 	var img2 = ctx.canvas.toDataURL();
+	function onZipHandler(?value:String) {
+		trace(value);
+		// switch (str) {
+		// 	case 'jsfilesaver':
+		// 		trace('jsfilesaver');
+		// 		isFileLoaded = true;
+		// 	case 'jszip':
+		// 		trace('jszip');
+		// 		isZipLoaded = true;
+		// 	default:
+		// 		trace("case '" + str + "': trace ('" + str + "');");
+		// }
+		// if (isFileLoaded && isZipLoaded) {
+		// 	// startExport();
+		// 	// haxe.Timer.delay(function() {
+		// 	// 	var img = ctx.canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+		// 	// 	var img2 = ctx.canvas.toDataURL();
 
-			// 	var zip = new JSZip();
-			// 	zip.file('_${toString()}/sequence/_readme.md', '# Hello world');
-			// 	zip.file('_${toString()}/base64.txt', img);
-			// 	zip.file('_${toString()}/sequence/image_00000.png', img, {base64: true});
-			// 	zip.generateAsync({type: "blob"}).then(function(blob) { // 1) generate the zip file
-			// 		console.log('save zip');
-			// 		untyped saveAs(blob, '_${toString()}.zip'); // 2) trigger the download
-			// 	}, function(err) {
-			// 		console.log(err);
-			// 	});
-			// }, 1000);
-			// haxe.Timer.delay(function() {
-			// 	startExport();
-			// }, 2000);
-			// haxe.Timer.delay(function() {
-			// 	stopExport();
-			// }, 5000);
-			// var zip = new JSZip();
-			// zip.file("/hello/Hello.txt", "Hello World\n");
-			// zip.generateAsync({type: "blob"})
-			// 	.then(function(content) {
-			// 		// see FileSaver.js
-			// 		untyped saveAs(content, "example.zip");
-			// 	});
-			/*
-				ctx.canvas.toBlob(function(bl:Blob) {
-					var zip = untyped __js__('new JSZip()');
-					untyped __js__('zip.file(\'sequence/_readme.md\', \'# Hello world\');');
-					untyped __js__('zip.file(\'sequence/image_0000.png\', bl);');
-					zip.generateAsync({type: "blob"}).then(function(blob) { // 1) generate the zip file
-						untyped saveAs(blob, ' ${toString()}.zip'); // 2) trigger the download
-					}, function(err) {
-						console.log(err);
-					});
-				});
-			 */
-		}
+		// 	// 	var zip = new JSZip();
+		// 	// 	zip.file('_${toString()}/sequence/_readme.md', '# Hello world');
+		// 	// 	zip.file('_${toString()}/base64.txt', img);
+		// 	// 	zip.file('_${toString()}/sequence/image_00000.png', img, {base64: true});
+		// 	// 	zip.generateAsync({type: "blob"}).then(function(blob) { // 1) generate the zip file
+		// 	// 		console.log('save zip');
+		// 	// 		untyped saveAs(blob, '_${toString()}.zip'); // 2) trigger the download
+		// 	// 	}, function(err) {
+		// 	// 		console.log(err);
+		// 	// 	});
+		// 	// }, 1000);
+		// 	// haxe.Timer.delay(function() {
+		// 	// 	startExport();
+		// 	// }, 2000);
+		// 	// haxe.Timer.delay(function() {
+		// 	// 	stopExport();
+		// 	// }, 5000);
+		// 	// var zip = new JSZip();
+		// 	// zip.file("/hello/Hello.txt", "Hello World\n");
+		// 	// zip.generateAsync({type: "blob"})
+		// 	// 	.then(function(content) {
+		// 	// 		// see FileSaver.js
+		// 	// 		untyped saveAs(content, "example.zip");
+		// 	// 	});
+		// 	/*
+		// 		ctx.canvas.toBlob(function(bl:Blob) {
+		// 			var zip = untyped __js__('new JSZip()');
+		// 			untyped __js__('zip.file(\'sequence/_readme.md\', \'# Hello world\');');
+		// 			untyped __js__('zip.file(\'sequence/image_0000.png\', bl);');
+		// 			zip.generateAsync({type: "blob"}).then(function(blob) { // 1) generate the zip file
+		// 				untyped saveAs(blob, ' ${toString()}.zip'); // 2) trigger the download
+		// 			}, function(err) {
+		// 				console.log(err);
+		// 			});
+		// 		});
+		// 	 */
+		// }
 	}
 
 	function startExport() {
