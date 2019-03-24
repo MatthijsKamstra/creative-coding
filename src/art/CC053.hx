@@ -9,14 +9,24 @@ class CC053 extends CCBase implements ICCBase {
 	var defaultText = "Hier moet iets staan dat de moeite waard is";
 	var _text:String;
 	var _radius:Int = 180;
+	var _angle:Float = 10;
 
 	public function new(ctx:CanvasRenderingContext2D) {
+		// setup Sketch
+		var option = new SketchOption();
+		option.width = 1080; // 1080
+		// option.height = 1000;
+		option.autostart = true;
+		option.padding = 10;
+		option.scale = true;
+		ctx = Sketch.create("creative_code_mck", option);
+
 		description = '';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		_text = defaultText;
 
-		Text.embedGoogleFont('Source+Code+Pro', onEmbedHandler);
+		Text.embedGoogleFont('PT+Mono', onEmbedHandler);
 		createQuickSettings();
 		super(ctx);
 	}
@@ -25,14 +35,26 @@ class CC053 extends CCBase implements ICCBase {
 		// demo/basic example
 		panel1 = QuickSettings.create(10, 10, "Test rotation")
 			.setGlobalChangeHandler(untyped drawShape)
-			.addTextArea('Quote', _text, function(value) trace(value))
-			.addRange('radius', 50, 300, 180, 1, function(value) setRadius(value))
+			.addTextArea('Reason', 'Test this text in circle thing', null)
+			.addTextArea('Quote', defaultText, function(value) setText(value))
+			.addRange('angle', 0.0, 10.0, 5.5, .05, function(value) setAngle(value))
+			.addRange('radius', 200, 400, 180, 1, function(value) setRadius(value))
+			.addNumber('angle2', 0.0, 10.0, 5.5, .05, function(value) setAngle(value))
+			.addButton('default', function(e) setText(defaultText))
 			.saveInLocalStorage('store-data-${toString()}');
 		// .addBoolean('All Caps', false, function(value) trace(value))
 	}
 
+	function setText(str:String):Void {
+		this._text = str;
+	}
+
 	function setRadius(px:Int):Void {
 		this._radius = px;
+	}
+
+	function setAngle(angle:Float):Void {
+		this._angle = angle;
 	}
 
 	function onEmbedHandler(e) {
@@ -57,13 +79,14 @@ class CC053 extends CCBase implements ICCBase {
 		// important to have a example text in the canvas, otherwise the measurement don't work
 		// important to have the font loaded
 		ctx.fillStyle = getColourObj(PINK);
-		Text.fillText(ctx, _text, w2, h2, "Source Code Pro", 20);
+		Text.fillText(ctx, _text, w2, h2, "PT Mono", 20);
 
+		// use and create with the correct fonr
 		ctx.fillColourRGB(BLACK);
 		ctx.textAlign = "center";
 		ctx.textBaseline = "bottom";
-		ctx.font = '20px Source Code Pro';
-		TextUtil.drawTextAlongArc2(ctx, _text, centerX, centerY, this._radius);
+		ctx.font = '20px PT Mono';
+		TextUtil.drawTextAlongArc4(ctx, _text, centerX, centerY, this._radius, this._angle);
 
 		ctx.strokeColourRGB(GRAY);
 		ctx.circleStroke(centerX, centerY, this._radius);
