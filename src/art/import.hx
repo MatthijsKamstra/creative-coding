@@ -1,7 +1,6 @@
 // quick and dirty import for Haxe JavaScript
 import js.Browser.*;
 import js.html.*;
-
 // easy access to Globals
 import Sketch.Global.*;
 // easy access to the utils
@@ -18,7 +17,6 @@ import cc.AST;
 // draw package
 import cc.draw.*;
 import cc.draw.Text;
-
 import art.CCBase.CCType;
 
 // syntactic sugar to extend CanvasRenderingContext2D
@@ -28,9 +26,9 @@ using cc.util.ShapeUtil;
 // animation lib
 import cc.lets.Go;
 import cc.lets.easing.*;
-
 // custom ast
 import AST;
-
 // settings
 import quicksettings.QuickSettings;
+// sketch settings
+import Sketch;
