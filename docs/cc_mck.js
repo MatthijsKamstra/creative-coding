@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC056a];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC056a,art_CC057];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -190,14 +190,14 @@ Main.prototype = {
 		var left = new lib_html_Nav();
 		var ldiv = left.dir("left");
 		ldiv.onclick = function() {
-			console.log("left");
+			haxe_Log.trace("left",{ fileName : "Main.hx", lineNumber : 59, className : "Main", methodName : "setupNav"});
 			_gthis.count--;
 			_gthis.changeHash();
 		};
 		var right = new lib_html_Nav();
 		var rdiv = right.dir("right");
 		rdiv.onclick = function() {
-			console.log("right");
+			haxe_Log.trace("right",{ fileName : "Main.hx", lineNumber : 66, className : "Main", methodName : "setupNav"});
 			_gthis.count++;
 			_gthis.changeHash();
 		};
@@ -510,25 +510,25 @@ Sketch.prototype = {
 		});
 		this.window.addEventListener(Global.KEY_DOWN,function(e3) {
 			if(e3.metaKey == true && e3.key == "r") {
-				console.log("cmd + r");
+				haxe_Log.trace("cmd + r",{ fileName : "Sketch.hx", lineNumber : 197, className : "Sketch", methodName : "init"});
 				window.location.reload();
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == false) {
 				e3.preventDefault();
 				e3.stopPropagation();
-				console.log("cmd + s");
+				haxe_Log.trace("cmd + s",{ fileName : "Sketch.hx", lineNumber : 203, className : "Sketch", methodName : "init"});
 				cc_tool_Export.downloadImageBg(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "s" && e3.shiftKey == true) {
 				e3.preventDefault();
 				e3.stopPropagation();
-				console.log("cmd + shift + s");
+				haxe_Log.trace("cmd + shift + s",{ fileName : "Sketch.hx", lineNumber : 209, className : "Sketch", methodName : "init"});
 				cc_tool_Export.downloadImage(ctx,false);
 			}
 			if(e3.metaKey == true && (e3.code == "KeyS" && e3.altKey == true)) {
 				e3.preventDefault();
 				e3.stopPropagation();
-				console.log("cmd + alt + s");
+				haxe_Log.trace("cmd + alt + s",{ fileName : "Sketch.hx", lineNumber : 215, className : "Sketch", methodName : "init"});
 				cc_tool_Export.onBase64Handler(ctx,true);
 			}
 			if(e3.metaKey == true && e3.key == "f") {
@@ -571,7 +571,7 @@ var SketchBase = function(ctx) {
 	this.dpiScale = 1;
 	this.isDebug = false;
 	this.isDrawActive = true;
-	console.log("START :: " + this.toString());
+	haxe_Log.trace("START :: " + this.toString(),{ fileName : "Sketch.hx", lineNumber : 504, className : "SketchBase", methodName : "new"});
 	if(ctx == null) {
 		var option = new SketchOption();
 		option.set_width(1080);
@@ -614,7 +614,7 @@ SketchBase.prototype = {
 	,onKeyDown: function(e) {
 	}
 	,draw: function() {
-		console.log("DRAW :: " + this.toString() + " -> override public function draw()");
+		haxe_Log.trace("DRAW :: " + this.toString() + " -> override public function draw()",{ fileName : "Sketch.hx", lineNumber : 595, className : "SketchBase", methodName : "draw"});
 	}
 	,pause: function() {
 		this.isDrawActive = !this.isDrawActive;
@@ -985,7 +985,7 @@ art_CC000.__interfaces__ = [art_ICCBase];
 art_CC000.__super__ = art_CCBase;
 art_CC000.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC000.hx", lineNumber : 25, className : "art.CC000", methodName : "draw"});
 		this.rotate++;
 		this.size++;
 		this.ctx.save();
@@ -1008,7 +1008,7 @@ art_CC001.__interfaces__ = [art_ICCBase];
 art_CC001.__super__ = art_CCBase;
 art_CC001.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC001.hx", lineNumber : 20, className : "art.CC001", methodName : "draw"});
 		cc_CanvasTools.background(this.ctx,0,0,0);
 		cc_CanvasTools.fillColour(this.ctx,255,255,255);
 		cc_CanvasTools.fillCircle(this.ctx,Global.w / 2,Global.h / 2,100);
@@ -1025,7 +1025,7 @@ art_CC002.__interfaces__ = [art_ICCBase];
 art_CC002.__super__ = art_CCBase;
 art_CC002.prototype = $extend(art_CCBase.prototype,{
 	draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC002.hx", lineNumber : 21, className : "art.CC002", methodName : "draw"});
 		cc_CanvasTools.fillColour(this.ctx,cc_util_ColorUtil.LIME.r,cc_util_ColorUtil.LIME.g,cc_util_ColorUtil.LIME.b);
 		cc_CanvasTools.fillEllipse(this.ctx,Global.w / 2,Global.h / 2,100,200);
 		this.pause();
@@ -1044,7 +1044,7 @@ art_CC003.__interfaces__ = [art_ICCBase];
 art_CC003.__super__ = art_CCBase;
 art_CC003.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC003.hx", lineNumber : 37, className : "art.CC003", methodName : "setup"});
 		cc_CanvasTools.background(this.ctx,255,255,255,0.2);
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -1104,7 +1104,7 @@ art_CC004.__interfaces__ = [art_ICCBase];
 art_CC004.__super__ = art_CCBase;
 art_CC004.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("" + this.toString() + " :: setup()");
+		haxe_Log.trace("" + this.toString() + " :: setup()",{ fileName : "CC004.hx", lineNumber : 26, className : "art.CC004", methodName : "setup"});
 		this.ballArray = [];
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -1175,7 +1175,7 @@ art_CC005.__interfaces__ = [art_ICCBase];
 art_CC005.__super__ = art_CCBase;
 art_CC005.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC005.hx", lineNumber : 17, className : "art.CC005", methodName : "setup"});
 		var padding = 100;
 		var arr = cc_util_GridUtil.createGrid(padding,padding,Global.w - 2 * padding,Global.h - 2 * padding,3,4);
 		var _g1 = 0;
@@ -1223,7 +1223,7 @@ var art_CC006 = function(ctx) {
 	art_CCBase.call(this,ctx);
 	window.addEventListener(Global.KEY_DOWN,function(e) {
 		if(e.key == " ") {
-			console.log("redraw");
+			haxe_Log.trace("redraw",{ fileName : "CC006.hx", lineNumber : 12, className : "art.CC006", methodName : "new"});
 			_gthis.setup();
 		}
 	},false);
@@ -1234,7 +1234,7 @@ art_CC006.__interfaces__ = [art_ICCBase];
 art_CC006.__super__ = art_CCBase;
 art_CC006.prototype = $extend(art_CCBase.prototype,{
 	setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC006.hx", lineNumber : 19, className : "art.CC006", methodName : "setup"});
 		var _size = 50;
 		var _x = 0;
 		var _y = 0;
@@ -1256,7 +1256,7 @@ art_CC006.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC006.hx", lineNumber : 39, className : "art.CC006", methodName : "draw"});
 		this.stop();
 	}
 	,__class__: art_CC006
@@ -1309,10 +1309,10 @@ art_CC007.prototype = $extend(art_CCBase.prototype,{
 	,onCompleteHandler: function(value) {
 		var totalTime = new Date().getTime() / 1000 - this.startTime;
 		var totalDate = (new Date().getTime() - this.startDate) / 1000;
-		console.log("done: " + value + " seconds - date: " + totalDate + " , time: " + totalTime);
+		haxe_Log.trace("done: " + value + " seconds - date: " + totalDate + " , time: " + totalTime,{ fileName : "CC007.hx", lineNumber : 36, className : "art.CC007", methodName : "onCompleteHandler"});
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC007.hx", lineNumber : 40, className : "art.CC007", methodName : "setup"});
 		this.ballArray = [];
 		var _g1 = 0;
 		var _g = this.maxBalls;
@@ -1407,7 +1407,7 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC008.hx", lineNumber : 57, className : "art.CC008", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.shapeMax;
@@ -1610,26 +1610,26 @@ art_CC008.prototype = $extend(art_CCBase.prototype,{
 		var _shape = this.shapeArray[value];
 		switch(value) {
 		case 4:
-			console.log("onUpdateHandler - rotation: " + _shape.rotation);
+			haxe_Log.trace("onUpdateHandler - rotation: " + _shape.rotation,{ fileName : "CC008.hx", lineNumber : 85, className : "art.CC008", methodName : "onUpdateHandler"});
 			break;
 		case 5:
-			console.log("onUpdateHandler - foobar: " + _shape.foobar);
+			haxe_Log.trace("onUpdateHandler - foobar: " + _shape.foobar,{ fileName : "CC008.hx", lineNumber : 86, className : "art.CC008", methodName : "onUpdateHandler"});
 			break;
 		default:
-			console.log("case " + value + ": trace ('" + value + "');");
+			haxe_Log.trace("case " + value + ": trace ('" + value + "');",{ fileName : "CC008.hx", lineNumber : 87, className : "art.CC008", methodName : "onUpdateHandler"});
 		}
 	}
 	,onCompleteHandler: function(value) {
 		var _shape = this.shapeArray[value];
 		switch(value) {
 		case 4:
-			console.log("onCompleteHandler - rotation: " + _shape.rotation);
+			haxe_Log.trace("onCompleteHandler - rotation: " + _shape.rotation,{ fileName : "CC008.hx", lineNumber : 94, className : "art.CC008", methodName : "onCompleteHandler"});
 			break;
 		case 5:
-			console.log("onCompleteHandler - foobar: " + _shape.foobar);
+			haxe_Log.trace("onCompleteHandler - foobar: " + _shape.foobar,{ fileName : "CC008.hx", lineNumber : 95, className : "art.CC008", methodName : "onCompleteHandler"});
 			break;
 		default:
-			console.log("case " + value + ": trace ('" + value + "');");
+			haxe_Log.trace("case " + value + ": trace ('" + value + "');",{ fileName : "CC008.hx", lineNumber : 96, className : "art.CC008", methodName : "onCompleteHandler"});
 		}
 	}
 	,draw: function() {
@@ -1767,7 +1767,7 @@ art_CC010.__interfaces__ = [art_ICCBase];
 art_CC010.__super__ = art_CCBase;
 art_CC010.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("Embed: \"" + e + "\"");
+		haxe_Log.trace("Embed: \"" + e + "\"",{ fileName : "CC010.hx", lineNumber : 19, className : "art.CC010", methodName : "onEmbedHandler"});
 	}
 	,createText: function() {
 		var shape = { x : Global.w / 2, y : Global.h / 2 + 20, alpha : 1, size : 60, type : "text"};
@@ -1883,7 +1883,7 @@ art_CC010.prototype = $extend(art_CCBase.prototype,{
 		return shape;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC010.hx", lineNumber : 63, className : "art.CC010", methodName : "setup"});
 		this.shapeArray = [];
 		this.shapeArray.push(this.createBall());
 		this.shapeArray.push(this.createText());
@@ -1968,7 +1968,7 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,onUpdateHandler: function(e) {
-		console.log("update: " + e);
+		haxe_Log.trace("update: " + e,{ fileName : "CC011.hx", lineNumber : 79, className : "art.CC011", methodName : "onUpdateHandler"});
 	}
 	,onCompleteHandler: function(line) {
 		var Go = new cc_lets_Go(line,cc_util_MathUtil.random(0.5,1.5));
@@ -2024,7 +2024,7 @@ art_CC011.prototype = $extend(art_CCBase.prototype,{
 		_this4._delay = _this4.getDuration(cc_util_MathUtil.random(0,0.5));
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC011.hx", lineNumber : 92, className : "art.CC011", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2095,7 +2095,7 @@ art_CC012.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,onUpdateHandler: function(e) {
-		console.log("update: " + e);
+		haxe_Log.trace("update: " + e,{ fileName : "CC012.hx", lineNumber : 70, className : "art.CC012", methodName : "onUpdateHandler"});
 	}
 	,onCompleteHandler: function(line) {
 		var Go = new cc_lets_Go(line,cc_util_MathUtil.random(2,4));
@@ -2118,7 +2118,7 @@ art_CC012.prototype = $extend(art_CCBase.prototype,{
 		_this2._options.onCompleteParams = [line];
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC012.hx", lineNumber : 83, className : "art.CC012", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2158,7 +2158,7 @@ art_CC013.prototype = $extend(art_CCBase.prototype,{
 			break;
 		case 4:
 			var error = _g[2];
-			console.log(error);
+			haxe_Log.trace(error,{ fileName : "CC013.hx", lineNumber : 30, className : "art.CC013", methodName : "loaded"});
 			break;
 		default:
 		}
@@ -2209,7 +2209,7 @@ art_CC013.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC013.hx", lineNumber : 99, className : "art.CC013", methodName : "draw"});
 		this.ctx.clearRect(0,0,Global.w,Global.h);
 		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
 		this.create();
@@ -2233,7 +2233,7 @@ art_CC014.__interfaces__ = [art_ICCBase];
 art_CC014.__super__ = art_CCBase;
 art_CC014.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("Embed: \"" + e + "\"");
+		haxe_Log.trace("Embed: \"" + e + "\"",{ fileName : "CC014.hx", lineNumber : 24, className : "art.CC014", methodName : "onEmbedHandler"});
 		this.draw();
 		this.onFlipColorHandler();
 	}
@@ -2327,7 +2327,7 @@ art_CC014.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC014.hx", lineNumber : 108, className : "art.CC014", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2368,7 +2368,7 @@ art_CC015.prototype = $extend(art_CCBase.prototype,{
 		var centerY = Global.h / 2;
 		var _alpha = 0.1;
 		if(this.isDebug) {
-			console.log("" + hours + ":" + min + ":" + sec);
+			haxe_Log.trace("" + hours + ":" + min + ":" + sec,{ fileName : "CC015.hx", lineNumber : 39, className : "art.CC015", methodName : "drawShape"});
 		}
 		this.ctx.beginPath();
 		var $int = Std.parseInt(StringTools.replace(this.color[0],"#","0x"));
@@ -2439,7 +2439,7 @@ art_CC016.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC016.hx", lineNumber : 48, className : "art.CC016", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -2496,7 +2496,7 @@ art_CC017.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("init: " + this.toString());
+		haxe_Log.trace("init: " + this.toString(),{ fileName : "CC017.hx", lineNumber : 77, className : "art.CC017", methodName : "setup"});
 		this.grid.setCellSize(this._size);
 		this.grid.setIsCenterPoint(true);
 		var _g1 = 0;
@@ -2571,7 +2571,7 @@ art_CC018.prototype = $extend(art_CCBase.prototype,{
 		_this3._options.onCompleteParams = [circle];
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC018.hx", lineNumber : 48, className : "art.CC018", methodName : "setup"});
 		this.grid.setCellSize(this._size);
 		this.grid.setIsCenterPoint(true);
 		var _g1 = 0;
@@ -2728,7 +2728,7 @@ art_CC020.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC020.hx", lineNumber : 57, className : "art.CC020", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -2804,7 +2804,7 @@ art_CC021.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC021.hx", lineNumber : 87, className : "art.CC021", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -2878,7 +2878,7 @@ art_CC022.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC022.hx", lineNumber : 91, className : "art.CC022", methodName : "draw"});
 		this.drawShape();
 	}
 	,__class__: art_CC022
@@ -3145,7 +3145,7 @@ art_CC025.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setNumbered(10,10);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC025.hx", lineNumber : 95, className : "art.CC025", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -3218,7 +3218,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 	,onCompleteHandler: function(circle) {
 		this.readyCounter++;
 		if(this.readyCounter >= this.shapeArray.length) {
-			console.log("stop");
+			haxe_Log.trace("stop",{ fileName : "CC026.hx", lineNumber : 46, className : "art.CC026", methodName : "onCompleteHandler"});
 			this.stop();
 		}
 	}
@@ -3255,7 +3255,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 			var circle = { _id : "" + i, _type : "circle", x : xstart + xpos, y : ystart + ypos, radius : 10, colour : rgba};
 			this.shapeArray.push(circle);
 		}
-		console.log(this.shapeArray.length);
+		haxe_Log.trace(this.shapeArray.length,{ fileName : "CC026.hx", lineNumber : 95, className : "art.CC026", methodName : "getPixel"});
 		var _g11 = 0;
 		var _g2 = this.shapeArray.length;
 		while(_g11 < _g2) {
@@ -3266,7 +3266,7 @@ art_CC026.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC026.hx", lineNumber : 104, className : "art.CC026", methodName : "setup"});
 		var img = new Image();
 		img.src = "assets/img/planb.png";
 		img.onload = function() {
@@ -3356,7 +3356,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 	,onCompleteHandler: function(circle) {
 		this.readyCounter++;
 		if(this.readyCounter >= this.shapeArray.length) {
-			console.log("stop");
+			haxe_Log.trace("stop",{ fileName : "CC027.hx", lineNumber : 49, className : "art.CC027", methodName : "onCompleteHandler"});
 			this.stop();
 		}
 	}
@@ -3375,10 +3375,10 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setPosition(0,0);
 		this.grid.setCellSize(this._cellsize);
 		this.grid.setDimension(this.ctxHidden.canvas.width,this.ctxHidden.canvas.height);
-		console.log("canvas (width,height): " + this.ctxHidden.canvas.width + "," + this.ctxHidden.canvas.height);
-		console.log("grid (width,height): " + this.grid.width + "," + this.grid.height);
-		console.log("grid.array.length: " + this.grid.array.length);
-		console.log("grid cell (width,height): " + this.grid.cellHeight + ", " + this.grid.cellWidth);
+		haxe_Log.trace("canvas (width,height): " + this.ctxHidden.canvas.width + "," + this.ctxHidden.canvas.height,{ fileName : "CC027.hx", lineNumber : 80, className : "art.CC027", methodName : "buildGrid"});
+		haxe_Log.trace("grid (width,height): " + this.grid.width + "," + this.grid.height,{ fileName : "CC027.hx", lineNumber : 81, className : "art.CC027", methodName : "buildGrid"});
+		haxe_Log.trace("grid.array.length: " + this.grid.array.length,{ fileName : "CC027.hx", lineNumber : 82, className : "art.CC027", methodName : "buildGrid"});
+		haxe_Log.trace("grid cell (width,height): " + this.grid.cellHeight + ", " + this.grid.cellWidth,{ fileName : "CC027.hx", lineNumber : 83, className : "art.CC027", methodName : "buildGrid"});
 		var _g1 = 0;
 		var _g = this.grid.array.length;
 		while(_g1 < _g) {
@@ -3400,7 +3400,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 			var circle = { _id : "" + i, _type : "circle", x : xstart + xpos, y : ystart + ypos, radius : this._cellsize / 2, colour : rgba};
 			this.shapeArray.push(circle);
 		}
-		console.log("total shape: " + this.shapeArray.length + " from total grid " + this.grid.array.length);
+		haxe_Log.trace("total shape: " + this.shapeArray.length + " from total grid " + this.grid.array.length,{ fileName : "CC027.hx", lineNumber : 114, className : "art.CC027", methodName : "buildGrid"});
 		var _g11 = 0;
 		var _g2 = this.shapeArray.length;
 		while(_g11 < _g2) {
@@ -3411,7 +3411,7 @@ art_CC027.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC027.hx", lineNumber : 125, className : "art.CC027", methodName : "setup"});
 		this.shapeArray = [];
 		var img = new Image();
 		img.src = "assets/img/planb.png";
@@ -3462,7 +3462,7 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 			break;
 		case 4:
 			var error = _g[2];
-			console.log(error);
+			haxe_Log.trace(error,{ fileName : "CC028.hx", lineNumber : 41, className : "art.CC028", methodName : "loaded"});
 			break;
 		default:
 		}
@@ -3610,7 +3610,7 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC028.hx", lineNumber : 176, className : "art.CC028", methodName : "setup"});
 		this.grid.setNumbered(4,1);
 		window.addEventListener(Global.KEY_DOWN,function(e) {
 			e.preventDefault();
@@ -3642,12 +3642,12 @@ art_CC028.prototype = $extend(art_CCBase.prototype,{
 				cc_tool_Export.downloadTextFile(JSON.stringify(_gthis.exportIntArray),"sorted_int_1000.json");
 				cc_tool_Export.downloadTextFile(JSON.stringify(_gthis.exportStringArray),"sorted_1000.json");
 			} else {
-				console.log("case '" + e.key + "': trace ('" + e.key + "');");
+				haxe_Log.trace("case '" + e.key + "': trace ('" + e.key + "');",{ fileName : "CC028.hx", lineNumber : 210, className : "art.CC028", methodName : "setup"});
 			}
 		},false);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC028.hx", lineNumber : 216, className : "art.CC028", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -3694,13 +3694,13 @@ art_CC029.prototype = $extend(art_CCBase.prototype,{
 		var _g = event.type;
 		switch(_g[1]) {
 		case 3:
-			console.log(event.target.content.length);
+			haxe_Log.trace(event.target.content.length,{ fileName : "CC029.hx", lineNumber : 43, className : "art.CC029", methodName : "loaded"});
 			this.colorArr = event.target.content;
 			this.drawShape();
 			break;
 		case 4:
 			var error = _g[2];
-			console.log(error);
+			haxe_Log.trace(error,{ fileName : "CC029.hx", lineNumber : 39, className : "art.CC029", methodName : "loaded"});
 			break;
 		default:
 		}
@@ -3716,7 +3716,7 @@ art_CC029.prototype = $extend(art_CCBase.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			var colorArray = this.colorArr[i];
-			console.log(colorArray);
+			haxe_Log.trace(colorArray,{ fileName : "CC029.hx", lineNumber : 60, className : "art.CC029", methodName : "drawShape"});
 			var point = this.grid.array[i];
 			var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 			var color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -3745,7 +3745,7 @@ art_CC029.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setNumbered(32,32);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC029.hx", lineNumber : 94, className : "art.CC029", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -3820,7 +3820,7 @@ art_CC030.prototype = $extend(art_CCBase.prototype,{
 		return arr;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC030.hx", lineNumber : 98, className : "art.CC030", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -3844,7 +3844,7 @@ art_CC030.prototype = $extend(art_CCBase.prototype,{
 		if(_g == " ") {
 			this.drawShape();
 		} else {
-			console.log("case '" + e.key + "': trace ('" + e.key + "');");
+			haxe_Log.trace("case '" + e.key + "': trace ('" + e.key + "');",{ fileName : "CC030.hx", lineNumber : 127, className : "art.CC030", methodName : "onKeyDown"});
 		}
 	}
 	,__class__: art_CC030
@@ -3885,7 +3885,7 @@ art_CC031.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC031.hx", lineNumber : 52, className : "art.CC031", methodName : "setup"});
 		this.shapeArray = [];
 		this.grid.setCellSize(this.cellsize);
 		this.grid.setIsCenterPoint(true);
@@ -3963,7 +3963,7 @@ art_CC031a.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC031a.hx", lineNumber : 53, className : "art.CC031a", methodName : "setup"});
 		this.shapeArray = [];
 		this.grid.setCellSize(this.cellsize);
 		this.grid.setIsCenterPoint(true);
@@ -4088,7 +4088,7 @@ art_CC032.prototype = $extend(art_CCBase.prototype,{
 		this._rotation += this._speed;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC032.hx", lineNumber : 84, className : "art.CC032", methodName : "setup"});
 		this.grid.setCellSize(this.cellsize);
 	}
 	,draw: function() {
@@ -4163,7 +4163,7 @@ art_CC033.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC033.hx", lineNumber : 82, className : "art.CC033", methodName : "setup"});
 		this.grid.setCellSize(this.cellsize);
 	}
 	,draw: function() {
@@ -4211,7 +4211,7 @@ art_CC034.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC034.hx", lineNumber : 52, className : "art.CC034", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -4267,7 +4267,7 @@ art_CC035.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC035.hx", lineNumber : 69, className : "art.CC035", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.max;
@@ -4325,7 +4325,7 @@ art_CC036.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC036.hx", lineNumber : 71, className : "art.CC036", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.max;
@@ -4365,11 +4365,11 @@ art_CC037.prototype = $extend(art_CCBase.prototype,{
 		var horDistSin = Math.sin(hoek_2) * this.cellsize;
 		var horDistCos = Math.cos(hoek_2) * this.cellsize;
 		var horDistTan = Math.tan(hoek_2) * this.cellsize;
-		console.log("schuine zijde: " + this.cellsize);
-		console.log("- horDistSin: " + horDistSin);
-		console.log("> horDistCos: " + horDistCos);
-		console.log("- horDistTan: " + horDistTan);
-		console.log(cc_util_MathUtil.pythagoreanTheorem(0,horDistCos,this.cellsize));
+		haxe_Log.trace("schuine zijde: " + this.cellsize,{ fileName : "CC037.hx", lineNumber : 41, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("- horDistSin: " + horDistSin,{ fileName : "CC037.hx", lineNumber : 42, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("> horDistCos: " + horDistCos,{ fileName : "CC037.hx", lineNumber : 43, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("- horDistTan: " + horDistTan,{ fileName : "CC037.hx", lineNumber : 44, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace(cc_util_MathUtil.pythagoreanTheorem(0,horDistCos,this.cellsize),{ fileName : "CC037.hx", lineNumber : 46, className : "art.CC037", methodName : "drawShape"});
 		var distX = this.cellsize + horDistSin;
 		var distY = horDistCos;
 		this.grid.setIsFullscreen();
@@ -4381,11 +4381,11 @@ art_CC037.prototype = $extend(art_CCBase.prototype,{
 			var i = _g1++;
 			this.shapeArray.push(this.createShape(i));
 		}
-		console.log("w: " + Global.w + ", h: " + Global.h);
-		console.log("total: " + this.grid.array.length);
-		console.log("numHor: " + this.grid.numHor + ", numVer: " + this.grid.numVer);
-		console.log("width: " + this.grid.width + ", height: " + this.grid.height);
-		console.log("x: " + this.grid.x + ", y: " + this.grid.y);
+		haxe_Log.trace("w: " + Global.w + ", h: " + Global.h,{ fileName : "CC037.hx", lineNumber : 62, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("total: " + this.grid.array.length,{ fileName : "CC037.hx", lineNumber : 63, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("numHor: " + this.grid.numHor + ", numVer: " + this.grid.numVer,{ fileName : "CC037.hx", lineNumber : 64, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("width: " + this.grid.width + ", height: " + this.grid.height,{ fileName : "CC037.hx", lineNumber : 65, className : "art.CC037", methodName : "drawShape"});
+		haxe_Log.trace("x: " + this.grid.x + ", y: " + this.grid.y,{ fileName : "CC037.hx", lineNumber : 66, className : "art.CC037", methodName : "drawShape"});
 		var startX = this.grid.x;
 		var startY = this.grid.y;
 		var gridCounterY = 0;
@@ -4417,10 +4417,10 @@ art_CC037.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC037.hx", lineNumber : 102, className : "art.CC037", methodName : "setup"});
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC037.hx", lineNumber : 107, className : "art.CC037", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -4451,11 +4451,11 @@ art_CC038.prototype = $extend(art_CCBase.prototype,{
 		var horDistSin = Math.sin(hoek_2) * this.cellsize;
 		var horDistCos = Math.cos(hoek_2) * this.cellsize;
 		var horDistTan = Math.tan(hoek_2) * this.cellsize;
-		console.log("schuine zijde: " + this.cellsize);
-		console.log("- horDistSin: " + horDistSin);
-		console.log("> horDistCos: " + horDistCos);
-		console.log("- horDistTan: " + horDistTan);
-		console.log(cc_util_MathUtil.pythagoreanTheorem(0,horDistCos,this.cellsize));
+		haxe_Log.trace("schuine zijde: " + this.cellsize,{ fileName : "CC038.hx", lineNumber : 42, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("- horDistSin: " + horDistSin,{ fileName : "CC038.hx", lineNumber : 43, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("> horDistCos: " + horDistCos,{ fileName : "CC038.hx", lineNumber : 44, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("- horDistTan: " + horDistTan,{ fileName : "CC038.hx", lineNumber : 45, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace(cc_util_MathUtil.pythagoreanTheorem(0,horDistCos,this.cellsize),{ fileName : "CC038.hx", lineNumber : 47, className : "art.CC038", methodName : "drawShape"});
 		var distX = this.cellsize + horDistSin;
 		var distY = horDistCos;
 		this.grid.setIsFullscreen();
@@ -4467,11 +4467,11 @@ art_CC038.prototype = $extend(art_CCBase.prototype,{
 			var i = _g1++;
 			this.shapeArray.push(this.createShape(i));
 		}
-		console.log("w: " + Global.w + ", h: " + Global.h);
-		console.log("total: " + this.grid.array.length);
-		console.log("numHor: " + this.grid.numHor + ", numVer: " + this.grid.numVer);
-		console.log("width: " + this.grid.width + ", height: " + this.grid.height);
-		console.log("x: " + this.grid.x + ", y: " + this.grid.y);
+		haxe_Log.trace("w: " + Global.w + ", h: " + Global.h,{ fileName : "CC038.hx", lineNumber : 63, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("total: " + this.grid.array.length,{ fileName : "CC038.hx", lineNumber : 64, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("numHor: " + this.grid.numHor + ", numVer: " + this.grid.numVer,{ fileName : "CC038.hx", lineNumber : 65, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("width: " + this.grid.width + ", height: " + this.grid.height,{ fileName : "CC038.hx", lineNumber : 66, className : "art.CC038", methodName : "drawShape"});
+		haxe_Log.trace("x: " + this.grid.x + ", y: " + this.grid.y,{ fileName : "CC038.hx", lineNumber : 67, className : "art.CC038", methodName : "drawShape"});
 		var startX = this.grid.x;
 		var startY = this.grid.y;
 		var gridCounterY = 0;
@@ -4512,7 +4512,7 @@ art_CC038.prototype = $extend(art_CCBase.prototype,{
 		return rgba;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC038.hx", lineNumber : 114, className : "art.CC038", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		var _color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -4541,7 +4541,7 @@ art_CC038.prototype = $extend(art_CCBase.prototype,{
 		this.ctxHidden.fillRect(0,0,Global.w,Global.h);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC038.hx", lineNumber : 143, className : "art.CC038", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -4604,7 +4604,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 			this.ctx.drawImage(this.ctxHidden.canvas,0,0,Global.w,Global.h);
 			cc_util_EffectUtil.mirror(this.ctx,false);
 			cc_util_EffectUtil.mirror(this.ctx,true);
-			console.log("both");
+			haxe_Log.trace("both",{ fileName : "CC039.hx", lineNumber : 86, className : "art.CC039", methodName : "dropdown"});
 			break;
 		case "horizontal":
 			this.ctx.drawImage(this.ctxHidden.canvas,0,0,Global.w,Global.h);
@@ -4618,7 +4618,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 			cc_util_EffectUtil.mirror(this.ctx,false);
 			break;
 		default:
-			console.log("case '" + Std.string(index.label) + "': trace ('" + Std.string(index.label) + "');");
+			haxe_Log.trace("case '" + Std.string(index.label) + "': trace ('" + Std.string(index.label) + "');",{ fileName : "CC039.hx", lineNumber : 87, className : "art.CC039", methodName : "dropdown"});
 		}
 	}
 	,setFlip: function(type,isTrue) {
@@ -4635,22 +4635,22 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 	,setMirror: function(type,isTrue) {
 		switch(type) {
 		case "mirror both":
-			console.log("mirror both");
+			haxe_Log.trace("mirror both",{ fileName : "CC039.hx", lineNumber : 104, className : "art.CC039", methodName : "setMirror"});
 			break;
 		case "mirror horizontal":
-			console.log("mirror horizontal");
+			haxe_Log.trace("mirror horizontal",{ fileName : "CC039.hx", lineNumber : 102, className : "art.CC039", methodName : "setMirror"});
 			break;
 		case "mirror vertical":
-			console.log("mirror vertical");
+			haxe_Log.trace("mirror vertical",{ fileName : "CC039.hx", lineNumber : 103, className : "art.CC039", methodName : "setMirror"});
 			break;
 		default:
-			console.log("case '" + type + "': trace ('" + type + "');");
+			haxe_Log.trace("case '" + type + "': trace ('" + type + "');",{ fileName : "CC039.hx", lineNumber : 105, className : "art.CC039", methodName : "setMirror"});
 		}
 		if(isTrue) {
-			console.log("mirror");
+			haxe_Log.trace("mirror",{ fileName : "CC039.hx", lineNumber : 108, className : "art.CC039", methodName : "setMirror"});
 			cc_util_EffectUtil.mirror(this.ctx);
 		} else {
-			console.log("reset mirror");
+			haxe_Log.trace("reset mirror",{ fileName : "CC039.hx", lineNumber : 111, className : "art.CC039", methodName : "setMirror"});
 			this.ctx.drawImage(this.ctxHidden.canvas,0,0,Global.w,Global.h);
 		}
 	}
@@ -4682,7 +4682,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 			cc_util_FilterUtil.sepia(this.ctx,value);
 			break;
 		default:
-			console.log("case '" + type + "': trace ('" + type + "');");
+			haxe_Log.trace("case '" + type + "': trace ('" + type + "');",{ fileName : "CC039.hx", lineNumber : 127, className : "art.CC039", methodName : "setFilter"});
 		}
 		this.drawShape();
 	}
@@ -4696,7 +4696,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC039.hx", lineNumber : 144, className : "art.CC039", methodName : "setup"});
 		this.isDebug = true;
 		var img = new Image();
 		img.src = "assets/img/lotus.jpg";
@@ -4711,7 +4711,7 @@ art_CC039.prototype = $extend(art_CCBase.prototype,{
 		};
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC039.hx", lineNumber : 163, className : "art.CC039", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -4767,7 +4767,7 @@ art_CC040.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC040.hx", lineNumber : 68, className : "art.CC040", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -4822,7 +4822,7 @@ art_CC041.__interfaces__ = [art_ICCBase];
 art_CC041.__super__ = art_CCBase;
 art_CC041.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC041.hx", lineNumber : 37, className : "art.CC041", methodName : "onEmbedHandler"});
 		this.drawShape();
 	}
 	,createShape: function(i,point) {
@@ -4876,7 +4876,7 @@ art_CC041.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC041.hx", lineNumber : 140, className : "art.CC041", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -4917,7 +4917,7 @@ art_CC042.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.strokeEllipse(this.ctx,Global.w / 2,Global.h / 2,cc_util_MathUtil.random(0,r),cc_util_MathUtil.random(0,r));
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC042.hx", lineNumber : 21, className : "art.CC042", methodName : "setup"});
 		this.ctx.clearRect(0,0,Global.w,Global.h);
 		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
 	}
@@ -4950,7 +4950,7 @@ art_CC043.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.ellipseFillStroke(this.ctx,this.xpos,this.ypos,cc_util_MathUtil.random(0,r),cc_util_MathUtil.random(20,40));
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC043.hx", lineNumber : 60, className : "art.CC043", methodName : "setup"});
 		this.ypos = Global.h;
 		this.ctx.clearRect(0,0,Global.w,Global.h);
 		cc_CanvasTools.backgroundRGB(this.ctx,cc_util_ColorUtil.WHITE);
@@ -5016,7 +5016,7 @@ art_CC044.prototype = $extend(art_CCBase.prototype,{
 		window.console.log("Output","" + name + ": " + Std.string(value));
 	}
 	,quicksetttingsDefault: function() {
-		console.log("defaults");
+		haxe_Log.trace("defaults",{ fileName : "CC044.hx", lineNumber : 84, className : "art.CC044", methodName : "quicksetttingsDefault"});
 		this.panel1.setValue("Fullscreen",false);
 		this.panel1.setValue("octaves",1);
 		this.panel1.setValue("xValue",50.0);
@@ -5067,8 +5067,8 @@ art_CC044.prototype = $extend(art_CCBase.prototype,{
 				this.ctx.fillRect(xOffset + x,yOffset + y,1,1);
 			}
 		}
-		console.log("min: " + min);
-		console.log("max: " + max);
+		haxe_Log.trace("min: " + min,{ fileName : "CC044.hx", lineNumber : 137, className : "art.CC044", methodName : "drawShape"});
+		haxe_Log.trace("max: " + max,{ fileName : "CC044.hx", lineNumber : 138, className : "art.CC044", methodName : "drawShape"});
 		window.console.group("Perlin Noise values");
 		window.console.log("xValue: " + this.xValue);
 		window.console.log("yValue: " + this.yValue);
@@ -5079,7 +5079,7 @@ art_CC044.prototype = $extend(art_CCBase.prototype,{
 		window.console.groupEnd();
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC044.hx", lineNumber : 151, className : "art.CC044", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._bgColor = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -5143,7 +5143,7 @@ art_CC046.__interfaces__ = [art_ICCBase];
 art_CC046.__super__ = art_CCBase;
 art_CC046.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC046.hx", lineNumber : 25, className : "art.CC046", methodName : "onEmbedHandler"});
 		this.drawShape();
 	}
 	,drawShape: function() {
@@ -5162,7 +5162,7 @@ art_CC046.prototype = $extend(art_CCBase.prototype,{
 		cc_draw_Text.centerFillText(this.ctx,text,Global.w / 2,Global.h / 2,"'Share Tech Mono', monospace",160);
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC046.hx", lineNumber : 60, className : "art.CC046", methodName : "setup"});
 		this.isDebug = true;
 	}
 	,draw: function() {
@@ -5250,7 +5250,7 @@ art_CC047.prototype = $extend(art_CCBase.prototype,{
 	}
 	,onAnimateHandler: function() {
 		if(this._leader == null) {
-			console.log("no leader");
+			haxe_Log.trace("no leader",{ fileName : "CC047.hx", lineNumber : 115, className : "art.CC047", methodName : "onAnimateHandler"});
 			var Go = new cc_lets_Go({ },1);
 			var _this = Go;
 			_this._options.onComplete = $bind(this,this.onAnimateHandler);
@@ -5317,7 +5317,7 @@ art_CC047.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.circleFill(this.ctx,this._follow.x,this._follow.y,10);
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC047.hx", lineNumber : 185, className : "art.CC047", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -5362,7 +5362,7 @@ art_CC048.__interfaces__ = [art_ICCBase];
 art_CC048.__super__ = art_CCBase;
 art_CC048.prototype = $extend(art_CCBase.prototype,{
 	startCanvasImage: function() {
-		console.log("startCanvasImage :: start");
+		haxe_Log.trace("startCanvasImage :: start",{ fileName : "CC048.hx", lineNumber : 34, className : "art.CC048", methodName : "startCanvasImage"});
 		this.ctx.clearRect(0,0,Global.w,Global.h);
 		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
 		if(this.shapeArray.length <= 0) {
@@ -5379,7 +5379,7 @@ art_CC048.prototype = $extend(art_CCBase.prototype,{
 			cc_CanvasTools.fillColour(this.ctx,sh.rgba.r,sh.rgba.g,sh.rgba.b,sh.rgba.a);
 			this.ctx.fillRect(xpos,ypos,1,1);
 		}
-		console.log("startCanvasImage :: done");
+		haxe_Log.trace("startCanvasImage :: done",{ fileName : "CC048.hx", lineNumber : 48, className : "art.CC048", methodName : "startCanvasImage"});
 	}
 	,drawShape: function() {
 		if(this.shapeArray.length <= 0) {
@@ -5405,19 +5405,19 @@ art_CC048.prototype = $extend(art_CCBase.prototype,{
 	}
 	,setup: function() {
 		var _gthis = this;
-		console.log("setup: " + this.toString());
-		console.log("setup: start loading image");
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC048.hx", lineNumber : 84, className : "art.CC048", methodName : "setup"});
+		haxe_Log.trace("setup: start loading image",{ fileName : "CC048.hx", lineNumber : 88, className : "art.CC048", methodName : "setup"});
 		var img = new Image();
 		img.src = "assets/img/fresh/xiaolong-wong-1297576-unsplash_square500x500.jpg";
 		img.onload = function() {
-			console.log("setup: image loaded");
+			haxe_Log.trace("setup: image loaded",{ fileName : "CC048.hx", lineNumber : 94, className : "art.CC048", methodName : "setup"});
 			var option = new SketchOption();
 			option.set_width(Math.round(img.width * _gthis._scale));
 			option.set_height(Math.round(img.height * _gthis._scale));
 			_gthis._sizeX = option.get_width();
 			_gthis._sizeY = option.get_height();
 			_gthis._total = _gthis._sizeX * _gthis._sizeY;
-			console.log("setup -> _sizeX: " + _gthis._sizeX + ", _sizeY: " + _gthis._sizeY + ", total pixels: " + _gthis._total);
+			haxe_Log.trace("setup -> _sizeX: " + _gthis._sizeX + ", _sizeY: " + _gthis._sizeY + ", total pixels: " + _gthis._total,{ fileName : "CC048.hx", lineNumber : 103, className : "art.CC048", methodName : "setup"});
 			_gthis.ctxHidden = Sketch.createHiddenCanvas("imageholder",option,_gthis.isDebug);
 			var _gthis1 = _gthis.ctxHidden;
 			var tmp = option.get_width();
@@ -5430,7 +5430,7 @@ art_CC048.prototype = $extend(art_CCBase.prototype,{
 		};
 	}
 	,setupDataArray: function(xdir,ydir) {
-		console.log("convert image: Start converting pixels to data");
+		haxe_Log.trace("convert image: Start converting pixels to data",{ fileName : "CC048.hx", lineNumber : 113, className : "art.CC048", methodName : "setupDataArray"});
 		var _g1 = 0;
 		var _g = ydir;
 		while(_g1 < _g) {
@@ -5443,7 +5443,7 @@ art_CC048.prototype = $extend(art_CCBase.prototype,{
 				this.shapeArray.push(pixel);
 			}
 		}
-		console.log("convert image: DONE");
+		haxe_Log.trace("convert image: DONE",{ fileName : "CC048.hx", lineNumber : 126, className : "art.CC048", methodName : "setupDataArray"});
 		this.pixelCounter = 0;
 		this.startCanvasImage();
 	}
@@ -5571,11 +5571,11 @@ art_CC049.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC049.hx", lineNumber : 125, className : "art.CC049", methodName : "setup"});
 		this.isDebug = true;
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC049.hx", lineNumber : 130, className : "art.CC049", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -5584,7 +5584,7 @@ art_CC049.prototype = $extend(art_CCBase.prototype,{
 		var xpadding = 100;
 		var ypadding = 100;
 		var scale = 50;
-		console.log(m);
+		haxe_Log.trace(m,{ fileName : "CC049.hx", lineNumber : 143, className : "art.CC049", methodName : "testMe"});
 		this.ctx.beginPath();
 		this.ctx.lineCap = "round";
 		this.ctx.lineJoin = "round";
@@ -5635,14 +5635,14 @@ art_CC050.__interfaces__ = [art_ICCBase];
 art_CC050.__super__ = art_CCBase;
 art_CC050.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC050.hx", lineNumber : 38, className : "art.CC050", methodName : "onEmbedHandler"});
 		this.isFontLoaded = true;
 		this.drawShape();
 	}
 	,createQuickSettings: function() {
 		var _gthis = this;
 		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote",this.text,function(value) {
-			console.log(value);
+			haxe_Log.trace(value,{ fileName : "CC050.hx", lineNumber : 49, className : "art.CC050", methodName : "createQuickSettings"});
 		}).addBoolean("All Caps",false,function(value1) {
 			_gthis.setCaps(value1);
 		}).addRange("Font size",10,500,this._defaultFontSize,1,function(value2) {
@@ -5707,19 +5707,19 @@ art_CC050.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC050.hx", lineNumber : 117, className : "art.CC050", methodName : "setup"});
 		this.randomColorize();
 		this.isDebug = true;
 		var canvas = window.document.getElementById("creative_code_mck");
 		this.square = Math.round(Math.min(Global.w,Global.h));
-		console.log("w: " + Global.w + ", h: " + Global.h);
-		console.log("square: " + this.square);
+		haxe_Log.trace("w: " + Global.w + ", h: " + Global.h,{ fileName : "CC050.hx", lineNumber : 127, className : "art.CC050", methodName : "setup"});
+		haxe_Log.trace("square: " + this.square,{ fileName : "CC050.hx", lineNumber : 128, className : "art.CC050", methodName : "setup"});
 		canvas.width = this.square - 2;
 		canvas.height = this.square - 2;
 		canvas.style.border = "1px solid silver";
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC050.hx", lineNumber : 136, className : "art.CC050", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -5740,7 +5740,7 @@ var art_CC051 = function(ctx) {
 	window.document.fonts.add(font);
 	font.load();
 	font.loaded.then(function(fontface) {
-		console.log(fontface.family);
+		haxe_Log.trace(fontface.family,{ fileName : "CC051.hx", lineNumber : 42, className : "art.CC051", methodName : "new"});
 		_gthis.isFondEmbedded = true;
 		_gthis.drawShape();
 	});
@@ -5764,7 +5764,7 @@ art_CC051.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC051.hx", lineNumber : 66, className : "art.CC051", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -5779,7 +5779,7 @@ art_CC051.prototype = $extend(art_CCBase.prototype,{
 		this.isDebug = true;
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC051.hx", lineNumber : 79, className : "art.CC051", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -5800,7 +5800,7 @@ var art_CC051a = function(ctx) {
 	window.document.fonts.add(font);
 	font.load();
 	font.loaded.then(function(fontface) {
-		console.log(fontface.family);
+		haxe_Log.trace(fontface.family,{ fileName : "CC051a.hx", lineNumber : 42, className : "art.CC051a", methodName : "new"});
 		_gthis.isFondEmbedded = true;
 		_gthis.drawShape();
 	});
@@ -5835,20 +5835,44 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 			_this2.set__x(x);
 			_this2.set__y(y);
 			var _this3 = _this2;
-			_this3.set__size(this.scaling(50));
+			var px = this.scaling(50);
+			_this3.set__size(px);
+			if(_this3.get__leading() == null) {
+				_this3.set__leading(px);
+			}
 			var _this4 = _this3;
+			var isLines = false;
 			_this4._ctx.save();
+			if(_this4._text.indexOf("\n") != -1) {
+				_this4._lineArray = _this4._text.split("\n");
+				isLines = true;
+			}
 			var previousColor = _this4._ctx.fillStyle;
 			if(_this4._color != null) {
 				cc_CanvasTools.fillColourRGB(_this4._ctx,_this4._color,_this4.get__alpha());
+			} else {
+				var _this5 = _this4._ctx;
+				var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+				var tmp1 = _this4.get__alpha();
+				cc_CanvasTools.fillColourRGB(_this5,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp1);
 			}
-			var tmp1 = "" + _this4.get__size() + "px ";
-			_this4._ctx.font = tmp1 + _this4._font;
+			var tmp2 = "" + _this4.get__size() + "px ";
+			_this4._ctx.font = tmp2 + _this4._font;
 			_this4._ctx.textAlign = _this4._textAlign;
 			_this4._ctx.textBaseline = _this4._textBaseline;
 			_this4._ctx.translate(_this4.get__x(),_this4.get__y());
 			_this4._ctx.rotate(cc_util_MathUtil.radians(_this4.get__rotate()));
-			_this4._ctx.fillText(_this4._text,0,0);
+			if(!isLines) {
+				_this4._ctx.fillText(_this4._text,0,0);
+			} else {
+				var _g1 = 0;
+				var _g = _this4._lineArray.length;
+				while(_g1 < _g) {
+					var i = _g1++;
+					var line = _this4._lineArray[i];
+					_this4._ctx.fillText(line,0,i * _this4.get__leading());
+				}
+			}
 			_this4._ctx.restore();
 			_this4._ctx.fillStyle = previousColor;
 		}
@@ -5857,7 +5881,7 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 		return value;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC051a.hx", lineNumber : 81, className : "art.CC051a", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -5872,7 +5896,7 @@ art_CC051a.prototype = $extend(art_CCBase.prototype,{
 		this.isDebug = true;
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC051a.hx", lineNumber : 94, className : "art.CC051a", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -5908,9 +5932,9 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 		var _gthis = this;
 		this.svgImage = new Image();
 		this.svgImage.onload = function() {
-			console.log("base64 square");
-			console.log("w: " + _gthis.svgImage.width);
-			console.log("h: " + _gthis.svgImage.height);
+			haxe_Log.trace("base64 square",{ fileName : "CC052.hx", lineNumber : 48, className : "art.CC052", methodName : "initSVG"});
+			haxe_Log.trace("w: " + _gthis.svgImage.width,{ fileName : "CC052.hx", lineNumber : 49, className : "art.CC052", methodName : "initSVG"});
+			haxe_Log.trace("h: " + _gthis.svgImage.height,{ fileName : "CC052.hx", lineNumber : 50, className : "art.CC052", methodName : "initSVG"});
 			_gthis.isSvgReady = true;
 			_gthis.drawShape();
 		};
@@ -5920,7 +5944,7 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 		this.svgImage.src = image64;
 	}
 	,onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC052.hx", lineNumber : 77, className : "art.CC052", methodName : "onEmbedHandler"});
 		this.isFontReady = true;
 		this.drawShape();
 	}
@@ -5953,26 +5977,49 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 			_this1.set__y(y);
 			var _this2 = _this1;
 			_this2.set__size(20);
+			if(_this2.get__leading() == null) {
+				_this2.set__leading(20);
+			}
 			var _this3 = _this2;
+			var isLines = false;
 			_this3._ctx.save();
+			if(_this3._text.indexOf("\n") != -1) {
+				_this3._lineArray = _this3._text.split("\n");
+				isLines = true;
+			}
 			var previousColor = _this3._ctx.fillStyle;
 			if(_this3._color != null) {
 				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3.get__alpha());
+			} else {
+				var _this4 = _this3._ctx;
+				var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+				var tmp = _this3.get__alpha();
+				cc_CanvasTools.fillColourRGB(_this4,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
 			}
-			var tmp = "" + _this3.get__size() + "px ";
-			_this3._ctx.font = tmp + _this3._font;
+			var tmp1 = "" + _this3.get__size() + "px ";
+			_this3._ctx.font = tmp1 + _this3._font;
 			_this3._ctx.textAlign = _this3._textAlign;
 			_this3._ctx.textBaseline = _this3._textBaseline;
 			_this3._ctx.translate(_this3.get__x(),_this3.get__y());
 			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3.get__rotate()));
-			_this3._ctx.fillText(_this3._text,0,0);
+			if(!isLines) {
+				_this3._ctx.fillText(_this3._text,0,0);
+			} else {
+				var _g11 = 0;
+				var _g2 = _this3._lineArray.length;
+				while(_g11 < _g2) {
+					var i1 = _g11++;
+					var line = _this3._lineArray[i1];
+					_this3._ctx.fillText(line,0,i1 * _this3.get__leading());
+				}
+			}
 			_this3._ctx.restore();
 			_this3._ctx.fillStyle = previousColor;
 		}
 		this.stop();
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC052.hx", lineNumber : 128, className : "art.CC052", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -5995,39 +6042,39 @@ art_CC052.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC052.hx", lineNumber : 151, className : "art.CC052", methodName : "draw"});
 		this.drawShape();
 	}
 	,didnotwork: function() {
 		var _gthis = this;
 		var img = new Image();
 		img.onload = function() {
-			console.log("green square");
+			haxe_Log.trace("green square",{ fileName : "CC052.hx", lineNumber : 162, className : "art.CC052", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img,Global.w / 2,Global.h / 2);
 		};
 		img.src = "http://upload.wikimedia.org/wikipedia/commons/d/d2/Svg_example_square.svg";
-		console.log(img.src);
+		haxe_Log.trace(img.src,{ fileName : "CC052.hx", lineNumber : 168, className : "art.CC052", methodName : "didnotwork"});
 		var img1 = new Image();
 		img1.onload = function() {
-			console.log("png");
+			haxe_Log.trace("png",{ fileName : "CC052.hx", lineNumber : 172, className : "art.CC052", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img1,Global.w / 2,Global.h / 2);
 		};
 		img1.src = "assets/img/mck.png";
-		console.log(img1.src);
+		haxe_Log.trace(img1.src,{ fileName : "CC052.hx", lineNumber : 178, className : "art.CC052", methodName : "didnotwork"});
 		var img2 = new Image();
 		img2.onload = function() {
-			console.log("likes");
+			haxe_Log.trace("likes",{ fileName : "CC052.hx", lineNumber : 182, className : "art.CC052", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img2,Global.w / 2,Global.h / 2);
 		};
 		img2.src = "assets/img/likes/likes.svg";
-		console.log(img2.src);
+		haxe_Log.trace(img2.src,{ fileName : "CC052.hx", lineNumber : 188, className : "art.CC052", methodName : "didnotwork"});
 		var img3 = new Image();
 		img3.onload = function() {
-			console.log("likes.min");
+			haxe_Log.trace("likes.min",{ fileName : "CC052.hx", lineNumber : 192, className : "art.CC052", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img3,Global.w / 2,Global.h / 2);
 		};
 		img3.src = "assets/img/likes/likes.min.svg";
-		console.log(img3.src);
+		haxe_Log.trace(img3.src,{ fileName : "CC052.hx", lineNumber : 198, className : "art.CC052", methodName : "didnotwork"});
 	}
 	,__class__: art_CC052
 });
@@ -6069,9 +6116,9 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 		var _gthis = this;
 		this.svgImage = new Image();
 		this.svgImage.onload = function() {
-			console.log("base64 square");
-			console.log("w: " + _gthis.svgImage.width);
-			console.log("h: " + _gthis.svgImage.height);
+			haxe_Log.trace("base64 square",{ fileName : "CC052a.hx", lineNumber : 68, className : "art.CC052a", methodName : "initSVG"});
+			haxe_Log.trace("w: " + _gthis.svgImage.width,{ fileName : "CC052a.hx", lineNumber : 69, className : "art.CC052a", methodName : "initSVG"});
+			haxe_Log.trace("h: " + _gthis.svgImage.height,{ fileName : "CC052a.hx", lineNumber : 70, className : "art.CC052a", methodName : "initSVG"});
 			_gthis.isSvgReady = true;
 			_gthis.drawShape();
 		};
@@ -6081,7 +6128,7 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 		this.svgImage.src = image64;
 	}
 	,onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC052a.hx", lineNumber : 97, className : "art.CC052a", methodName : "onEmbedHandler"});
 		this.isFontReady = true;
 		this.drawShape();
 	}
@@ -6166,19 +6213,42 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 			_this1.set__y(y);
 			var _this2 = _this1;
 			_this2.set__size(20);
+			if(_this2.get__leading() == null) {
+				_this2.set__leading(20);
+			}
 			var _this3 = _this2;
+			var isLines = false;
 			_this3._ctx.save();
+			if(_this3._text.indexOf("\n") != -1) {
+				_this3._lineArray = _this3._text.split("\n");
+				isLines = true;
+			}
 			var previousColor = _this3._ctx.fillStyle;
 			if(_this3._color != null) {
 				cc_CanvasTools.fillColourRGB(_this3._ctx,_this3._color,_this3.get__alpha());
+			} else {
+				var _this4 = _this3._ctx;
+				var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+				var tmp = _this3.get__alpha();
+				cc_CanvasTools.fillColourRGB(_this4,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
 			}
-			var tmp = "" + _this3.get__size() + "px ";
-			_this3._ctx.font = tmp + _this3._font;
+			var tmp1 = "" + _this3.get__size() + "px ";
+			_this3._ctx.font = tmp1 + _this3._font;
 			_this3._ctx.textAlign = _this3._textAlign;
 			_this3._ctx.textBaseline = _this3._textBaseline;
 			_this3._ctx.translate(_this3.get__x(),_this3.get__y());
 			_this3._ctx.rotate(cc_util_MathUtil.radians(_this3.get__rotate()));
-			_this3._ctx.fillText(_this3._text,0,0);
+			if(!isLines) {
+				_this3._ctx.fillText(_this3._text,0,0);
+			} else {
+				var _g11 = 0;
+				var _g2 = _this3._lineArray.length;
+				while(_g11 < _g2) {
+					var i1 = _g11++;
+					var line = _this3._lineArray[i1];
+					_this3._ctx.fillText(line,0,i1 * _this3.get__leading());
+				}
+			}
 			_this3._ctx.restore();
 			_this3._ctx.fillStyle = previousColor;
 			this.ctx.globalAlpha = 1;
@@ -6186,7 +6256,7 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC052a.hx", lineNumber : 166, className : "art.CC052a", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -6220,32 +6290,32 @@ art_CC052a.prototype = $extend(art_CCBase.prototype,{
 		var _gthis = this;
 		var img = new Image();
 		img.onload = function() {
-			console.log("green square");
+			haxe_Log.trace("green square",{ fileName : "CC052a.hx", lineNumber : 209, className : "art.CC052a", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img,Global.w / 2,Global.h / 2);
 		};
 		img.src = "http://upload.wikimedia.org/wikipedia/commons/d/d2/Svg_example_square.svg";
-		console.log(img.src);
+		haxe_Log.trace(img.src,{ fileName : "CC052a.hx", lineNumber : 215, className : "art.CC052a", methodName : "didnotwork"});
 		var img1 = new Image();
 		img1.onload = function() {
-			console.log("png");
+			haxe_Log.trace("png",{ fileName : "CC052a.hx", lineNumber : 219, className : "art.CC052a", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img1,Global.w / 2,Global.h / 2);
 		};
 		img1.src = "assets/img/mck.png";
-		console.log(img1.src);
+		haxe_Log.trace(img1.src,{ fileName : "CC052a.hx", lineNumber : 225, className : "art.CC052a", methodName : "didnotwork"});
 		var img2 = new Image();
 		img2.onload = function() {
-			console.log("likes");
+			haxe_Log.trace("likes",{ fileName : "CC052a.hx", lineNumber : 229, className : "art.CC052a", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img2,Global.w / 2,Global.h / 2);
 		};
 		img2.src = "assets/img/likes/likes.svg";
-		console.log(img2.src);
+		haxe_Log.trace(img2.src,{ fileName : "CC052a.hx", lineNumber : 235, className : "art.CC052a", methodName : "didnotwork"});
 		var img3 = new Image();
 		img3.onload = function() {
-			console.log("likes.min");
+			haxe_Log.trace("likes.min",{ fileName : "CC052a.hx", lineNumber : 239, className : "art.CC052a", methodName : "didnotwork"});
 			_gthis.ctx.drawImage(img3,Global.w / 2,Global.h / 2);
 		};
 		img3.src = "assets/img/likes/likes.min.svg";
-		console.log(img3.src);
+		haxe_Log.trace(img3.src,{ fileName : "CC052a.hx", lineNumber : 245, className : "art.CC052a", methodName : "didnotwork"});
 	}
 	,toString: function() {
 		return "cc052a";
@@ -6256,13 +6326,20 @@ var art_CC053 = function(ctx) {
 	this.lyrics = "I said a hip hop\nHippie to the hippie\nThe hip, hip a hop, and you don't stop, a rock it out\nBubba to the bang bang boogie, boobie to the boogie\nTo the rhythm of the boogie the beat\nNow, what you hear is not a test I'm rappin' to the beat\nAnd me, the groove, and my friends are gonna try to move your feet\nSee, I am Wonder Mike, and I'd like to say hello\nTo the black, to the white, the red and the brown\nThe purple and yellow, but first, I gotta\nBang bang, the boogie to the boogie\nSay up jump the boogie to the bang bang boogie\nLet's rock, you don't stop\nRock the rhythm that'll make your body rock\nWell so far you've heard my voice but I brought two friends along\nAnd the next on the mic is my man Hank\nC'mon, Hank, sing that song, check it out\nWell, I'm Imp the Dimp, the ladies' pimp\nThe women fight for my delight\nBut I'm the grandmaster with the three MCs\nThat shock the house for the young ladies\nAnd when you come inside, into the front\nYou do the Freak, Spank, and do the Bump\nAnd when the sucker MC's try to prove a point\nWe're Treacherous Trio, we're the serious joint\nA from sun to sun and day to day\nI sit down and write a brand new rhyme\nBecause they say that miracles never cease\nI've created a devastating masterpiece\nI'm gonna rock the mic 'til you can't resist\nEverybody, I say it goes like this\nWell, I was coming home late one dark afternoon\nA reporter stopped me for an interview\nShe said she's heard stories and she's heard fables\nThat I'm vicious on the mic and the turntable\nThis young reporter I did adore\nSo I rocked some vicious rhymes like I never did before\nShe said, \"damn, fly guy, I'm in love with you\nThe Casanova legend must have been true\"\nI said, \"by the way, baby, what's your name?\"\nSaid, \"I go by name of Lois Lane\"\n\"And you could be my boyfriend, you surely can\nJust let me quit my boyfriend called Superman\"\nI said, \"he's a fairy, I do suppose\nFlyin' through the air in pantyhose\nHe may be very sexy, or even cute\nBut he looks like a sucker in a blue and red suit\"\nI said, \"you need a man man who's got finesse\nAnd his whole name across his chest\nHe may be able to fly all through the night\nBut can he rock a party 'til the early light?\nHe can't satisfy you with his little worm\nBut I can bust you out with my super sperm!\"\nI go do it, I go do it, I go do it, do it, do it\nAn' I'm here an' I'm there, I'm Big Ban Hank, I'm everywhere\nJust throw your hands up in the air\nAnd party hardy like you just don't care\nLet's do it, don't stop, y'all, a tick tock, y'all, you don't stop!\nGo ho-tel, mo-tel, whatcha gonna do today? (say what?)\nI'm gonna get a fly girl, gonna get some spank, drive off in a def OJ\nEverybody go, \"ho-tel, mo-tel, Holiday Inn\"\nYou say if your girl starts actin' up, then you take her friend\nI say skip, dive, what can I say?\nI can't fit 'em all inside my OJ\nSo I just take half, and bust 'em out\nI give the rest to Master Gee so he can shock the house\nI said M-A-S, T-E-R, a G with a double E\nI said I go by the unforgettable name\nOf the man they call the Master Gee\nWell, my name is known all over the world\nBy all the foxy ladies and the pretty girls\nI'm goin' down in history\nAs the baddest rapper there ever could be\nNow I'm feelin' the highs and you're feelin' the lows\nThe beat starts gettin' into your toes\nYou start poppin' your fingers and stompin' your feet\nAnd movin' your body while while you're sitting in your seat\nAnd then damn! Ya start doin' the freak, I said\nDamn! Right outta your seat\nThen you throw your hands high in the air\nYa rockin' to the rhythm, shake your derriere\nYa rockin' to the beat without a care\nWith the sureshot MCs for the affair\nNow, I'm not as tall as the rest of the gang\nBut I rap to the beat just the same\nI got a little face, and a pair of brown eyes\nAll I'm here to do, ladies, is hypnotize\nSingin' on'n'n'on'n'on on'n'on\nThe beat don't stop until the break of dawn\nSingin' on'n'n'on'n'on on'n'on\nLike a hot buttered pop da pop da pop dibbie dibbie\nPop da pop pop, don't you dare stop\nCome alive y'all, gimme whatcha got\nI guess by now you can take a hunch\nAnd find that I am the baby of the bunch\nBut that's okay, I still keep in stride\n'Cause all I'm here to do is just wiggle your behind\nSingin' on'n'n'on'n'on on'n'on\nThe beat don't stop until the break of dawn\nSingin' on'n'n'on'n'on on'n'on\nRock rock, y'all, throw it on the floor\nI'm gonna freak you here, I'm gona freak you there\nI'm gonna move you outta this atmosphere\n'Cause I'm one of a kind and I'll shock your mind\nI'll put TNT in your behind. I said\nOne, two, three, four, come on, girls, get on the floor\nA-come alive, y'all, a-gimme whatcha got\n'Cause I'm guaranteed to make you rock\nI said one, two, three, four, tell me, Wonder Mike\nWhat are you waiting for?\nI said a hip hop\nThe hippie to the hippie\nThe hip hip a hop, and you don't stop, a rock it\nTo the bang bang boogie, say up jump the boogie\nTo the rhythm of the boogie, the beat\nA skiddleebebop, we rock, scooby doo\nAnd guess what, America, we love you\n'Cause you rocked and a rolled with so much soul\nYou could rock 'til a hundred and one years old\nI don't mean to brag, I don't mean to boast\nBut we like hot butter on our breakfast toast\nRock it up, Baby Bubba!\nBaby Bubba to the boogie da bang bang da boogie\nTo the beat, beat, it's unique\nCome on everybody and dance to the beat!\nHave you ever went over a friends house to eat\nAnd the food just ain't no good?\nI mean the macaroni's soggy, the peas are mushed\nAnd the chicken tastes like wood\nSo you try to play it off like you think you can\nBy saying that you're full\nAnd then your friend says, \"mama, he's just being polite\nHe ain't finished, uh-uh, that's bull!\"\nSo your heart starts pumpin' and you think of a lie\nAnd you say that you already ate\nAnd your friend says \"man, there's plenty of food\"\nSo you pile some more on your plate\nWhile the stinky food's steamin', your mind starts to dreamin'\nOf the moment that it's time to leave\nAnd then you look at your plate and your chicken's slowly rottin'\nInto something that looks like cheese\nOh so you say \"that's it, I gotta leave this place\nI don't care what these people think\nI'm just sittin' here makin' myself nauseous\nWith this ugly food that stinks\"\nSo you bust out the door while it's still closed\nStill sick from the food you ate\nAnd then you run to the store for quick relief\nFrom a bottle of Kaopectate\nAnd then you call your friend two weeks later\nTo see how he has been\nAnd he says, \"I understand about the food\nBaby Bubba, but we're still friends\"\nWith a hip hop the hippie to the hippie\nThe hip hip a hop, a you don't stop the rockin'\nTo the bang bang boogie\nSay up jump the boogie to the rhythm of the boogie the beat";
 	this.preformer = "The Sugarhill Gang";
 	this.song = "Rapper's Delight";
+	this._angle = 10;
 	this._radius = 180;
 	this.defaultText = "Hier moet iets staan dat de moeite waard is";
 	this._isEmbedded = false;
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
 	this.set_description("");
 	this.set_type(["Animation","Image"]);
 	this._text = this.defaultText;
-	cc_draw_Text.embedGoogleFont("Source+Code+Pro",$bind(this,this.onEmbedHandler));
+	cc_draw_Text.embedGoogleFont("PT+Mono",$bind(this,this.onEmbedHandler));
 	this.createQuickSettings();
 	art_CCBase.call(this,ctx);
 };
@@ -6273,17 +6350,29 @@ art_CC053.__super__ = art_CCBase;
 art_CC053.prototype = $extend(art_CCBase.prototype,{
 	createQuickSettings: function() {
 		var _gthis = this;
-		this.panel1 = QuickSettings.create(10,10,"Test rotation").setGlobalChangeHandler($bind(this,this.drawShape)).addTextArea("Quote",this._text,function(value) {
-			console.log(value);
-		}).addRange("radius",50,300,180,1,function(value1) {
-			_gthis.setRadius(value1);
+		this.panel1 = QuickSettings.create(10,10,"Test rotation").setGlobalChangeHandler($bind(this,this.drawShape)).addTextArea("Reason","Test this text in circle thing",null).addTextArea("Quote",this.defaultText,function(value) {
+			_gthis.setText(value);
+		}).addRange("angle",0.0,10.0,5.5,.05,function(value1) {
+			_gthis.setAngle(value1);
+		}).addRange("radius",200,400,180,1,function(value2) {
+			_gthis.setRadius(value2);
+		}).addNumber("angle2",0.0,10.0,5.5,.05,function(value3) {
+			_gthis.setAngle(value3);
+		}).addButton("default",function(e) {
+			_gthis.setText(_gthis.defaultText);
 		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,setText: function(str) {
+		this._text = str;
 	}
 	,setRadius: function(px) {
 		this._radius = px;
 	}
+	,setAngle: function(angle) {
+		this._angle = angle;
+	}
 	,onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC053.hx", lineNumber : 61, className : "art.CC053", methodName : "onEmbedHandler"});
 		this._isEmbedded = true;
 		this.drawShape();
 	}
@@ -6297,21 +6386,21 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 		var centerY = this.get_h2();
 		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
 		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(cc_util_ColorUtil.PINK);
-		cc_draw_Text.fillText(this.ctx,this._text,this.get_w2(),this.get_h2(),"Source Code Pro",20);
+		cc_draw_Text.fillText(this.ctx,this._text,this.get_w2(),this.get_h2(),"PT Mono",20);
 		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
 		this.ctx.textAlign = "center";
 		this.ctx.textBaseline = "bottom";
-		this.ctx.font = "20px Source Code Pro";
-		cc_util_TextUtil.drawTextAlongArc2(this.ctx,this._text,centerX,centerY,this._radius);
+		this.ctx.font = "20px PT Mono";
+		cc_util_TextUtil.drawTextAlongArc4(this.ctx,this._text,centerX,centerY,this._radius,this._angle);
 		cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.GRAY);
 		cc_CanvasTools.circleStroke(this.ctx,centerX,centerY,this._radius);
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 96, className : "art.CC053", methodName : "setup"});
 		this.isDebug = true;
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 102, className : "art.CC053", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -6338,14 +6427,14 @@ art_CC054.__interfaces__ = [art_ICCBase];
 art_CC054.__super__ = art_CCBase;
 art_CC054.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC054.hx", lineNumber : 31, className : "art.CC054", methodName : "onEmbedHandler"});
 		this.drawShape();
 	}
 	,createQuickSettings: function() {
 		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote","text",function(value) {
-			console.log(value);
+			haxe_Log.trace(value,{ fileName : "CC054.hx", lineNumber : 38, className : "art.CC054", methodName : "createQuickSettings"});
 		}).addBoolean("All Caps",false,function(value1) {
-			console.log(value1);
+			haxe_Log.trace(value1,{ fileName : "CC054.hx", lineNumber : 40, className : "art.CC054", methodName : "createQuickSettings"});
 		}).saveInLocalStorage("store-data-" + this.toString());
 	}
 	,createShape: function(i,point) {
@@ -6488,7 +6577,7 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		_this21._ctx.fillStyle = previousColor4;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC054.hx", lineNumber : 123, className : "art.CC054", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -6512,7 +6601,7 @@ art_CC054.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC054.hx", lineNumber : 146, className : "art.CC054", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -6708,7 +6797,7 @@ art_CC054a.prototype = $extend(art_CCBase.prototype,{
 		_this25._ctx.fillStyle = previousColor5;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC054a.hx", lineNumber : 157, className : "art.CC054a", methodName : "setup"});
 		this.isDebug = true;
 		var padding = 20;
 		this.grid.setDimension(Global.w - padding * 2,Global.h - padding * 2);
@@ -6784,26 +6873,26 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 		}).saveInLocalStorage("store-data-" + this.toString());
 	}
 	,setDelay: function(e) {
-		console.log(e);
+		haxe_Log.trace(e,{ fileName : "CC055.hx", lineNumber : 71, className : "art.CC055", methodName : "setDelay"});
 	}
 	,setRecord: function(e) {
-		console.log(e);
+		haxe_Log.trace(e,{ fileName : "CC055.hx", lineNumber : 75, className : "art.CC055", methodName : "setRecord"});
 	}
 	,onClickHandler: function(e) {
 		var input = e;
 		var _g = input.value;
 		switch(_g) {
 		case "init recording":
-			console.log("init recording");
+			haxe_Log.trace("init recording",{ fileName : "CC055.hx", lineNumber : 83, className : "art.CC055", methodName : "onClickHandler"});
 			break;
 		case "start recording":
-			console.log("start recording");
+			haxe_Log.trace("start recording",{ fileName : "CC055.hx", lineNumber : 85, className : "art.CC055", methodName : "onClickHandler"});
 			break;
 		case "stop recording":
-			console.log("stop recording");
+			haxe_Log.trace("stop recording",{ fileName : "CC055.hx", lineNumber : 87, className : "art.CC055", methodName : "onClickHandler"});
 			break;
 		default:
-			console.log("case '" + input.value + "': trace ('" + input.value + "');");
+			haxe_Log.trace("case '" + input.value + "': trace ('" + input.value + "');",{ fileName : "CC055.hx", lineNumber : 89, className : "art.CC055", methodName : "onClickHandler"});
 		}
 	}
 	,onSpritesheetComplete: function(img) {
@@ -6860,12 +6949,12 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 				if(_this4._currentSprite > _this4._totalFrame) {
 					if(_this4._isLoop) {
 						if(_this4.get__isDebug()) {
-							console.log("" + _this4.get__id() + " - start loop");
+							haxe_Log.trace("" + _this4.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 						}
 						_this4._currentSprite = _this4.get__index();
 					} else {
 						if(_this4.get__isDebug()) {
-							console.log("" + _this4.get__id() + " - stop animation");
+							haxe_Log.trace("" + _this4.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 						}
 						_this4._isAnimation = false;
 						_this4._currentSprite = _this4._totalFrame - 1;
@@ -6920,12 +7009,12 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 			if(_this11._currentSprite > _this11._totalFrame) {
 				if(_this11._isLoop) {
 					if(_this11.get__isDebug()) {
-						console.log("" + _this11.get__id() + " - start loop");
+						haxe_Log.trace("" + _this11.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this11._currentSprite = _this11.get__index();
 				} else {
 					if(_this11.get__isDebug()) {
-						console.log("" + _this11.get__id() + " - stop animation");
+						haxe_Log.trace("" + _this11.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this11._isAnimation = false;
 					_this11._currentSprite = _this11._totalFrame - 1;
@@ -6979,12 +7068,12 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 			if(_this18._currentSprite > _this18._totalFrame) {
 				if(_this18._isLoop) {
 					if(_this18.get__isDebug()) {
-						console.log("" + _this18.get__id() + " - start loop");
+						haxe_Log.trace("" + _this18.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this18._currentSprite = _this18.get__index();
 				} else {
 					if(_this18.get__isDebug()) {
-						console.log("" + _this18.get__id() + " - stop animation");
+						haxe_Log.trace("" + _this18.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this18._isAnimation = false;
 					_this18._currentSprite = _this18._totalFrame - 1;
@@ -7041,12 +7130,12 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 			if(_this26._currentSprite > _this26._totalFrame) {
 				if(_this26._isLoop) {
 					if(_this26.get__isDebug()) {
-						console.log("" + _this26.get__id() + " - start loop");
+						haxe_Log.trace("" + _this26.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this26._currentSprite = _this26.get__index();
 				} else {
 					if(_this26.get__isDebug()) {
-						console.log("" + _this26.get__id() + " - stop animation");
+						haxe_Log.trace("" + _this26.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this26._isAnimation = false;
 					_this26._currentSprite = _this26._totalFrame - 1;
@@ -7103,12 +7192,12 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 			if(_this34._currentSprite > _this34._totalFrame) {
 				if(_this34._isLoop) {
 					if(_this34.get__isDebug()) {
-						console.log("" + _this34.get__id() + " - start loop");
+						haxe_Log.trace("" + _this34.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this34._currentSprite = _this34.get__index();
 				} else {
 					if(_this34.get__isDebug()) {
-						console.log("" + _this34.get__id() + " - stop animation");
+						haxe_Log.trace("" + _this34.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					_this34._isAnimation = false;
 					_this34._currentSprite = _this34._totalFrame - 1;
@@ -7123,7 +7212,7 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.centreStrokeRect(this.ctx,this.get_w3(),this.get_h3(),100 * _scale,100 * _scale);
 	}
 	,onFontComplete: function(e) {
-		console.log("onFontComplete: \"" + e + "\"");
+		haxe_Log.trace("onFontComplete: \"" + e + "\"",{ fileName : "CC055.hx", lineNumber : 160, className : "art.CC055", methodName : "onFontComplete"});
 		this.isFontLoaded = true;
 		this.drawShape();
 	}
@@ -7132,7 +7221,7 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 		cc_CanvasTools.backgroundObj(this.ctx,this._color0);
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC055.hx", lineNumber : 193, className : "art.CC055", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -7149,7 +7238,7 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 		this.grid.setIsCenterPoint(true);
 	}
 	,draw: function() {
-		console.log("draw: " + this.toString());
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC055.hx", lineNumber : 216, className : "art.CC055", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -7195,7 +7284,7 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		cc_draw_Text.embedGoogleFont("Berkshire+Swash",$bind(this,this.onFontHandler));
 	}
 	,onZipHandler: function(value) {
-		console.log(value);
+		haxe_Log.trace(value,{ fileName : "CC055a.hx", lineNumber : 66, className : "art.CC055a", methodName : "onZipHandler"});
 		this.isZip = true;
 		this.drawShape();
 	}
@@ -7205,7 +7294,7 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,onFontHandler: function(e) {
-		console.log("onFontHandler: \"" + e + "\"");
+		haxe_Log.trace("onFontHandler: \"" + e + "\"",{ fileName : "CC055a.hx", lineNumber : 78, className : "art.CC055a", methodName : "onFontHandler"});
 		this.isFont = true;
 		this.drawShape();
 	}
@@ -7269,12 +7358,12 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 					if(_this7._currentSprite > _this7._totalFrame) {
 						if(_this7._isLoop) {
 							if(_this7.get__isDebug()) {
-								console.log("" + _this7.get__id() + " - start loop");
+								haxe_Log.trace("" + _this7.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 							}
 							_this7._currentSprite = _this7.get__index();
 						} else {
 							if(_this7.get__isDebug()) {
-								console.log("" + _this7.get__id() + " - stop animation");
+								haxe_Log.trace("" + _this7.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 							}
 							_this7._isAnimation = false;
 							_this7._currentSprite = _this7._totalFrame - 1;
@@ -7290,7 +7379,7 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC055a.hx", lineNumber : 138, className : "art.CC055a", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -7351,28 +7440,28 @@ art_CC056.prototype = $extend(art_CCBase.prototype,{
 		zip.embedScripts($bind(this,this.onZipHandler));
 	}
 	,onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC056.hx", lineNumber : 66, className : "art.CC056", methodName : "onEmbedHandler"});
 		this.isFontLoaded = true;
 		this.drawShape();
 	}
 	,onZipHandler: function(value) {
-		console.log(value);
+		haxe_Log.trace(value,{ fileName : "CC056.hx", lineNumber : 72, className : "art.CC056", methodName : "onZipHandler"});
 	}
 	,startExport: function() {
 		this.startT = new Date().getTime();
 		this.isExportActive = true;
 		this.imageStringArray = [];
-		console.log(this.toString() + " - start export - 0ms");
+		haxe_Log.trace(this.toString() + " - start export - 0ms",{ fileName : "CC056.hx", lineNumber : 133, className : "art.CC056", methodName : "startExport"});
 	}
 	,stopExport: function() {
 		var _gthis = this;
 		this.endT = new Date().getTime();
 		this.isExportActive = false;
-		console.log(this.toString() + (" - stop export - " + (this.endT - this.startT) / 1000 + "sec"));
+		haxe_Log.trace(this.toString() + (" - stop export - " + (this.endT - this.startT) / 1000 + "sec"),{ fileName : "CC056.hx", lineNumber : 140, className : "art.CC056", methodName : "stopExport"});
 		var timeStamp = this.endT;
 		var md = "# " + this.toString() + "\n\n- Generated on: " + Std.string(new Date()) + "\n- total images: " + this.imageStringArray.length + "\n- file name: + _" + this.toString() + "_" + timeStamp + ".zip\n- delay: " + this._delay + " frames (" + this._delay / 60 + " sec)\n- record: " + this._record + " frames (" + this._record / 60 + " sec)\n\n\n\n## Instagram\n\n```\nsketch." + this.toString() + " :: " + this.get_description() + "\n\n\n#codeart #coding #creativecode #generative #generativeArt\n#minimalism #minimalist #minimal\n#haxe #javascript #js #nodejs\n```\n\n## convert\n\nopen terminal\n\n```\nsh convert.sh\n```\n\n## Folder structure\n\n```\n+ _" + this.toString() + "_" + timeStamp + ".zip\n\t+ _" + this.toString() + "\n\t\t- convert.sh\n\t\t- README.MD\n\t\t+ sequence\n\t\t\t- image_" + StringTools.lpad("0","0",4) + ".png\n\t\t\t- image_" + StringTools.lpad("1","0",4) + ".png\n\t\t\t- ...\n```\n";
 		var bash = "#!/bin/bash\n\necho 'Start convertions png sequens to mp4'\n\nffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  " + this.toString() + "_output_30fps.mp4\n# ffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  sequence/_output_30fps.mp4\n\necho 'End convertions png sequens to mp4'\n\n";
-		console.log("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec");
+		haxe_Log.trace("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "CC056.hx", lineNumber : 198, className : "art.CC056", methodName : "stopExport"});
 		var zip = new JSZip();
 		zip.file("_" + this.toString() + "/README.MD",md);
 		zip.file("_" + this.toString() + "/convert.sh",bash);
@@ -7380,11 +7469,11 @@ art_CC056.prototype = $extend(art_CCBase.prototype,{
 		var _g = this.imageStringArray.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			console.log("/" + this.imageStringArray.length + ". add image to file");
+			haxe_Log.trace("/" + this.imageStringArray.length + ". add image to file",{ fileName : "CC056.hx", lineNumber : 203, className : "art.CC056", methodName : "stopExport"});
 			var img = this.imageStringArray[i];
 			zip.file("_" + this.toString() + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
 		}
-		console.log("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec");
+		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "CC056.hx", lineNumber : 207, className : "art.CC056", methodName : "stopExport"});
 		zip.generateAsync({ type : "blob"}).then(function(blob) {
 			window.console.log("Save zip file complete - " + (new Date().getTime() - _gthis.startT) / 1000 + "sec");
 			saveAs(blob,"_" + _gthis.toString() + "_" + timeStamp + ".zip");
@@ -7394,9 +7483,9 @@ art_CC056.prototype = $extend(art_CCBase.prototype,{
 	}
 	,createQuickSettings: function() {
 		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote","text",function(value) {
-			console.log(value);
+			haxe_Log.trace(value,{ fileName : "CC056.hx", lineNumber : 221, className : "art.CC056", methodName : "createQuickSettings"});
 		}).addBoolean("All Caps",false,function(value1) {
-			console.log(value1);
+			haxe_Log.trace(value1,{ fileName : "CC056.hx", lineNumber : 222, className : "art.CC056", methodName : "createQuickSettings"});
 		}).saveInLocalStorage("store-data-" + this.toString());
 	}
 	,createShape: function(i,point) {
@@ -7462,33 +7551,56 @@ art_CC056.prototype = $extend(art_CCBase.prototype,{
 		_this2._font = StringTools.replace(StringTools.replace("Oswald",";",""),"+"," ");
 		var _this3 = _this2;
 		_this3.set__size(160);
+		if(_this3.get__leading() == null) {
+			_this3.set__leading(160);
+		}
 		var _this4 = _this3;
 		var x = this.get_w2();
 		var y = this.get_h2();
 		_this4.set__x(x);
 		_this4.set__y(y);
 		var _this5 = _this4;
+		var isLines = false;
 		_this5._ctx.save();
+		if(_this5._text.indexOf("\n") != -1) {
+			_this5._lineArray = _this5._text.split("\n");
+			isLines = true;
+		}
 		var previousColor = _this5._ctx.fillStyle;
 		if(_this5._color != null) {
 			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
+		} else {
+			var _this6 = _this5._ctx;
+			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+			var tmp = _this5.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
 		}
-		var tmp = "" + _this5.get__size() + "px ";
-		_this5._ctx.font = tmp + _this5._font;
+		var tmp1 = "" + _this5.get__size() + "px ";
+		_this5._ctx.font = tmp1 + _this5._font;
 		_this5._ctx.textAlign = _this5._textAlign;
 		_this5._ctx.textBaseline = _this5._textBaseline;
 		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
 		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
-		_this5._ctx.fillText(_this5._text,0,0);
+		if(!isLines) {
+			_this5._ctx.fillText(_this5._text,0,0);
+		} else {
+			var _g11 = 0;
+			var _g2 = _this5._lineArray.length;
+			while(_g11 < _g2) {
+				var i1 = _g11++;
+				var line = _this5._lineArray[i1];
+				_this5._ctx.fillText(line,0,i1 * _this5.get__leading());
+			}
+		}
 		_this5._ctx.restore();
 		_this5._ctx.fillStyle = previousColor;
 		if(this.isExportActive) {
 			if(this._delayCounter < this._delay) {
-				console.log("delay: " + this._delayCounter + " >= " + this._delay);
+				haxe_Log.trace("delay: " + this._delayCounter + " >= " + this._delay,{ fileName : "CC056.hx", lineNumber : 278, className : "art.CC056", methodName : "drawShape"});
 			}
 			if(this._delayCounter >= this._delay) {
 				if(this._recordCounter < this._record) {
-					console.log("recording: " + this._recordCounter + " <  " + this._record);
+					haxe_Log.trace("recording: " + this._recordCounter + " <  " + this._record,{ fileName : "CC056.hx", lineNumber : 284, className : "art.CC056", methodName : "drawShape"});
 					this.imageStringArray.push(this.ctx.canvas.toDataURL("image/png").split("base64,")[1]);
 					this._recordCounter++;
 				} else {
@@ -7499,7 +7611,7 @@ art_CC056.prototype = $extend(art_CCBase.prototype,{
 		this._delayCounter++;
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC056.hx", lineNumber : 297, className : "art.CC056", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -7562,10 +7674,10 @@ art_CC056a.__interfaces__ = [art_ICCBase];
 art_CC056a.__super__ = art_CCBase;
 art_CC056a.prototype = $extend(art_CCBase.prototype,{
 	onZipHandler: function(value) {
-		console.log(value);
+		haxe_Log.trace(value,{ fileName : "CC056a.hx", lineNumber : 49, className : "art.CC056a", methodName : "onZipHandler"});
 	}
 	,onEmbedHandler: function(e) {
-		console.log("onEmbedHandler: \"" + e + "\"");
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC056a.hx", lineNumber : 53, className : "art.CC056a", methodName : "onEmbedHandler"});
 		this.isFontLoaded = true;
 		this.drawShape();
 	}
@@ -7632,30 +7744,53 @@ art_CC056a.prototype = $extend(art_CCBase.prototype,{
 		_this2._font = StringTools.replace(StringTools.replace("Oswald",";",""),"+"," ");
 		var _this3 = _this2;
 		_this3.set__size(160);
+		if(_this3.get__leading() == null) {
+			_this3.set__leading(160);
+		}
 		var _this4 = _this3;
 		var x = this.get_w2();
 		var y = this.get_h2();
 		_this4.set__x(x);
 		_this4.set__y(y);
 		var _this5 = _this4;
+		var isLines = false;
 		_this5._ctx.save();
+		if(_this5._text.indexOf("\n") != -1) {
+			_this5._lineArray = _this5._text.split("\n");
+			isLines = true;
+		}
 		var previousColor = _this5._ctx.fillStyle;
 		if(_this5._color != null) {
 			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
+		} else {
+			var _this6 = _this5._ctx;
+			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+			var tmp = _this5.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
 		}
-		var tmp = "" + _this5.get__size() + "px ";
-		_this5._ctx.font = tmp + _this5._font;
+		var tmp1 = "" + _this5.get__size() + "px ";
+		_this5._ctx.font = tmp1 + _this5._font;
 		_this5._ctx.textAlign = _this5._textAlign;
 		_this5._ctx.textBaseline = _this5._textBaseline;
 		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
 		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
-		_this5._ctx.fillText(_this5._text,0,0);
+		if(!isLines) {
+			_this5._ctx.fillText(_this5._text,0,0);
+		} else {
+			var _g11 = 0;
+			var _g2 = _this5._lineArray.length;
+			while(_g11 < _g2) {
+				var i1 = _g11++;
+				var line = _this5._lineArray[i1];
+				_this5._ctx.fillText(line,0,i1 * _this5.get__leading());
+			}
+		}
 		_this5._ctx.restore();
 		_this5._ctx.fillStyle = previousColor;
 		this.zip.pulse();
 	}
 	,setup: function() {
-		console.log("setup: " + this.toString());
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC056a.hx", lineNumber : 109, className : "art.CC056a", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -7685,6 +7820,435 @@ art_CC056a.prototype = $extend(art_CCBase.prototype,{
 		return "cc056a";
 	}
 	,__class__: art_CC056a
+});
+var art_CC057 = function(ctx) {
+	this.goalCount = 250;
+	this._followerCount = -1;
+	this.timeDelayOffset = 0.15;
+	this.timeDelay = 3;
+	this.yoffset = 200;
+	this.imageH = 100;
+	this.imageW = 100;
+	this.isPayoffVisible = false;
+	this.isCounterVisible = false;
+	this.isDefaultLoaded = false;
+	this.isJsonLoaded = false;
+	this.isFontLoaded = false;
+	var $int = Std.parseInt(StringTools.replace("#2B3A42","#","0x"));
+	this._color4 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+	var int1 = Std.parseInt(StringTools.replace("#3F5866","#","0x"));
+	this._color3 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+	var int2 = Std.parseInt(StringTools.replace("#BDD3DE","#","0x"));
+	this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+	var int3 = Std.parseInt(StringTools.replace("#F0F0DF","#","0x"));
+	this._color1 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+	var int4 = Std.parseInt(StringTools.replace("#FF9000","#","0x"));
+	this._color0 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+	this.shapeArray = [];
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	cc_draw_Text.embedGoogleFont("Abel",$bind(this,this.onFontHandler));
+	this.onJsonHandler();
+	this.zip = new cc_tool_export_Zip(ctx,"" + this.toString());
+	this.zip.delayInSeconds(0);
+	this.zip.recordInSeconds(37);
+	this.zip.menu(false);
+	this.zip.embedScripts($bind(this,this.onZipHandler));
+	this.zip.onComplete($bind(this,this.onZipCompleteHandler));
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC057"] = art_CC057;
+art_CC057.__name__ = ["art","CC057"];
+art_CC057.__interfaces__ = [art_ICCBase];
+art_CC057.__super__ = art_CCBase;
+art_CC057.prototype = $extend(art_CCBase.prototype,{
+	createFollowerList: function() {
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.json.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var instaObj = this.json[i];
+			this.shapeArray.push(this.createFollower(i,instaObj));
+			this.loadImage(i,instaObj);
+		}
+	}
+	,onZipHandler: function(value) {
+		haxe_Log.trace(value,{ fileName : "CC057.hx", lineNumber : 74, className : "art.CC057", methodName : "onZipHandler"});
+	}
+	,onZipCompleteHandler: function(value) {
+		haxe_Log.trace("onZipCompleteHandler : " + Std.string(value),{ fileName : "CC057.hx", lineNumber : 79, className : "art.CC057", methodName : "onZipCompleteHandler"});
+		this.stop();
+	}
+	,createFollower: function(i,insta) {
+		var sh = { i : i, _id : "" + i, x : Global.w / 2, y : Global.h / 2, width : this.imageH, height : this.imageH, count : i, percentage : 0, radius : cc_util_MathUtil.random(30,100), speed : cc_util_MathUtil.random(-3,3), angle : cc_util_MathUtil.random(360), name : insta.name, src : insta.src, img : null};
+		this.onAnimateHandler(sh);
+		return sh;
+	}
+	,resetInstaLike: function(sh) {
+		sh.x = cc_util_MathUtil.random(this.imageW,Global.w - this.imageW);
+		sh.y = Global.h + this.yoffset;
+	}
+	,onAnimateHandler: function(sh) {
+		this.resetInstaLike(sh);
+		var Go = new cc_lets_Go(sh,cc_util_MathUtil.random(7,8));
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(sh.i * this.timeDelayOffset + this.timeDelay);
+		var _this1 = _this;
+		var value = sh.x;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range = { key : "x", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("x",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		var value1 = -this.yoffset * 2;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this2._target,"y")) {
+			objValue1 = Reflect.getProperty(_this2._target,"y");
+		}
+		var _range1 = { key : "y", from : _this2._isFrom ? value1 : objValue1, to : !_this2._isFrom ? value1 : objValue1};
+		_this2._props.set("y",_range1);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
+		var _this3 = _this2;
+		_this3._options.onAnimationStart = $bind(this,this.onAnimationStart);
+		_this3._options.onAnimationStartParams = [sh.i];
+		var _this4 = _this3;
+		_this4._easing = cc_lets_easing_Sine.get_easeOut();
+	}
+	,onAnimationStart: function(i) {
+		var _gthis = this;
+		this.isCounterVisible = true;
+		this._followerCount++;
+		if(this._followerCount == this.shapeArray.length - 1) {
+			haxe_Timer.delay(function() {
+				_gthis.isPayoffVisible = true;
+				_gthis.isCounterVisible = false;
+			},3000);
+		}
+	}
+	,drawShape: function() {
+		if(this.json == null) {
+			return;
+		}
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,this._color1);
+		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+		var Text = new cc_draw_Text(this.ctx,"Current obsession is\nto have " + this.goalCount + " followers");
+		var _this = Text;
+		_this._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
+		var _this1 = _this;
+		_this1._textAlign = "center";
+		var _this2 = _this1;
+		_this2._textBaseline = "top";
+		var _this3 = _this2;
+		_this3.set__x(Global.w / 2);
+		_this3.set__y(100);
+		var _this4 = _this3;
+		_this4.set__size(100);
+		if(_this4.get__leading() == null) {
+			_this4.set__leading(100);
+		}
+		var _this5 = _this4;
+		var isLines = false;
+		_this5._ctx.save();
+		if(_this5._text.indexOf("\n") != -1) {
+			_this5._lineArray = _this5._text.split("\n");
+			isLines = true;
+		}
+		var previousColor = _this5._ctx.fillStyle;
+		if(_this5._color != null) {
+			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
+		} else {
+			var _this6 = _this5._ctx;
+			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+			var tmp = _this5.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
+		}
+		var tmp1 = "" + _this5.get__size() + "px ";
+		_this5._ctx.font = tmp1 + _this5._font;
+		_this5._ctx.textAlign = _this5._textAlign;
+		_this5._ctx.textBaseline = _this5._textBaseline;
+		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
+		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
+		if(!isLines) {
+			_this5._ctx.fillText(_this5._text,0,0);
+		} else {
+			var _g1 = 0;
+			var _g = _this5._lineArray.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				var line = _this5._lineArray[i];
+				_this5._ctx.fillText(line,0,i * _this5.get__leading());
+			}
+		}
+		_this5._ctx.restore();
+		_this5._ctx.fillStyle = previousColor;
+		var _g11 = 0;
+		var _g2 = this.shapeArray.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var sh = this.shapeArray[i1];
+			this.ctx.save();
+			sh.angle += sh.speed;
+			var xpos = sh.x + Math.cos(cc_util_MathUtil.radians(sh.angle)) * sh.radius;
+			var ypos = sh.y + Math.sin(cc_util_MathUtil.radians(sh.angle)) * sh.radius;
+			var r = this.imageW / 2;
+			cc_CanvasTools.fillColourRGB(this.ctx,this._color4);
+			var Text1 = new cc_draw_Text(this.ctx,StringTools.replace(sh.name,"&amp;","&"));
+			var _this7 = Text1;
+			_this7._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
+			var _this8 = _this7;
+			_this8._textAlign = "center";
+			var _this9 = _this8;
+			_this9._textBaseline = "top";
+			var _this10 = _this9;
+			var y = ypos + this.imageH + 10;
+			_this10.set__x(xpos + r);
+			_this10.set__y(y);
+			var _this11 = _this10;
+			_this11.set__size(20);
+			if(_this11.get__leading() == null) {
+				_this11.set__leading(20);
+			}
+			var _this12 = _this11;
+			var isLines1 = false;
+			_this12._ctx.save();
+			if(_this12._text.indexOf("\n") != -1) {
+				_this12._lineArray = _this12._text.split("\n");
+				isLines1 = true;
+			}
+			var previousColor1 = _this12._ctx.fillStyle;
+			if(_this12._color != null) {
+				cc_CanvasTools.fillColourRGB(_this12._ctx,_this12._color,_this12.get__alpha());
+			} else {
+				var _this13 = _this12._ctx;
+				var int1 = Std.parseInt(StringTools.replace(previousColor1,"#","0x"));
+				var tmp2 = _this12.get__alpha();
+				cc_CanvasTools.fillColourRGB(_this13,{ r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255},tmp2);
+			}
+			var tmp3 = "" + _this12.get__size() + "px ";
+			_this12._ctx.font = tmp3 + _this12._font;
+			_this12._ctx.textAlign = _this12._textAlign;
+			_this12._ctx.textBaseline = _this12._textBaseline;
+			_this12._ctx.translate(_this12.get__x(),_this12.get__y());
+			_this12._ctx.rotate(cc_util_MathUtil.radians(_this12.get__rotate()));
+			if(!isLines1) {
+				_this12._ctx.fillText(_this12._text,0,0);
+			} else {
+				var _g12 = 0;
+				var _g3 = _this12._lineArray.length;
+				while(_g12 < _g3) {
+					var i2 = _g12++;
+					var line1 = _this12._lineArray[i2];
+					_this12._ctx.fillText(line1,0,i2 * _this12.get__leading());
+				}
+			}
+			_this12._ctx.restore();
+			_this12._ctx.fillStyle = previousColor1;
+			cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.WHITE);
+			cc_CanvasTools.strokeColourRGB(this.ctx,this._color4);
+			cc_CanvasTools.circleFillStroke(this.ctx,xpos + r,ypos + r,r + 7);
+			cc_CanvasTools.circleStroke(this.ctx,xpos + r,ypos + r,r);
+			cc_CanvasTools.circle(this.ctx,xpos + r,ypos + r,r);
+			this.ctx.clip();
+			if(sh.img != null) {
+				this.ctx.drawImage(sh.img,xpos,ypos,this.imageW,this.imageH);
+			} else if(this.isDefaultLoaded) {
+				this.ctx.drawImage(this.defaultImage,xpos,ypos,this.imageW,this.imageH);
+			}
+			this.ctx.restore();
+		}
+		if(this._followerCount <= -1) {
+			return;
+		}
+		var Text2 = new cc_draw_Text(this.ctx,"Meet my followers:\n" + this.shapeArray[this._followerCount].name + "\n" + (this._followerCount + 1) + "/" + this.shapeArray.length);
+		var _this14 = Text2;
+		_this14._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
+		var _this15 = _this14;
+		_this15._color = this._color3;
+		_this15.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		var _this16 = _this15;
+		_this16._textAlign = "center";
+		var _this17 = _this16;
+		_this17._textBaseline = "top";
+		var _this18 = _this17;
+		_this18.set__x(this.get_w2());
+		_this18.set__y(400);
+		var _this19 = _this18;
+		if(this.isCounterVisible) {
+			_this19.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		} else {
+			_this19.set__alpha(cc_util_MathUtil.clamp(0,0,1));
+		}
+		var _this20 = _this19;
+		_this20.set__size(60);
+		if(_this20.get__leading() == null) {
+			_this20.set__leading(60);
+		}
+		var _this21 = _this20;
+		var isLines2 = false;
+		_this21._ctx.save();
+		if(_this21._text.indexOf("\n") != -1) {
+			_this21._lineArray = _this21._text.split("\n");
+			isLines2 = true;
+		}
+		var previousColor2 = _this21._ctx.fillStyle;
+		if(_this21._color != null) {
+			cc_CanvasTools.fillColourRGB(_this21._ctx,_this21._color,_this21.get__alpha());
+		} else {
+			var _this22 = _this21._ctx;
+			var int2 = Std.parseInt(StringTools.replace(previousColor2,"#","0x"));
+			var tmp4 = _this21.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this22,{ r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255},tmp4);
+		}
+		var tmp5 = "" + _this21.get__size() + "px ";
+		_this21._ctx.font = tmp5 + _this21._font;
+		_this21._ctx.textAlign = _this21._textAlign;
+		_this21._ctx.textBaseline = _this21._textBaseline;
+		_this21._ctx.translate(_this21.get__x(),_this21.get__y());
+		_this21._ctx.rotate(cc_util_MathUtil.radians(_this21.get__rotate()));
+		if(!isLines2) {
+			_this21._ctx.fillText(_this21._text,0,0);
+		} else {
+			var _g13 = 0;
+			var _g4 = _this21._lineArray.length;
+			while(_g13 < _g4) {
+				var i3 = _g13++;
+				var line2 = _this21._lineArray[i3];
+				_this21._ctx.fillText(line2,0,i3 * _this21.get__leading());
+			}
+		}
+		_this21._ctx.restore();
+		_this21._ctx.fillStyle = previousColor2;
+		var Text3 = new cc_draw_Text(this.ctx,"Follow me and be in\nthe next animation!\nI only need " + (this.goalCount - this.shapeArray.length) + " more.");
+		var _this23 = Text3;
+		_this23._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
+		var _this24 = _this23;
+		_this24._color = this._color3;
+		_this24.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		var _this25 = _this24;
+		_this25._textAlign = "center";
+		var _this26 = _this25;
+		_this26._textBaseline = "top";
+		var _this27 = _this26;
+		_this27.set__x(this.get_w2());
+		_this27.set__y(400);
+		var _this28 = _this27;
+		if(this.isPayoffVisible) {
+			_this28.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		} else {
+			_this28.set__alpha(cc_util_MathUtil.clamp(0,0,1));
+		}
+		var _this29 = _this28;
+		_this29.set__size(80);
+		if(_this29.get__leading() == null) {
+			_this29.set__leading(80);
+		}
+		var _this30 = _this29;
+		var isLines3 = false;
+		_this30._ctx.save();
+		if(_this30._text.indexOf("\n") != -1) {
+			_this30._lineArray = _this30._text.split("\n");
+			isLines3 = true;
+		}
+		var previousColor3 = _this30._ctx.fillStyle;
+		if(_this30._color != null) {
+			cc_CanvasTools.fillColourRGB(_this30._ctx,_this30._color,_this30.get__alpha());
+		} else {
+			var _this31 = _this30._ctx;
+			var int3 = Std.parseInt(StringTools.replace(previousColor3,"#","0x"));
+			var tmp6 = _this30.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this31,{ r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255},tmp6);
+		}
+		var tmp7 = "" + _this30.get__size() + "px ";
+		_this30._ctx.font = tmp7 + _this30._font;
+		_this30._ctx.textAlign = _this30._textAlign;
+		_this30._ctx.textBaseline = _this30._textBaseline;
+		_this30._ctx.translate(_this30.get__x(),_this30.get__y());
+		_this30._ctx.rotate(cc_util_MathUtil.radians(_this30.get__rotate()));
+		if(!isLines3) {
+			_this30._ctx.fillText(_this30._text,0,0);
+		} else {
+			var _g14 = 0;
+			var _g5 = _this30._lineArray.length;
+			while(_g14 < _g5) {
+				var i4 = _g14++;
+				var line3 = _this30._lineArray[i4];
+				_this30._ctx.fillText(line3,0,i4 * _this30.get__leading());
+			}
+		}
+		_this30._ctx.restore();
+		_this30._ctx.fillStyle = previousColor3;
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC057.hx", lineNumber : 212, className : "art.CC057", methodName : "setup"});
+	}
+	,draw: function() {
+		this.drawShape();
+		this.zip.pulse();
+	}
+	,onJsonHandler: function() {
+		var _gthis = this;
+		var url = "assets/insta.json";
+		var req = new haxe_Http(url);
+		req.onData = function(data) {
+			try {
+				_gthis.json = JSON.parse(data);
+				_gthis.json.reverse();
+				_gthis.isJsonLoaded = true;
+				_gthis.createFollowerList();
+			} catch( e ) {
+				if (e instanceof js__$Boot_HaxeError) e = e.val;
+				haxe_Log.trace(e,{ fileName : "CC057.hx", lineNumber : 256, className : "art.CC057", methodName : "onJsonHandler"});
+			}
+		};
+		req.onError = function(error) {
+			haxe_Log.trace("error: " + error,{ fileName : "CC057.hx", lineNumber : 260, className : "art.CC057", methodName : "onJsonHandler"});
+		};
+		req.onStatus = function(status) {
+			haxe_Log.trace("status: " + status,{ fileName : "CC057.hx", lineNumber : 263, className : "art.CC057", methodName : "onJsonHandler"});
+		};
+		req.request(true);
+	}
+	,onFontHandler: function(e) {
+		haxe_Log.trace("onFontHandler: \"" + e + "\"",{ fileName : "CC057.hx", lineNumber : 269, className : "art.CC057", methodName : "onFontHandler"});
+		this.isFontLoaded = true;
+		this.drawShape();
+	}
+	,loadImage: function(i,obj) {
+		var _gthis = this;
+		var img = new Image();
+		img.crossOrigin = "anonymous";
+		img.onload = function() {
+			_gthis.shapeArray[i].img = img;
+		};
+		img.src = obj.src;
+	}
+	,loadDefaultImage: function() {
+		var _gthis = this;
+		var img = new Image();
+		img.crossOrigin = "anonymous";
+		img.onload = function() {
+			_gthis.defaultImage = img;
+			_gthis.isDefaultLoaded = true;
+		};
+		img.src = "assets/img/profile/noprofile_instagram.jpg";
+	}
+	,__class__: art_CC057
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -7817,7 +8381,7 @@ cc_CanvasTools.eellipse = function(ctx,x,y,width,height) {
 	var i = 0;
 	var counter = 0;
 	while(i < Math.PI * 2) {
-		console.log("" + counter + ". - " + i + " < " + Math.PI * 2);
+		haxe_Log.trace("" + counter + ". - " + i + " < " + Math.PI * 2,{ fileName : "CanvasTools.hx", lineNumber : 166, className : "cc.CanvasTools", methodName : "eellipse"});
 		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
 		i += Math.PI / 16;
 		++counter;
@@ -8151,7 +8715,7 @@ cc_draw_Gradient.prototype = {
 	}
 	,circle: function(circle) {
 		this._circle = circle;
-		console.log(circle.toString());
+		haxe_Log.trace(circle.toString(),{ fileName : "Gradient.hx", lineNumber : 106, className : "cc.draw.Gradient", methodName : "circle"});
 		this._x = circle.get__x() - circle.get__radius();
 		this._y = circle.get__y() - circle.get__radius();
 		this._width = circle.get__radius() * 2;
@@ -8206,7 +8770,7 @@ cc_draw_Gradient.prototype = {
 		default:
 			this._startPoint = { x : this._x, y : this._y};
 			this._endPoint = { x : this._x + this._width, y : this._y};
-			console.log("case '" + dir + "': trace ('" + dir + "');");
+			haxe_Log.trace("case '" + dir + "': trace ('" + dir + "');",{ fileName : "Gradient.hx", lineNumber : 170, className : "cc.draw.Gradient", methodName : "setDir"});
 		}
 	}
 	,draw: function() {
@@ -8214,7 +8778,7 @@ cc_draw_Gradient.prototype = {
 		if(this.get__linear()) {
 			this._get = this._ctx.createLinearGradient(this._startPoint.x,this._startPoint.y,this._endPoint.x,this._endPoint.y);
 		} else {
-			console.log("WIP");
+			haxe_Log.trace("WIP",{ fileName : "Gradient.hx", lineNumber : 179, className : "cc.draw.Gradient", methodName : "draw"});
 		}
 		var _g1 = 0;
 		var _g = this._colorArray.length;
@@ -8447,12 +9011,12 @@ cc_draw_Spritesheet.prototype = {
 			if(this._currentSprite > this._totalFrame) {
 				if(this._isLoop) {
 					if(this.get__isDebug()) {
-						console.log("" + this.get__id() + " - start loop");
+						haxe_Log.trace("" + this.get__id() + " - start loop",{ fileName : "Spritesheet.hx", lineNumber : 298, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					this._currentSprite = this.get__index();
 				} else {
 					if(this.get__isDebug()) {
-						console.log("" + this.get__id() + " - stop animation");
+						haxe_Log.trace("" + this.get__id() + " - stop animation",{ fileName : "Spritesheet.hx", lineNumber : 302, className : "cc.draw.Spritesheet", methodName : "draw"});
 					}
 					this._isAnimation = false;
 					this._currentSprite = this._totalFrame - 1;
@@ -8662,6 +9226,13 @@ cc_draw_Text.prototype = {
 	}
 	,size: function(px) {
 		this.set__size(px);
+		if(this.get__leading() == null) {
+			this.set__leading(px);
+		}
+		return this;
+	}
+	,leading: function(px) {
+		this.set__leading(px);
 		return this;
 	}
 	,textAlign: function(pos) {
@@ -8724,19 +9295,47 @@ cc_draw_Text.prototype = {
 		this.set__alpha(cc_util_MathUtil.clamp(alpha,0,1));
 		return this;
 	}
+	,visible: function(isVisible) {
+		if(isVisible) {
+			this.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		} else {
+			this.set__alpha(cc_util_MathUtil.clamp(0,0,1));
+		}
+		return this;
+	}
 	,draw: function() {
+		var isLines = false;
 		this._ctx.save();
+		if(this._text.indexOf("\n") != -1) {
+			this._lineArray = this._text.split("\n");
+			isLines = true;
+		}
 		var previousColor = this._ctx.fillStyle;
 		if(this._color != null) {
 			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this.get__alpha());
+		} else {
+			var tmp = this._ctx;
+			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+			var tmp1 = this.get__alpha();
+			cc_CanvasTools.fillColourRGB(tmp,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp1);
 		}
-		var tmp = "" + this.get__size() + "px ";
-		this._ctx.font = tmp + this._font;
+		var tmp2 = "" + this.get__size() + "px ";
+		this._ctx.font = tmp2 + this._font;
 		this._ctx.textAlign = this._textAlign;
 		this._ctx.textBaseline = this._textBaseline;
 		this._ctx.translate(this.get__x(),this.get__y());
 		this._ctx.rotate(cc_util_MathUtil.radians(this.get__rotate()));
-		this._ctx.fillText(this._text,0,0);
+		if(!isLines) {
+			this._ctx.fillText(this._text,0,0);
+		} else {
+			var _g1 = 0;
+			var _g = this._lineArray.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				var line = this._lineArray[i];
+				this._ctx.fillText(line,0,i * this.get__leading());
+			}
+		}
 		this._ctx.restore();
 		this._ctx.fillStyle = previousColor;
 		return this;
@@ -8783,11 +9382,17 @@ cc_draw_Text.prototype = {
 	,set__size: function(value) {
 		return this._size = value;
 	}
+	,get__leading: function() {
+		return this._leading;
+	}
+	,set__leading: function(value) {
+		return this._leading = value;
+	}
 	,toString: function() {
 		return "Text: " + Std.string(JSON.parse(JSON.stringify(this)));
 	}
 	,__class__: cc_draw_Text
-	,__properties__: {set__gradient:"set__gradient",get__gradient:"get__gradient",set__size:"set__size",get__size:"get__size",set__rotate:"set__rotate",get__rotate:"get__rotate",set__alpha:"set__alpha",get__alpha:"get__alpha",set__radius:"set__radius",get__radius:"get__radius",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
+	,__properties__: {set__leading:"set__leading",get__leading:"get__leading",set__gradient:"set__gradient",get__gradient:"get__gradient",set__size:"set__size",get__size:"get__size",set__rotate:"set__rotate",get__rotate:"get__rotate",set__alpha:"set__alpha",get__alpha:"get__alpha",set__radius:"set__radius",get__radius:"get__radius",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
 };
 var cc_lets_Easing = function() { };
 $hxClasses["cc.lets.Easing"] = cc_lets_Easing;
@@ -8860,6 +9465,7 @@ var cc_lets_Go = function(target,duration) {
 	this._seconds = 0;
 	this._delay = 0;
 	this._initTime = 0;
+	this._isDelayDone = false;
 	this._isTimeBased = false;
 	this._isYoyo = false;
 	this._isFrom = false;
@@ -8903,7 +9509,7 @@ cc_lets_Go.prototype = {
 		if(isTimeBased == null) {
 			isTimeBased = true;
 		}
-		console.log("Fixme: this doesn\t work right now");
+		haxe_Log.trace("Fixme: this doesn\t work right now",{ fileName : "Go.hx", lineNumber : 116, className : "cc.lets.Go", methodName : "isTimeBased"});
 		this._isTimeBased = isTimeBased;
 		this._duration = this._duration / this.FRAME_RATE | 0;
 		return this;
@@ -9065,6 +9671,11 @@ cc_lets_Go.prototype = {
 		this._options.onCompleteParams = arr;
 		return this;
 	}
+	,onAnimationStart: function(func,arr) {
+		this._options.onAnimationStart = func;
+		this._options.onAnimationStartParams = arr;
+		return this;
+	}
 	,onUpdate: function(func,arr) {
 		this._options.onUpdate = func;
 		this._options.onUpdateParams = arr;
@@ -9079,7 +9690,7 @@ cc_lets_Go.prototype = {
 	}
 	,init: function() {
 		if(this._isTimeBased) {
-			console.log("TODO: build timebased animation");
+			haxe_Log.trace("TODO: build timebased animation",{ fileName : "Go.hx", lineNumber : 346, className : "cc.lets.Go", methodName : "init"});
 		} else if(cc_lets_Go._requestId == null) {
 			cc_lets_Go._requestId = window.requestAnimationFrame($bind(this,this.onEnterFrameHandler));
 		}
@@ -9104,12 +9715,23 @@ cc_lets_Go.prototype = {
 	}
 	,update: function() {
 		if(this._delay > 0 && this._isTimeBased) {
-			console.log("FIXME this doesn't work yet");
+			haxe_Log.trace("FIXME this doesn't work yet",{ fileName : "Go.hx", lineNumber : 385, className : "cc.lets.Go", methodName : "update"});
 		}
 		if(this._delay > 0) {
 			this._delay--;
 			return;
 		}
+		if(!this._isDelayDone) {
+			if(this.DEBUG) {
+				haxe_Log.trace("should trigger only once: " + this._id,{ fileName : "Go.hx", lineNumber : 392, className : "cc.lets.Go", methodName : "update"});
+			}
+			if(Reflect.isFunction(this._options.onAnimationStart)) {
+				var func = this._options.onAnimationStart;
+				var arr = this._options.onAnimationStartParams != null ? this._options.onAnimationStartParams : [];
+				func.apply(func,arr);
+			}
+		}
+		this._isDelayDone = true;
 		this._initTime--;
 		var progressed = this._duration - this._initTime;
 		if(this._isTimeBased) {
@@ -9141,7 +9763,7 @@ cc_lets_Go.prototype = {
 	}
 	,complete: function() {
 		if(this.DEBUG) {
-			console.log("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + cc_lets_Go._tweens.length);
+			haxe_Log.trace("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + cc_lets_Go._tweens.length,{ fileName : "Go.hx", lineNumber : 450, className : "cc.lets.Go", methodName : "complete"});
 		}
 		if(this._isYoyo) {
 			var n = this._props.keys();
@@ -9813,23 +10435,23 @@ cc_tool_Export.prototype = {
 		var _gthis = this;
 		this._isStart = true;
 		if(this._isExportServerReady) {
-			console.log("" + this.toString() + " possible start recording");
+			haxe_Log.trace("" + this.toString() + " possible start recording",{ fileName : "Export.hx", lineNumber : 94, className : "cc.tool.Export", methodName : "start"});
 			this.reset();
 			if(this._isTimer) {
 				this.startTime = new Date().getTime() / 1000;
 				window.console.log("" + this.toString() + " START time base recording (delay: " + this._delay + "second, frames: " + this._durationFrames + ")");
 				haxe_Timer.delay(function() {
-					console.log("delay time " + (new Date().getTime() / 1000 - _gthis.startTime));
+					haxe_Log.trace("delay time " + (new Date().getTime() / 1000 - _gthis.startTime),{ fileName : "Export.hx", lineNumber : 100, className : "cc.tool.Export", methodName : "start"});
 					_gthis._isRecording = true;
 					_gthis.renderSequence();
 				},Math.round(this._delay * 1000));
 			} else {
-				console.log("" + this.toString() + " WIP normal recording");
+				haxe_Log.trace("" + this.toString() + " WIP normal recording",{ fileName : "Export.hx", lineNumber : 105, className : "cc.tool.Export", methodName : "start"});
 			}
 		} else if(this._isSocketReady) {
 			window.console.warn("Its possible that the export server is not working, check it!");
 		} else {
-			console.log("" + this.toString() + " Socket not even ready [comment out]");
+			haxe_Log.trace("" + this.toString() + " Socket not even ready [comment out]",{ fileName : "Export.hx", lineNumber : 111, className : "cc.tool.Export", methodName : "start"});
 		}
 	}
 	,stop: function() {
@@ -9837,7 +10459,7 @@ cc_tool_Export.prototype = {
 		this._isRecording = false;
 	}
 	,reset: function() {
-		console.log("" + this.toString() + " reset : make sure everything starts from the beginning");
+		haxe_Log.trace("" + this.toString() + " reset : make sure everything starts from the beginning",{ fileName : "Export.hx", lineNumber : 128, className : "cc.tool.Export", methodName : "reset"});
 		this._currentDuration = 0;
 		this._currentDelay = 0;
 		this._frameCounter = 0;
@@ -9850,7 +10472,7 @@ cc_tool_Export.prototype = {
 		if(delay == null) {
 			delay = 0;
 		}
-		console.log("" + this.toString() + " Set time: duration:" + duration + " seconds, delay: " + delay + " seconds");
+		haxe_Log.trace("" + this.toString() + " Set time: duration:" + duration + " seconds, delay: " + delay + " seconds",{ fileName : "Export.hx", lineNumber : 147, className : "cc.tool.Export", methodName : "time"});
 		this._isTimer = true;
 		this._duration = cc_util_MathUtil.clamp(duration,3.0,60.0);
 		this._durationFrames = Math.round(this._duration * this.FPS);
@@ -9885,16 +10507,16 @@ cc_tool_Export.prototype = {
 		var id = Std.string(new Date().getTime());
 		var data = { _id : id, file : dataString, name : "" + this._name + "-" + StringTools.lpad(Std.string(this._frameCounter),"0",4), folder : "" + this._folder};
 		if(this._isDebug) {
-			console.log("" + this.toString() + " renderSequence : " + data._id);
+			haxe_Log.trace("" + this.toString() + " renderSequence : " + data._id,{ fileName : "Export.hx", lineNumber : 200, className : "cc.tool.Export", methodName : "renderSequence"});
 		}
 		this._socket.emit(cc_tool_Export.SEQUENCE,data);
 		if(this._frameCounter % 60 == 1) {
-			console.log("current frame render: " + this._frameCounter + "/" + this._durationFrames);
+			haxe_Log.trace("current frame render: " + this._frameCounter + "/" + this._durationFrames,{ fileName : "Export.hx", lineNumber : 206, className : "cc.tool.Export", methodName : "renderSequence"});
 		}
 		if(this._frameCounter >= this._durationFrames) {
 			this._isRecording = false;
-			console.log("" + this.toString() + " STOP recording base on frames");
-			console.log(this.settings());
+			haxe_Log.trace("" + this.toString() + " STOP recording base on frames",{ fileName : "Export.hx", lineNumber : 211, className : "cc.tool.Export", methodName : "renderSequence"});
+			haxe_Log.trace(this.settings(),{ fileName : "Export.hx", lineNumber : 212, className : "cc.tool.Export", methodName : "renderSequence"});
 			this.convertRecording();
 			this._frameCounter--;
 		}
@@ -9913,7 +10535,7 @@ cc_tool_Export.prototype = {
 	}
 	,initSocket: function() {
 		var _gthis = this;
-		console.log("" + this.toString() + " Init Socket");
+		haxe_Log.trace("" + this.toString() + " Init Socket",{ fileName : "Export.hx", lineNumber : 247, className : "cc.tool.Export", methodName : "initSocket"});
 		this._socket = io.connect("" + this._host + ":" + this._port,{upgradeTimeout: 30000});
 		this._socket.on("connect_error",function(err) {
 			window.console.group("Connection error export server");
@@ -9926,51 +10548,51 @@ cc_tool_Export.prototype = {
 		});
 		this._socket.on("connect",function(err1) {
 			if(err1 == "undefined") {
-				console.log("" + _gthis.toString() + " connect: " + err1);
+				haxe_Log.trace("" + _gthis.toString() + " connect: " + err1,{ fileName : "Export.hx", lineNumber : 263, className : "cc.tool.Export", methodName : "initSocket"});
 			} else {
-				console.log("" + _gthis.toString() + " connect");
+				haxe_Log.trace("" + _gthis.toString() + " connect",{ fileName : "Export.hx", lineNumber : 265, className : "cc.tool.Export", methodName : "initSocket"});
 			}
-			console.log("_currentFrame : " + _gthis._currentFrame);
+			haxe_Log.trace("_currentFrame : " + _gthis._currentFrame,{ fileName : "Export.hx", lineNumber : 268, className : "cc.tool.Export", methodName : "initSocket"});
 			if(err1 == null) {
 				_gthis._isSocketReady = true;
 			}
 		});
 		this._socket.on("disconnect",function(err2) {
-			console.log("" + _gthis.toString() + " disconnect: " + err2);
+			haxe_Log.trace("" + _gthis.toString() + " disconnect: " + err2,{ fileName : "Export.hx", lineNumber : 275, className : "cc.tool.Export", methodName : "initSocket"});
 			_gthis._currentFrame = _gthis._frameCounter;
-			console.log("_currentFrame : " + _gthis._currentFrame);
+			haxe_Log.trace("_currentFrame : " + _gthis._currentFrame,{ fileName : "Export.hx", lineNumber : 277, className : "cc.tool.Export", methodName : "initSocket"});
 		});
 		this._socket.on("connect_failed",function(err3) {
-			console.log("" + _gthis.toString() + " connect_failed: " + err3);
+			haxe_Log.trace("" + _gthis.toString() + " connect_failed: " + err3,{ fileName : "Export.hx", lineNumber : 280, className : "cc.tool.Export", methodName : "initSocket"});
 		});
 		this._socket.on("error",function(err4) {
-			console.log("" + _gthis.toString() + " error: " + err4);
+			haxe_Log.trace("" + _gthis.toString() + " error: " + err4,{ fileName : "Export.hx", lineNumber : 283, className : "cc.tool.Export", methodName : "initSocket"});
 		});
 		this._socket.on("message",function(data) {
 			if(data.message != null) {
-				console.log("" + _gthis.toString() + " message: " + data.message);
+				haxe_Log.trace("" + _gthis.toString() + " message: " + data.message,{ fileName : "Export.hx", lineNumber : 289, className : "cc.tool.Export", methodName : "initSocket"});
 			} else {
-				console.log("" + _gthis.toString() + " There is a problem: " + Std.string(data));
+				haxe_Log.trace("" + _gthis.toString() + " There is a problem: " + Std.string(data),{ fileName : "Export.hx", lineNumber : 291, className : "cc.tool.Export", methodName : "initSocket"});
 			}
 		});
 		this._socket.emit(cc_tool_Export.CHECKIN);
 		this._socket.on(cc_tool_Export.SERVER_CHECKIN,function(data1) {
 			if(data1.checkin != null && data1.checkin == true) {
 				_gthis._isExportServerReady = true;
-				console.log("" + _gthis.toString() + " data:  + " + Std.string(data1) + ", & _isExportServerReady: " + (_gthis._isExportServerReady == null ? "null" : "" + _gthis._isExportServerReady));
+				haxe_Log.trace("" + _gthis.toString() + " data:  + " + Std.string(data1) + ", & _isExportServerReady: " + (_gthis._isExportServerReady == null ? "null" : "" + _gthis._isExportServerReady),{ fileName : "Export.hx", lineNumber : 298, className : "cc.tool.Export", methodName : "initSocket"});
 				if(_gthis._isStart) {
 					_gthis.start();
 				}
 			} else {
-				console.log("" + _gthis.toString() + " There is a problem: " + Std.string(data1));
+				haxe_Log.trace("" + _gthis.toString() + " There is a problem: " + Std.string(data1),{ fileName : "Export.hx", lineNumber : 304, className : "cc.tool.Export", methodName : "initSocket"});
 			}
 		});
 		this._socket.on(cc_tool_Export.RENDER_DONE,function(data2) {
-			console.log(data2);
+			haxe_Log.trace(data2,{ fileName : "Export.hx", lineNumber : 308, className : "cc.tool.Export", methodName : "initSocket"});
 		});
 	}
 	,onScriptIsEmbeddedHandler: function(a) {
-		console.log("" + this.toString() + " onScriptIsEmbeddedHandler: " + a);
+		haxe_Log.trace("" + this.toString() + " onScriptIsEmbeddedHandler: " + a,{ fileName : "Export.hx", lineNumber : 315, className : "cc.tool.Export", methodName : "onScriptIsEmbeddedHandler"});
 		this.checkScript();
 		this.initSocket();
 	}
@@ -9982,7 +10604,7 @@ cc_tool_Export.prototype = {
 			var i = _g1++;
 			var _script = arr[i];
 			if(_script.src.indexOf("socket.io.js") != -1) {
-				console.log("" + this.toString() + " Current page has socket.io script!");
+				haxe_Log.trace("" + this.toString() + " Current page has socket.io script!",{ fileName : "Export.hx", lineNumber : 328, className : "cc.tool.Export", methodName : "checkScript"});
 				this._isEmbedded = true;
 			}
 		}
@@ -9990,7 +10612,7 @@ cc_tool_Export.prototype = {
 	}
 	,embedSocketScript: function(callback,callbackArray) {
 		var _gthis = this;
-		console.log("" + this.toString() + " embedSocketScript");
+		haxe_Log.trace("" + this.toString() + " embedSocketScript",{ fileName : "Export.hx", lineNumber : 340, className : "cc.tool.Export", methodName : "embedSocketScript"});
 		var el = window.document.createElement("script");
 		el.id = "embedSocketIO";
 		el.src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js";
@@ -10062,12 +10684,12 @@ cc_tool_export_Zip.prototype = {
 		var _gthis = this;
 		this.panel1 = QuickSettings.create(10,10,"Zip Exporter Settings").addRange("delay in seconds",0.0,5.0,2.0,0.5,function(e) {
 			_gthis.setDelay(e);
-		}).addRange("record in seconds",0.0,30.0,2.0,0.5,function(e1) {
+		}).addRange("record in seconds",0.0,60.0,2.0,0.5,function(e1) {
 			_gthis.setRecord(e1);
 		}).addButton("init recording",function(e2) {
 			_gthis.onClickHandler(e2);
 		}).addText("feedback","x",function(e3) {
-		}).saveInLocalStorage("store-data-" + this.toString());
+		});
 	}
 	,out: function(str) {
 		if(this.panel1 == null) {
@@ -10076,7 +10698,7 @@ cc_tool_export_Zip.prototype = {
 		this.panel1.setValue("feedback",str);
 	}
 	,setDelay: function(e) {
-		this.out("delay in secondds: " + (e == null ? "null" : "" + e));
+		this.out("delay in seconds: " + (e == null ? "null" : "" + e));
 		this.set__delay(Math.round(this.fps * e));
 	}
 	,setRecord: function(e) {
@@ -10088,22 +10710,22 @@ cc_tool_export_Zip.prototype = {
 		var _g = input.value;
 		switch(_g) {
 		case "init recording":
-			console.log("init recording");
+			haxe_Log.trace("init recording",{ fileName : "Zip.hx", lineNumber : 119, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 			this.setDelay(this.panel1.getValue("delay in seconds"));
 			this.setRecord(this.panel1.getValue("record in seconds"));
 			this.start();
-			console.log(JSON.parse(JSON.stringify(this)));
+			haxe_Log.trace(JSON.parse(JSON.stringify(this)),{ fileName : "Zip.hx", lineNumber : 123, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 			break;
 		case "recording":
 			break;
 		case "start recording":
 			break;
 		case "stop recording":
-			console.log("stop recording");
+			haxe_Log.trace("stop recording",{ fileName : "Zip.hx", lineNumber : 125, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 			this.stop();
 			break;
 		default:
-			console.log("case '" + input.value + "': trace ('" + input.value + "');");
+			haxe_Log.trace("case '" + input.value + "': trace ('" + input.value + "');",{ fileName : "Zip.hx", lineNumber : 128, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 		}
 	}
 	,startExport: function() {
@@ -10113,18 +10735,22 @@ cc_tool_export_Zip.prototype = {
 		this.imageStringArray = [];
 		this._delayCounter = 0;
 		this._recordCounter = 0;
-		console.log(this.toString() + " - start export - 0ms");
+		haxe_Log.trace(this.toString() + " - start export - 0ms",{ fileName : "Zip.hx", lineNumber : 140, className : "cc.tool.export.Zip", methodName : "startExport"});
 	}
 	,stopExport: function() {
 		var _gthis = this;
 		this.endT = new Date().getTime();
 		this.isExportActive = false;
 		this.out(this.toString() + (" - stop export - " + (this.endT - this.startT) / 1000 + "sec"));
+		if(Reflect.isFunction(this._onComplete)) {
+			var arr = this._onCompleteParams != null ? this._onCompleteParams : [];
+			this._onComplete.apply(this._onComplete,arr);
+		}
 		var timeStamp = this.endT;
 		var md = "# " + this.toString() + "\n\n- Generated on: " + Std.string(new Date()) + "\n- total images: " + this.imageStringArray.length + "\n- file name: `_" + this._filename + "_" + timeStamp + ".zip`\n- delay: " + this.get__delay() + " frames (" + this.get__delay() / 60 + " sec)\n- record: " + this.get__record() + " frames (" + this.get__record() / 60 + " sec)\n\n## Instagram\n\n```\nsketch." + this._filename + " :: " + this.get_description() + "\n\n\n#codeart #coding #creativecode #generative #generativeArt\n#minimalism #minimalist #minimal\n#haxe #javascript #js #nodejs\n```\n\n## convert\n\nopen terminal\n\n```\nsh convert.sh\n```\n\n## Folder structure\n\n```\n+ _" + this._filename + "_" + timeStamp + ".zip\n+ _" + this._filename + "\n\t- convert.sh\n\t- README.MD\n\t+ sequence\n\t\t- image_" + StringTools.lpad("0","0",4) + ".png\n\t\t- image_" + StringTools.lpad("1","0",4) + ".png\n\t\t- ...\n```\n";
 		var bash = "#!/bin/bash\n\necho 'Start convertions png sequence to mp4'\n\nffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  " + this._filename + "_output_30fps.mp4\n# ffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  sequence/_output_30fps.mp4\n\necho 'End convertions png sequence to mp4'\n\n";
 		var bash2 = "\n#!/bin/bash\n\necho 'Start remove transparancy from images sequence'\n\ncd sequence\nmkdir output\nfor i in *.png; do\n   convert \"$" + "i\" -background white -alpha remove output/\"$" + "i\"\n   echo \"$" + "i\"\ndone\n\necho 'End remove transparancy from images sequence'\necho 'Start convertions png sequence to mp4'\n\nffmpeg -y -r 30 -i output/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  ../" + this._filename + "_white_output_30fps.mp4\n\necho 'End convertions png sequence to mp4'\n\n";
-		console.log("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec");
+		haxe_Log.trace("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 229, className : "cc.tool.export.Zip", methodName : "stopExport"});
 		var zip = new JSZip();
 		zip.file("_" + this._filename + "/README.MD",md);
 		zip.file("_" + this._filename + "/convert.sh",bash);
@@ -10133,11 +10759,12 @@ cc_tool_export_Zip.prototype = {
 		var _g = this.imageStringArray.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			console.log("/" + this.imageStringArray.length + ". add image to file");
+			haxe_Log.trace("/" + this.imageStringArray.length + ". add image to file",{ fileName : "Zip.hx", lineNumber : 235, className : "cc.tool.export.Zip", methodName : "stopExport"});
 			var img = this.imageStringArray[i];
 			zip.file("_" + this._filename + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
 		}
-		console.log("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec");
+		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 239, className : "cc.tool.export.Zip", methodName : "stopExport"});
+		this.createProgressBar(10);
 		this.out("generate zip");
 		var updateCallback = function(metadata) {
 			window.console.log("progression: " + metadata.percent.toFixed(2) + " %");
@@ -10150,11 +10777,31 @@ cc_tool_export_Zip.prototype = {
 			window.console.log(err);
 		});
 	}
+	,createProgressBar: function(percentage) {
+		var body = window.document.querySelector("body");
+		var div = window.document.createElement("div");
+		div.setAttribute("id","zip-progress");
+		div.innerHTML = percentage + "%";
+		div.style.position = "absolute";
+		div.style.left = "0px";
+		div.style.top = "0px";
+		div.style.width = "100%";
+		div.style.height = "2px";
+		div.style.backgroundColor = "red";
+		body.appendChild(div);
+	}
 	,start: function() {
+		if($bind(this,this.pulse) == null) {
+			window.console.warn("no pulse detected, hook intro the animation");
+		}
 		this.startExport();
 	}
 	,stop: function() {
 		this.stopExport();
+	}
+	,onComplete: function(func,arr) {
+		this._onComplete = func;
+		this._onCompleteParams = arr;
 	}
 	,menu: function(isVisible) {
 		if(isVisible == null) {
@@ -10170,21 +10817,23 @@ cc_tool_export_Zip.prototype = {
 	}
 	,delayInSeconds: function(sec) {
 		this.set__delay(Math.round(sec * this.fps));
+		this.panel1.setValue("delay in seconds",sec);
 	}
 	,record: function(frames) {
 		this.set__record(frames);
 	}
 	,recordInSeconds: function(sec) {
 		this.set__record(Math.round(sec * this.fps));
+		this.panel1.setValue("record in seconds",sec);
 	}
 	,pulse: function() {
 		if(this.isExportActive) {
 			if(this._delayCounter < this.get__delay()) {
-				console.log(">= " + this.get__delay() + " (delay)");
+				haxe_Log.trace("delay: " + this._delayCounter + " >= " + this.get__delay(),{ fileName : "Zip.hx", lineNumber : 327, className : "cc.tool.export.Zip", methodName : "pulse"});
 			}
 			if(this._delayCounter >= this.get__delay()) {
 				if(this._recordCounter < this.get__record()) {
-					console.log("< " + this.get__record() + " (recording)");
+					haxe_Log.trace("recording: " + this._recordCounter + " <  " + this.get__record(),{ fileName : "Zip.hx", lineNumber : 333, className : "cc.tool.export.Zip", methodName : "pulse"});
 					this.imageStringArray.push(this.get__ctx().canvas.toDataURL("image/png").split("base64,")[1]);
 					this._recordCounter++;
 				} else {
@@ -10207,7 +10856,7 @@ cc_tool_export_Zip.prototype = {
 			cc_tool_export_Zip.isZipLoaded = true;
 			break;
 		default:
-			console.log("case '" + str + "': trace ('" + str + "');");
+			haxe_Log.trace("case '" + str + "': trace ('" + str + "');",{ fileName : "Zip.hx", lineNumber : 363, className : "cc.tool.export.Zip", methodName : "onLoadComplete"});
 		}
 		if(cc_tool_export_Zip.isFileLoaded && cc_tool_export_Zip.isZipLoaded) {
 			callback.apply(callback,["JsZip and jsFilesaver are ready"]);
@@ -10598,7 +11247,7 @@ cc_util_GridUtil.prototype = {
 		return this;
 	}
 	,calc: function() {
-		console.log("WIP");
+		haxe_Log.trace("WIP",{ fileName : "GridUtil.hx", lineNumber : 155, className : "cc.util.GridUtil", methodName : "calc"});
 		return this;
 	}
 	,draw: function(isDebug) {
@@ -10844,7 +11493,7 @@ cc_util_MathUtil.dist = function(x1,y1,x2,y2) {
 };
 cc_util_MathUtil.pythagoreanTheorem = function(a,b,c) {
 	if(a == null && b == null && c == null) {
-		console.log("Really? Perhaps you should use some data");
+		haxe_Log.trace("Really? Perhaps you should use some data",{ fileName : "MathUtil.hx", lineNumber : 77, className : "cc.util.MathUtil", methodName : "pythagoreanTheorem"});
 		return 0;
 	}
 	var value = 0.0;
@@ -11062,6 +11711,49 @@ cc_util_TextUtil.drawTextAlongArc = function(ctx,str,centerX,centerY,radius,angl
 	}
 	ctx.restore();
 };
+cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius,pAngle) {
+	if(pAngle == null) {
+		pAngle = 10;
+	}
+	var charArr = str.split("");
+	ctx.save();
+	var angle = 0.0;
+	var _g1 = 0;
+	var _g = charArr.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var _char = charArr[i];
+		angle = i * pAngle;
+		var xpos = centerX + Math.cos(cc_util_MathUtil.radians(angle)) * radius;
+		var ypos = centerY + Math.sin(cc_util_MathUtil.radians(angle)) * radius;
+		ctx.save();
+		ctx.translate(xpos,ypos);
+		ctx.rotate(cc_util_MathUtil.radians(angle + 90));
+		ctx.fillText(_char,0,0);
+		ctx.restore();
+	}
+	ctx.restore();
+};
+cc_util_TextUtil.drawTextAlongArc3 = function(ctx,str,centerX,centerY,radius) {
+	var charArr = str.split("");
+	ctx.save();
+	var angle = 0;
+	var _g1 = 0;
+	var _g = charArr.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var _char = charArr[i];
+		angle = i;
+		var xpos = centerX + Math.cos(cc_util_MathUtil.radians(angle)) * radius;
+		var ypos = centerY + Math.sin(cc_util_MathUtil.radians(angle)) * radius;
+		haxe_Log.trace(_char,{ fileName : "TextUtil.hx", lineNumber : 124, className : "cc.util.TextUtil", methodName : "drawTextAlongArc3", customParams : [i,xpos,ypos]});
+		ctx.translate(xpos,ypos);
+		ctx.rotate(angle / charArr.length);
+		ctx.fillText(_char,0,0);
+		ctx.restore();
+	}
+	ctx.restore();
+};
 cc_util_TextUtil.drawTextAlongArc2 = function(ctx,str,centerX,centerY,radius) {
 	var charArr = str.split("");
 	var width = ctx.measureText(" ").width;
@@ -11075,7 +11767,7 @@ cc_util_TextUtil.drawTextAlongArc2 = function(ctx,str,centerX,centerY,radius) {
 		var _char = charArr[i];
 		var _rotation = cc_util_MathUtil.radians(_angle);
 		ctx.rotate(_angle * Math.PI / 360);
-		console.log("" + i + " // _char = " + _char + " : _angle: " + _angle + " - _rotation: " + _rotation);
+		haxe_Log.trace("" + i + " // _char = " + _char + " : _angle: " + _angle + " - _rotation: " + _rotation,{ fileName : "TextUtil.hx", lineNumber : 164, className : "cc.util.TextUtil", methodName : "drawTextAlongArc2"});
 		ctx.save();
 		ctx.translate(0,-1 * radius);
 		ctx.fillText(_char,0,0);
@@ -11240,6 +11932,12 @@ haxe_Http.prototype = {
 	,onStatus: function(status) {
 	}
 	,__class__: haxe_Http
+};
+var haxe_Log = function() { };
+$hxClasses["haxe.Log"] = haxe_Log;
+haxe_Log.__name__ = ["haxe","Log"];
+haxe_Log.trace = function(v,infos) {
+	js_Boot.__trace(v,infos);
 };
 var haxe_Timer = function(time_ms) {
 	var me = this;
@@ -13636,6 +14334,35 @@ js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
 var js_Boot = function() { };
 $hxClasses["js.Boot"] = js_Boot;
 js_Boot.__name__ = ["js","Boot"];
+js_Boot.__unhtml = function(s) {
+	return s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+};
+js_Boot.__trace = function(v,i) {
+	var msg = i != null ? i.fileName + ":" + i.lineNumber + ": " : "";
+	msg += js_Boot.__string_rec(v,"");
+	if(i != null && i.customParams != null) {
+		var _g = 0;
+		var _g1 = i.customParams;
+		while(_g < _g1.length) {
+			var v1 = _g1[_g];
+			++_g;
+			msg += "," + js_Boot.__string_rec(v1,"");
+		}
+	}
+	var d;
+	var tmp;
+	if(typeof(document) != "undefined") {
+		d = document.getElementById("haxe:trace");
+		tmp = d != null;
+	} else {
+		tmp = false;
+	}
+	if(tmp) {
+		d.innerHTML += js_Boot.__unhtml(msg) + "<br/>";
+	} else if(typeof console != "undefined" && console.log != null) {
+		console.log(msg);
+	}
+};
 js_Boot.getClass = function(o) {
 	if((o instanceof Array) && o.__enum__ == null) {
 		return Array;
@@ -15310,7 +16037,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-22 22:53:49";
+lib_model_constants_App.BUILD = "2019-03-24 01:31:35";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
