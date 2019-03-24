@@ -23,7 +23,7 @@ class CC056a extends CCBase implements ICCBase {
 	var zip:Zip;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = 'Zip test';
+		description = 'Export Zip test, test features';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// setup Sketch

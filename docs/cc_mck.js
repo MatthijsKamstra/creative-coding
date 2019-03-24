@@ -7653,7 +7653,7 @@ var art_CC056a = function(ctx) {
 	this._radius = 20;
 	this.grid = new cc_util_GridUtil();
 	this.shapeArray = [];
-	this.set_description("Zip test");
+	this.set_description("Export Zip test, test features");
 	this.set_type(["Animation","Image"]);
 	var option = new SketchOption();
 	option.set_width(1080);
@@ -10670,6 +10670,7 @@ var cc_tool_export_Zip = function(ctx,fileName) {
 	this._delayCounter = 0;
 	this.isExportActive = false;
 	this.createQuickSettings();
+	this.createProgressBar();
 	if(ctx == null) {
 		window.console.warn("This is not acceptable, I need a context!");
 	}
@@ -10710,22 +10711,22 @@ cc_tool_export_Zip.prototype = {
 		var _g = input.value;
 		switch(_g) {
 		case "init recording":
-			haxe_Log.trace("init recording",{ fileName : "Zip.hx", lineNumber : 119, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
+			haxe_Log.trace("init recording",{ fileName : "Zip.hx", lineNumber : 121, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 			this.setDelay(this.panel1.getValue("delay in seconds"));
 			this.setRecord(this.panel1.getValue("record in seconds"));
 			this.start();
-			haxe_Log.trace(JSON.parse(JSON.stringify(this)),{ fileName : "Zip.hx", lineNumber : 123, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
+			haxe_Log.trace(JSON.parse(JSON.stringify(this)),{ fileName : "Zip.hx", lineNumber : 125, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 			break;
 		case "recording":
 			break;
 		case "start recording":
 			break;
 		case "stop recording":
-			haxe_Log.trace("stop recording",{ fileName : "Zip.hx", lineNumber : 125, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
+			haxe_Log.trace("stop recording",{ fileName : "Zip.hx", lineNumber : 127, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 			this.stop();
 			break;
 		default:
-			haxe_Log.trace("case '" + input.value + "': trace ('" + input.value + "');",{ fileName : "Zip.hx", lineNumber : 128, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
+			haxe_Log.trace("case '" + input.value + "': trace ('" + input.value + "');",{ fileName : "Zip.hx", lineNumber : 130, className : "cc.tool.export.Zip", methodName : "onClickHandler"});
 		}
 	}
 	,startExport: function() {
@@ -10735,7 +10736,7 @@ cc_tool_export_Zip.prototype = {
 		this.imageStringArray = [];
 		this._delayCounter = 0;
 		this._recordCounter = 0;
-		haxe_Log.trace(this.toString() + " - start export - 0ms",{ fileName : "Zip.hx", lineNumber : 140, className : "cc.tool.export.Zip", methodName : "startExport"});
+		haxe_Log.trace(this.toString() + " - start export - 0ms",{ fileName : "Zip.hx", lineNumber : 142, className : "cc.tool.export.Zip", methodName : "startExport"});
 	}
 	,stopExport: function() {
 		var _gthis = this;
@@ -10750,7 +10751,7 @@ cc_tool_export_Zip.prototype = {
 		var md = "# " + this.toString() + "\n\n- Generated on: " + Std.string(new Date()) + "\n- total images: " + this.imageStringArray.length + "\n- file name: `_" + this._filename + "_" + timeStamp + ".zip`\n- delay: " + this.get__delay() + " frames (" + this.get__delay() / 60 + " sec)\n- record: " + this.get__record() + " frames (" + this.get__record() / 60 + " sec)\n\n## Instagram\n\n```\nsketch." + this._filename + " :: " + this.get_description() + "\n\n\n#codeart #coding #creativecode #generative #generativeArt\n#minimalism #minimalist #minimal\n#haxe #javascript #js #nodejs\n```\n\n## convert\n\nopen terminal\n\n```\nsh convert.sh\n```\n\n## Folder structure\n\n```\n+ _" + this._filename + "_" + timeStamp + ".zip\n+ _" + this._filename + "\n\t- convert.sh\n\t- README.MD\n\t+ sequence\n\t\t- image_" + StringTools.lpad("0","0",4) + ".png\n\t\t- image_" + StringTools.lpad("1","0",4) + ".png\n\t\t- ...\n```\n";
 		var bash = "#!/bin/bash\n\necho 'Start convertions png sequence to mp4'\n\nffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  " + this._filename + "_output_30fps.mp4\n# ffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  sequence/_output_30fps.mp4\n\necho 'End convertions png sequence to mp4'\n\n";
 		var bash2 = "\n#!/bin/bash\n\necho 'Start remove transparancy from images sequence'\n\ncd sequence\nmkdir output\nfor i in *.png; do\n   convert \"$" + "i\" -background white -alpha remove output/\"$" + "i\"\n   echo \"$" + "i\"\ndone\n\necho 'End remove transparancy from images sequence'\necho 'Start convertions png sequence to mp4'\n\nffmpeg -y -r 30 -i output/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  ../" + this._filename + "_white_output_30fps.mp4\n\necho 'End convertions png sequence to mp4'\n\n";
-		haxe_Log.trace("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 229, className : "cc.tool.export.Zip", methodName : "stopExport"});
+		haxe_Log.trace("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 231, className : "cc.tool.export.Zip", methodName : "stopExport"});
 		var zip = new JSZip();
 		zip.file("_" + this._filename + "/README.MD",md);
 		zip.file("_" + this._filename + "/convert.sh",bash);
@@ -10759,15 +10760,17 @@ cc_tool_export_Zip.prototype = {
 		var _g = this.imageStringArray.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			haxe_Log.trace("/" + this.imageStringArray.length + ". add image to file",{ fileName : "Zip.hx", lineNumber : 235, className : "cc.tool.export.Zip", methodName : "stopExport"});
+			haxe_Log.trace("/" + this.imageStringArray.length + ". add image to file",{ fileName : "Zip.hx", lineNumber : 237, className : "cc.tool.export.Zip", methodName : "stopExport"});
 			var img = this.imageStringArray[i];
 			zip.file("_" + this._filename + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
 		}
-		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 239, className : "cc.tool.export.Zip", methodName : "stopExport"});
+		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 241, className : "cc.tool.export.Zip", methodName : "stopExport"});
 		this.createProgressBar(10);
 		this.out("generate zip");
 		var updateCallback = function(metadata) {
 			window.console.log("progression: " + metadata.percent.toFixed(2) + " %");
+			var updateCallback1 = parseFloat(metadata.percent.toFixed(2));
+			_gthis.progressGeneration(updateCallback1);
 		};
 		zip.generateAsync({ type : "blob"},updateCallback).then(function(blob) {
 			window.console.log("Save zip file complete - " + (new Date().getTime() - _gthis.startT) / 1000 + "sec");
@@ -10778,17 +10781,29 @@ cc_tool_export_Zip.prototype = {
 		});
 	}
 	,createProgressBar: function(percentage) {
+		if(percentage == null) {
+			percentage = 10;
+		}
 		var body = window.document.querySelector("body");
 		var div = window.document.createElement("div");
 		div.setAttribute("id","zip-progress");
-		div.innerHTML = percentage + "%";
+		div.innerHTML = "<span style=\"display:none\">" + percentage + "%</span>";
 		div.style.position = "absolute";
 		div.style.left = "0px";
 		div.style.top = "0px";
 		div.style.width = "100%";
-		div.style.height = "2px";
-		div.style.backgroundColor = "red";
+		div.style.height = "1px";
+		div.style.backgroundColor = "silver";
 		body.appendChild(div);
+		this.progressBar = div;
+	}
+	,progressGeneration: function(percent) {
+		this.progressBar.style.width = "" + percent + "%";
+		this.progressBar.style.backgroundColor = "navy";
+	}
+	,progressRecording: function(percent) {
+		this.progressBar.style.width = "" + percent + "%";
+		this.progressBar.style.backgroundColor = "red";
 	}
 	,start: function() {
 		if($bind(this,this.pulse) == null) {
@@ -10829,12 +10844,13 @@ cc_tool_export_Zip.prototype = {
 	,pulse: function() {
 		if(this.isExportActive) {
 			if(this._delayCounter < this.get__delay()) {
-				haxe_Log.trace("delay: " + this._delayCounter + " >= " + this.get__delay(),{ fileName : "Zip.hx", lineNumber : 327, className : "cc.tool.export.Zip", methodName : "pulse"});
+				haxe_Log.trace("delay: " + this._delayCounter + " >= " + this.get__delay(),{ fileName : "Zip.hx", lineNumber : 342, className : "cc.tool.export.Zip", methodName : "pulse"});
 			}
 			if(this._delayCounter >= this.get__delay()) {
 				if(this._recordCounter < this.get__record()) {
-					haxe_Log.trace("recording: " + this._recordCounter + " <  " + this.get__record(),{ fileName : "Zip.hx", lineNumber : 333, className : "cc.tool.export.Zip", methodName : "pulse"});
+					haxe_Log.trace("recording: " + this._recordCounter + " <  " + this.get__record(),{ fileName : "Zip.hx", lineNumber : 348, className : "cc.tool.export.Zip", methodName : "pulse"});
 					this.imageStringArray.push(this.get__ctx().canvas.toDataURL("image/png").split("base64,")[1]);
+					this.progressRecording(this._recordCounter / this.get__record() * 100);
 					this._recordCounter++;
 				} else {
 					this.stopExport();
@@ -10856,7 +10872,7 @@ cc_tool_export_Zip.prototype = {
 			cc_tool_export_Zip.isZipLoaded = true;
 			break;
 		default:
-			haxe_Log.trace("case '" + str + "': trace ('" + str + "');",{ fileName : "Zip.hx", lineNumber : 363, className : "cc.tool.export.Zip", methodName : "onLoadComplete"});
+			haxe_Log.trace("case '" + str + "': trace ('" + str + "');",{ fileName : "Zip.hx", lineNumber : 379, className : "cc.tool.export.Zip", methodName : "onLoadComplete"});
 		}
 		if(cc_tool_export_Zip.isFileLoaded && cc_tool_export_Zip.isZipLoaded) {
 			callback.apply(callback,["JsZip and jsFilesaver are ready"]);
@@ -16037,7 +16053,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-24 01:31:35";
+lib_model_constants_App.BUILD = "2019-03-24 10:44:58";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
