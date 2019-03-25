@@ -5627,6 +5627,12 @@ var art_CC050 = function(ctx) {
 	this.set_type(["Image"]);
 	cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
 	this.createQuickSettings();
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
 	art_CCBase.call(this,ctx);
 };
 $hxClasses["art.CC050"] = art_CC050;
@@ -5635,14 +5641,14 @@ art_CC050.__interfaces__ = [art_ICCBase];
 art_CC050.__super__ = art_CCBase;
 art_CC050.prototype = $extend(art_CCBase.prototype,{
 	onEmbedHandler: function(e) {
-		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC050.hx", lineNumber : 38, className : "art.CC050", methodName : "onEmbedHandler"});
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC050.hx", lineNumber : 47, className : "art.CC050", methodName : "onEmbedHandler"});
 		this.isFontLoaded = true;
 		this.drawShape();
 	}
 	,createQuickSettings: function() {
 		var _gthis = this;
 		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote",this.text,function(value) {
-			haxe_Log.trace(value,{ fileName : "CC050.hx", lineNumber : 49, className : "art.CC050", methodName : "createQuickSettings"});
+			haxe_Log.trace(value,{ fileName : "CC050.hx", lineNumber : 58, className : "art.CC050", methodName : "createQuickSettings"});
 		}).addBoolean("All Caps",false,function(value1) {
 			_gthis.setCaps(value1);
 		}).addRange("Font size",10,500,this._defaultFontSize,1,function(value2) {
@@ -5707,19 +5713,19 @@ art_CC050.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC050.hx", lineNumber : 117, className : "art.CC050", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC050.hx", lineNumber : 126, className : "art.CC050", methodName : "setup"});
 		this.randomColorize();
 		this.isDebug = true;
 		var canvas = window.document.getElementById("creative_code_mck");
 		this.square = Math.round(Math.min(Global.w,Global.h));
-		haxe_Log.trace("w: " + Global.w + ", h: " + Global.h,{ fileName : "CC050.hx", lineNumber : 127, className : "art.CC050", methodName : "setup"});
-		haxe_Log.trace("square: " + this.square,{ fileName : "CC050.hx", lineNumber : 128, className : "art.CC050", methodName : "setup"});
+		haxe_Log.trace("w: " + Global.w + ", h: " + Global.h,{ fileName : "CC050.hx", lineNumber : 136, className : "art.CC050", methodName : "setup"});
+		haxe_Log.trace("square: " + this.square,{ fileName : "CC050.hx", lineNumber : 137, className : "art.CC050", methodName : "setup"});
 		canvas.width = this.square - 2;
 		canvas.height = this.square - 2;
 		canvas.style.border = "1px solid silver";
 	}
 	,draw: function() {
-		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC050.hx", lineNumber : 136, className : "art.CC050", methodName : "draw"});
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC050.hx", lineNumber : 145, className : "art.CC050", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -6326,6 +6332,7 @@ var art_CC053 = function(ctx) {
 	this.lyrics = "I said a hip hop\nHippie to the hippie\nThe hip, hip a hop, and you don't stop, a rock it out\nBubba to the bang bang boogie, boobie to the boogie\nTo the rhythm of the boogie the beat\nNow, what you hear is not a test I'm rappin' to the beat\nAnd me, the groove, and my friends are gonna try to move your feet\nSee, I am Wonder Mike, and I'd like to say hello\nTo the black, to the white, the red and the brown\nThe purple and yellow, but first, I gotta\nBang bang, the boogie to the boogie\nSay up jump the boogie to the bang bang boogie\nLet's rock, you don't stop\nRock the rhythm that'll make your body rock\nWell so far you've heard my voice but I brought two friends along\nAnd the next on the mic is my man Hank\nC'mon, Hank, sing that song, check it out\nWell, I'm Imp the Dimp, the ladies' pimp\nThe women fight for my delight\nBut I'm the grandmaster with the three MCs\nThat shock the house for the young ladies\nAnd when you come inside, into the front\nYou do the Freak, Spank, and do the Bump\nAnd when the sucker MC's try to prove a point\nWe're Treacherous Trio, we're the serious joint\nA from sun to sun and day to day\nI sit down and write a brand new rhyme\nBecause they say that miracles never cease\nI've created a devastating masterpiece\nI'm gonna rock the mic 'til you can't resist\nEverybody, I say it goes like this\nWell, I was coming home late one dark afternoon\nA reporter stopped me for an interview\nShe said she's heard stories and she's heard fables\nThat I'm vicious on the mic and the turntable\nThis young reporter I did adore\nSo I rocked some vicious rhymes like I never did before\nShe said, \"damn, fly guy, I'm in love with you\nThe Casanova legend must have been true\"\nI said, \"by the way, baby, what's your name?\"\nSaid, \"I go by name of Lois Lane\"\n\"And you could be my boyfriend, you surely can\nJust let me quit my boyfriend called Superman\"\nI said, \"he's a fairy, I do suppose\nFlyin' through the air in pantyhose\nHe may be very sexy, or even cute\nBut he looks like a sucker in a blue and red suit\"\nI said, \"you need a man man who's got finesse\nAnd his whole name across his chest\nHe may be able to fly all through the night\nBut can he rock a party 'til the early light?\nHe can't satisfy you with his little worm\nBut I can bust you out with my super sperm!\"\nI go do it, I go do it, I go do it, do it, do it\nAn' I'm here an' I'm there, I'm Big Ban Hank, I'm everywhere\nJust throw your hands up in the air\nAnd party hardy like you just don't care\nLet's do it, don't stop, y'all, a tick tock, y'all, you don't stop!\nGo ho-tel, mo-tel, whatcha gonna do today? (say what?)\nI'm gonna get a fly girl, gonna get some spank, drive off in a def OJ\nEverybody go, \"ho-tel, mo-tel, Holiday Inn\"\nYou say if your girl starts actin' up, then you take her friend\nI say skip, dive, what can I say?\nI can't fit 'em all inside my OJ\nSo I just take half, and bust 'em out\nI give the rest to Master Gee so he can shock the house\nI said M-A-S, T-E-R, a G with a double E\nI said I go by the unforgettable name\nOf the man they call the Master Gee\nWell, my name is known all over the world\nBy all the foxy ladies and the pretty girls\nI'm goin' down in history\nAs the baddest rapper there ever could be\nNow I'm feelin' the highs and you're feelin' the lows\nThe beat starts gettin' into your toes\nYou start poppin' your fingers and stompin' your feet\nAnd movin' your body while while you're sitting in your seat\nAnd then damn! Ya start doin' the freak, I said\nDamn! Right outta your seat\nThen you throw your hands high in the air\nYa rockin' to the rhythm, shake your derriere\nYa rockin' to the beat without a care\nWith the sureshot MCs for the affair\nNow, I'm not as tall as the rest of the gang\nBut I rap to the beat just the same\nI got a little face, and a pair of brown eyes\nAll I'm here to do, ladies, is hypnotize\nSingin' on'n'n'on'n'on on'n'on\nThe beat don't stop until the break of dawn\nSingin' on'n'n'on'n'on on'n'on\nLike a hot buttered pop da pop da pop dibbie dibbie\nPop da pop pop, don't you dare stop\nCome alive y'all, gimme whatcha got\nI guess by now you can take a hunch\nAnd find that I am the baby of the bunch\nBut that's okay, I still keep in stride\n'Cause all I'm here to do is just wiggle your behind\nSingin' on'n'n'on'n'on on'n'on\nThe beat don't stop until the break of dawn\nSingin' on'n'n'on'n'on on'n'on\nRock rock, y'all, throw it on the floor\nI'm gonna freak you here, I'm gona freak you there\nI'm gonna move you outta this atmosphere\n'Cause I'm one of a kind and I'll shock your mind\nI'll put TNT in your behind. I said\nOne, two, three, four, come on, girls, get on the floor\nA-come alive, y'all, a-gimme whatcha got\n'Cause I'm guaranteed to make you rock\nI said one, two, three, four, tell me, Wonder Mike\nWhat are you waiting for?\nI said a hip hop\nThe hippie to the hippie\nThe hip hip a hop, and you don't stop, a rock it\nTo the bang bang boogie, say up jump the boogie\nTo the rhythm of the boogie, the beat\nA skiddleebebop, we rock, scooby doo\nAnd guess what, America, we love you\n'Cause you rocked and a rolled with so much soul\nYou could rock 'til a hundred and one years old\nI don't mean to brag, I don't mean to boast\nBut we like hot butter on our breakfast toast\nRock it up, Baby Bubba!\nBaby Bubba to the boogie da bang bang da boogie\nTo the beat, beat, it's unique\nCome on everybody and dance to the beat!\nHave you ever went over a friends house to eat\nAnd the food just ain't no good?\nI mean the macaroni's soggy, the peas are mushed\nAnd the chicken tastes like wood\nSo you try to play it off like you think you can\nBy saying that you're full\nAnd then your friend says, \"mama, he's just being polite\nHe ain't finished, uh-uh, that's bull!\"\nSo your heart starts pumpin' and you think of a lie\nAnd you say that you already ate\nAnd your friend says \"man, there's plenty of food\"\nSo you pile some more on your plate\nWhile the stinky food's steamin', your mind starts to dreamin'\nOf the moment that it's time to leave\nAnd then you look at your plate and your chicken's slowly rottin'\nInto something that looks like cheese\nOh so you say \"that's it, I gotta leave this place\nI don't care what these people think\nI'm just sittin' here makin' myself nauseous\nWith this ugly food that stinks\"\nSo you bust out the door while it's still closed\nStill sick from the food you ate\nAnd then you run to the store for quick relief\nFrom a bottle of Kaopectate\nAnd then you call your friend two weeks later\nTo see how he has been\nAnd he says, \"I understand about the food\nBaby Bubba, but we're still friends\"\nWith a hip hop the hippie to the hippie\nThe hip hip a hop, a you don't stop the rockin'\nTo the bang bang boogie\nSay up jump the boogie to the rhythm of the boogie the beat";
 	this.preformer = "The Sugarhill Gang";
 	this.song = "Rapper's Delight";
+	this._startAngle = -90;
 	this._angle = 10;
 	this._radius = 180;
 	this.defaultText = "Hier moet iets staan dat de moeite waard is";
@@ -6346,9 +6353,9 @@ var art_CC053 = function(ctx) {
 	var b = 6;
 	var c = 7;
 	var cosa = (Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2)) / (2 * b * c);
-	haxe_Log.trace(cosa,{ fileName : "CC053.hx", lineNumber : 38, className : "art.CC053", methodName : "new"});
-	haxe_Log.trace(Math.acos(cosa),{ fileName : "CC053.hx", lineNumber : 39, className : "art.CC053", methodName : "new"});
-	haxe_Log.trace(cc_util_MathUtil.degrees(Math.acos(cosa)),{ fileName : "CC053.hx", lineNumber : 40, className : "art.CC053", methodName : "new"});
+	haxe_Log.trace(cosa,{ fileName : "CC053.hx", lineNumber : 39, className : "art.CC053", methodName : "new"});
+	haxe_Log.trace(Math.acos(cosa),{ fileName : "CC053.hx", lineNumber : 40, className : "art.CC053", methodName : "new"});
+	haxe_Log.trace(cc_util_MathUtil.degrees(Math.acos(cosa)),{ fileName : "CC053.hx", lineNumber : 41, className : "art.CC053", methodName : "new"});
 };
 $hxClasses["art.CC053"] = art_CC053;
 art_CC053.__name__ = ["art","CC053"];
@@ -6359,17 +6366,19 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 		var _gthis = this;
 		this.panel1 = QuickSettings.create(10,10,"Test rotation").setGlobalChangeHandler($bind(this,this.drawShape)).addTextArea("Reason","Test this text in circle thing",null).addTextArea("Quote",this.defaultText,function(value) {
 			_gthis.setText(value);
-		}).addRange("radius",200,400,180,1,function(value1) {
+		}).addRange("radius",200,500,180,1,function(value1) {
 			_gthis.setRadius(value1);
-		}).addDropDown("text",["one","two"],function(value2) {
-			_gthis.dropdown("DropDown",value2);
+		}).addRange("start angle",0,360,180,1,function(value2) {
+			_gthis.setStartAngle(value2);
+		}).addDropDown("text",["one","two"],function(value3) {
+			_gthis.dropdown("DropDown",value3);
 		}).addButton("default",function(e) {
 			_gthis.setText(_gthis.defaultText);
 		}).saveInLocalStorage("store-data-" + this.toString());
 	}
 	,dropdown: function(value,index) {
 		var sub = this.lyrics.split("").length;
-		this._text = this.lyrics.substring(0,Math.round(sub / 4));
+		this._text = this.lyrics.substring(0,Math.round(sub / 6));
 	}
 	,setText: function(str) {
 		this._text = str;
@@ -6377,11 +6386,14 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 	,setRadius: function(px) {
 		this._radius = px;
 	}
+	,setStartAngle: function(degree) {
+		this._startAngle = degree;
+	}
 	,setAngle: function(angle) {
 		this._angle = angle;
 	}
 	,onEmbedHandler: function(e) {
-		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC053.hx", lineNumber : 77, className : "art.CC053", methodName : "onEmbedHandler"});
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC053.hx", lineNumber : 83, className : "art.CC053", methodName : "onEmbedHandler"});
 		this._isEmbedded = true;
 		this.drawShape();
 	}
@@ -6505,14 +6517,14 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 		this.ctx.textAlign = "center";
 		this.ctx.textBaseline = "bottom";
 		this.ctx.font = "20px PT Mono";
-		cc_util_TextUtil.drawTextAlongArc4(this.ctx,this._text,centerX,centerY,this._radius);
+		cc_util_TextUtil.drawTextAlongArc4(this.ctx,this._text,centerX,centerY,this._radius,this._startAngle);
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 128, className : "art.CC053", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 134, className : "art.CC053", methodName : "setup"});
 		this.isDebug = true;
 	}
 	,draw: function() {
-		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 134, className : "art.CC053", methodName : "draw"});
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 140, className : "art.CC053", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -10987,7 +10999,10 @@ cc_util_TextUtil.drawTextAlongArc = function(ctx,str,centerX,centerY,radius,angl
 	}
 	ctx.restore();
 };
-cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius) {
+cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius,startDegree) {
+	if(startDegree == null) {
+		startDegree = -90;
+	}
 	var monoW = ctx.measureText(" ").width;
 	var charArr = str.split("");
 	ctx.save();
@@ -10996,14 +11011,14 @@ cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius) {
 	var _g = charArr.length;
 	while(_g1 < _g) {
 		var i = _g1++;
-		radius -= 0.15;
+		radius -= 0.15 + i * 0.005;
 		var a = monoW;
 		var b = radius;
 		var c = radius;
 		var cosa = (Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2)) / (2 * b * c);
 		var pAngle = cc_util_MathUtil.degrees(Math.acos(cosa));
 		var _char = charArr[i];
-		angle = -90 + i * pAngle;
+		angle = startDegree + i * pAngle;
 		var xpos = centerX + Math.cos(cc_util_MathUtil.radians(angle)) * radius;
 		var ypos = centerY + Math.sin(cc_util_MathUtil.radians(angle)) * radius;
 		ctx.save();
@@ -15317,7 +15332,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-25 20:30:32";
+lib_model_constants_App.BUILD = "2019-03-25 20:57:33";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
