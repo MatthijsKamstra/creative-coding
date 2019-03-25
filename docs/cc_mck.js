@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC056a,art_CC057];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -6336,12 +6336,19 @@ var art_CC053 = function(ctx) {
 	option.set_padding(10);
 	option.set_scale(true);
 	ctx = Sketch.create("creative_code_mck",option);
-	this.set_description("");
+	this.set_description("Show a large text in a spiral");
 	this.set_type(["Animation","Image"]);
 	this._text = this.defaultText;
 	cc_draw_Text.embedGoogleFont("PT+Mono",$bind(this,this.onEmbedHandler));
 	this.createQuickSettings();
 	art_CCBase.call(this,ctx);
+	var a = 8;
+	var b = 6;
+	var c = 7;
+	var cosa = (Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2)) / (2 * b * c);
+	haxe_Log.trace(cosa,{ fileName : "CC053.hx", lineNumber : 38, className : "art.CC053", methodName : "new"});
+	haxe_Log.trace(Math.acos(cosa),{ fileName : "CC053.hx", lineNumber : 39, className : "art.CC053", methodName : "new"});
+	haxe_Log.trace(cc_util_MathUtil.degrees(Math.acos(cosa)),{ fileName : "CC053.hx", lineNumber : 40, className : "art.CC053", methodName : "new"});
 };
 $hxClasses["art.CC053"] = art_CC053;
 art_CC053.__name__ = ["art","CC053"];
@@ -6352,15 +6359,17 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 		var _gthis = this;
 		this.panel1 = QuickSettings.create(10,10,"Test rotation").setGlobalChangeHandler($bind(this,this.drawShape)).addTextArea("Reason","Test this text in circle thing",null).addTextArea("Quote",this.defaultText,function(value) {
 			_gthis.setText(value);
-		}).addRange("angle",0.0,10.0,5.5,.05,function(value1) {
-			_gthis.setAngle(value1);
-		}).addRange("radius",200,400,180,1,function(value2) {
-			_gthis.setRadius(value2);
-		}).addNumber("angle2",0.0,10.0,5.5,.05,function(value3) {
-			_gthis.setAngle(value3);
+		}).addRange("radius",200,400,180,1,function(value1) {
+			_gthis.setRadius(value1);
+		}).addDropDown("text",["one","two"],function(value2) {
+			_gthis.dropdown("DropDown",value2);
 		}).addButton("default",function(e) {
 			_gthis.setText(_gthis.defaultText);
 		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,dropdown: function(value,index) {
+		var sub = this.lyrics.split("").length;
+		this._text = this.lyrics.substring(0,Math.round(sub / 4));
 	}
 	,setText: function(str) {
 		this._text = str;
@@ -6372,7 +6381,7 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 		this._angle = angle;
 	}
 	,onEmbedHandler: function(e) {
-		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC053.hx", lineNumber : 61, className : "art.CC053", methodName : "onEmbedHandler"});
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC053.hx", lineNumber : 77, className : "art.CC053", methodName : "onEmbedHandler"});
 		this._isEmbedded = true;
 		this.drawShape();
 	}
@@ -6382,25 +6391,128 @@ art_CC053.prototype = $extend(art_CCBase.prototype,{
 		if(!this._isEmbedded) {
 			return;
 		}
+		var xoffset = 7;
+		var Text = new cc_draw_Text(this.ctx,this.preformer);
+		var _this = Text;
+		_this._color = cc_util_ColorUtil.PINK;
+		_this.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		var _this1 = _this;
+		_this1._font = StringTools.replace(StringTools.replace("PT Mono",";",""),"+"," ");
+		var _this2 = _this1;
+		_this2.set__size(30);
+		if(_this2.get__leading() == null) {
+			_this2.set__leading(30);
+		}
+		var _this3 = _this2;
+		_this3._textAlign = "left";
+		var _this4 = _this3;
+		var x = this.get_w2() - xoffset;
+		var y = this.get_h2() - this._radius - 60;
+		_this4.set__x(x);
+		_this4.set__y(y);
+		var _this5 = _this4;
+		var isLines = false;
+		_this5._ctx.save();
+		if(_this5._text.indexOf("\n") != -1) {
+			_this5._lineArray = _this5._text.split("\n");
+			isLines = true;
+		}
+		var previousColor = _this5._ctx.fillStyle;
+		if(_this5._color != null) {
+			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
+		} else {
+			var _this6 = _this5._ctx;
+			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+			var tmp = _this5.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
+		}
+		var tmp1 = "" + _this5.get__size() + "px ";
+		_this5._ctx.font = tmp1 + _this5._font;
+		_this5._ctx.textAlign = _this5._textAlign;
+		_this5._ctx.textBaseline = _this5._textBaseline;
+		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
+		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
+		if(!isLines) {
+			_this5._ctx.fillText(_this5._text,0,0);
+		} else {
+			var _g1 = 0;
+			var _g = _this5._lineArray.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				var line = _this5._lineArray[i];
+				_this5._ctx.fillText(line,0,i * _this5.get__leading());
+			}
+		}
+		_this5._ctx.restore();
+		_this5._ctx.fillStyle = previousColor;
+		var Text1 = new cc_draw_Text(this.ctx,this.song);
+		var _this7 = Text1;
+		_this7._font = StringTools.replace(StringTools.replace("PT Mono",";",""),"+"," ");
+		var _this8 = _this7;
+		_this8._color = cc_util_ColorUtil.PINK;
+		_this8.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		var _this9 = _this8;
+		_this9._textAlign = "left";
+		var _this10 = _this9;
+		_this10.set__size(25);
+		if(_this10.get__leading() == null) {
+			_this10.set__leading(25);
+		}
+		var _this11 = _this10;
+		var x1 = this.get_w2() - xoffset;
+		var y1 = this.get_h2() - this._radius - 30;
+		_this11.set__x(x1);
+		_this11.set__y(y1);
+		var _this12 = _this11;
+		var isLines1 = false;
+		_this12._ctx.save();
+		if(_this12._text.indexOf("\n") != -1) {
+			_this12._lineArray = _this12._text.split("\n");
+			isLines1 = true;
+		}
+		var previousColor1 = _this12._ctx.fillStyle;
+		if(_this12._color != null) {
+			cc_CanvasTools.fillColourRGB(_this12._ctx,_this12._color,_this12.get__alpha());
+		} else {
+			var _this13 = _this12._ctx;
+			var int1 = Std.parseInt(StringTools.replace(previousColor1,"#","0x"));
+			var tmp2 = _this12.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this13,{ r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255},tmp2);
+		}
+		var tmp3 = "" + _this12.get__size() + "px ";
+		_this12._ctx.font = tmp3 + _this12._font;
+		_this12._ctx.textAlign = _this12._textAlign;
+		_this12._ctx.textBaseline = _this12._textBaseline;
+		_this12._ctx.translate(_this12.get__x(),_this12.get__y());
+		_this12._ctx.rotate(cc_util_MathUtil.radians(_this12.get__rotate()));
+		if(!isLines1) {
+			_this12._ctx.fillText(_this12._text,0,0);
+		} else {
+			var _g11 = 0;
+			var _g2 = _this12._lineArray.length;
+			while(_g11 < _g2) {
+				var i1 = _g11++;
+				var line1 = _this12._lineArray[i1];
+				_this12._ctx.fillText(line1,0,i1 * _this12.get__leading());
+			}
+		}
+		_this12._ctx.restore();
+		_this12._ctx.fillStyle = previousColor1;
 		var centerX = this.get_w2();
 		var centerY = this.get_h2();
 		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
-		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(cc_util_ColorUtil.PINK);
-		cc_draw_Text.fillText(this.ctx,this._text,this.get_w2(),this.get_h2(),"PT Mono",20);
 		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
 		this.ctx.textAlign = "center";
 		this.ctx.textBaseline = "bottom";
 		this.ctx.font = "20px PT Mono";
-		cc_util_TextUtil.drawTextAlongArc4(this.ctx,this._text,centerX,centerY,this._radius,this._angle);
-		cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.GRAY);
-		cc_CanvasTools.circleStroke(this.ctx,centerX,centerY,this._radius);
+		cc_util_TextUtil.drawTextAlongArc4(this.ctx,this._text,centerX,centerY,this._radius);
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 96, className : "art.CC053", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 128, className : "art.CC053", methodName : "setup"});
 		this.isDebug = true;
 	}
 	,draw: function() {
-		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 102, className : "art.CC053", methodName : "draw"});
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC053.hx", lineNumber : 134, className : "art.CC053", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -7245,7 +7357,7 @@ art_CC055.prototype = $extend(art_CCBase.prototype,{
 	,__class__: art_CC055
 });
 var art_CC055a = function(ctx) {
-	this.src = "/assets/img/spritesheet/web_heart_animation_edge.png";
+	this.src = "assets/img/spritesheet/web_heart_animation_edge.png";
 	this.isFirstRun = false;
 	this.isSpritesheet = false;
 	this.isZip = false;
@@ -7374,7 +7486,6 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 			}
 		}
 		if(this.isSpritesheet && this.isFont && this.isZip && !this.isFirstRun) {
-			this.zip.start();
 			this.isFirstRun = true;
 		}
 	}
@@ -7398,857 +7509,6 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		this.zip.pulse();
 	}
 	,__class__: art_CC055a
-});
-var art_CC056 = function(ctx) {
-	this.imageStringArray = [];
-	this._record = 600;
-	this._delay = 120;
-	this._recordCounter = 0;
-	this._delayCounter = 0;
-	this.isExportActive = false;
-	this.isFileLoaded = false;
-	this.isZipLoaded = false;
-	this.isFontLoaded = false;
-	this._color4 = null;
-	this._color3 = null;
-	this._color2 = null;
-	this._color1 = null;
-	this._color0 = null;
-	this._cellsize = 150;
-	this._radius = 20;
-	this.grid = new cc_util_GridUtil();
-	this.shapeArray = [];
-	this.set_description("Zip test");
-	this.set_type(["Animation","Image"]);
-	var option = new SketchOption();
-	option.set_width(1080);
-	option.set_autostart(true);
-	option.set_padding(10);
-	option.set_scale(true);
-	ctx = Sketch.create("creative_code_mck",option);
-	this.init();
-	art_CCBase.call(this,ctx);
-};
-$hxClasses["art.CC056"] = art_CC056;
-art_CC056.__name__ = ["art","CC056"];
-art_CC056.__interfaces__ = [art_ICCBase];
-art_CC056.__super__ = art_CCBase;
-art_CC056.prototype = $extend(art_CCBase.prototype,{
-	init: function() {
-		cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
-		var zip = new cc_tool_export_Zip(this.ctx);
-		zip.embedScripts($bind(this,this.onZipHandler));
-	}
-	,onEmbedHandler: function(e) {
-		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC056.hx", lineNumber : 66, className : "art.CC056", methodName : "onEmbedHandler"});
-		this.isFontLoaded = true;
-		this.drawShape();
-	}
-	,onZipHandler: function(value) {
-		haxe_Log.trace(value,{ fileName : "CC056.hx", lineNumber : 72, className : "art.CC056", methodName : "onZipHandler"});
-	}
-	,startExport: function() {
-		this.startT = new Date().getTime();
-		this.isExportActive = true;
-		this.imageStringArray = [];
-		haxe_Log.trace(this.toString() + " - start export - 0ms",{ fileName : "CC056.hx", lineNumber : 133, className : "art.CC056", methodName : "startExport"});
-	}
-	,stopExport: function() {
-		var _gthis = this;
-		this.endT = new Date().getTime();
-		this.isExportActive = false;
-		haxe_Log.trace(this.toString() + (" - stop export - " + (this.endT - this.startT) / 1000 + "sec"),{ fileName : "CC056.hx", lineNumber : 140, className : "art.CC056", methodName : "stopExport"});
-		var timeStamp = this.endT;
-		var md = "# " + this.toString() + "\n\n- Generated on: " + Std.string(new Date()) + "\n- total images: " + this.imageStringArray.length + "\n- file name: + _" + this.toString() + "_" + timeStamp + ".zip\n- delay: " + this._delay + " frames (" + this._delay / 60 + " sec)\n- record: " + this._record + " frames (" + this._record / 60 + " sec)\n\n\n\n## Instagram\n\n```\nsketch." + this.toString() + " :: " + this.get_description() + "\n\n\n#codeart #coding #creativecode #generative #generativeArt\n#minimalism #minimalist #minimal\n#haxe #javascript #js #nodejs\n```\n\n## convert\n\nopen terminal\n\n```\nsh convert.sh\n```\n\n## Folder structure\n\n```\n+ _" + this.toString() + "_" + timeStamp + ".zip\n\t+ _" + this.toString() + "\n\t\t- convert.sh\n\t\t- README.MD\n\t\t+ sequence\n\t\t\t- image_" + StringTools.lpad("0","0",4) + ".png\n\t\t\t- image_" + StringTools.lpad("1","0",4) + ".png\n\t\t\t- ...\n```\n";
-		var bash = "#!/bin/bash\n\necho 'Start convertions png sequens to mp4'\n\nffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  " + this.toString() + "_output_30fps.mp4\n# ffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  sequence/_output_30fps.mp4\n\necho 'End convertions png sequens to mp4'\n\n";
-		haxe_Log.trace("Start creation zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "CC056.hx", lineNumber : 198, className : "art.CC056", methodName : "stopExport"});
-		var zip = new JSZip();
-		zip.file("_" + this.toString() + "/README.MD",md);
-		zip.file("_" + this.toString() + "/convert.sh",bash);
-		var _g1 = 0;
-		var _g = this.imageStringArray.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			haxe_Log.trace("/" + this.imageStringArray.length + ". add image to file",{ fileName : "CC056.hx", lineNumber : 203, className : "art.CC056", methodName : "stopExport"});
-			var img = this.imageStringArray[i];
-			zip.file("_" + this.toString() + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
-		}
-		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "CC056.hx", lineNumber : 207, className : "art.CC056", methodName : "stopExport"});
-		zip.generateAsync({ type : "blob"}).then(function(blob) {
-			window.console.log("Save zip file complete - " + (new Date().getTime() - _gthis.startT) / 1000 + "sec");
-			saveAs(blob,"_" + _gthis.toString() + "_" + timeStamp + ".zip");
-		},function(err) {
-			window.console.log(err);
-		});
-	}
-	,createQuickSettings: function() {
-		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote","text",function(value) {
-			haxe_Log.trace(value,{ fileName : "CC056.hx", lineNumber : 221, className : "art.CC056", methodName : "createQuickSettings"});
-		}).addBoolean("All Caps",false,function(value1) {
-			haxe_Log.trace(value1,{ fileName : "CC056.hx", lineNumber : 222, className : "art.CC056", methodName : "createQuickSettings"});
-		}).saveInLocalStorage("store-data-" + this.toString());
-	}
-	,createShape: function(i,point) {
-		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius, rgb : cc_util_ColorUtil.randomColourObject()};
-		this.onAnimateHandler(shape);
-		return shape;
-	}
-	,onAnimateHandler: function(circle) {
-		var Go = new cc_lets_Go(circle,cc_util_MathUtil.random(3,5));
-		Go._isFrom = false;
-		var _this = Go;
-		var value = cc_util_MathUtil.random(0,Global.w);
-		var objValue = 0;
-		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
-			objValue = Reflect.getProperty(_this._target,"x");
-		}
-		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
-		_this._props.set("x",_range);
-		if(_this._isFrom) {
-			_this.updateProperties(0);
-		}
-		var _this1 = _this;
-		var value1 = cc_util_MathUtil.random(0,Global.h);
-		var objValue1 = 0;
-		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
-			objValue1 = Reflect.getProperty(_this1._target,"y");
-		}
-		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
-		_this1._props.set("y",_range1);
-		if(_this1._isFrom) {
-			_this1.updateProperties(0);
-		}
-		var _this2 = _this1;
-		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
-		var _this3 = _this2;
-		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
-		_this3._options.onCompleteParams = [circle];
-	}
-	,drawShape: function() {
-		this.ctx.clearRect(0,0,Global.w,Global.h);
-		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
-		if(this.isDebug) {
-			cc_util_ShapeUtil.gridField(this.ctx,this.grid);
-		}
-		var _g1 = 0;
-		var _g = this.shapeArray.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			var sh = this.shapeArray[i];
-			cc_CanvasTools.fillColourRGB(this.ctx,sh.rgb);
-			cc_CanvasTools.circleFill(this.ctx,sh.x,sh.y,sh.radius);
-		}
-		var rgb = cc_util_ColorUtil.randomColourObject();
-		cc_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
-		cc_util_ShapeUtil.xcross(this.ctx,Global.w / 2,Global.h / 2,200);
-		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color4);
-		var Text = new cc_draw_Text(this.ctx,"Zip export test");
-		var _this = Text;
-		_this._textAlign = "center";
-		var _this1 = _this;
-		_this1._textBaseline = "middle";
-		var _this2 = _this1;
-		_this2._font = StringTools.replace(StringTools.replace("Oswald",";",""),"+"," ");
-		var _this3 = _this2;
-		_this3.set__size(160);
-		if(_this3.get__leading() == null) {
-			_this3.set__leading(160);
-		}
-		var _this4 = _this3;
-		var x = this.get_w2();
-		var y = this.get_h2();
-		_this4.set__x(x);
-		_this4.set__y(y);
-		var _this5 = _this4;
-		var isLines = false;
-		_this5._ctx.save();
-		if(_this5._text.indexOf("\n") != -1) {
-			_this5._lineArray = _this5._text.split("\n");
-			isLines = true;
-		}
-		var previousColor = _this5._ctx.fillStyle;
-		if(_this5._color != null) {
-			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
-		} else {
-			var _this6 = _this5._ctx;
-			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
-			var tmp = _this5.get__alpha();
-			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
-		}
-		var tmp1 = "" + _this5.get__size() + "px ";
-		_this5._ctx.font = tmp1 + _this5._font;
-		_this5._ctx.textAlign = _this5._textAlign;
-		_this5._ctx.textBaseline = _this5._textBaseline;
-		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
-		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
-		if(!isLines) {
-			_this5._ctx.fillText(_this5._text,0,0);
-		} else {
-			var _g11 = 0;
-			var _g2 = _this5._lineArray.length;
-			while(_g11 < _g2) {
-				var i1 = _g11++;
-				var line = _this5._lineArray[i1];
-				_this5._ctx.fillText(line,0,i1 * _this5.get__leading());
-			}
-		}
-		_this5._ctx.restore();
-		_this5._ctx.fillStyle = previousColor;
-		if(this.isExportActive) {
-			if(this._delayCounter < this._delay) {
-				haxe_Log.trace("delay: " + this._delayCounter + " >= " + this._delay,{ fileName : "CC056.hx", lineNumber : 278, className : "art.CC056", methodName : "drawShape"});
-			}
-			if(this._delayCounter >= this._delay) {
-				if(this._recordCounter < this._record) {
-					haxe_Log.trace("recording: " + this._recordCounter + " <  " + this._record,{ fileName : "CC056.hx", lineNumber : 284, className : "art.CC056", methodName : "drawShape"});
-					this.imageStringArray.push(this.ctx.canvas.toDataURL("image/png").split("base64,")[1]);
-					this._recordCounter++;
-				} else {
-					this.stopExport();
-				}
-			}
-		}
-		this._delayCounter++;
-	}
-	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC056.hx", lineNumber : 297, className : "art.CC056", methodName : "setup"});
-		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
-		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
-		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
-		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
-		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
-		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
-		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
-		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
-		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
-		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
-		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
-		this.isDebug = true;
-		this.grid.setCellSize(this._cellsize);
-		this.grid.setIsCenterPoint(true);
-		this.shapeArray = [];
-		var _g1 = 0;
-		var _g = this.grid.array.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
-		}
-	}
-	,draw: function() {
-		this.drawShape();
-	}
-	,toString: function() {
-		return "cc056";
-	}
-	,__class__: art_CC056
-});
-var art_CC056a = function(ctx) {
-	this.isFontLoaded = false;
-	this._color4 = null;
-	this._color3 = null;
-	this._color2 = null;
-	this._color1 = null;
-	this._color0 = null;
-	this._cellsize = 150;
-	this._radius = 20;
-	this.grid = new cc_util_GridUtil();
-	this.shapeArray = [];
-	this.set_description("Export Zip test, test features");
-	this.set_type(["Animation","Image"]);
-	var option = new SketchOption();
-	option.set_width(1080);
-	option.set_autostart(true);
-	option.set_padding(10);
-	option.set_scale(true);
-	ctx = Sketch.create("creative_code_mck",option);
-	this.zip = new cc_tool_export_Zip(ctx,"" + this.toString());
-	this.zip.delay(180);
-	this.zip.record(180);
-	this.zip.embedScripts($bind(this,this.onZipHandler));
-	cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
-	art_CCBase.call(this,ctx);
-};
-$hxClasses["art.CC056a"] = art_CC056a;
-art_CC056a.__name__ = ["art","CC056a"];
-art_CC056a.__interfaces__ = [art_ICCBase];
-art_CC056a.__super__ = art_CCBase;
-art_CC056a.prototype = $extend(art_CCBase.prototype,{
-	onZipHandler: function(value) {
-		haxe_Log.trace(value,{ fileName : "CC056a.hx", lineNumber : 49, className : "art.CC056a", methodName : "onZipHandler"});
-	}
-	,onEmbedHandler: function(e) {
-		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC056a.hx", lineNumber : 53, className : "art.CC056a", methodName : "onEmbedHandler"});
-		this.isFontLoaded = true;
-		this.drawShape();
-	}
-	,createShape: function(i,point) {
-		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius, rgb : cc_util_ColorUtil.randomColourObject()};
-		this.onAnimateHandler(shape);
-		return shape;
-	}
-	,onAnimateHandler: function(circle) {
-		var Go = new cc_lets_Go(circle,cc_util_MathUtil.random(3,5));
-		Go._isFrom = false;
-		var _this = Go;
-		var value = cc_util_MathUtil.random(0,Global.w);
-		var objValue = 0;
-		if(Object.prototype.hasOwnProperty.call(_this._target,"x")) {
-			objValue = Reflect.getProperty(_this._target,"x");
-		}
-		var _range = { key : "x", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
-		_this._props.set("x",_range);
-		if(_this._isFrom) {
-			_this.updateProperties(0);
-		}
-		var _this1 = _this;
-		var value1 = cc_util_MathUtil.random(0,Global.h);
-		var objValue1 = 0;
-		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
-			objValue1 = Reflect.getProperty(_this1._target,"y");
-		}
-		var _range1 = { key : "y", from : _this1._isFrom ? value1 : objValue1, to : !_this1._isFrom ? value1 : objValue1};
-		_this1._props.set("y",_range1);
-		if(_this1._isFrom) {
-			_this1.updateProperties(0);
-		}
-		var _this2 = _this1;
-		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
-		var _this3 = _this2;
-		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
-		_this3._options.onCompleteParams = [circle];
-	}
-	,drawShape: function() {
-		this.ctx.clearRect(0,0,Global.w,Global.h);
-		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
-		if(this.isDebug) {
-			cc_util_ShapeUtil.gridField(this.ctx,this.grid);
-		}
-		var _g1 = 0;
-		var _g = this.shapeArray.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			var sh = this.shapeArray[i];
-			cc_CanvasTools.fillColourRGB(this.ctx,sh.rgb);
-			cc_CanvasTools.circleFill(this.ctx,sh.x,sh.y,sh.radius);
-		}
-		var rgb = cc_util_ColorUtil.randomColourObject();
-		cc_CanvasTools.strokeColour(this.ctx,rgb.r,rgb.g,rgb.b);
-		cc_util_ShapeUtil.xcross(this.ctx,Global.w / 2,Global.h / 2,200);
-		this.ctx.fillStyle = cc_util_ColorUtil.getColourObj(this._color4);
-		var Text = new cc_draw_Text(this.ctx,"Zip export test");
-		var _this = Text;
-		_this._textAlign = "center";
-		var _this1 = _this;
-		_this1._textBaseline = "middle";
-		var _this2 = _this1;
-		_this2._font = StringTools.replace(StringTools.replace("Oswald",";",""),"+"," ");
-		var _this3 = _this2;
-		_this3.set__size(160);
-		if(_this3.get__leading() == null) {
-			_this3.set__leading(160);
-		}
-		var _this4 = _this3;
-		var x = this.get_w2();
-		var y = this.get_h2();
-		_this4.set__x(x);
-		_this4.set__y(y);
-		var _this5 = _this4;
-		var isLines = false;
-		_this5._ctx.save();
-		if(_this5._text.indexOf("\n") != -1) {
-			_this5._lineArray = _this5._text.split("\n");
-			isLines = true;
-		}
-		var previousColor = _this5._ctx.fillStyle;
-		if(_this5._color != null) {
-			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
-		} else {
-			var _this6 = _this5._ctx;
-			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
-			var tmp = _this5.get__alpha();
-			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
-		}
-		var tmp1 = "" + _this5.get__size() + "px ";
-		_this5._ctx.font = tmp1 + _this5._font;
-		_this5._ctx.textAlign = _this5._textAlign;
-		_this5._ctx.textBaseline = _this5._textBaseline;
-		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
-		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
-		if(!isLines) {
-			_this5._ctx.fillText(_this5._text,0,0);
-		} else {
-			var _g11 = 0;
-			var _g2 = _this5._lineArray.length;
-			while(_g11 < _g2) {
-				var i1 = _g11++;
-				var line = _this5._lineArray[i1];
-				_this5._ctx.fillText(line,0,i1 * _this5.get__leading());
-			}
-		}
-		_this5._ctx.restore();
-		_this5._ctx.fillStyle = previousColor;
-		this.zip.pulse();
-	}
-	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC056a.hx", lineNumber : 109, className : "art.CC056a", methodName : "setup"});
-		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
-		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
-		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
-		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
-		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
-		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
-		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
-		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
-		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
-		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
-		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
-		this.isDebug = true;
-		this.grid.setCellSize(this._cellsize);
-		this.grid.setIsCenterPoint(true);
-		this.shapeArray = [];
-		var _g1 = 0;
-		var _g = this.grid.array.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
-		}
-	}
-	,draw: function() {
-		this.drawShape();
-	}
-	,toString: function() {
-		return "cc056a";
-	}
-	,__class__: art_CC056a
-});
-var art_CC057 = function(ctx) {
-	this.goalCount = 250;
-	this._followerCount = -1;
-	this.timeDelayOffset = 0.15;
-	this.timeDelay = 3;
-	this.yoffset = 200;
-	this.imageH = 100;
-	this.imageW = 100;
-	this.isPayoffVisible = false;
-	this.isCounterVisible = false;
-	this.isDefaultLoaded = false;
-	this.isJsonLoaded = false;
-	this.isFontLoaded = false;
-	var $int = Std.parseInt(StringTools.replace("#2B3A42","#","0x"));
-	this._color4 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
-	var int1 = Std.parseInt(StringTools.replace("#3F5866","#","0x"));
-	this._color3 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
-	var int2 = Std.parseInt(StringTools.replace("#BDD3DE","#","0x"));
-	this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
-	var int3 = Std.parseInt(StringTools.replace("#F0F0DF","#","0x"));
-	this._color1 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
-	var int4 = Std.parseInt(StringTools.replace("#FF9000","#","0x"));
-	this._color0 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
-	this.shapeArray = [];
-	var option = new SketchOption();
-	option.set_width(1080);
-	option.set_autostart(true);
-	option.set_padding(10);
-	option.set_scale(true);
-	ctx = Sketch.create("creative_code_mck",option);
-	this.set_description("");
-	this.set_type(["Animation","Image"]);
-	cc_draw_Text.embedGoogleFont("Abel",$bind(this,this.onFontHandler));
-	this.onJsonHandler();
-	this.zip = new cc_tool_export_Zip(ctx,"" + this.toString());
-	this.zip.delayInSeconds(0);
-	this.zip.recordInSeconds(37);
-	this.zip.menu(false);
-	this.zip.embedScripts($bind(this,this.onZipHandler));
-	this.zip.onComplete($bind(this,this.onZipCompleteHandler));
-	art_CCBase.call(this,ctx);
-};
-$hxClasses["art.CC057"] = art_CC057;
-art_CC057.__name__ = ["art","CC057"];
-art_CC057.__interfaces__ = [art_ICCBase];
-art_CC057.__super__ = art_CCBase;
-art_CC057.prototype = $extend(art_CCBase.prototype,{
-	createFollowerList: function() {
-		this.shapeArray = [];
-		var _g1 = 0;
-		var _g = this.json.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			var instaObj = this.json[i];
-			this.shapeArray.push(this.createFollower(i,instaObj));
-			this.loadImage(i,instaObj);
-		}
-	}
-	,onZipHandler: function(value) {
-		haxe_Log.trace(value,{ fileName : "CC057.hx", lineNumber : 74, className : "art.CC057", methodName : "onZipHandler"});
-	}
-	,onZipCompleteHandler: function(value) {
-		haxe_Log.trace("onZipCompleteHandler : " + Std.string(value),{ fileName : "CC057.hx", lineNumber : 79, className : "art.CC057", methodName : "onZipCompleteHandler"});
-		this.stop();
-	}
-	,createFollower: function(i,insta) {
-		var sh = { i : i, _id : "" + i, x : Global.w / 2, y : Global.h / 2, width : this.imageH, height : this.imageH, count : i, percentage : 0, radius : cc_util_MathUtil.random(30,100), speed : cc_util_MathUtil.random(-3,3), angle : cc_util_MathUtil.random(360), name : insta.name, src : insta.src, img : null};
-		this.onAnimateHandler(sh);
-		return sh;
-	}
-	,resetInstaLike: function(sh) {
-		sh.x = cc_util_MathUtil.random(this.imageW,Global.w - this.imageW);
-		sh.y = Global.h + this.yoffset;
-	}
-	,onAnimateHandler: function(sh) {
-		this.resetInstaLike(sh);
-		var Go = new cc_lets_Go(sh,cc_util_MathUtil.random(7,8));
-		Go._isFrom = false;
-		var _this = Go;
-		_this._delay = _this.getDuration(sh.i * this.timeDelayOffset + this.timeDelay);
-		var _this1 = _this;
-		var value = sh.x;
-		var objValue = 0;
-		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
-			objValue = Reflect.getProperty(_this1._target,"x");
-		}
-		var _range = { key : "x", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
-		_this1._props.set("x",_range);
-		if(_this1._isFrom) {
-			_this1.updateProperties(0);
-		}
-		var _this2 = _this1;
-		var value1 = -this.yoffset * 2;
-		var objValue1 = 0;
-		if(Object.prototype.hasOwnProperty.call(_this2._target,"y")) {
-			objValue1 = Reflect.getProperty(_this2._target,"y");
-		}
-		var _range1 = { key : "y", from : _this2._isFrom ? value1 : objValue1, to : !_this2._isFrom ? value1 : objValue1};
-		_this2._props.set("y",_range1);
-		if(_this2._isFrom) {
-			_this2.updateProperties(0);
-		}
-		var _this3 = _this2;
-		_this3._options.onAnimationStart = $bind(this,this.onAnimationStart);
-		_this3._options.onAnimationStartParams = [sh.i];
-		var _this4 = _this3;
-		_this4._easing = cc_lets_easing_Sine.get_easeOut();
-	}
-	,onAnimationStart: function(i) {
-		var _gthis = this;
-		this.isCounterVisible = true;
-		this._followerCount++;
-		if(this._followerCount == this.shapeArray.length - 1) {
-			haxe_Timer.delay(function() {
-				_gthis.isPayoffVisible = true;
-				_gthis.isCounterVisible = false;
-			},3000);
-		}
-	}
-	,drawShape: function() {
-		if(this.json == null) {
-			return;
-		}
-		this.ctx.clearRect(0,0,Global.w,Global.h);
-		cc_CanvasTools.backgroundObj(this.ctx,this._color1);
-		cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
-		var Text = new cc_draw_Text(this.ctx,"Current obsession is\nto have " + this.goalCount + " followers");
-		var _this = Text;
-		_this._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
-		var _this1 = _this;
-		_this1._textAlign = "center";
-		var _this2 = _this1;
-		_this2._textBaseline = "top";
-		var _this3 = _this2;
-		_this3.set__x(Global.w / 2);
-		_this3.set__y(100);
-		var _this4 = _this3;
-		_this4.set__size(100);
-		if(_this4.get__leading() == null) {
-			_this4.set__leading(100);
-		}
-		var _this5 = _this4;
-		var isLines = false;
-		_this5._ctx.save();
-		if(_this5._text.indexOf("\n") != -1) {
-			_this5._lineArray = _this5._text.split("\n");
-			isLines = true;
-		}
-		var previousColor = _this5._ctx.fillStyle;
-		if(_this5._color != null) {
-			cc_CanvasTools.fillColourRGB(_this5._ctx,_this5._color,_this5.get__alpha());
-		} else {
-			var _this6 = _this5._ctx;
-			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
-			var tmp = _this5.get__alpha();
-			cc_CanvasTools.fillColourRGB(_this6,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
-		}
-		var tmp1 = "" + _this5.get__size() + "px ";
-		_this5._ctx.font = tmp1 + _this5._font;
-		_this5._ctx.textAlign = _this5._textAlign;
-		_this5._ctx.textBaseline = _this5._textBaseline;
-		_this5._ctx.translate(_this5.get__x(),_this5.get__y());
-		_this5._ctx.rotate(cc_util_MathUtil.radians(_this5.get__rotate()));
-		if(!isLines) {
-			_this5._ctx.fillText(_this5._text,0,0);
-		} else {
-			var _g1 = 0;
-			var _g = _this5._lineArray.length;
-			while(_g1 < _g) {
-				var i = _g1++;
-				var line = _this5._lineArray[i];
-				_this5._ctx.fillText(line,0,i * _this5.get__leading());
-			}
-		}
-		_this5._ctx.restore();
-		_this5._ctx.fillStyle = previousColor;
-		var _g11 = 0;
-		var _g2 = this.shapeArray.length;
-		while(_g11 < _g2) {
-			var i1 = _g11++;
-			var sh = this.shapeArray[i1];
-			this.ctx.save();
-			sh.angle += sh.speed;
-			var xpos = sh.x + Math.cos(cc_util_MathUtil.radians(sh.angle)) * sh.radius;
-			var ypos = sh.y + Math.sin(cc_util_MathUtil.radians(sh.angle)) * sh.radius;
-			var r = this.imageW / 2;
-			cc_CanvasTools.fillColourRGB(this.ctx,this._color4);
-			var Text1 = new cc_draw_Text(this.ctx,StringTools.replace(sh.name,"&amp;","&"));
-			var _this7 = Text1;
-			_this7._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
-			var _this8 = _this7;
-			_this8._textAlign = "center";
-			var _this9 = _this8;
-			_this9._textBaseline = "top";
-			var _this10 = _this9;
-			var y = ypos + this.imageH + 10;
-			_this10.set__x(xpos + r);
-			_this10.set__y(y);
-			var _this11 = _this10;
-			_this11.set__size(20);
-			if(_this11.get__leading() == null) {
-				_this11.set__leading(20);
-			}
-			var _this12 = _this11;
-			var isLines1 = false;
-			_this12._ctx.save();
-			if(_this12._text.indexOf("\n") != -1) {
-				_this12._lineArray = _this12._text.split("\n");
-				isLines1 = true;
-			}
-			var previousColor1 = _this12._ctx.fillStyle;
-			if(_this12._color != null) {
-				cc_CanvasTools.fillColourRGB(_this12._ctx,_this12._color,_this12.get__alpha());
-			} else {
-				var _this13 = _this12._ctx;
-				var int1 = Std.parseInt(StringTools.replace(previousColor1,"#","0x"));
-				var tmp2 = _this12.get__alpha();
-				cc_CanvasTools.fillColourRGB(_this13,{ r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255},tmp2);
-			}
-			var tmp3 = "" + _this12.get__size() + "px ";
-			_this12._ctx.font = tmp3 + _this12._font;
-			_this12._ctx.textAlign = _this12._textAlign;
-			_this12._ctx.textBaseline = _this12._textBaseline;
-			_this12._ctx.translate(_this12.get__x(),_this12.get__y());
-			_this12._ctx.rotate(cc_util_MathUtil.radians(_this12.get__rotate()));
-			if(!isLines1) {
-				_this12._ctx.fillText(_this12._text,0,0);
-			} else {
-				var _g12 = 0;
-				var _g3 = _this12._lineArray.length;
-				while(_g12 < _g3) {
-					var i2 = _g12++;
-					var line1 = _this12._lineArray[i2];
-					_this12._ctx.fillText(line1,0,i2 * _this12.get__leading());
-				}
-			}
-			_this12._ctx.restore();
-			_this12._ctx.fillStyle = previousColor1;
-			cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.WHITE);
-			cc_CanvasTools.strokeColourRGB(this.ctx,this._color4);
-			cc_CanvasTools.circleFillStroke(this.ctx,xpos + r,ypos + r,r + 7);
-			cc_CanvasTools.circleStroke(this.ctx,xpos + r,ypos + r,r);
-			cc_CanvasTools.circle(this.ctx,xpos + r,ypos + r,r);
-			this.ctx.clip();
-			if(sh.img != null) {
-				this.ctx.drawImage(sh.img,xpos,ypos,this.imageW,this.imageH);
-			} else if(this.isDefaultLoaded) {
-				this.ctx.drawImage(this.defaultImage,xpos,ypos,this.imageW,this.imageH);
-			}
-			this.ctx.restore();
-		}
-		if(this._followerCount <= -1) {
-			return;
-		}
-		var Text2 = new cc_draw_Text(this.ctx,"Meet my followers:\n" + this.shapeArray[this._followerCount].name + "\n" + (this._followerCount + 1) + "/" + this.shapeArray.length);
-		var _this14 = Text2;
-		_this14._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
-		var _this15 = _this14;
-		_this15._color = this._color3;
-		_this15.set__alpha(cc_util_MathUtil.clamp(1,0,1));
-		var _this16 = _this15;
-		_this16._textAlign = "center";
-		var _this17 = _this16;
-		_this17._textBaseline = "top";
-		var _this18 = _this17;
-		_this18.set__x(this.get_w2());
-		_this18.set__y(400);
-		var _this19 = _this18;
-		if(this.isCounterVisible) {
-			_this19.set__alpha(cc_util_MathUtil.clamp(1,0,1));
-		} else {
-			_this19.set__alpha(cc_util_MathUtil.clamp(0,0,1));
-		}
-		var _this20 = _this19;
-		_this20.set__size(60);
-		if(_this20.get__leading() == null) {
-			_this20.set__leading(60);
-		}
-		var _this21 = _this20;
-		var isLines2 = false;
-		_this21._ctx.save();
-		if(_this21._text.indexOf("\n") != -1) {
-			_this21._lineArray = _this21._text.split("\n");
-			isLines2 = true;
-		}
-		var previousColor2 = _this21._ctx.fillStyle;
-		if(_this21._color != null) {
-			cc_CanvasTools.fillColourRGB(_this21._ctx,_this21._color,_this21.get__alpha());
-		} else {
-			var _this22 = _this21._ctx;
-			var int2 = Std.parseInt(StringTools.replace(previousColor2,"#","0x"));
-			var tmp4 = _this21.get__alpha();
-			cc_CanvasTools.fillColourRGB(_this22,{ r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255},tmp4);
-		}
-		var tmp5 = "" + _this21.get__size() + "px ";
-		_this21._ctx.font = tmp5 + _this21._font;
-		_this21._ctx.textAlign = _this21._textAlign;
-		_this21._ctx.textBaseline = _this21._textBaseline;
-		_this21._ctx.translate(_this21.get__x(),_this21.get__y());
-		_this21._ctx.rotate(cc_util_MathUtil.radians(_this21.get__rotate()));
-		if(!isLines2) {
-			_this21._ctx.fillText(_this21._text,0,0);
-		} else {
-			var _g13 = 0;
-			var _g4 = _this21._lineArray.length;
-			while(_g13 < _g4) {
-				var i3 = _g13++;
-				var line2 = _this21._lineArray[i3];
-				_this21._ctx.fillText(line2,0,i3 * _this21.get__leading());
-			}
-		}
-		_this21._ctx.restore();
-		_this21._ctx.fillStyle = previousColor2;
-		var Text3 = new cc_draw_Text(this.ctx,"Follow me and be in\nthe next animation!\nI only need " + (this.goalCount - this.shapeArray.length) + " more.");
-		var _this23 = Text3;
-		_this23._font = StringTools.replace(StringTools.replace("Abel",";",""),"+"," ");
-		var _this24 = _this23;
-		_this24._color = this._color3;
-		_this24.set__alpha(cc_util_MathUtil.clamp(1,0,1));
-		var _this25 = _this24;
-		_this25._textAlign = "center";
-		var _this26 = _this25;
-		_this26._textBaseline = "top";
-		var _this27 = _this26;
-		_this27.set__x(this.get_w2());
-		_this27.set__y(400);
-		var _this28 = _this27;
-		if(this.isPayoffVisible) {
-			_this28.set__alpha(cc_util_MathUtil.clamp(1,0,1));
-		} else {
-			_this28.set__alpha(cc_util_MathUtil.clamp(0,0,1));
-		}
-		var _this29 = _this28;
-		_this29.set__size(80);
-		if(_this29.get__leading() == null) {
-			_this29.set__leading(80);
-		}
-		var _this30 = _this29;
-		var isLines3 = false;
-		_this30._ctx.save();
-		if(_this30._text.indexOf("\n") != -1) {
-			_this30._lineArray = _this30._text.split("\n");
-			isLines3 = true;
-		}
-		var previousColor3 = _this30._ctx.fillStyle;
-		if(_this30._color != null) {
-			cc_CanvasTools.fillColourRGB(_this30._ctx,_this30._color,_this30.get__alpha());
-		} else {
-			var _this31 = _this30._ctx;
-			var int3 = Std.parseInt(StringTools.replace(previousColor3,"#","0x"));
-			var tmp6 = _this30.get__alpha();
-			cc_CanvasTools.fillColourRGB(_this31,{ r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255},tmp6);
-		}
-		var tmp7 = "" + _this30.get__size() + "px ";
-		_this30._ctx.font = tmp7 + _this30._font;
-		_this30._ctx.textAlign = _this30._textAlign;
-		_this30._ctx.textBaseline = _this30._textBaseline;
-		_this30._ctx.translate(_this30.get__x(),_this30.get__y());
-		_this30._ctx.rotate(cc_util_MathUtil.radians(_this30.get__rotate()));
-		if(!isLines3) {
-			_this30._ctx.fillText(_this30._text,0,0);
-		} else {
-			var _g14 = 0;
-			var _g5 = _this30._lineArray.length;
-			while(_g14 < _g5) {
-				var i4 = _g14++;
-				var line3 = _this30._lineArray[i4];
-				_this30._ctx.fillText(line3,0,i4 * _this30.get__leading());
-			}
-		}
-		_this30._ctx.restore();
-		_this30._ctx.fillStyle = previousColor3;
-	}
-	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC057.hx", lineNumber : 212, className : "art.CC057", methodName : "setup"});
-	}
-	,draw: function() {
-		this.drawShape();
-		this.zip.pulse();
-	}
-	,onJsonHandler: function() {
-		var _gthis = this;
-		var url = "assets/insta.json";
-		var req = new haxe_Http(url);
-		req.onData = function(data) {
-			try {
-				_gthis.json = JSON.parse(data);
-				_gthis.json.reverse();
-				_gthis.isJsonLoaded = true;
-				_gthis.createFollowerList();
-			} catch( e ) {
-				if (e instanceof js__$Boot_HaxeError) e = e.val;
-				haxe_Log.trace(e,{ fileName : "CC057.hx", lineNumber : 256, className : "art.CC057", methodName : "onJsonHandler"});
-			}
-		};
-		req.onError = function(error) {
-			haxe_Log.trace("error: " + error,{ fileName : "CC057.hx", lineNumber : 260, className : "art.CC057", methodName : "onJsonHandler"});
-		};
-		req.onStatus = function(status) {
-			haxe_Log.trace("status: " + status,{ fileName : "CC057.hx", lineNumber : 263, className : "art.CC057", methodName : "onJsonHandler"});
-		};
-		req.request(true);
-	}
-	,onFontHandler: function(e) {
-		haxe_Log.trace("onFontHandler: \"" + e + "\"",{ fileName : "CC057.hx", lineNumber : 269, className : "art.CC057", methodName : "onFontHandler"});
-		this.isFontLoaded = true;
-		this.drawShape();
-	}
-	,loadImage: function(i,obj) {
-		var _gthis = this;
-		var img = new Image();
-		img.crossOrigin = "anonymous";
-		img.onload = function() {
-			_gthis.shapeArray[i].img = img;
-		};
-		img.src = obj.src;
-	}
-	,loadDefaultImage: function() {
-		var _gthis = this;
-		var img = new Image();
-		img.crossOrigin = "anonymous";
-		img.onload = function() {
-			_gthis.defaultImage = img;
-			_gthis.isDefaultLoaded = true;
-		};
-		img.src = "assets/img/profile/noprofile_instagram.jpg";
-	}
-	,__class__: art_CC057
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -10765,7 +10025,7 @@ cc_tool_export_Zip.prototype = {
 			zip.file("_" + this._filename + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
 		}
 		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - this.startT) / 1000 + "sec",{ fileName : "Zip.hx", lineNumber : 241, className : "cc.tool.export.Zip", methodName : "stopExport"});
-		this.createProgressBar(10);
+		this.createProgressBar();
 		this.out("generate zip");
 		var updateCallback = function(metadata) {
 			window.console.log("progression: " + metadata.percent.toFixed(2) + " %");
@@ -11727,10 +10987,8 @@ cc_util_TextUtil.drawTextAlongArc = function(ctx,str,centerX,centerY,radius,angl
 	}
 	ctx.restore();
 };
-cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius,pAngle) {
-	if(pAngle == null) {
-		pAngle = 10;
-	}
+cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius) {
+	var monoW = ctx.measureText(" ").width;
 	var charArr = str.split("");
 	ctx.save();
 	var angle = 0.0;
@@ -11738,8 +10996,14 @@ cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius,pAn
 	var _g = charArr.length;
 	while(_g1 < _g) {
 		var i = _g1++;
+		radius -= 0.15;
+		var a = monoW;
+		var b = radius;
+		var c = radius;
+		var cosa = (Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2)) / (2 * b * c);
+		var pAngle = cc_util_MathUtil.degrees(Math.acos(cosa));
 		var _char = charArr[i];
-		angle = i * pAngle;
+		angle = -90 + i * pAngle;
 		var xpos = centerX + Math.cos(cc_util_MathUtil.radians(angle)) * radius;
 		var ypos = centerY + Math.sin(cc_util_MathUtil.radians(angle)) * radius;
 		ctx.save();
@@ -11762,7 +11026,7 @@ cc_util_TextUtil.drawTextAlongArc3 = function(ctx,str,centerX,centerY,radius) {
 		angle = i;
 		var xpos = centerX + Math.cos(cc_util_MathUtil.radians(angle)) * radius;
 		var ypos = centerY + Math.sin(cc_util_MathUtil.radians(angle)) * radius;
-		haxe_Log.trace(_char,{ fileName : "TextUtil.hx", lineNumber : 124, className : "cc.util.TextUtil", methodName : "drawTextAlongArc3", customParams : [i,xpos,ypos]});
+		haxe_Log.trace(_char,{ fileName : "TextUtil.hx", lineNumber : 133, className : "cc.util.TextUtil", methodName : "drawTextAlongArc3", customParams : [i,xpos,ypos]});
 		ctx.translate(xpos,ypos);
 		ctx.rotate(angle / charArr.length);
 		ctx.fillText(_char,0,0);
@@ -11783,7 +11047,7 @@ cc_util_TextUtil.drawTextAlongArc2 = function(ctx,str,centerX,centerY,radius) {
 		var _char = charArr[i];
 		var _rotation = cc_util_MathUtil.radians(_angle);
 		ctx.rotate(_angle * Math.PI / 360);
-		haxe_Log.trace("" + i + " // _char = " + _char + " : _angle: " + _angle + " - _rotation: " + _rotation,{ fileName : "TextUtil.hx", lineNumber : 164, className : "cc.util.TextUtil", methodName : "drawTextAlongArc2"});
+		haxe_Log.trace("" + i + " // _char = " + _char + " : _angle: " + _angle + " - _rotation: " + _rotation,{ fileName : "TextUtil.hx", lineNumber : 173, className : "cc.util.TextUtil", methodName : "drawTextAlongArc2"});
 		ctx.save();
 		ctx.translate(0,-1 * radius);
 		ctx.fillText(_char,0,0);
@@ -16053,7 +15317,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-24 10:44:58";
+lib_model_constants_App.BUILD = "2019-03-25 20:30:32";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
