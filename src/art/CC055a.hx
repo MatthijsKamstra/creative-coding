@@ -23,7 +23,7 @@ class CC055a extends CCBase implements ICCBase {
 	var isSpritesheet:Bool = false;
 	var isFirstRun:Bool = false;
 	var spritesheet:Spritesheet; // hmm doesn't work like expected
-	var src = '/assets/img/spritesheet/web_heart_animation_edge.png';
+	var src = 'assets/img/spritesheet/web_heart_animation_edge.png';
 	var zip:Zip;
 	var _img:Image;
 
@@ -104,7 +104,7 @@ class CC055a extends CCBase implements ICCBase {
 			}
 		}
 		if (isSpritesheet && isFont && isZip && !isFirstRun) {
-			zip.start();
+			// zip.start();
 			isFirstRun = true;
 		}
 
