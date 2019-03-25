@@ -31,6 +31,15 @@ class CC050 extends CCBase implements ICCBase {
 
 		createQuickSettings();
 
+		// setup Sketch
+		var option = new Sketch.SketchOption();
+		option.width = 1080; // 1080
+		// option.height = 1000;
+		option.autostart = true;
+		option.padding = 10;
+		option.scale = true;
+		ctx = Sketch.create("creative_code_mck", option);
+
 		super(ctx);
 	}
 
