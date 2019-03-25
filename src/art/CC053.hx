@@ -21,7 +21,7 @@ class CC053 extends CCBase implements ICCBase {
 		option.scale = true;
 		ctx = Sketch.create("creative_code_mck", option);
 
-		description = '';
+		description = 'Show a large text in a spiral';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		_text = defaultText;
@@ -29,6 +29,19 @@ class CC053 extends CCBase implements ICCBase {
 		Text.embedGoogleFont('PT+Mono', onEmbedHandler);
 		createQuickSettings();
 		super(ctx);
+
+		// https://www.mathsisfun.com/algebra/trig-solving-sss-triangles.html
+		var a = 8;
+		var b = 6;
+		var c = 7;
+		var cosa = (Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(a, 2)) / (2 * b * c);
+		trace(cosa);
+		trace((Math.acos(cosa)));
+		trace(degrees(Math.acos(cosa)));
+		// trace((Math.cos(degrees(cosa))));
+		// trace((Math.cos(radians(cosa))));
+		// trace(radians(Math.cos(cosa)));
+		// trace(degrees(Math.cos(cosa)));
 	}
 
 	function createQuickSettings() {
@@ -37,12 +50,15 @@ class CC053 extends CCBase implements ICCBase {
 			.setGlobalChangeHandler(untyped drawShape)
 			.addTextArea('Reason', 'Test this text in circle thing', null)
 			.addTextArea('Quote', defaultText, function(value) setText(value))
-			.addRange('angle', 0.0, 10.0, 5.5, .05, function(value) setAngle(value))
 			.addRange('radius', 200, 400, 180, 1, function(value) setRadius(value))
-			.addNumber('angle2', 0.0, 10.0, 5.5, .05, function(value) setAngle(value))
+			.addDropDown('text', ['one', 'two'], function(value) dropdown("DropDown", value))
 			.addButton('default', function(e) setText(defaultText))
 			.saveInLocalStorage('store-data-${toString()}');
-		// .addBoolean('All Caps', false, function(value) trace(value))
+	}
+
+	function dropdown(value:String, index:Dynamic) {
+		var sub = lyrics.split('').length;
+		this._text = lyrics.substring(0, Math.round(sub / 4));
 	}
 
 	function setText(str:String):Void {
@@ -70,6 +86,22 @@ class CC053 extends CCBase implements ICCBase {
 		if (!_isEmbedded)
 			return;
 
+		var xoffset = 7;
+		Text.create(ctx, preformer)
+			.color(PINK)
+			.font("PT Mono")
+			.size(30)
+			.leftAlign()
+			.pos(w2 - xoffset, h2 - _radius - 60)
+			.draw();
+		Text.create(ctx, song)
+			.font("PT Mono")
+			.color(PINK)
+			.leftAlign()
+			.size(25)
+			.pos(w2 - xoffset, h2 - _radius - 30)
+			.draw();
+
 		var centerX = w2;
 		var centerY = h2;
 		// var angle = Math.PI * 0.8; // radians
@@ -78,18 +110,18 @@ class CC053 extends CCBase implements ICCBase {
 
 		// important to have a example text in the canvas, otherwise the measurement don't work
 		// important to have the font loaded
-		ctx.fillStyle = getColourObj(PINK);
-		Text.fillText(ctx, _text, w2, h2, "PT Mono", 20);
+		// ctx.fillStyle = getColourObj(PINK);
+		// Text.fillText(ctx, _text, w2, h2, "PT Mono", 20);
 
 		// use and create with the correct fonr
 		ctx.fillColourRGB(BLACK);
 		ctx.textAlign = "center";
 		ctx.textBaseline = "bottom";
 		ctx.font = '20px PT Mono';
-		TextUtil.drawTextAlongArc4(ctx, _text, centerX, centerY, this._radius, this._angle);
+		TextUtil.drawTextAlongArc4(ctx, _text, centerX, centerY, this._radius);
 
-		ctx.strokeColourRGB(GRAY);
-		ctx.circleStroke(centerX, centerY, this._radius);
+		// ctx.strokeColourRGB(GRAY);
+		// ctx.circleStroke(centerX, centerY, this._radius);
 	}
 
 	override function setup() {
