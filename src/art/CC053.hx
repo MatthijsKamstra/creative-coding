@@ -10,6 +10,7 @@ class CC053 extends CCBase implements ICCBase {
 	var _text:String;
 	var _radius:Int = 180;
 	var _angle:Float = 10;
+	var _startAngle:Int = -90;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		// setup Sketch
@@ -50,7 +51,8 @@ class CC053 extends CCBase implements ICCBase {
 			.setGlobalChangeHandler(untyped drawShape)
 			.addTextArea('Reason', 'Test this text in circle thing', null)
 			.addTextArea('Quote', defaultText, function(value) setText(value))
-			.addRange('radius', 200, 400, 180, 1, function(value) setRadius(value))
+			.addRange('radius', 200, 500, 180, 1, function(value) setRadius(value))
+			.addRange('start angle', 0, 360, 180, 1, function(value) setStartAngle(value))
 			.addDropDown('text', ['one', 'two'], function(value) dropdown("DropDown", value))
 			.addButton('default', function(e) setText(defaultText))
 			.saveInLocalStorage('store-data-${toString()}');
@@ -58,7 +60,7 @@ class CC053 extends CCBase implements ICCBase {
 
 	function dropdown(value:String, index:Dynamic) {
 		var sub = lyrics.split('').length;
-		this._text = lyrics.substring(0, Math.round(sub / 4));
+		this._text = lyrics.substring(0, Math.round(sub / 6));
 	}
 
 	function setText(str:String):Void {
@@ -67,6 +69,10 @@ class CC053 extends CCBase implements ICCBase {
 
 	function setRadius(px:Int):Void {
 		this._radius = px;
+	}
+
+	function setStartAngle(degree:Int):Void {
+		this._startAngle = degree;
 	}
 
 	function setAngle(angle:Float):Void {
@@ -118,7 +124,7 @@ class CC053 extends CCBase implements ICCBase {
 		ctx.textAlign = "center";
 		ctx.textBaseline = "bottom";
 		ctx.font = '20px PT Mono';
-		TextUtil.drawTextAlongArc4(ctx, _text, centerX, centerY, this._radius);
+		TextUtil.drawTextAlongArc4(ctx, _text, centerX, centerY, this._radius, this._startAngle);
 
 		// ctx.strokeColourRGB(GRAY);
 		// ctx.circleStroke(centerX, centerY, this._radius);
