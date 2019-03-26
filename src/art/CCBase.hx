@@ -6,26 +6,30 @@ import js.Browser.document;
 import Sketch.Global.*;
 
 class CCBase extends Sketch.SketchBase implements ICCBase {
+	// var zip:Dynamic; // hack my own system?
 
 	/**
 	 * set types for sketch
 	 */
-	public var type ( get_type , set_type ) : Array<CCType>;
-	private var _type : Array<CCType> = [BASE];
+	public var type(get_type, set_type):Array<CCType>;
+
+	private var _type:Array<CCType> = [BASE];
 
 	/**
 	 * title of sketch (default: package.className)
 	 * @example:
 	 * 		trace(title); // "art.CCBase"
 	 */
-	public var title ( get_title , set_title ) : String;
-	private var _title : String = '';
+	public var title(get_title, set_title):String;
+
+	private var _title:String = '';
 
 	/**
 	 * description of sketch (default: '')
 	 */
-	public var description ( get_description , set_description ) : String;
-	private var _description : String = '';
+	public var description(get_description, set_description):String;
+
+	private var _description:String = '';
 
 	/**
 	 * constructor
@@ -35,31 +39,33 @@ class CCBase extends Sketch.SketchBase implements ICCBase {
 		super(ctx);
 	}
 
-
 	// ____________________________________ getter/setter ____________________________________
 
-	function get_description () : String {
+	function get_description():String {
 		return _description;
 	}
-	function set_description(value : String) : String {
+
+	function set_description(value:String):String {
 		return _description = value;
 	}
 
-	function get_title () : String {
-		if (_title == '') _title = toString();
+	function get_title():String {
+		if (_title == '')
+			_title = toString();
 		return _title;
 	}
-	function set_title(value : String) : String {
+
+	function set_title(value:String):String {
 		return _title = value;
 	}
 
-	function get_type () : Array<CCType> {
+	function get_type():Array<CCType> {
 		return _type;
 	}
-	function set_type(value : Array<CCType>) : Array<CCType> {
+
+	function set_type(value:Array<CCType>):Array<CCType> {
 		return _type = value;
 	}
-
 }
 
 @:enum abstract CCType(String) {
