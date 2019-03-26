@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -7522,6 +7522,282 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC055a
 });
+var art_CC056 = function(ctx) {
+	this.isFontLoaded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	cc_draw_Text.embedGoogleFont("Oswald:200,300,400,500,600,700",$bind(this,this.onEmbedHandler));
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC056"] = art_CC056;
+art_CC056.__name__ = ["art","CC056"];
+art_CC056.__interfaces__ = [art_ICCBase];
+art_CC056.__super__ = art_CCBase;
+art_CC056.prototype = $extend(art_CCBase.prototype,{
+	onEmbedHandler: function(e) {
+		haxe_Log.trace("onEmbedHandler: \"" + e + "\"",{ fileName : "CC056.hx", lineNumber : 41, className : "art.CC056", methodName : "onEmbedHandler"});
+		this.isFontLoaded = true;
+		this.drawShape();
+	}
+	,createQuickSettings: function() {
+		this.panel1 = QuickSettings.create(10,10,"Quote generator").setGlobalChangeHandler($bind(this,this.drawShape)).addHTML("Reason","Sometimes I need a quick quote, to post on Instagram").addTextArea("Quote","text",function(value) {
+			haxe_Log.trace(value,{ fileName : "CC056.hx", lineNumber : 51, className : "art.CC056", methodName : "createQuickSettings"});
+		}).addBoolean("All Caps",false,function(value1) {
+			haxe_Log.trace(value1,{ fileName : "CC056.hx", lineNumber : 52, className : "art.CC056", methodName : "createQuickSettings"});
+		}).saveInLocalStorage("store-data-" + this.toString());
+	}
+	,createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "poly", x : point.x, y : point.y, radius : this._radius};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var tmp = this.isDebug;
+		cc_CanvasTools.strokeWeight(this.ctx,1);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.ctx.save();
+			var sh = this.shapeArray[i];
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(30.));
+			cc_CanvasTools.outlinedPolygon(this.ctx,0,0,6,this._cellsize / 2,cc_util_ColorUtil.getColourObj(cc_util_ColorUtil.WHITE),cc_util_ColorUtil.getColourObj(cc_util_ColorUtil.BLACK));
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC056.hx", lineNumber : 92, className : "art.CC056", methodName : "setup"});
+		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
+		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
+		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+		var int1 = Std.parseInt(StringTools.replace(colorArray[1],"#","0x"));
+		this._color1 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+		var int2 = Std.parseInt(StringTools.replace(colorArray[2],"#","0x"));
+		this._color2 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+		var int3 = Std.parseInt(StringTools.replace(colorArray[3],"#","0x"));
+		this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+		var int4 = Std.parseInt(StringTools.replace(colorArray[4],"#","0x"));
+		this._color4 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+		this.isDebug = true;
+		this.grid.setCellSize(this._cellsize);
+		this.grid.setIsCenterPoint(true);
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
+		}
+	}
+	,draw: function() {
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC056.hx", lineNumber : 115, className : "art.CC056", methodName : "draw"});
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC056
+});
+var art_CC057 = function(ctx) {
+	this.isFontLoaded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC057"] = art_CC057;
+art_CC057.__name__ = ["art","CC057"];
+art_CC057.__interfaces__ = [art_ICCBase];
+art_CC057.__super__ = art_CCBase;
+art_CC057.prototype = $extend(art_CCBase.prototype,{
+	drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		cc_CanvasTools.fillPolygon(this.ctx,this.get_w2(),this.get_h2(),6,this.get_w3());
+		this.ctx.clip();
+		var max = 50;
+		var _g1 = 0;
+		var _g = max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var offset = 10;
+			this.ctx.save();
+			this.ctx.translate(this.get_w2(),this.get_h2());
+			this.ctx.rotate(cc_util_MathUtil.radians(30.));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,6,offset * i);
+			this.ctx.restore();
+		}
+	}
+	,draw: function() {
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC057.hx", lineNumber : 56, className : "art.CC057", methodName : "draw"});
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC057
+});
+var art_CC058 = function(ctx) {
+	this.isFontLoaded = false;
+	this._color4 = null;
+	this._color3 = null;
+	this._color2 = null;
+	this._color1 = null;
+	this._color0 = null;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC058"] = art_CC058;
+art_CC058.__name__ = ["art","CC058"];
+art_CC058.__interfaces__ = [art_ICCBase];
+art_CC058.__super__ = art_CCBase;
+art_CC058.prototype = $extend(art_CCBase.prototype,{
+	drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		cc_CanvasTools.fillPolygon(this.ctx,this.get_w2(),this.get_h2(),6,this.get_w3());
+		this.ctx.clip();
+		var max = 50;
+		var _g1 = 0;
+		var _g = max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var offset = 10;
+			var startDegree = 30.;
+			this.ctx.save();
+			this.ctx.translate(this.get_w2(),this.get_h2());
+			this.ctx.rotate(cc_util_MathUtil.radians(startDegree + i));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,6,offset * i);
+			this.ctx.restore();
+		}
+	}
+	,draw: function() {
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC058.hx", lineNumber : 57, className : "art.CC058", methodName : "draw"});
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC058
+});
+var art_CC059 = function(ctx) {
+	this.max = 50;
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC059"] = art_CC059;
+art_CC059.__name__ = ["art","CC059"];
+art_CC059.__interfaces__ = [art_ICCBase];
+art_CC059.__super__ = art_CCBase;
+art_CC059.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var offset = 10;
+		var shape = { _id : "" + i, _type : "poly", x : this.get_w2(), y : this.get_h2(), size : i * offset, degree : 30.};
+		this.onAnimateHandler(shape,i,3);
+		return shape;
+	}
+	,onAnimateHandler: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,1);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(id * 0.1);
+		var _this1 = _this;
+		var value = 30. * count;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"degree")) {
+			objValue = Reflect.getProperty(_this1._target,"degree");
+		}
+		var _range = { key : "degree", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("degree",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this3._options.onCompleteParams = [sh,id,count];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.degree));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,6,sh.size);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059.hx", lineNumber : 69, className : "art.CC059", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC059
+});
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
 cc_AST.__name__ = ["cc","AST"];
@@ -7653,7 +7929,7 @@ cc_CanvasTools.eellipse = function(ctx,x,y,width,height) {
 	var i = 0;
 	var counter = 0;
 	while(i < Math.PI * 2) {
-		haxe_Log.trace("" + counter + ". - " + i + " < " + Math.PI * 2,{ fileName : "CanvasTools.hx", lineNumber : 166, className : "cc.CanvasTools", methodName : "eellipse"});
+		haxe_Log.trace("" + counter + ". - " + i + " < " + Math.PI * 2,{ fileName : "CanvasTools.hx", lineNumber : 174, className : "cc.CanvasTools", methodName : "eellipse"});
 		ctx.lineTo(x + Math.cos(i) * width / 2,y + Math.sin(i) * height / 2);
 		i += Math.PI / 16;
 		++counter;
@@ -11011,7 +11287,7 @@ cc_util_TextUtil.drawTextAlongArc4 = function(ctx,str,centerX,centerY,radius,sta
 	var _g = charArr.length;
 	while(_g1 < _g) {
 		var i = _g1++;
-		radius -= 0.15 + i * 0.005;
+		radius -= 0.15 + i * 0.0005;
 		var a = monoW;
 		var b = radius;
 		var c = radius;
@@ -15332,7 +15608,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-25 20:57:33";
+lib_model_constants_App.BUILD = "2019-03-26 12:49:47";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
