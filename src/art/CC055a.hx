@@ -28,7 +28,7 @@ class CC055a extends CCBase implements ICCBase {
 	var _img:Image;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = '';
+		description = 'Loading spritesheet, animation spritesheet';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// setup Sketch
