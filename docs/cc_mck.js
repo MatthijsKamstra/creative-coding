@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC060];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -5739,14 +5739,14 @@ var art_CC051 = function(ctx) {
 	this._color1 = null;
 	this._color0 = null;
 	var _gthis = this;
-	this.set_description("");
+	this.set_description("Font embedding: Gunplay (not Google font)");
 	this.set_type(["Tool","Image"]);
 	art_CCBase.call(this,ctx);
 	var font = new FontFace("Gunplay","url(assets/font/gunplay/Gunplay-Regular.woff2)",{ style : "normal", weight : "400"});
 	window.document.fonts.add(font);
 	font.load();
 	font.loaded.then(function(fontface) {
-		haxe_Log.trace(fontface.family,{ fileName : "CC051.hx", lineNumber : 42, className : "art.CC051", methodName : "new"});
+		haxe_Log.trace(fontface.family,{ fileName : "CC051.hx", lineNumber : 41, className : "art.CC051", methodName : "new"});
 		_gthis.isFondEmbedded = true;
 		_gthis.drawShape();
 	});
@@ -5770,7 +5770,7 @@ art_CC051.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC051.hx", lineNumber : 66, className : "art.CC051", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC051.hx", lineNumber : 65, className : "art.CC051", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -5785,7 +5785,7 @@ art_CC051.prototype = $extend(art_CCBase.prototype,{
 		this.isDebug = true;
 	}
 	,draw: function() {
-		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC051.hx", lineNumber : 79, className : "art.CC051", methodName : "draw"});
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC051.hx", lineNumber : 78, className : "art.CC051", methodName : "draw"});
 		this.drawShape();
 		this.stop();
 	}
@@ -7382,7 +7382,7 @@ var art_CC055a = function(ctx) {
 	this._cellsize = 100;
 	this.grid = new cc_util_GridUtil();
 	this.shapeArray = [];
-	this.set_description("");
+	this.set_description("Loading spritesheet, animation spritesheet");
 	this.set_type(["Animation","Image"]);
 	var option = new SketchOption();
 	option.set_width(1080);
@@ -7797,6 +7797,331 @@ art_CC059.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC059
+});
+var art_CC060 = function(ctx) {
+	this.imgSize = 100;
+	this.src = "assets/img/cursor/hand_fill.png";
+	this.animationInSeconds = 1.5;
+	this.patternCounter = 0;
+	this.isImageLoaded = false;
+	this.isFontLoaded = false;
+	this.isSvgLoaded = false;
+	this.svgSize = 600;
+	this.svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\"><path fill=\"red\" stroke=\"black\" stroke-width=\"2\" d=\"M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5z\"/></svg>";
+	var $int = Std.parseInt(StringTools.replace("#2D8E03","#","0x"));
+	this._color6 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
+	var int1 = Std.parseInt(StringTools.replace("#8EC52D","#","0x"));
+	this._color5 = { r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255};
+	var int2 = Std.parseInt(StringTools.replace("#FFC506","#","0x"));
+	this._color4 = { r : int2 >> 16 & 255, g : int2 >> 8 & 255, b : int2 & 255};
+	var int3 = Std.parseInt(StringTools.replace("#FF8E5B","#","0x"));
+	this._color3 = { r : int3 >> 16 & 255, g : int3 >> 8 & 255, b : int3 & 255};
+	var int4 = Std.parseInt(StringTools.replace("#C52C03","#","0x"));
+	this._color2 = { r : int4 >> 16 & 255, g : int4 >> 8 & 255, b : int4 & 255};
+	var int5 = Std.parseInt(StringTools.replace("#FEF006","#","0x"));
+	this._color1 = { r : int5 >> 16 & 255, g : int5 >> 8 & 255, b : int5 & 255};
+	var int6 = Std.parseInt(StringTools.replace("#000000","#","0x"));
+	this._color0 = { r : int6 >> 16 & 255, g : int6 >> 8 & 255, b : int6 & 255};
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC060"] = art_CC060;
+art_CC060.__name__ = ["art","CC060"];
+art_CC060.__interfaces__ = [art_ICCBase];
+art_CC060.__super__ = art_CCBase;
+art_CC060.prototype = $extend(art_CCBase.prototype,{
+	onSvgHandler: function(image) {
+		this.svgImage = image;
+		this.isSvgLoaded = true;
+		this.drawShape();
+	}
+	,onImageHandler: function(arr) {
+		haxe_Log.trace(arr.length,{ fileName : "CC060.hx", lineNumber : 66, className : "art.CC060", methodName : "onImageHandler"});
+		haxe_Log.trace(arr[0],{ fileName : "CC060.hx", lineNumber : 67, className : "art.CC060", methodName : "onImageHandler"});
+		this._img = arr[0];
+		this.isImageLoaded = true;
+		this.drawShape();
+	}
+	,onAnimateHandler: function(sh) {
+		var Go = new cc_lets_Go(sh,this.animationInSeconds);
+		Go._isFrom = false;
+		var _this = Go;
+		var value = this.svgSize * .7;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"size")) {
+			objValue = Reflect.getProperty(_this._target,"size");
+		}
+		var _range = { key : "size", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("size",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
+		var _this1 = _this;
+		_this1._isYoyo = true;
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Quart.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this3._options.onCompleteParams = [sh];
+	}
+	,onAnimate2Handler: function(sh) {
+		var Go = new cc_lets_Go(sh,this.animationInSeconds);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(3);
+		var _this1 = _this;
+		var value = this.get_w2();
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range = { key : "x", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("x",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		var value1 = this.get_h2();
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this2._target,"y")) {
+			objValue1 = Reflect.getProperty(_this2._target,"y");
+		}
+		var _range1 = { key : "y", from : _this2._isFrom ? value1 : objValue1, to : !_this2._isFrom ? value1 : objValue1};
+		_this2._props.set("y",_range1);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
+		var _this3 = _this2;
+		_this3._easing = cc_lets_easing_Quart.get_easeInOut();
+		var _this4 = _this3;
+		_this4._options.onComplete = $bind(this,this.onAnimate3Handler);
+		_this4._options.onCompleteParams = [this.cursorObj];
+	}
+	,onAnimate3Handler: function(sh) {
+		var Go = new cc_lets_Go(sh,this.animationInSeconds);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(1);
+		var _this1 = _this;
+		var value = Global.w + this.imgSize;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range = { key : "x", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("x",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		var value1 = Global.h + this.imgSize;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this2._target,"y")) {
+			objValue1 = Reflect.getProperty(_this2._target,"y");
+		}
+		var _range1 = { key : "y", from : _this2._isFrom ? value1 : objValue1, to : !_this2._isFrom ? value1 : objValue1};
+		_this2._props.set("y",_range1);
+		if(_this2._isFrom) {
+			_this2.updateProperties(0);
+		}
+		var _this3 = _this2;
+		_this3._easing = cc_lets_easing_Quart.get_easeInOut();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.BLACK);
+		if(!this.isFontLoaded && !this.isSvgLoaded) {
+			return;
+		}
+		var size = 1080;
+		var strokeW = 50;
+		var _g1 = 0;
+		var _g = size;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.ctx.save();
+			this.ctx.translate(strokeW * i - size + this.patternCounter,0);
+			cc_CanvasTools.strokeWeight(this.ctx,strokeW);
+			if(i % 2 == 0) {
+				cc_CanvasTools.lineColourRGB(this.ctx,this._color1);
+			} else {
+				cc_CanvasTools.lineColourRGB(this.ctx,this._color0);
+			}
+			this.ctx.lineCap = "square";
+			cc_CanvasTools.line(this.ctx,size,size,0,0);
+			this.ctx.restore();
+		}
+		var xpos = this.get_w2();
+		var ypos = this.get_h4() - 70;
+		var padding = 50;
+		cc_CanvasTools.fillColourRGB(this.ctx,this._color0);
+		this.ctx.fillRect(padding,padding,Global.w - 2 * padding,250);
+		var Text = new cc_draw_Text(this.ctx,"warning".toUpperCase());
+		var _this = Text;
+		_this.set__x(xpos);
+		_this.set__y(ypos);
+		var _this1 = _this;
+		_this1._color = this._color1;
+		_this1.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		var _this2 = _this1;
+		_this2._textAlign = "center";
+		var _this3 = _this2;
+		_this3._textBaseline = "middle";
+		var _this4 = _this3;
+		_this4._font = StringTools.replace(StringTools.replace("Gunplay",";",""),"+"," ");
+		var _this5 = _this4;
+		_this5.set__size(200);
+		if(_this5.get__leading() == null) {
+			_this5.set__leading(200);
+		}
+		var _this6 = _this5;
+		var isLines = false;
+		_this6._ctx.save();
+		if(_this6._text.indexOf("\n") != -1) {
+			_this6._lineArray = _this6._text.split("\n");
+			isLines = true;
+		}
+		var previousColor = _this6._ctx.fillStyle;
+		if(_this6._color != null) {
+			cc_CanvasTools.fillColourRGB(_this6._ctx,_this6._color,_this6.get__alpha());
+		} else {
+			var _this7 = _this6._ctx;
+			var $int = Std.parseInt(StringTools.replace(previousColor,"#","0x"));
+			var tmp = _this6.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this7,{ r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255},tmp);
+		}
+		var tmp1 = "" + _this6.get__size() + "px ";
+		_this6._ctx.font = tmp1 + _this6._font;
+		_this6._ctx.textAlign = _this6._textAlign;
+		_this6._ctx.textBaseline = _this6._textBaseline;
+		_this6._ctx.translate(_this6.get__x(),_this6.get__y());
+		_this6._ctx.rotate(cc_util_MathUtil.radians(_this6.get__rotate()));
+		if(!isLines) {
+			_this6._ctx.fillText(_this6._text,0,0);
+		} else {
+			var _g11 = 0;
+			var _g2 = _this6._lineArray.length;
+			while(_g11 < _g2) {
+				var i1 = _g11++;
+				var line = _this6._lineArray[i1];
+				_this6._ctx.fillText(line,0,i1 * _this6.get__leading());
+			}
+		}
+		_this6._ctx.restore();
+		_this6._ctx.fillStyle = previousColor;
+		var text = _this6;
+		var xpos1 = this.get_w2();
+		var ypos1 = this.get_h4() * 3 - 10;
+		var bHeight = 300;
+		cc_CanvasTools.fillColourRGB(this.ctx,this._color0);
+		this.ctx.fillRect(padding,Global.h - padding - bHeight,Global.w - 2 * padding,bHeight);
+		var Text1 = new cc_draw_Text(this.ctx,"this post and you\nwill be featured in\nthe next animation!".toUpperCase());
+		var _this8 = Text1;
+		_this8.set__x(xpos1);
+		_this8.set__y(ypos1);
+		var _this9 = _this8;
+		_this9._color = this._color1;
+		_this9.set__alpha(cc_util_MathUtil.clamp(1,0,1));
+		var _this10 = _this9;
+		_this10._textAlign = "center";
+		var _this11 = _this10;
+		_this11._textBaseline = "middle";
+		var _this12 = _this11;
+		_this12._font = StringTools.replace(StringTools.replace("Gunplay",";",""),"+"," ");
+		var _this13 = _this12;
+		_this13.set__size(90);
+		if(_this13.get__leading() == null) {
+			_this13.set__leading(90);
+		}
+		var _this14 = _this13;
+		var isLines1 = false;
+		_this14._ctx.save();
+		if(_this14._text.indexOf("\n") != -1) {
+			_this14._lineArray = _this14._text.split("\n");
+			isLines1 = true;
+		}
+		var previousColor1 = _this14._ctx.fillStyle;
+		if(_this14._color != null) {
+			cc_CanvasTools.fillColourRGB(_this14._ctx,_this14._color,_this14.get__alpha());
+		} else {
+			var _this15 = _this14._ctx;
+			var int1 = Std.parseInt(StringTools.replace(previousColor1,"#","0x"));
+			var tmp2 = _this14.get__alpha();
+			cc_CanvasTools.fillColourRGB(_this15,{ r : int1 >> 16 & 255, g : int1 >> 8 & 255, b : int1 & 255},tmp2);
+		}
+		var tmp3 = "" + _this14.get__size() + "px ";
+		_this14._ctx.font = tmp3 + _this14._font;
+		_this14._ctx.textAlign = _this14._textAlign;
+		_this14._ctx.textBaseline = _this14._textBaseline;
+		_this14._ctx.translate(_this14.get__x(),_this14.get__y());
+		_this14._ctx.rotate(cc_util_MathUtil.radians(_this14.get__rotate()));
+		if(!isLines1) {
+			_this14._ctx.fillText(_this14._text,0,0);
+		} else {
+			var _g12 = 0;
+			var _g3 = _this14._lineArray.length;
+			while(_g12 < _g3) {
+				var i2 = _g12++;
+				var line1 = _this14._lineArray[i2];
+				_this14._ctx.fillText(line1,0,i2 * _this14.get__leading());
+			}
+		}
+		_this14._ctx.restore();
+		_this14._ctx.fillStyle = previousColor1;
+		var text1 = _this14;
+		this.ctx.drawImage(this.svgImage,this.heartObj.x + (this.svgSize - this.heartObj.size) / 2,this.heartObj.y + (this.svgSize - this.heartObj.size) / 2,this.heartObj.size,this.heartObj.size);
+		if(this.isImageLoaded) {
+			this.ctx.drawImage(this._img,this.cursorObj.x,this.cursorObj.y,this.imgSize,this.imgSize);
+		}
+		this.patternCounter++;
+		if(this.patternCounter >= strokeW * 2) {
+			this.patternCounter = 0;
+		}
+	}
+	,setup: function() {
+		var _gthis = this;
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC060.hx", lineNumber : 165, className : "art.CC060", methodName : "setup"});
+		var font = new FontFace("Gunplay","url(assets/font/gunplay/Gunplay-Regular.woff2)",{ style : "normal", weight : "400"});
+		window.document.fonts.add(font);
+		font.load();
+		font.loaded.then(function(fontface) {
+			haxe_Log.trace(fontface.family,{ fileName : "CC060.hx", lineNumber : 173, className : "art.CC060", methodName : "setup"});
+			_gthis.isFontLoaded = true;
+			_gthis.drawShape();
+		});
+		this.heartObj = { x : this.get_w2() - this.svgSize / 2, y : this.get_h2() - this.svgSize / 2, size : this.svgSize};
+		var _svg = StringTools.replace(this.svg,"fill=\"red\"","fill=\"" + cc_util_ColorUtil.getColourObj(this._color2) + "\"");
+		cc_tool_convert_SvgToImage.convert(_svg,$bind(this,this.onSvgHandler));
+		this.onAnimateHandler(this.heartObj);
+		this.cursorObj = { x : Global.w + this.imgSize, y : Global.h + this.imgSize, size : this.imgSize};
+		var loader = new cc_tool_Loader(null);
+		var _this = loader;
+		var path = this.src;
+		_this.get__loadingArray().push(path);
+		var _this1 = _this;
+		_this1._onComplete = $bind(this,this.onImageHandler);
+		_this1._onCompleteParams = null;
+		var _this2 = _this1;
+		_this2.set__isDebug(this.isDebug);
+		var _this3 = _this2;
+		if(_this3.get__isDebug()) {
+			haxe_Log.trace("start loading",{ fileName : "Loader.hx", lineNumber : 79, className : "cc.tool.Loader", methodName : "load"});
+		}
+		_this3.loadingHandler();
+		var load = _this3;
+		this.onAnimate2Handler(this.cursorObj);
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC060
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -10206,6 +10531,163 @@ cc_tool_Export.prototype = {
 	}
 	,__class__: cc_tool_Export
 	,__properties__: {get_duration:"get_duration",get_frames:"get_frames",get_delay:"get_delay",get_count:"get_count"}
+};
+var cc_tool_Loader = function(id) {
+	this._loadCounter = 0;
+	this._isDebug = false;
+	this.completeArray = [];
+	this._loadingArray = [];
+	if(id == null) {
+		this.set__id("" + this.toString() + "_" + new Date().getTime());
+	} else {
+		this.set__id(id);
+	}
+};
+$hxClasses["cc.tool.Loader"] = cc_tool_Loader;
+cc_tool_Loader.__name__ = ["cc","tool","Loader"];
+cc_tool_Loader.create = function(id) {
+	var loader = new cc_tool_Loader(id);
+	return loader;
+};
+cc_tool_Loader.prototype = {
+	isDebug: function(isDebug) {
+		if(isDebug == null) {
+			isDebug = true;
+		}
+		this.set__isDebug(isDebug);
+		return this;
+	}
+	,add: function(path) {
+		this.get__loadingArray().push(path);
+		return this;
+	}
+	,onComplete: function(func,arr) {
+		this._onComplete = func;
+		this._onCompleteParams = arr;
+		return this;
+	}
+	,onUpdate: function(func,arr) {
+		this._onUpdate = func;
+		this._onUpdateParams = arr;
+		return this;
+	}
+	,onProgress: function(func,arr) {
+		this._onProgress = func;
+		this._onProgressParams = arr;
+		return this;
+	}
+	,onError: function(func,arr) {
+		this._onError = func;
+		this._onErrorParams = arr;
+		return this;
+	}
+	,load: function() {
+		if(this.get__isDebug()) {
+			haxe_Log.trace("start loading",{ fileName : "Loader.hx", lineNumber : 79, className : "cc.tool.Loader", methodName : "load"});
+		}
+		this.loadingHandler();
+		return this;
+	}
+	,loadingHandler: function() {
+		var _gthis = this;
+		if(this._loadCounter >= this.get__loadingArray().length) {
+			if(this.get__isDebug()) {
+				haxe_Log.trace("" + this.toString() + " :: Loading queue is done",{ fileName : "Loader.hx", lineNumber : 87, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(this.get__isDebug()) {
+				haxe_Log.trace(this.completeArray,{ fileName : "Loader.hx", lineNumber : 89, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(this.get__isDebug()) {
+				haxe_Log.trace(this.completeArray.length,{ fileName : "Loader.hx", lineNumber : 91, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(Reflect.isFunction(this._onComplete)) {
+				this._onComplete.apply(this._onComplete,[this.completeArray]);
+			}
+			return;
+		}
+		var _img = new Image();
+		_img.crossOrigin = "Anonymous";
+		var tmp = this.get__loadingArray();
+		_img.src = tmp[this._loadCounter];
+		_img.onload = function() {
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace("w: " + _img.width,{ fileName : "Loader.hx", lineNumber : 104, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace("h: " + _img.height,{ fileName : "Loader.hx", lineNumber : 106, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace(_gthis.completeArray.length,{ fileName : "Loader.hx", lineNumber : 108, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			_gthis.completeArray.push(_img);
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace(_gthis.completeArray,{ fileName : "Loader.hx", lineNumber : 111, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace(_gthis.completeArray.length,{ fileName : "Loader.hx", lineNumber : 113, className : "cc.tool.Loader", methodName : "loadingHandler"});
+			}
+			if(Reflect.isFunction(_gthis._onUpdate)) {
+				_gthis._onUpdate.apply(_gthis._onUpdate,[_img]);
+			}
+			_gthis._loadCounter++;
+			_gthis.loadingHandler();
+		};
+		_img.onerror = function() {
+			if(Reflect.isFunction(_gthis._onError)) {
+				_gthis._onError.apply(_gthis._onError,[_img]);
+			}
+			_gthis._loadCounter++;
+			_gthis.loadingHandler();
+		};
+		_img.onprogress = function() {
+			if(Reflect.isFunction(_gthis._onProgress)) {
+				_gthis._onProgress.apply(_gthis._onProgress,[_img]);
+			}
+		};
+	}
+	,get__id: function() {
+		return this._id;
+	}
+	,set__id: function(value) {
+		return this._id = value;
+	}
+	,get__loadingArray: function() {
+		return this._loadingArray;
+	}
+	,set__loadingArray: function(value) {
+		return this._loadingArray = value;
+	}
+	,get__isDebug: function() {
+		return this._isDebug;
+	}
+	,set__isDebug: function(value) {
+		return this._isDebug = value;
+	}
+	,toString: function() {
+		return "[Loader]";
+	}
+	,__class__: cc_tool_Loader
+	,__properties__: {set__isDebug:"set__isDebug",get__isDebug:"get__isDebug",set__loadingArray:"set__loadingArray",get__loadingArray:"get__loadingArray",set__id:"set__id",get__id:"get__id"}
+};
+var cc_tool_convert_SvgToImage = function() {
+};
+$hxClasses["cc.tool.convert.SvgToImage"] = cc_tool_convert_SvgToImage;
+cc_tool_convert_SvgToImage.__name__ = ["cc","tool","convert","SvgToImage"];
+cc_tool_convert_SvgToImage.convert = function(svg,callback) {
+	var svgImage = new Image();
+	svgImage.onload = function() {
+		haxe_Log.trace("base64 square",{ fileName : "SvgToImage.hx", lineNumber : 13, className : "cc.tool.convert.SvgToImage", methodName : "convert"});
+		haxe_Log.trace("w: " + svgImage.width,{ fileName : "SvgToImage.hx", lineNumber : 14, className : "cc.tool.convert.SvgToImage", methodName : "convert"});
+		haxe_Log.trace("h: " + svgImage.height,{ fileName : "SvgToImage.hx", lineNumber : 15, className : "cc.tool.convert.SvgToImage", methodName : "convert"});
+		callback.apply(callback,[svgImage]);
+	};
+	var svg64 = window.btoa(svg);
+	var b64Start = "data:image/svg+xml;base64,";
+	var image64 = b64Start + svg64;
+	svgImage.src = image64;
+};
+cc_tool_convert_SvgToImage.prototype = {
+	__class__: cc_tool_convert_SvgToImage
 };
 var cc_tool_export_Zip = function(ctx,fileName) {
 	this.imageStringArray = [];
@@ -15608,7 +16090,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-26 12:49:47";
+lib_model_constants_App.BUILD = "2019-03-27 23:29:41";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
