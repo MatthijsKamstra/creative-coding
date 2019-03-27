@@ -6,7 +6,6 @@ import js.Browser.*;
  * short description what this does
  */
 class CC051 extends CCBase implements ICCBase {
-
 	// colors
 	var _color0:RGB = null;
 	var _color1:RGB = null;
@@ -27,7 +26,7 @@ class CC051 extends CCBase implements ICCBase {
 		* @param ctx
 	 */
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = '';
+		description = 'Font embedding: Gunplay (not Google font)';
 		type = [CCType.TOOL, CCType.IMAGE];
 
 		super(ctx);
