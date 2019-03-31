@@ -10,10 +10,12 @@ class ZipBase extends CCBase {
 	 * @param ctx
 	 */
 	public function new(ctx:CanvasRenderingContext2D) {
-		zip = new Zip(ctx);
+		zip = new Zip(ctx, toString());
 		zip.delay(0);
 		zip.recordInSeconds(7);
 		zip.menu(false);
+		zip.onRecordComplete(onRecordHandler);
+		zip.onExportComplete(onExportHandler);
 		zip.embedScripts(onZipHandler);
 		super(ctx);
 	}
@@ -21,6 +23,16 @@ class ZipBase extends CCBase {
 	function onZipHandler(?value:String) {
 		trace(value);
 		zip.start();
+	}
+
+	function onRecordHandler() {
+		trace('onRecordHandler');
+		stop();
+	}
+
+	function onExportHandler() {
+		trace('onExportHandler');
+		start();
 	}
 
 	/**

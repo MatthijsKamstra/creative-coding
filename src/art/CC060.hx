@@ -5,11 +5,7 @@ import cc.tool.Loader;
 using StringTools;
 
 /**
-		 *
-		 *
-		 *
-	/**
-	* short description what this does
+ * short description what this does
  */
 class CC060 extends CCBase implements ICCBase {
 	// colors
@@ -41,7 +37,7 @@ class CC060 extends CCBase implements ICCBase {
 	var imgSize = 100;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = '';
+		description = 'Warning: like this post and you will be featured in the next animation!';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// setup Sketch
@@ -63,36 +59,36 @@ class CC060 extends CCBase implements ICCBase {
 	}
 
 	function onImageHandler(arr:Array<js.html.Image>) {
-		trace(arr.length);
-		trace(arr[0]);
+		trace('total images: ' + arr.length);
+		trace('first image width: ' + arr[0].width);
 		this._img = arr[0];
 		isImageLoaded = true;
 		drawShape();
 	}
 
-	function onAnimateHandler(sh:Dynamic) {
+	function onHeartYoyoHandler(sh:Dynamic) {
 		Go.to(sh, animationInSeconds)
 			.prop('size', (svgSize * .7))
 			.yoyo()
 			.ease(Quart.easeInOut)
-			.onComplete(onAnimateHandler, [sh]);
+			.onComplete(onHeartYoyoHandler, [sh]);
 	}
 
-	function onAnimate2Handler(sh:Dynamic) {
+	function onShowCursorHandler(sh:Dynamic) {
 		Go.to(sh, animationInSeconds)
-			.delay(3)
+			.delay(animationInSeconds * 3)
 			.x(w2)
 			.y(h2)
 			.ease(Quart.easeInOut)
-			.onComplete(onAnimate3Handler, [cursorObj]);
+			.onComplete(onHideCursorHandler, [cursorObj]);
 	}
 
-	function onAnimate3Handler(sh:Dynamic) {
+	function onHideCursorHandler(sh:Dynamic) {
 		Go.to(sh, animationInSeconds)
-			.delay(1)
+			.delay(.5)
 			.x(w + (imgSize))
 			.y(h + (imgSize))
-			.ease(Quart.easeInOut) // .onComplete(onAnimate3Handler, [cursorObj])
+			.ease(Quart.easeInOut) // .onComplete(onHideCursorHandler, [cursorObj])
 		;
 	}
 
@@ -182,7 +178,7 @@ class CC060 extends CCBase implements ICCBase {
 		}
 		var _svg = svg.replace('fill="red"', 'fill="${getColourObj(_color2)}"');
 		cc.tool.convert.SvgToImage.convert(_svg, onSvgHandler);
-		onAnimateHandler(heartObj);
+		onHeartYoyoHandler(heartObj);
 
 		cursorObj = {
 			x: w + (imgSize),
@@ -194,11 +190,15 @@ class CC060 extends CCBase implements ICCBase {
 			.onComplete(onImageHandler)
 			.isDebug(isDebug)
 			.load();
-		onAnimate2Handler(cursorObj);
+		onShowCursorHandler(cursorObj);
+
+		// zip.recordInSeconds(animationInSeconds * 6);
+		// zip.record(600);
 	}
 
 	override function draw() {
 		// trace('draw: ${toString()}');
+		// super.draw(); // don't forget to add
 		drawShape();
 		// stop();
 	}
