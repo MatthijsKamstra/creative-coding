@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC060];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -7801,6 +7801,174 @@ art_CC059.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC059
 });
+var art_CC059a = function(ctx) {
+	this.max = 50;
+	this.shapeArray = [];
+	this.set_description("Polygon animation back and forth");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC059a"] = art_CC059a;
+art_CC059a.__name__ = ["art","CC059a"];
+art_CC059a.__interfaces__ = [art_ICCBase];
+art_CC059a.__super__ = art_CCBase;
+art_CC059a.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var offset = 10;
+		var shape = { _id : "" + i, _type : "poly", x : this.get_w2(), y : this.get_h2(), size : i * offset, degree : 30.};
+		this.onAnimateHandler(shape,i,3);
+		return shape;
+	}
+	,onAnimateHandler: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,1);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(id * 0.1);
+		var _this1 = _this;
+		var value = 30. * count;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"degree")) {
+			objValue = Reflect.getProperty(_this1._target,"degree");
+		}
+		var _range = { key : "degree", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("degree",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._isYoyo = true;
+		var _this3 = _this2;
+		_this3._easing = cc_lets_easing_Sine.get_easeInOut();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.degree));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,6,sh.size);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059a.hx", lineNumber : 70, className : "art.CC059a", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC059a
+});
+var art_CC059b = function(ctx) {
+	this.max = 50;
+	this.shapeArray = [];
+	this.set_description("Polygon animation back and forth");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC059b"] = art_CC059b;
+art_CC059b.__name__ = ["art","CC059b"];
+art_CC059b.__interfaces__ = [art_ICCBase];
+art_CC059b.__super__ = art_CCBase;
+art_CC059b.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var offset = 10;
+		var shape = { _id : "" + i, _type : "poly", x : this.get_w2(), y : this.get_h2(), size : i * offset, degree : 30.};
+		this.onAnimateHandler(shape,i,3);
+		return shape;
+	}
+	,onAnimateHandler: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,2);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(id * 0.1);
+		var _this1 = _this;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"degree")) {
+			objValue = Reflect.getProperty(_this1._target,"degree");
+		}
+		var _range = { key : "degree", from : _this1._isFrom ? 180. : objValue, to : !_this1._isFrom ? 180. : objValue};
+		_this1._props.set("degree",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler2);
+		_this3._options.onCompleteParams = [sh,id,count++];
+	}
+	,onAnimateHandler2: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,3);
+		Go._isFrom = false;
+		var _this = Go;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"degree")) {
+			objValue = Reflect.getProperty(_this._target,"degree");
+		}
+		var _range = { key : "degree", from : _this._isFrom ? 90. : objValue, to : !_this._isFrom ? 90. : objValue};
+		_this._props.set("degree",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
+		var _this1 = _this;
+		_this1._easing = cc_lets_easing_Sine.get_easeInOut();
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.degree));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,6,sh.size);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059b.hx", lineNumber : 79, className : "art.CC059b", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC059b
+});
 var art_CC060 = function(ctx) {
 	this.imgSize = 100;
 	this.src = "assets/img/cursor/hand_fill.png";
@@ -8125,6 +8293,184 @@ art_CC060.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC060
+});
+var art_CC061 = function(ctx) {
+	this.size = 400;
+	this.max = 20;
+	this.shapeArray = [];
+	this.set_description("Polygon animation, rotate with hidden others");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC061"] = art_CC061;
+art_CC061.__name__ = ["art","CC061"];
+art_CC061.__interfaces__ = [art_ICCBase];
+art_CC061.__super__ = art_CCBase;
+art_CC061.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var offset = 10;
+		var shape = { _id : "" + i, _type : "poly", x : this.get_w2(), y : this.get_h2(), size : this.size, degree : 30.};
+		this.onAnimateHandler(shape,i,3);
+		return shape;
+	}
+	,onAnimateHandler: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,2);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(id * 0.1);
+		var _this1 = _this;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"degree")) {
+			objValue = Reflect.getProperty(_this1._target,"degree");
+		}
+		var _range = { key : "degree", from : _this1._isFrom ? 90. : objValue, to : !_this1._isFrom ? 90. : objValue};
+		_this1._props.set("degree",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this3._options.onCompleteParams = [sh,id,count++];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.degree));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,6,sh.size);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC061.hx", lineNumber : 80, className : "art.CC061", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC061
+});
+var art_CC062 = function(ctx) {
+	this.size = 400;
+	this.max = 20;
+	this.shapeArray = [];
+	this.set_description("Polygon animation, rotate with hidden others");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC062"] = art_CC062;
+art_CC062.__name__ = ["art","CC062"];
+art_CC062.__interfaces__ = [art_ICCBase];
+art_CC062.__super__ = art_CCBase;
+art_CC062.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var offset = 10;
+		var shape = { _id : "" + i, _type : "poly", x : this.get_w2(), y : this.get_h2(), size : this.size, degree : 30.};
+		this.onAnimateHandler(shape,i,3);
+		return shape;
+	}
+	,onAnimateHandler: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,2);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(id * 0.1);
+		var _this1 = _this;
+		var value = 30. * count;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"degree")) {
+			objValue = Reflect.getProperty(_this1._target,"degree");
+		}
+		var _range = { key : "degree", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("degree",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler2);
+		_this3._options.onCompleteParams = [sh,id,count + 3];
+	}
+	,onAnimateHandler2: function(sh,id,count) {
+		haxe_Log.trace(count,{ fileName : "CC062.hx", lineNumber : 55, className : "art.CC062", methodName : "onAnimateHandler2"});
+		var Go = new cc_lets_Go(sh,3);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(2);
+		var _this1 = _this;
+		var value = 30. * count;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"degree")) {
+			objValue = Reflect.getProperty(_this1._target,"degree");
+		}
+		var _range = { key : "degree", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("degree",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimateHandler2);
+		_this3._options.onCompleteParams = [sh,id,count + 3];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.degree));
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokePolygon(this.ctx,0,0,3,sh.size);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC062.hx", lineNumber : 82, className : "art.CC062", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC062
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -16133,7 +16479,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-03-29 17:19:48";
+lib_model_constants_App.BUILD = "2019-04-02 22:26:45";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
