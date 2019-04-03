@@ -8,6 +8,7 @@ implements ICCBase {
 	var shapeArray:Array<Dynamic> = [];
 	var max = 20;
 	var size = 400;
+	var _rotationCounter = 0;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'Polygon animation, rotate with hidden others';
@@ -24,7 +25,9 @@ implements ICCBase {
 
 		super(ctx);
 
-		// zip.recordInSeconds(20);
+		// export.recordInSeconds(100);
+		// export.type(ZIP);
+		// export.start();
 	}
 
 	function createShape(i:Int, ?point:Point) {
@@ -50,7 +53,11 @@ implements ICCBase {
 	}
 
 	function onAnimateHandler2(sh:Dynamic, id:Int, count:Int) {
-		trace(count);
+		_rotationCounter++;
+		if (_rotationCounter == (max * 3)) {
+			trace('stop export');
+			// export.stop();
+		}
 		Go.to(sh, 3)
 			.delay(2)
 			.prop('degree', (180 / 6) * count)
@@ -87,9 +94,7 @@ implements ICCBase {
 
 	override function draw() {
 		// trace('draw: ${toString()}');
-		// super.draw();
 		drawShape();
-		// zip.pulse();
 		// stop();
 	}
 }
