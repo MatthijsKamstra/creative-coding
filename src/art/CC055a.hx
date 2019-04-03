@@ -1,7 +1,8 @@
 package art;
 
 import cc.draw.Spritesheet;
-import cc.tool.export.Zip;
+
+// // import cc.tool.export.Zip;
 
 /**
  * short description what this does
@@ -24,7 +25,7 @@ class CC055a extends CCBase implements ICCBase {
 	var isFirstRun:Bool = false;
 	var spritesheet:Spritesheet; // hmm doesn't work like expected
 	var src = 'assets/img/spritesheet/web_heart_animation_edge.png';
-	var zip:Zip;
+	// var zip:Zip;
 	var _img:Image;
 
 	public function new(ctx:CanvasRenderingContext2D) {
@@ -40,11 +41,11 @@ class CC055a extends CCBase implements ICCBase {
 		option.scale = true;
 		ctx = Sketch.create("creative_code_mck", option);
 
-		zip = new Zip(ctx, '${toString()}');
-		zip.menu(false);
-		zip.delay(0);
-		zip.recordInSeconds(11);
-		zip.embedScripts(onZipHandler);
+		// zip = new Zip(ctx, '${toString()}');
+		// zip.menu(false);
+		// zip.delay(0);
+		// zip.recordInSeconds(11);
+		// zip.embedScripts(onZipHandler);
 
 		init();
 
@@ -159,7 +160,7 @@ class CC055a extends CCBase implements ICCBase {
 
 	override function draw() {
 		// trace('draw: ${toString()}');
-		zip.pulse();
+		// zip.pulse();
 		// drawShape();
 		// stop();
 	}

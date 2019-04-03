@@ -58,10 +58,10 @@ class CC060 extends CCBase implements ICCBase {
 		drawShape();
 	}
 
-	function onImageHandler(arr:Array<js.html.Image>) {
+	function onImageHandler(arr:Array<cc.tool.LoaderObj>) {
 		trace('total images: ' + arr.length);
-		trace('first image width: ' + arr[0].width);
-		this._img = arr[0];
+		// trace('first image width: ' + arr[0].width);
+		this._img = arr[0].image;
 		isImageLoaded = true;
 		drawShape();
 	}

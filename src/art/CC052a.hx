@@ -1,7 +1,7 @@
 package art;
 
 import cc.*;
-import cc.tool.Export;
+// // import cc.tool.Export;
 import Sketch;
 
 using StringTools;
@@ -37,8 +37,9 @@ class CC052a extends CCBase implements ICCBase {
 	// pos
 	var padding = 5;
 	var yoffset = 50;
+
 	// export video
-	var export:Export;
+	// var export:Export;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		// setup Sketch
@@ -184,14 +185,14 @@ class CC052a extends CCBase implements ICCBase {
 			shapeArray.push(createLike(i, grid.array[i]));
 		}
 
-		// settings export
-		export = new Export(ctx);
-		export.time(30);
-		export.name('${toString()}');
-		export.folder('${toString()}');
-		export.debug(isDebug);
-		export.clear(true);
-		export.start();
+		// // settings export
+		// export = new Export(ctx);
+		// export.time(30);
+		// export.name('${toString()}');
+		// export.folder('${toString()}');
+		// export.debug(isDebug);
+		// export.clear(true);
+		// export.start();
 	}
 
 	override function draw() {

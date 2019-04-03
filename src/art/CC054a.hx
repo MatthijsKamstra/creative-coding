@@ -1,6 +1,6 @@
 package art;
 
-import cc.tool.Export;
+// import cc.tool.Export;
 
 /**
  * short description what this does
@@ -16,8 +16,9 @@ class CC054a extends CCBase implements ICCBase {
 	var cell = 0.0;
 	var innerR = 50.0;
 	var maxDistance = 200;
+
 	// export to node server
-	var export:Export;
+	// var export:Export;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'Eyes following mouse by looking at it';
@@ -170,15 +171,15 @@ class CC054a extends CCBase implements ICCBase {
 		}
 
 		// setup export settings
-		export = new Export(ctx); // bind context
-		export.time(10, 2); // 60 seconds recording after 2 second delay (optional)
-		export.name('${toString()}'); // file names start with
-		export.folder('${toString()}'); // folder name to export in
-		// export.debug(isDebug);			// debug
-		export.clear(true); // empty folder when start/restart recording
+		// export = new Export(ctx); // bind context
+		// export.time(10, 2); // 60 seconds recording after 2 second delay (optional)
+		// export.name('${toString()}'); // file names start with
+		// export.folder('${toString()}'); // folder name to export in
+		// // export.debug(isDebug);			// debug
+		// export.clear(true); // empty folder when start/restart recording
 
-		// start recording
-		export.start();
+		// // start recording
+		// export.start();
 	}
 
 	override function draw() {
