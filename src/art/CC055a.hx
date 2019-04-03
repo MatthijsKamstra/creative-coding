@@ -2,7 +2,6 @@ package art;
 
 import cc.draw.Spritesheet;
 
-// // import cc.tool.export.Zip;
 
 /**
  * short description what this does

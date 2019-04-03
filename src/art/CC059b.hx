@@ -1,12 +1,9 @@
 package art;
 
-// import cc.tool.export.Zip;
-
 /**
  * short description what this does
  */
-class CC059b extends CCBase // ZipBase
-implements ICCBase {
+class CC059b extends CCBase implements ICCBase {
 	var shapeArray:Array<Dynamic> = [];
 	var max = 50;
 
