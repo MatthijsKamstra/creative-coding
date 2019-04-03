@@ -7399,7 +7399,7 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		cc_draw_Text.embedGoogleFont("Berkshire+Swash",$bind(this,this.onFontHandler));
 	}
 	,onZipHandler: function(value) {
-		haxe_Log.trace(value,{ fileName : "CC055a.hx", lineNumber : 67, className : "art.CC055a", methodName : "onZipHandler"});
+		haxe_Log.trace(value,{ fileName : "CC055a.hx", lineNumber : 66, className : "art.CC055a", methodName : "onZipHandler"});
 		this.isZip = true;
 		this.drawShape();
 	}
@@ -7409,7 +7409,7 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,onFontHandler: function(e) {
-		haxe_Log.trace("onFontHandler: \"" + e + "\"",{ fileName : "CC055a.hx", lineNumber : 79, className : "art.CC055a", methodName : "onFontHandler"});
+		haxe_Log.trace("onFontHandler: \"" + e + "\"",{ fileName : "CC055a.hx", lineNumber : 78, className : "art.CC055a", methodName : "onFontHandler"});
 		this.isFont = true;
 		this.drawShape();
 	}
@@ -7493,7 +7493,7 @@ art_CC055a.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC055a.hx", lineNumber : 139, className : "art.CC055a", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC055a.hx", lineNumber : 138, className : "art.CC055a", methodName : "setup"});
 		var colorArray = cc_util_ColorUtil.niceColor100SortedString[cc_util_MathUtil.randomInt(cc_util_ColorUtil.niceColor100SortedString.length - 1)];
 		var $int = Std.parseInt(StringTools.replace(colorArray[0],"#","0x"));
 		this._color0 = { r : $int >> 16 & 255, g : $int >> 8 & 255, b : $int & 255};
@@ -7774,7 +7774,7 @@ art_CC059.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059.hx", lineNumber : 69, className : "art.CC059", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059.hx", lineNumber : 67, className : "art.CC059", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.max;
@@ -7850,7 +7850,7 @@ art_CC059a.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059a.hx", lineNumber : 70, className : "art.CC059a", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059a.hx", lineNumber : 68, className : "art.CC059a", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.max;
@@ -7942,7 +7942,7 @@ art_CC059b.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059b.hx", lineNumber : 79, className : "art.CC059b", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC059b.hx", lineNumber : 76, className : "art.CC059b", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.max;
@@ -8360,6 +8360,7 @@ art_CC061.prototype = $extend(art_CCBase.prototype,{
 	,__class__: art_CC061
 });
 var art_CC062 = function(ctx) {
+	this._rotationCounter = 0;
 	this.size = 400;
 	this.max = 20;
 	this.shapeArray = [];
@@ -8407,7 +8408,10 @@ art_CC062.prototype = $extend(art_CCBase.prototype,{
 		_this3._options.onCompleteParams = [sh,id,count + 3];
 	}
 	,onAnimateHandler2: function(sh,id,count) {
-		haxe_Log.trace(count,{ fileName : "CC062.hx", lineNumber : 53, className : "art.CC062", methodName : "onAnimateHandler2"});
+		this._rotationCounter++;
+		if(this._rotationCounter == this.max * 3) {
+			haxe_Log.trace("stop export",{ fileName : "CC062.hx", lineNumber : 58, className : "art.CC062", methodName : "onAnimateHandler2"});
+		}
 		var Go = new cc_lets_Go(sh,3);
 		Go._isFrom = false;
 		var _this = Go;
@@ -8446,7 +8450,7 @@ art_CC062.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC062.hx", lineNumber : 80, className : "art.CC062", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC062.hx", lineNumber : 87, className : "art.CC062", methodName : "setup"});
 		this.shapeArray = [];
 		var _g1 = 0;
 		var _g = this.max;
@@ -15968,7 +15972,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-04 00:27:16";
+lib_model_constants_App.BUILD = "2019-04-04 01:12:18";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
