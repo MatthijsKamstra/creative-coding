@@ -615,9 +615,6 @@ SketchBase.prototype = {
 		}
 	}
 	,__export: function() {
-		if(this.isDebug) {
-			haxe_Log.trace("EXPORT :: " + this.toString() + " -> override public function __export()",{ fileName : "Sketch.hx", lineNumber : 593, className : "SketchBase", methodName : "__export"});
-		}
 	}
 	,pause: function() {
 		this.isDrawActive = !this.isDrawActive;
@@ -8260,21 +8257,26 @@ art_CC060.prototype = $extend(art_CCBase.prototype,{
 		this.cursorObj = { x : Global.w + this.imgSize, y : Global.h + this.imgSize, size : this.imgSize};
 		var loader = new cc_tool_Loader(null);
 		var _this = loader;
-		var path = this.src;
-		var _type = _this.fileType(path);
-		var _obj = { path : path, type : _type};
-		_this.get__loadingArray().push(_obj);
+		_this.set__isDebug(this.isDebug);
 		var _this1 = _this;
-		_this1._onComplete = $bind(this,this.onImageHandler);
-		_this1._onCompleteParams = null;
-		var _this2 = _this1;
-		_this2.set__isDebug(this.isDebug);
-		var _this3 = _this2;
-		if(_this3.get__isDebug()) {
-			haxe_Log.trace("start loading",{ fileName : "Loader.hx", lineNumber : 96, className : "cc.tool.Loader", methodName : "load"});
+		var path = this.src;
+		var _type = _this1.fileType(path);
+		var _obj = { path : path, type : _type};
+		if(_this1.get__isDebug()) {
+			haxe_Log.trace(_obj,{ fileName : "Loader.hx", lineNumber : 67, className : "cc.tool.Loader", methodName : "add"});
 		}
-		_this3.loadingHandler();
-		var load = _this3;
+		_this1.get__loadingArray().push(_obj);
+		var _this2 = _this1;
+		_this2._onComplete = $bind(this,this.onImageHandler);
+		_this2._onCompleteParams = null;
+		var _this3 = _this2;
+		_this3.set__isDebug(this.isDebug);
+		var _this4 = _this3;
+		if(_this4.get__isDebug()) {
+			haxe_Log.trace("start loading",{ fileName : "Loader.hx", lineNumber : 98, className : "cc.tool.Loader", methodName : "load"});
+		}
+		_this4.loadingHandler();
+		var load = _this4;
 		this.onShowCursorHandler(this.cursorObj);
 	}
 	,draw: function() {
@@ -10619,6 +10621,9 @@ cc_tool_Loader.prototype = {
 	,add: function(path,type) {
 		var _type = type == null ? this.fileType(path) : type;
 		var _obj = { path : path, type : _type};
+		if(this.get__isDebug()) {
+			haxe_Log.trace(_obj,{ fileName : "Loader.hx", lineNumber : 67, className : "cc.tool.Loader", methodName : "add"});
+		}
 		this.get__loadingArray().push(_obj);
 		return this;
 	}
@@ -10644,7 +10649,7 @@ cc_tool_Loader.prototype = {
 	}
 	,load: function() {
 		if(this.get__isDebug()) {
-			haxe_Log.trace("start loading",{ fileName : "Loader.hx", lineNumber : 96, className : "cc.tool.Loader", methodName : "load"});
+			haxe_Log.trace("start loading",{ fileName : "Loader.hx", lineNumber : 98, className : "cc.tool.Loader", methodName : "load"});
 		}
 		this.loadingHandler();
 		return this;
@@ -10656,14 +10661,15 @@ cc_tool_Loader.prototype = {
 		switch(_g) {
 		case "gif":
 			type = cc_tool_FileType.Gif;
-			type = cc_tool_FileType.Img;
 			break;
 		case "jpeg":case "jpg":
 			type = cc_tool_FileType.JPG;
-			type = cc_tool_FileType.Img;
 			break;
 		case "json":
 			type = cc_tool_FileType.Json;
+			break;
+		case "png":
+			type = cc_tool_FileType.Png;
 			break;
 		case "txt":
 			type = cc_tool_FileType.Txt;
@@ -10677,16 +10683,15 @@ cc_tool_Loader.prototype = {
 		return type;
 	}
 	,loadingHandler: function() {
-		var _gthis = this;
 		if(this._loadCounter >= this.get__loadingArray().length) {
 			if(this.get__isDebug()) {
-				haxe_Log.trace("" + this.toString() + " :: Loading queue is done",{ fileName : "Loader.hx", lineNumber : 138, className : "cc.tool.Loader", methodName : "loadingHandler"});
+				haxe_Log.trace("" + this.toString() + " :: Loading queue is done",{ fileName : "Loader.hx", lineNumber : 140, className : "cc.tool.Loader", methodName : "loadingHandler"});
 			}
 			if(this.get__isDebug()) {
-				haxe_Log.trace("show completed array: " + Std.string(this.completeArray),{ fileName : "Loader.hx", lineNumber : 140, className : "cc.tool.Loader", methodName : "loadingHandler"});
+				haxe_Log.trace("show completed array: " + Std.string(this.completeArray),{ fileName : "Loader.hx", lineNumber : 142, className : "cc.tool.Loader", methodName : "loadingHandler"});
 			}
 			if(this.get__isDebug()) {
-				haxe_Log.trace("length of complete files: " + this.completeArray.length,{ fileName : "Loader.hx", lineNumber : 142, className : "cc.tool.Loader", methodName : "loadingHandler"});
+				haxe_Log.trace("length of complete files: " + this.completeArray.length,{ fileName : "Loader.hx", lineNumber : 144, className : "cc.tool.Loader", methodName : "loadingHandler"});
 			}
 			if(Reflect.isFunction(this._onComplete)) {
 				this._onComplete.apply(this._onComplete,[this.completeArray]);
@@ -10694,82 +10699,96 @@ cc_tool_Loader.prototype = {
 			return;
 		}
 		var _l = this.get__loadingArray()[this._loadCounter];
-		if(_l.type == cc_tool_FileType.Img) {
-			var _img = new Image();
-			_img.crossOrigin = "Anonymous";
-			_img.src = _l.path;
-			_img.onload = function() {
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace("w: " + _img.width,{ fileName : "Loader.hx", lineNumber : 157, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace("h: " + _img.height,{ fileName : "Loader.hx", lineNumber : 159, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace(_gthis.completeArray.length,{ fileName : "Loader.hx", lineNumber : 161, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-				_l.image = _img;
-				_gthis.completeArray.push(_l);
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace(_gthis.completeArray,{ fileName : "Loader.hx", lineNumber : 165, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace(_gthis.completeArray.length,{ fileName : "Loader.hx", lineNumber : 167, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-				if(Reflect.isFunction(_gthis._onUpdate)) {
-					_gthis._onUpdate.apply(_gthis._onUpdate,[_img]);
-				}
-				_gthis._loadCounter++;
-				_gthis.loadingHandler();
-			};
-			_img.onerror = function() {
-				if(Reflect.isFunction(_gthis._onError)) {
-					_gthis._onError.apply(_gthis._onError,[_img]);
-				}
-				_gthis._loadCounter++;
-				_gthis.loadingHandler();
-			};
-			_img.onprogress = function() {
-				if(Reflect.isFunction(_gthis._onProgress)) {
-					_gthis._onProgress.apply(_gthis._onProgress,[_img]);
-				}
-			};
-		} else {
-			var url = _l.path;
-			var req = new haxe_Http(url);
-			req.onData = function(data) {
-				try {
-					_l.str = data;
-					_l.json = JSON.parse(data);
-					_gthis.completeArray.push(_l);
-					if(Reflect.isFunction(_gthis._onUpdate)) {
-						_gthis._onUpdate.apply(_gthis._onUpdate,["_img"]);
-					}
-					_gthis._loadCounter++;
-					_gthis.loadingHandler();
-				} catch( e ) {
-					if (e instanceof js__$Boot_HaxeError) e = e.val;
-					if(_gthis.get__isDebug()) {
-						haxe_Log.trace(e,{ fileName : "Loader.hx", lineNumber : 204, className : "cc.tool.Loader", methodName : "loadingHandler"});
-					}
-					_gthis._loadCounter++;
-					_gthis.loadingHandler();
-				}
-			};
-			req.onError = function(error) {
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace("error: " + error,{ fileName : "Loader.hx", lineNumber : 212, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-				_gthis._loadCounter++;
-				_gthis.loadingHandler();
-			};
-			req.onStatus = function(status) {
-				if(_gthis.get__isDebug()) {
-					haxe_Log.trace("status: " + status,{ fileName : "Loader.hx", lineNumber : 218, className : "cc.tool.Loader", methodName : "loadingHandler"});
-				}
-			};
-			req.request(true);
+		var _g = _l.type;
+		switch(_g[1]) {
+		case 1:case 4:case 5:case 6:case 7:
+			this.imageLoader(_l);
+			break;
+		case 2:case 3:case 8:case 9:
+			this.textLoader(_l);
+			break;
+		default:
+			haxe_Log.trace("?????????",{ fileName : "Loader.hx", lineNumber : 159, className : "cc.tool.Loader", methodName : "loadingHandler"});
 		}
+	}
+	,imageLoader: function(_l) {
+		var _gthis = this;
+		var _img = new Image();
+		_img.crossOrigin = "Anonymous";
+		_img.src = _l.path;
+		_img.onload = function() {
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace("w: " + _img.width,{ fileName : "Loader.hx", lineNumber : 169, className : "cc.tool.Loader", methodName : "imageLoader"});
+			}
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace("h: " + _img.height,{ fileName : "Loader.hx", lineNumber : 171, className : "cc.tool.Loader", methodName : "imageLoader"});
+			}
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace(_gthis.completeArray.length,{ fileName : "Loader.hx", lineNumber : 173, className : "cc.tool.Loader", methodName : "imageLoader"});
+			}
+			_l.image = _img;
+			_gthis.completeArray.push(_l);
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace(_gthis.completeArray,{ fileName : "Loader.hx", lineNumber : 177, className : "cc.tool.Loader", methodName : "imageLoader"});
+			}
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace(_gthis.completeArray.length,{ fileName : "Loader.hx", lineNumber : 179, className : "cc.tool.Loader", methodName : "imageLoader"});
+			}
+			if(Reflect.isFunction(_gthis._onUpdate)) {
+				_gthis._onUpdate.apply(_gthis._onUpdate,[_img]);
+			}
+			_gthis._loadCounter++;
+			_gthis.loadingHandler();
+		};
+		_img.onerror = function() {
+			if(Reflect.isFunction(_gthis._onError)) {
+				_gthis._onError.apply(_gthis._onError,[_img]);
+			}
+			_gthis._loadCounter++;
+			_gthis.loadingHandler();
+		};
+		_img.onprogress = function() {
+			if(Reflect.isFunction(_gthis._onProgress)) {
+				_gthis._onProgress.apply(_gthis._onProgress,[_img]);
+			}
+		};
+	}
+	,textLoader: function(_l) {
+		var _gthis = this;
+		var url = _l.path;
+		var req = new haxe_Http(url);
+		req.onData = function(data) {
+			try {
+				_l.str = data;
+				_l.json = JSON.parse(data);
+				_gthis.completeArray.push(_l);
+				if(Reflect.isFunction(_gthis._onUpdate)) {
+					_gthis._onUpdate.apply(_gthis._onUpdate,["_img"]);
+				}
+				_gthis._loadCounter++;
+				_gthis.loadingHandler();
+			} catch( e ) {
+				if (e instanceof js__$Boot_HaxeError) e = e.val;
+				if(_gthis.get__isDebug()) {
+					haxe_Log.trace(e,{ fileName : "Loader.hx", lineNumber : 218, className : "cc.tool.Loader", methodName : "textLoader"});
+				}
+				_gthis._loadCounter++;
+				_gthis.loadingHandler();
+			}
+		};
+		req.onError = function(error) {
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace("error: " + error,{ fileName : "Loader.hx", lineNumber : 226, className : "cc.tool.Loader", methodName : "textLoader"});
+			}
+			_gthis._loadCounter++;
+			_gthis.loadingHandler();
+		};
+		req.onStatus = function(status) {
+			if(_gthis.get__isDebug()) {
+				haxe_Log.trace("status: " + status,{ fileName : "Loader.hx", lineNumber : 232, className : "cc.tool.Loader", methodName : "textLoader"});
+			}
+		};
+		req.request(true);
 	}
 	,get__id: function() {
 		return this._id;
@@ -10795,7 +10814,7 @@ cc_tool_Loader.prototype = {
 	,__class__: cc_tool_Loader
 	,__properties__: {set__isDebug:"set__isDebug",get__isDebug:"get__isDebug",set__loadingArray:"set__loadingArray",get__loadingArray:"get__loadingArray",set__id:"set__id",get__id:"get__id"}
 };
-var cc_tool_FileType = { __ename__ : true, __constructs__ : ["Unknown","Img","Txt","Json","Gif","JPEG","JPG","Xml","Svg"] };
+var cc_tool_FileType = { __ename__ : true, __constructs__ : ["Unknown","Img","Txt","Json","Gif","Png","JPEG","JPG","Xml","Svg"] };
 cc_tool_FileType.Unknown = ["Unknown",0];
 cc_tool_FileType.Unknown.toString = $estr;
 cc_tool_FileType.Unknown.__enum__ = cc_tool_FileType;
@@ -10811,16 +10830,19 @@ cc_tool_FileType.Json.__enum__ = cc_tool_FileType;
 cc_tool_FileType.Gif = ["Gif",4];
 cc_tool_FileType.Gif.toString = $estr;
 cc_tool_FileType.Gif.__enum__ = cc_tool_FileType;
-cc_tool_FileType.JPEG = ["JPEG",5];
+cc_tool_FileType.Png = ["Png",5];
+cc_tool_FileType.Png.toString = $estr;
+cc_tool_FileType.Png.__enum__ = cc_tool_FileType;
+cc_tool_FileType.JPEG = ["JPEG",6];
 cc_tool_FileType.JPEG.toString = $estr;
 cc_tool_FileType.JPEG.__enum__ = cc_tool_FileType;
-cc_tool_FileType.JPG = ["JPG",6];
+cc_tool_FileType.JPG = ["JPG",7];
 cc_tool_FileType.JPG.toString = $estr;
 cc_tool_FileType.JPG.__enum__ = cc_tool_FileType;
-cc_tool_FileType.Xml = ["Xml",7];
+cc_tool_FileType.Xml = ["Xml",8];
 cc_tool_FileType.Xml.toString = $estr;
 cc_tool_FileType.Xml.__enum__ = cc_tool_FileType;
-cc_tool_FileType.Svg = ["Svg",8];
+cc_tool_FileType.Svg = ["Svg",9];
 cc_tool_FileType.Svg.toString = $estr;
 cc_tool_FileType.Svg.__enum__ = cc_tool_FileType;
 var cc_tool_convert_SvgToImage = function() {
@@ -15972,7 +15994,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-04 01:12:18";
+lib_model_constants_App.BUILD = "2019-04-04 01:29:26";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
