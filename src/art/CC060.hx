@@ -171,6 +171,8 @@ class CC060 extends CCBase implements ICCBase {
 			drawShape();
 		});
 
+		// isDebug = true;
+
 		heartObj = {
 			x: w2 - svgSize / 2,
 			y: h2 - svgSize / 2,
@@ -186,6 +188,7 @@ class CC060 extends CCBase implements ICCBase {
 			size: imgSize,
 		}
 		var load = Loader.create()
+			.isDebug(isDebug)
 			.add(src)
 			.onComplete(onImageHandler)
 			.isDebug(isDebug)
