@@ -36,6 +36,7 @@ class CC063 extends CCBase implements ICCBase {
 
 	function drawShape() {
 		ctx.clearRect(0, 0, w, h);
+		ctx.backgroundRGB(WHITE);
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 			// // sh.radius += i*5;

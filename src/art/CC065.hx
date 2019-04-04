@@ -3,15 +3,16 @@ package art;
 /**
  * short description what this does
  */
-class CC062 extends CCBase // ExportBase
+class CC065 extends CCBase // ExportBase
 implements ICCBase {
-	var shapeArray:Array<Dynamic> = [];
+	var shapeArray:Array<CircleExtra> = [];
 	var max = 20;
-	var size = 400;
+	var _maxSize = w;
+	var _offsetSize = 50;
 	var _rotationCounter = 0;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = 'Triangles animation with delay, rotation complete';
+		description = 'Circle animation with delay, rotation complete';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		// setup Sketch
@@ -31,54 +32,46 @@ implements ICCBase {
 	}
 
 	function createShape(i:Int, ?point:Point) {
-		var offset = 10;
-		var shape:Dynamic = {
+		var shape:CircleExtra = {
 			_id: '$i',
-			_type: 'poly',
+			_type: 'CircleExtra',
 			x: w2,
 			y: h2,
-			size: this.size,
-			degree: 180 / 6
+			size: _maxSize - (i * _offsetSize),
+			scale: 1
 		}
-		onAnimateHandler(shape, i, 3);
+		Reflect.setField(shape, 'shadowBlur', 15);
+		// onAnimateHandler(shape, i, 1);
+		haxe.Timer.delay(function() {
+			onAnimationContinue(shape, i, 1);
+		}, i * 100);
 		return shape;
 	}
 
-	function onAnimateHandler(sh:Dynamic, id:Int, count:Int) {
-		Go.to(sh, 2)
-			.delay(id * 0.1)
-			.prop('degree', (180 / 6) * count)
-			.ease(Sine.easeInOut)
-			.onComplete(onAnimateHandler2, [sh, id, count + 3]);
-	}
-
-	function onAnimateHandler2(sh:Dynamic, id:Int, count:Int) {
-		_rotationCounter++;
-		if (_rotationCounter == (max * 3)) {
-			trace('stop export');
-			// export.stop();
-		}
-		Go.to(sh, 3)
-			.delay(2)
-			.prop('degree', (180 / 6) * count)
-			.ease(Sine.easeInOut)
-			.onComplete(onAnimateHandler2, [sh, id, count + 3]);
+	function onAnimationContinue(sh:CircleExtra, id:Int, count:Int) {
+		Go.to(sh, 5)
+			.delay(0.1)
+			.prop('scale', 3) // .prop('angle', -(180 / 2) * count)
+				// .prop('shadowBlur', 5)
+			.yoyo() // .ease(Bounce.easeInOut)
+			.ease(Elastic.easeInOut)
+			.onComplete(onAnimationContinue, [sh, id, ++count]);
 	}
 
 	function drawShape() {
 		ctx.clearRect(0, 0, w, h);
 		ctx.backgroundObj(WHITE);
 
-		// ctx.fillPolygon(w2, h2, 6, w3);
-		// ctx.clip();
-
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 			ctx.save();
 			ctx.translate(sh.x, sh.y);
-			ctx.rotate(radians(sh.degree));
-			ctx.strokeColourRGB(BLACK);
-			ctx.strokePolygon(0, 0, 3, sh.size);
+			ctx.rotate(radians(sh.angle));
+			// ctx.strokeColourRGB(BLACK);
+			// Shadow
+			ctx.shadowColorRGB(BLACK, 0.1);
+			ctx.shadowBlur = untyped sh.shadowBlur;
+			ctx.centreFillRect(0, 0, sh.size * sh.scale);
 			ctx.restore();
 		}
 	}
@@ -90,6 +83,8 @@ implements ICCBase {
 		for (i in 0...max) {
 			shapeArray.push(createShape(i));
 		}
+
+		// console.table(shapeArray);
 	}
 
 	override function draw() {

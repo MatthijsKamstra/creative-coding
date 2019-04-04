@@ -19,7 +19,7 @@ class Main {
 		CC000, CC001, CC002, CC003, CC004, CC005, CC006, CC007, CC008, CC009, CC010, CC011, CC012, CC013, CC014, CC015, CC016, CC017, CC018, CC019, CC020,
 		CC021, CC022, CC023, CC024, CC025, CC026, CC027, CC028, CC029, CC030, CC031, CC031a, CC032, CC033, CC034, CC035, CC036, CC037, CC038, CC039, CC040,
 		CC041, CC042, CC043, CC044, CC045, CC046, CC047, CC048, CC049, CC050, CC051, CC051a, CC052, CC052a, CC053, CC054, CC054a, CC055, CC055a, CC056, CC057,
-		CC058, CC059, CC059a, CC059b, CC060, CC061, CC062, CC063
+		CC058, CC059, CC059a, CC059b, CC060, CC061, CC062, CC063, CC064, CC065, CC066
 	];
 
 	public function new() {
@@ -32,8 +32,16 @@ class Main {
 	}
 
 	function setupCC() {
+		var ctx:CanvasRenderingContext2D;
 		// setup canvas
-		var ctx:CanvasRenderingContext2D = Sketch.create("creative_code_mck");
+		var option = new SketchOption();
+		option.width = 1080; // 1080
+		// option.height = 1000;
+		option.autostart = true;
+		option.padding = 10;
+		option.scale = true;
+		ctx = Sketch.create("creative_code_mck", option);
+		// var ctx:CanvasRenderingContext2D = Sketch.create("creative_code_mck");
 
 		// get hash from url
 		hash = js.Browser.location.hash;
