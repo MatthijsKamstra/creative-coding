@@ -149,7 +149,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -164,7 +164,13 @@ Main.main = function() {
 };
 Main.prototype = {
 	setupCC: function() {
-		var ctx = Sketch.create("creative_code_mck");
+		var ctx;
+		var option = new SketchOption();
+		option.set_width(1080);
+		option.set_autostart(true);
+		option.set_padding(10);
+		option.set_scale(true);
+		ctx = Sketch.create("creative_code_mck",option);
 		this.hash = window.location.hash;
 		this.hash = StringTools.replace(this.hash,"#","");
 		var clazz = Type.resolveClass("art." + this.hash);
@@ -182,14 +188,14 @@ Main.prototype = {
 		var left = new lib_html_Nav();
 		var ldiv = left.dir("left");
 		ldiv.onclick = function() {
-			haxe_Log.trace("left",{ fileName : "Main.hx", lineNumber : 59, className : "Main", methodName : "setupNav"});
+			haxe_Log.trace("left",{ fileName : "Main.hx", lineNumber : 67, className : "Main", methodName : "setupNav"});
 			_gthis.count--;
 			_gthis.changeHash();
 		};
 		var right = new lib_html_Nav();
 		var rdiv = right.dir("right");
 		rdiv.onclick = function() {
-			haxe_Log.trace("right",{ fileName : "Main.hx", lineNumber : 66, className : "Main", methodName : "setupNav"});
+			haxe_Log.trace("right",{ fileName : "Main.hx", lineNumber : 74, className : "Main", methodName : "setupNav"});
 			_gthis.count++;
 			_gthis.changeHash();
 		};
@@ -8366,7 +8372,7 @@ var art_CC062 = function(ctx) {
 	this.size = 400;
 	this.max = 20;
 	this.shapeArray = [];
-	this.set_description("Polygon animation, rotate with hidden others");
+	this.set_description("Triangles animation with delay, rotation complete");
 	this.set_type(["Animation","Image"]);
 	var option = new SketchOption();
 	option.set_width(1080);
@@ -8489,6 +8495,7 @@ art_CC063.prototype = $extend(art_CCBase.prototype,{
 	}
 	,drawShape: function() {
 		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundRGB(this.ctx,cc_util_ColorUtil.WHITE);
 		var _g1 = 0;
 		var _g = this.shapeArray.length;
 		while(_g1 < _g) {
@@ -8523,9 +8530,9 @@ art_CC063.prototype = $extend(art_CCBase.prototype,{
 			var sh2 = this.shapeArray2[i2];
 			if(this.minDistance == null) {
 				this.minDistance = cc_util_MathUtil.distance(sh11.x,sh11.y,sh2.x,sh2.y);
-				haxe_Log.trace("start export",{ fileName : "CC063.hx", lineNumber : 71, className : "art.CC063", methodName : "drawShape"});
+				haxe_Log.trace("start export",{ fileName : "CC063.hx", lineNumber : 72, className : "art.CC063", methodName : "drawShape"});
 			} else if(this.minDistance == cc_util_MathUtil.distance(sh11.x,sh11.y,sh2.x,sh2.y)) {
-				haxe_Log.trace("stop export",{ fileName : "CC063.hx", lineNumber : 74, className : "art.CC063", methodName : "drawShape"});
+				haxe_Log.trace("stop export",{ fileName : "CC063.hx", lineNumber : 75, className : "art.CC063", methodName : "drawShape"});
 			}
 			cc_CanvasTools.lineColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
 			this.ctx.lineWidth = this.strokeWidth;
@@ -8534,7 +8541,7 @@ art_CC063.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC063.hx", lineNumber : 86, className : "art.CC063", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC063.hx", lineNumber : 87, className : "art.CC063", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -8547,6 +8554,252 @@ art_CC063.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC063
+});
+var art_CC064 = function(ctx) {
+	this._rotationCounter = 0;
+	this._offsetSize = 50;
+	this._maxSize = Global.w;
+	this.max = 20;
+	this.shapeArray = [];
+	this.set_description("Triangles animation with delay, rotation complete");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC064"] = art_CC064;
+art_CC064.__name__ = ["art","CC064"];
+art_CC064.__interfaces__ = [art_ICCBase];
+art_CC064.__super__ = art_CCBase;
+art_CC064.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var _gthis = this;
+		var shape = { _id : "" + i, _type : "square", x : this.get_w2(), y : this.get_h2(), size : this._maxSize - i * this._offsetSize};
+		haxe_Timer.delay(function() {
+			_gthis.onAnimationContinue(shape,i,1);
+		},i * 100);
+		return shape;
+	}
+	,onAnimationContinue: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,3);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(2);
+		var _this1 = _this;
+		var value = -90. * count;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"angle")) {
+			objValue = Reflect.getProperty(_this1._target,"angle");
+		}
+		var _range = { key : "angle", from : _this1._isFrom ? value : objValue, to : !_this1._isFrom ? value : objValue};
+		_this1._props.set("angle",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._easing = cc_lets_easing_Elastic.get_easeInOut();
+		var _this3 = _this2;
+		_this3._options.onComplete = $bind(this,this.onAnimationContinue);
+		_this3._options.onCompleteParams = [sh,id,++count];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.angle));
+			cc_CanvasTools.shadowColorRGB(this.ctx,cc_util_ColorUtil.BLACK,0.1);
+			this.ctx.shadowBlur = 15;
+			cc_CanvasTools.centreFillRect(this.ctx,0,0,sh.size);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC064.hx", lineNumber : 85, className : "art.CC064", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC064
+});
+var art_CC065 = function(ctx) {
+	this._rotationCounter = 0;
+	this._offsetSize = 50;
+	this._maxSize = Global.w;
+	this.max = 20;
+	this.shapeArray = [];
+	this.set_description("Circle animation with delay, rotation complete");
+	this.set_type(["Animation","Image"]);
+	var option = new SketchOption();
+	option.set_width(1080);
+	option.set_autostart(true);
+	option.set_padding(10);
+	option.set_scale(true);
+	ctx = Sketch.create("creative_code_mck",option);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC065"] = art_CC065;
+art_CC065.__name__ = ["art","CC065"];
+art_CC065.__interfaces__ = [art_ICCBase];
+art_CC065.__super__ = art_CCBase;
+art_CC065.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var _gthis = this;
+		var shape = { _id : "" + i, _type : "CircleExtra", x : this.get_w2(), y : this.get_h2(), size : this._maxSize - i * this._offsetSize, scale : 1};
+		shape["shadowBlur"] = 15;
+		haxe_Timer.delay(function() {
+			_gthis.onAnimationContinue(shape,i,1);
+		},i * 100);
+		return shape;
+	}
+	,onAnimationContinue: function(sh,id,count) {
+		var Go = new cc_lets_Go(sh,5);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(0.1);
+		var _this1 = _this;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"scale")) {
+			objValue = Reflect.getProperty(_this1._target,"scale");
+		}
+		var _range = { key : "scale", from : _this1._isFrom ? 3 : objValue, to : !_this1._isFrom ? 3 : objValue};
+		_this1._props.set("scale",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._isYoyo = true;
+		var _this3 = _this2;
+		_this3._easing = cc_lets_easing_Elastic.get_easeInOut();
+		var _this4 = _this3;
+		_this4._options.onComplete = $bind(this,this.onAnimationContinue);
+		_this4._options.onCompleteParams = [sh,id,++count];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			this.ctx.save();
+			this.ctx.translate(sh.x,sh.y);
+			this.ctx.rotate(cc_util_MathUtil.radians(sh.angle));
+			cc_CanvasTools.shadowColorRGB(this.ctx,cc_util_ColorUtil.BLACK,0.1);
+			this.ctx.shadowBlur = sh.shadowBlur;
+			cc_CanvasTools.centreFillRect(this.ctx,0,0,sh.size * sh.scale);
+			this.ctx.restore();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC065.hx", lineNumber : 80, className : "art.CC065", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC065
+});
+var art_CC066 = function(ctx) {
+	this._padding = 50;
+	this._blobSize = 50;
+	this._strokeW = 15;
+	this.divide = Math.round(51.4285714285714306);
+	this.radius1 = 350;
+	this.radius0 = 150;
+	this.shapeMax = 7;
+	this.shapeArray2 = [];
+	this.shapeArray = [];
+	this.set_description("Bio spere");
+	this.divide = Math.round(360 / this.shapeMax);
+	this.radius1 = Math.round(this.get_w2() - 2 * this._padding);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC066"] = art_CC066;
+art_CC066.__name__ = ["art","CC066"];
+art_CC066.__interfaces__ = [art_ICCBase];
+art_CC066.__super__ = art_CCBase;
+art_CC066.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i) {
+		var angle = i * this.divide;
+		var line = { _id : i, x1 : Global.w / 2 + Math.cos(cc_util_MathUtil.radians(angle)) * this.radius0, y1 : Global.h / 2 + Math.sin(cc_util_MathUtil.radians(angle)) * this.radius0, x2 : Global.w / 2 + Math.cos(cc_util_MathUtil.radians(angle)) * this.radius1, y2 : Global.h / 2 + Math.sin(cc_util_MathUtil.radians(angle)) * this.radius1, stroke : this._strokeW, radius : cc_util_MathUtil.random(this.radius0 + this._blobSize,this.radius1)};
+		this.onAnimationHandler(line);
+		return line;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.BLACK);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var line = this.shapeArray[i];
+			var angle = i * this.divide;
+			line.x2 = Global.w / 2 + Math.cos(cc_util_MathUtil.radians(angle)) * line.radius;
+			line.y2 = Global.h / 2 + Math.sin(cc_util_MathUtil.radians(angle)) * line.radius;
+			cc_CanvasTools.lineColour(this.ctx,cc_util_ColorUtil.WHITE.r,cc_util_ColorUtil.WHITE.g,cc_util_ColorUtil.WHITE.b,1);
+			this.ctx.lineWidth = line.stroke;
+			cc_CanvasTools.line(this.ctx,line.x1,line.y1,line.x2,line.y2);
+			cc_CanvasTools.circleFillStroke(this.ctx,line.x2,line.y2,this._blobSize);
+		}
+		cc_CanvasTools.strokeWeight(this.ctx,this._strokeW);
+		cc_CanvasTools.circleFillStroke(this.ctx,this.get_w2(),this.get_h2(),this.radius0);
+	}
+	,onAnimationHandler: function(line) {
+		var Go = new cc_lets_Go(line,cc_util_MathUtil.random(0.5,1.5));
+		Go._isFrom = false;
+		var _this = Go;
+		var value = cc_util_MathUtil.random(this.radius0 + this._blobSize,this.radius1);
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this._target,"radius")) {
+			objValue = Reflect.getProperty(_this._target,"radius");
+		}
+		var _range = { key : "radius", from : _this._isFrom ? value : objValue, to : !_this._isFrom ? value : objValue};
+		_this._props.set("radius",_range);
+		if(_this._isFrom) {
+			_this.updateProperties(0);
+		}
+		var _this1 = _this;
+		_this1._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this2 = _this1;
+		_this2._options.onComplete = $bind(this,this.onAnimationHandler);
+		_this2._options.onCompleteParams = [line];
+	}
+	,setup: function() {
+		var _g1 = 0;
+		var _g = this.shapeMax;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC066
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -8781,6 +9034,10 @@ cc_CanvasTools.colour = function(ctx,r,g,b,a) {
 cc_CanvasTools.colourObj = function(ctx,rgb,a) {
 	var c = cc_util_ColorUtil.getColour(rgb.r,rgb.g,rgb.b,a);
 	ctx.fillStyle = c;
+};
+cc_CanvasTools.shadowColorRGB = function(ctx,rgb,a) {
+	var c = cc_util_ColorUtil.getColour(rgb.r,rgb.g,rgb.b,a);
+	ctx.shadowColor = c;
 };
 cc_CanvasTools.strokeColourObj = function(ctx,rgb,a) {
 	cc_CanvasTools.lineColour(ctx,rgb.r,rgb.g,rgb.b,a);
@@ -10123,11 +10380,152 @@ cc_lets_Go.prototype = {
 	}
 	,__class__: cc_lets_Go
 };
+var cc_lets_easing_Elastic = function() { };
+$hxClasses["cc.lets.easing.Elastic"] = cc_lets_easing_Elastic;
+cc_lets_easing_Elastic.__name__ = ["cc","lets","easing","Elastic"];
+cc_lets_easing_Elastic.__properties__ = {get_easeOut:"get_easeOut",get_easeInOut:"get_easeInOut",get_easeIn:"get_easeIn"};
+cc_lets_easing_Elastic.get_easeIn = function() {
+	return new cc_lets_easing_ElasticEaseIn(0.1,0.4);
+};
+cc_lets_easing_Elastic.get_easeInOut = function() {
+	return new cc_lets_easing_ElasticEaseInOut(0.1,0.4);
+};
+cc_lets_easing_Elastic.get_easeOut = function() {
+	return new cc_lets_easing_ElasticEaseOut(0.1,0.4);
+};
 var cc_lets_easing_IEasing = function() { };
 $hxClasses["cc.lets.easing.IEasing"] = cc_lets_easing_IEasing;
 cc_lets_easing_IEasing.__name__ = ["cc","lets","easing","IEasing"];
 cc_lets_easing_IEasing.prototype = {
 	__class__: cc_lets_easing_IEasing
+};
+var cc_lets_easing_ElasticEaseIn = function(a,p) {
+	this.a = a;
+	this.p = p;
+};
+$hxClasses["cc.lets.easing.ElasticEaseIn"] = cc_lets_easing_ElasticEaseIn;
+cc_lets_easing_ElasticEaseIn.__name__ = ["cc","lets","easing","ElasticEaseIn"];
+cc_lets_easing_ElasticEaseIn.__interfaces__ = [cc_lets_easing_IEasing];
+cc_lets_easing_ElasticEaseIn.prototype = {
+	calculate: function(k) {
+		if(k == 0) {
+			return 0;
+		}
+		if(k == 1) {
+			return 1;
+		}
+		var s;
+		if(this.a < 1) {
+			this.a = 1;
+			s = this.p / 4;
+		} else {
+			s = this.p / (2 * Math.PI) * Math.asin(1 / this.a);
+		}
+		return -(this.a * Math.pow(2,10 * --k) * Math.sin((k - s) * (2 * Math.PI) / this.p));
+	}
+	,ease: function(t,b,c,d) {
+		if(t == 0) {
+			return b;
+		}
+		if((t /= d) == 1) {
+			return b + c;
+		}
+		var s;
+		if(this.a < Math.abs(c)) {
+			this.a = c;
+			s = this.p / 4;
+		} else {
+			s = this.p / (2 * Math.PI) * Math.asin(c / this.a);
+		}
+		return -(this.a * Math.pow(2,10 * --t) * Math.sin((t * d - s) * (2 * Math.PI) / this.p)) + b;
+	}
+	,__class__: cc_lets_easing_ElasticEaseIn
+};
+var cc_lets_easing_ElasticEaseInOut = function(a,p) {
+	this.a = a;
+	this.p = p;
+};
+$hxClasses["cc.lets.easing.ElasticEaseInOut"] = cc_lets_easing_ElasticEaseInOut;
+cc_lets_easing_ElasticEaseInOut.__name__ = ["cc","lets","easing","ElasticEaseInOut"];
+cc_lets_easing_ElasticEaseInOut.__interfaces__ = [cc_lets_easing_IEasing];
+cc_lets_easing_ElasticEaseInOut.prototype = {
+	calculate: function(k) {
+		if(k == 0) {
+			return 0;
+		}
+		if((k /= 0.5) == 2) {
+			return 1;
+		}
+		var p = 0.449999999999999956;
+		var a = 1;
+		var s = p / 4;
+		if(k < 1) {
+			return -0.5 * (Math.pow(2,10 * --k) * Math.sin((k - s) * (2 * Math.PI) / p));
+		}
+		return Math.pow(2,-10 * --k) * Math.sin((k - s) * (2 * Math.PI) / p) * 0.5 + 1;
+	}
+	,ease: function(t,b,c,d) {
+		if(t == 0) {
+			return b;
+		}
+		if((t /= d / 2) == 2) {
+			return b + c;
+		}
+		var s;
+		if(this.a < Math.abs(c)) {
+			this.a = c;
+			s = this.p / 4;
+		} else {
+			s = this.p / (2 * Math.PI) * Math.asin(c / this.a);
+		}
+		if(t < 1) {
+			return -0.5 * (this.a * Math.pow(2,10 * --t) * Math.sin((t * d - s) * (2 * Math.PI) / this.p)) + b;
+		}
+		return this.a * Math.pow(2,-10 * --t) * Math.sin((t * d - s) * (2 * Math.PI) / this.p) * 0.5 + c + b;
+	}
+	,__class__: cc_lets_easing_ElasticEaseInOut
+};
+var cc_lets_easing_ElasticEaseOut = function(a,p) {
+	this.a = a;
+	this.p = p;
+};
+$hxClasses["cc.lets.easing.ElasticEaseOut"] = cc_lets_easing_ElasticEaseOut;
+cc_lets_easing_ElasticEaseOut.__name__ = ["cc","lets","easing","ElasticEaseOut"];
+cc_lets_easing_ElasticEaseOut.__interfaces__ = [cc_lets_easing_IEasing];
+cc_lets_easing_ElasticEaseOut.prototype = {
+	calculate: function(k) {
+		if(k == 0) {
+			return 0;
+		}
+		if(k == 1) {
+			return 1;
+		}
+		var s;
+		if(this.a < 1) {
+			this.a = 1;
+			s = this.p / 4;
+		} else {
+			s = this.p / (2 * Math.PI) * Math.asin(1 / this.a);
+		}
+		return this.a * Math.pow(2,-10 * k) * Math.sin((k - s) * (2 * Math.PI) / this.p) + 1;
+	}
+	,ease: function(t,b,c,d) {
+		if(t == 0) {
+			return b;
+		}
+		if((t /= d) == 1) {
+			return b + c;
+		}
+		var s;
+		if(this.a < Math.abs(c)) {
+			this.a = c;
+			s = this.p / 4;
+		} else {
+			s = this.p / (2 * Math.PI) * Math.asin(c / this.a);
+		}
+		return this.a * Math.pow(2,-10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / this.p) + c + b;
+	}
+	,__class__: cc_lets_easing_ElasticEaseOut
 };
 var cc_lets_easing_Quad = function() { };
 $hxClasses["cc.lets.easing.Quad"] = cc_lets_easing_Quad;
@@ -16076,7 +16474,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-04 01:58:48";
+lib_model_constants_App.BUILD = "2019-04-04 21:46:29";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
