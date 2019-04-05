@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066,art_CC067];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066,art_CC067,art_CC068];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -8907,6 +8907,122 @@ art_CC067.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC067
 });
+var art_CC068 = function(ctx) {
+	this.aniMax = 0;
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid2 = new cc_util_GridUtil();
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("Bigger as a group, then when you are single");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC068"] = art_CC068;
+art_CC068.__name__ = ["art","CC068"];
+art_CC068.__interfaces__ = [art_ICCBase];
+art_CC068.__super__ = art_CCBase;
+art_CC068.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "Square", x : point.x, y : point.y};
+		this.onAnimateHandler(shape,i);
+		return shape;
+	}
+	,onAnimateHandler: function(sh,i) {
+		if(this.aniCounter == null) {
+			haxe_Log.trace("export start",{ fileName : "CC068.hx", lineNumber : 39, className : "art.CC068", methodName : "onAnimateHandler"});
+			this.startT = new Date().getTime();
+			this.aniCounter = 0;
+		}
+		if(this.aniCounter == this.aniMax) {
+			this.endT = new Date().getTime();
+			haxe_Log.trace("export stop (" + (this.endT - this.startT) / 1000 + " sec)",{ fileName : "CC068.hx", lineNumber : 45, className : "art.CC068", methodName : "onAnimateHandler"});
+		}
+		var sh2 = this.grid2.array[i];
+		this.aniCounter++;
+		var Go = new cc_lets_Go(sh,5);
+		Go._isFrom = false;
+		var _this = Go;
+		_this._delay = _this.getDuration(1.5);
+		var _this1 = _this;
+		var x = sh2.x;
+		var y = sh2.y;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"x")) {
+			objValue = Reflect.getProperty(_this1._target,"x");
+		}
+		var _range = { key : "x", from : _this1._isFrom ? x : objValue, to : !_this1._isFrom ? x : objValue};
+		_this1._props.set("x",_range);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_this1._target,"y")) {
+			objValue1 = Reflect.getProperty(_this1._target,"y");
+		}
+		var _range1 = { key : "y", from : _this1._isFrom ? y : objValue1, to : !_this1._isFrom ? y : objValue1};
+		_this1._props.set("y",_range1);
+		if(_this1._isFrom) {
+			_this1.updateProperties(0);
+		}
+		var _this2 = _this1;
+		_this2._isYoyo = true;
+		var _this3 = _this2;
+		_this3._easing = cc_lets_easing_Sine.get_easeInOut();
+		var _this4 = _this3;
+		_this4._options.onComplete = $bind(this,this.onAnimateHandler);
+		_this4._options.onCompleteParams = [sh,i];
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		if(this.isDebug) {
+			cc_util_ShapeUtil.gridField(this.ctx,this.grid);
+			cc_util_ShapeUtil.gridField(this.ctx,this.grid2);
+		}
+		var _color = cc_util_ColorUtil.WHITE;
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			cc_CanvasTools.fillColourRGB(this.ctx,_color);
+			cc_CanvasTools.shadowSet(this.ctx,cc_util_ColorUtil.BLACK,0.2,15);
+			cc_CanvasTools.centreFillRect(this.ctx,sh.x,sh.y,this.grid.cellWidth,this.grid.cellHeight);
+		}
+		var _g11 = 0;
+		var _g2 = this.shapeArray.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var sh1 = this.shapeArray[i1];
+			cc_CanvasTools.fillColourRGB(this.ctx,_color);
+			this.ctx.shadowBlur = 0;
+			cc_CanvasTools.centreFillRect(this.ctx,sh1.x,sh1.y,this.grid.cellWidth,this.grid.cellHeight);
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC068.hx", lineNumber : 83, className : "art.CC068", methodName : "setup"});
+		var padding = Global.w * .3;
+		this.grid.setDimension(Global.w - padding,Global.h - padding);
+		this.grid.setNumbered(3,3);
+		this.grid.setIsCenterPoint(true);
+		this.grid2.setDimension(Global.w,Global.h);
+		this.grid2.setNumbered(3,3);
+		this.grid2.setIsCenterPoint(true);
+		this.aniMax = this.grid.array.length;
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC068
+});
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
 cc_AST.__name__ = ["cc","AST"];
@@ -9144,6 +9260,17 @@ cc_CanvasTools.colourObj = function(ctx,rgb,a) {
 cc_CanvasTools.shadowColorRGB = function(ctx,rgb,a) {
 	var c = cc_util_ColorUtil.getColour(rgb.r,rgb.g,rgb.b,a);
 	ctx.shadowColor = c;
+};
+cc_CanvasTools.shadowSet = function(ctx,rgb,a,blur) {
+	if(blur == null) {
+		blur = 15;
+	}
+	if(a == null) {
+		a = 1;
+	}
+	var c = cc_util_ColorUtil.getColour(rgb.r,rgb.g,rgb.b,a);
+	ctx.shadowColor = c;
+	ctx.shadowBlur = blur;
 };
 cc_CanvasTools.strokeColourObj = function(ctx,rgb,a) {
 	cc_CanvasTools.lineColour(ctx,rgb.r,rgb.g,rgb.b,a);
@@ -17307,7 +17434,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-05 13:15:51";
+lib_model_constants_App.BUILD = "2019-04-05 14:50:50";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
