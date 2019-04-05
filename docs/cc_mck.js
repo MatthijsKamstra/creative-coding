@@ -26,6 +26,14 @@ EReg.prototype = {
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = ["HxOverrides"];
+HxOverrides.dateStr = function(date) {
+	var m = date.getMonth() + 1;
+	var d = date.getDate();
+	var h = date.getHours();
+	var mi = date.getMinutes();
+	var s = date.getSeconds();
+	return date.getFullYear() + "-" + (m < 10 ? "0" + m : "" + m) + "-" + (d < 10 ? "0" + d : "" + d) + " " + (h < 10 ? "0" + h : "" + h) + ":" + (mi < 10 ? "0" + mi : "" + mi) + ":" + (s < 10 ? "0" + s : "" + s);
+};
 HxOverrides.cca = function(s,index) {
 	var x = s.charCodeAt(index);
 	if(x != x) {
@@ -149,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066,art_CC067];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -8530,9 +8538,11 @@ art_CC063.prototype = $extend(art_CCBase.prototype,{
 			var sh2 = this.shapeArray2[i2];
 			if(this.minDistance == null) {
 				this.minDistance = cc_util_MathUtil.distance(sh11.x,sh11.y,sh2.x,sh2.y);
-				haxe_Log.trace("start export",{ fileName : "CC063.hx", lineNumber : 72, className : "art.CC063", methodName : "drawShape"});
+				haxe_Log.trace("start export",{ fileName : "CC063.hx", lineNumber : 78, className : "art.CC063", methodName : "drawShape"});
+				this._startT = new Date().getTime();
 			} else if(this.minDistance == cc_util_MathUtil.distance(sh11.x,sh11.y,sh2.x,sh2.y)) {
-				haxe_Log.trace("stop export",{ fileName : "CC063.hx", lineNumber : 75, className : "art.CC063", methodName : "drawShape"});
+				haxe_Log.trace("stop export",{ fileName : "CC063.hx", lineNumber : 83, className : "art.CC063", methodName : "drawShape"});
+				haxe_Log.trace((new Date().getTime() - this._startT) / 1000 + ".sec",{ fileName : "CC063.hx", lineNumber : 84, className : "art.CC063", methodName : "drawShape"});
 			}
 			cc_CanvasTools.lineColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
 			this.ctx.lineWidth = this.strokeWidth;
@@ -8541,7 +8551,7 @@ art_CC063.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC063.hx", lineNumber : 87, className : "art.CC063", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC063.hx", lineNumber : 97, className : "art.CC063", methodName : "setup"});
 		var _g1 = 0;
 		var _g = this.shapeMax;
 		while(_g1 < _g) {
@@ -8800,6 +8810,102 @@ art_CC066.prototype = $extend(art_CCBase.prototype,{
 		this.drawShape();
 	}
 	,__class__: art_CC066
+});
+var art_CC067 = function(ctx) {
+	this.max = 20;
+	this.strokeW = 50;
+	this._maxR = 150;
+	this._minR = 20;
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC067"] = art_CC067;
+art_CC067.__name__ = ["art","CC067"];
+art_CC067.__interfaces__ = [art_ICCBase];
+art_CC067.__super__ = art_CCBase;
+art_CC067.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var padding = this._maxR + this.strokeW / 2;
+		var shape = { _id : "" + i, _type : "circle", x : padding + cc_util_MathUtil.random(Global.w - padding * 2), y : padding + cc_util_MathUtil.random(Global.h - padding * 2), radius : cc_util_MathUtil.random(this._minR,this._maxR)};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+		var target = circle;
+		var x = circle.x;
+		var y = circle.y;
+		var _go = 1 + Math.random();
+		var _go1 = new cc_lets_Go(target,_go);
+		_go1._isWiggle = true;
+		var max = 20;
+		var min = -20;
+		var value = Math.random() * (max - min);
+		var value1 = x + value + min;
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(_go1._target,"x")) {
+			objValue = Reflect.getProperty(_go1._target,"x");
+		}
+		var _range = { key : "x", from : _go1._isFrom ? value1 : objValue, to : !_go1._isFrom ? value1 : objValue};
+		_go1._props.set("x",_range);
+		if(_go1._isFrom) {
+			_go1.updateProperties(0);
+		}
+		var value2 = Math.random() * (max - min);
+		var value3 = y + value2 + min;
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(_go1._target,"y")) {
+			objValue1 = Reflect.getProperty(_go1._target,"y");
+		}
+		var _range1 = { key : "y", from : _go1._isFrom ? value3 : objValue1, to : !_go1._isFrom ? value3 : objValue1};
+		_go1._props.set("y",_range1);
+		if(_go1._isFrom) {
+			_go1.updateProperties(0);
+		}
+		_go1._easing = cc_lets_easing_Sine.get_easeInOut();
+		_go1._options.onComplete = function() {
+			cc_lets_Go.wiggle(target,x,y,20);
+		};
+		_go1._options.onCompleteParams = null;
+	}
+	,drawShape: function() {
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var _g1 = 0;
+		var _g = this.shapeArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var sh = this.shapeArray[i];
+			cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK);
+			cc_CanvasTools.strokeWeight(this.ctx,this.strokeW);
+			cc_CanvasTools.circleFillStroke(this.ctx,sh.x,sh.y,sh.radius);
+		}
+		var _g11 = 0;
+		var _g2 = this.shapeArray.length;
+		while(_g11 < _g2) {
+			var i1 = _g11++;
+			var sh1 = this.shapeArray[i1];
+			cc_CanvasTools.fillColourRGB(this.ctx,cc_util_ColorUtil.WHITE);
+			cc_CanvasTools.fillCircle(this.ctx,sh1.x,sh1.y,sh1.radius);
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC067.hx", lineNumber : 67, className : "art.CC067", methodName : "setup"});
+		this.isDebug = true;
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.max;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i));
+		}
+	}
+	,draw: function() {
+		this.drawShape();
+	}
+	,__class__: art_CC067
 });
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
@@ -10014,7 +10120,7 @@ cc_lets_Easing.reflect = function(f) {
 	};
 };
 var cc_lets_Go = function(target,duration) {
-	this.VERSION = "1.0.6";
+	this.VERSION = "1.0.7";
 	this.DEBUG = false;
 	this.FRAME_RATE = 60;
 	this._seconds = 0;
@@ -10022,6 +10128,7 @@ var cc_lets_Go = function(target,duration) {
 	this._initTime = 0;
 	this._isDelayDone = false;
 	this._isTimeBased = false;
+	this._isWiggle = false;
 	this._isYoyo = false;
 	this._isFrom = false;
 	this._props = new haxe_ds_StringMap();
@@ -10059,12 +10166,50 @@ cc_lets_Go.timer = function(duration) {
 	var Go = new cc_lets_Go({ },duration);
 	return Go;
 };
+cc_lets_Go.wiggle = function(target,x,y,wiggleRoom) {
+	if(wiggleRoom == null) {
+		wiggleRoom = 10;
+	}
+	var _go = 1 + Math.random();
+	var _go1 = new cc_lets_Go(target,_go);
+	_go1._isWiggle = true;
+	var max = wiggleRoom;
+	var min = -wiggleRoom;
+	var value = Math.random() * (max - min);
+	var value1 = x + value + min;
+	var objValue = 0;
+	if(Object.prototype.hasOwnProperty.call(_go1._target,"x")) {
+		objValue = Reflect.getProperty(_go1._target,"x");
+	}
+	var _range = { key : "x", from : _go1._isFrom ? value1 : objValue, to : !_go1._isFrom ? value1 : objValue};
+	_go1._props.set("x",_range);
+	if(_go1._isFrom) {
+		_go1.updateProperties(0);
+	}
+	var value2 = Math.random() * (max - min);
+	var value3 = y + value2 + min;
+	var objValue1 = 0;
+	if(Object.prototype.hasOwnProperty.call(_go1._target,"y")) {
+		objValue1 = Reflect.getProperty(_go1._target,"y");
+	}
+	var _range1 = { key : "y", from : _go1._isFrom ? value3 : objValue1, to : !_go1._isFrom ? value3 : objValue1};
+	_go1._props.set("y",_range1);
+	if(_go1._isFrom) {
+		_go1.updateProperties(0);
+	}
+	_go1._easing = cc_lets_easing_Sine.get_easeInOut();
+	_go1._options.onComplete = function() {
+		cc_lets_Go.wiggle(target,x,y,wiggleRoom);
+	};
+	_go1._options.onCompleteParams = null;
+	return _go1;
+};
 cc_lets_Go.prototype = {
 	isTimeBased: function(isTimeBased) {
 		if(isTimeBased == null) {
 			isTimeBased = true;
 		}
-		haxe_Log.trace("Fixme: this doesn\t work right now",{ fileName : "Go.hx", lineNumber : 116, className : "cc.lets.Go", methodName : "isTimeBased"});
+		haxe_Log.trace("Fixme: this doesn\t work right now",{ fileName : "Go.hx", lineNumber : 147, className : "cc.lets.Go", methodName : "isTimeBased"});
 		this._isTimeBased = isTimeBased;
 		this._duration = this._duration / this.FRAME_RATE | 0;
 		return this;
@@ -10112,6 +10257,27 @@ cc_lets_Go.prototype = {
 		}
 		var _range = { key : "y", from : this._isFrom ? value : objValue, to : !this._isFrom ? value : objValue};
 		this._props.set("y",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
+		return this;
+	}
+	,pos: function(x,y) {
+		var objValue = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"x")) {
+			objValue = Reflect.getProperty(this._target,"x");
+		}
+		var _range = { key : "x", from : this._isFrom ? x : objValue, to : !this._isFrom ? x : objValue};
+		this._props.set("x",_range);
+		if(this._isFrom) {
+			this.updateProperties(0);
+		}
+		var objValue1 = 0;
+		if(Object.prototype.hasOwnProperty.call(this._target,"y")) {
+			objValue1 = Reflect.getProperty(this._target,"y");
+		}
+		var _range1 = { key : "y", from : this._isFrom ? y : objValue1, to : !this._isFrom ? y : objValue1};
+		this._props.set("y",_range1);
 		if(this._isFrom) {
 			this.updateProperties(0);
 		}
@@ -10245,7 +10411,7 @@ cc_lets_Go.prototype = {
 	}
 	,init: function() {
 		if(this._isTimeBased) {
-			haxe_Log.trace("TODO: build timebased animation",{ fileName : "Go.hx", lineNumber : 347, className : "cc.lets.Go", methodName : "init"});
+			haxe_Log.trace("TODO: build timebased animation",{ fileName : "Go.hx", lineNumber : 393, className : "cc.lets.Go", methodName : "init"});
 		} else if(cc_lets_Go._requestId == null) {
 			cc_lets_Go._requestId = window.requestAnimationFrame($bind(this,this.onEnterFrameHandler));
 		}
@@ -10270,7 +10436,7 @@ cc_lets_Go.prototype = {
 	}
 	,update: function() {
 		if(this._delay > 0 && this._isTimeBased) {
-			haxe_Log.trace("FIXME this doesn't work yet",{ fileName : "Go.hx", lineNumber : 386, className : "cc.lets.Go", methodName : "update"});
+			haxe_Log.trace("FIXME this doesn't work yet",{ fileName : "Go.hx", lineNumber : 432, className : "cc.lets.Go", methodName : "update"});
 		}
 		if(this._delay > 0) {
 			this._delay--;
@@ -10278,7 +10444,7 @@ cc_lets_Go.prototype = {
 		}
 		if(!this._isDelayDone) {
 			if(this.DEBUG) {
-				haxe_Log.trace("should trigger only once: " + this._id,{ fileName : "Go.hx", lineNumber : 393, className : "cc.lets.Go", methodName : "update"});
+				haxe_Log.trace("should trigger only once: " + this._id,{ fileName : "Go.hx", lineNumber : 439, className : "cc.lets.Go", methodName : "update"});
 			}
 			if(Reflect.isFunction(this._options.onAnimationStart)) {
 				var func = this._options.onAnimationStart;
@@ -10318,7 +10484,7 @@ cc_lets_Go.prototype = {
 	}
 	,complete: function() {
 		if(this.DEBUG) {
-			haxe_Log.trace("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + cc_lets_Go._tweens.length,{ fileName : "Go.hx", lineNumber : 451, className : "cc.lets.Go", methodName : "complete"});
+			haxe_Log.trace("complete :: \"" + this._id + "\", _duration: " + this._duration + ", _seconds: " + this._seconds + ", _initTime: " + this._initTime + " / _tweens.length: " + cc_lets_Go._tweens.length,{ fileName : "Go.hx", lineNumber : 497, className : "cc.lets.Go", methodName : "complete"});
 		}
 		if(this._isYoyo) {
 			var n = this._props.keys();
@@ -10989,6 +11155,29 @@ cc_noise_Perlin.prototype = {
 	}
 	,__class__: cc_noise_Perlin
 };
+var cc_tool_Embed = function() {
+};
+$hxClasses["cc.tool.Embed"] = cc_tool_Embed;
+cc_tool_Embed.__name__ = ["cc","tool","Embed"];
+cc_tool_Embed.script = function(id,src,callback,callbackArray) {
+	var el = window.document.createElement("script");
+	el.id = id;
+	el.src = src;
+	el.crossOrigin = "anonymous";
+	el.onload = function() {
+		if(callback != null) {
+			if(callbackArray == null) {
+				callback.apply(callback,[id]);
+			} else {
+				callback.apply(callback,callbackArray);
+			}
+		}
+	};
+	window.document.body.appendChild(el);
+};
+cc_tool_Embed.prototype = {
+	__class__: cc_tool_Embed
+};
 var cc_tool_ExportFile = function() { };
 $hxClasses["cc.tool.ExportFile"] = cc_tool_ExportFile;
 cc_tool_ExportFile.__name__ = ["cc","tool","ExportFile"];
@@ -11341,6 +11530,634 @@ cc_tool_convert_SvgToImage.convert = function(svg,callback) {
 };
 cc_tool_convert_SvgToImage.prototype = {
 	__class__: cc_tool_convert_SvgToImage
+};
+var cc_tool_export_ExportNames = function() {
+};
+$hxClasses["cc.tool.export.ExportNames"] = cc_tool_export_ExportNames;
+cc_tool_export_ExportNames.__name__ = ["cc","tool","export","ExportNames"];
+cc_tool_export_ExportNames.prototype = {
+	__class__: cc_tool_export_ExportNames
+};
+var cc_tool_export_ExportWrapperBase = function() {
+	this._isDebug = false;
+};
+$hxClasses["cc.tool.export.ExportWrapperBase"] = cc_tool_export_ExportWrapperBase;
+cc_tool_export_ExportWrapperBase.__name__ = ["cc","tool","export","ExportWrapperBase"];
+cc_tool_export_ExportWrapperBase.prototype = {
+	progress: function(func) {
+		this._onProgressHandler = func;
+	}
+	,complete: function(func) {
+		this._onExportComplete = func;
+	}
+	,getMarkdown: function(obj) {
+		var md = "# " + this.toString() + "\n\n- Generated on: " + Std.string(new Date()) + "\n- total images: " + obj.imageStringArray.length + "\n- calculated time: " + obj.imageStringArray.length / 60 + " sec\n- file name: `_" + obj.filename + "_" + obj.timestamp + ".zip`\n- delay: " + obj.delay + " frames (" + obj.delay / 60 + " sec)\n- record: " + obj.record + " frames (" + obj.record / 60 + " sec)\n\n## Instagram\n\n```\nsketch." + obj.filename + " :: " + obj.description + "\n\n#codeart #coding #creativecode #generative #generativeArt\n#minimalism #minimalist #minimal\n#haxe #javascript #js #nodejs\n#animation #illustration #graphicdesign\n```\n\n## convert\n\nopen terminal\n\n```\nsh convert.sh\n```\n\n## Folder structure\n\n```\n+ _" + obj.filename + "_" + obj.timestamp + ".zip\n+ _" + obj.filename + "\n\t- convert.sh\n\t- README.MD\n\t+ sequence\n\t\t- image_" + StringTools.lpad("0","0",4) + ".png\n\t\t- image_" + StringTools.lpad("1","0",4) + ".png\n\t\t- ...\n```\n";
+		return md;
+	}
+	,getBashConvert: function(obj) {
+		var bash = "#!/bin/bash\n\necho 'Start convertions png sequence to mp4'\n\nffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  " + obj.filename + "_output_30fps.mp4\n# ffmpeg -y -r 30 -i sequence/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  sequence/_output_30fps.mp4\n\necho 'End convertions png sequence to mp4'\n\n";
+		return bash;
+	}
+	,getBashConvertPng: function(obj) {
+		var bash2 = "\n#!/bin/bash\n\necho 'Start remove transparancy from images sequence'\n\ncd sequence\nmkdir output\nfor i in *.png; do\n   convert \"$" + "i\" -background white -alpha remove output/\"$" + "i\"\n   echo \"$" + "i\"\ndone\n\necho 'End remove transparancy from images sequence'\necho 'Start convertions png sequence to mp4'\n\nffmpeg -y -r 30 -i output/image_%04d.png -c:v libx264 -strict -2 -pix_fmt yuv420p -shortest -filter:v \"setpts=0.5*PTS\"  ../" + obj.filename + "_white_output_30fps.mp4\n\necho 'End convertions png sequence to mp4'\n\n";
+		return bash2;
+	}
+	,debug: function(isDebug) {
+		this._isDebug = isDebug;
+	}
+	,toString: function() {
+		return "[ExportTypeBase]";
+	}
+	,__class__: cc_tool_export_ExportWrapperBase
+};
+var cc_tool_export_IExport = function() { };
+$hxClasses["cc.tool.export.IExport"] = cc_tool_export_IExport;
+cc_tool_export_IExport.__name__ = ["cc","tool","export","IExport"];
+cc_tool_export_IExport.prototype = {
+	__class__: cc_tool_export_IExport
+};
+var cc_tool_export_ExportNodeServer = function() {
+	this._folder = "sequence";
+	this._name = "frame";
+	this._exportCounter = 0;
+	this._isRecording = false;
+	this._isClear = false;
+	this._isTimer = false;
+	this._isSocketReady = false;
+	this._isExportServerReady = false;
+	cc_tool_export_ExportWrapperBase.call(this);
+	this.embedScripts($bind(this,this.onEmbedComplete));
+};
+$hxClasses["cc.tool.export.ExportNodeServer"] = cc_tool_export_ExportNodeServer;
+cc_tool_export_ExportNodeServer.__name__ = ["cc","tool","export","ExportNodeServer"];
+cc_tool_export_ExportNodeServer.__interfaces__ = [cc_tool_export_IExport];
+cc_tool_export_ExportNodeServer.__super__ = cc_tool_export_ExportWrapperBase;
+cc_tool_export_ExportNodeServer.prototype = $extend(cc_tool_export_ExportWrapperBase.prototype,{
+	'export': function(obj) {
+		if(this._isDebug) {
+			haxe_Log.trace("" + this.toString() + " - export",{ fileName : "ExportNodeServer.hx", lineNumber : 38, className : "cc.tool.export.ExportNodeServer", methodName : "export"});
+		}
+		this._exportArray = obj.imageStringArray;
+		this._exportCounter = 0;
+		this.deleteFolder();
+	}
+	,startExport: function() {
+		if(this._isDebug) {
+			haxe_Log.trace("startExport: " + this._exportCounter + " / " + this._exportArray.length,{ fileName : "ExportNodeServer.hx", lineNumber : 49, className : "cc.tool.export.ExportNodeServer", methodName : "startExport"});
+		}
+		if(Reflect.isFunction(this._onProgressHandler)) {
+			this._onProgressHandler.apply(this._onProgressHandler,[this._exportCounter / this._exportArray.length * 100]);
+		}
+		if(this._exportCounter >= this._exportArray.length) {
+			this._isRecording = false;
+			if(Reflect.isFunction(this._onExportComplete)) {
+				this._onExportComplete.apply(this._onExportComplete,[]);
+			}
+			if(this._isDebug) {
+				haxe_Log.trace("" + this.toString() + " STOP recording base on total frames",{ fileName : "ExportNodeServer.hx", lineNumber : 60, className : "cc.tool.export.ExportNodeServer", methodName : "startExport"});
+			}
+			this.convertExport();
+			return;
+		}
+		var id = Std.string(new Date().getTime());
+		var data = { _id : id, file : this._exportArray[this._exportCounter], name : "" + this._name + "-" + StringTools.lpad(Std.string(this._exportCounter),"0",4), folder : "" + this._folder};
+		if(this._isDebug) {
+			haxe_Log.trace("" + this.toString() + " renderSequence : " + data._id,{ fileName : "ExportNodeServer.hx", lineNumber : 73, className : "cc.tool.export.ExportNodeServer", methodName : "startExport"});
+		}
+		this._socket.emit(cc_tool_export_ExportNames.SEQUENCE,data);
+		if(this._exportCounter % 60 == 1) {
+			if(this._isDebug) {
+				haxe_Log.trace("current frame render: " + this._exportCounter + "/" + this._exportArray.length,{ fileName : "ExportNodeServer.hx", lineNumber : 80, className : "cc.tool.export.ExportNodeServer", methodName : "startExport"});
+			}
+		}
+	}
+	,convertExport: function() {
+		var data = { name : "" + this._name, clear : this._isClear, folder : "" + this._folder, description : "export this file "};
+		this._socket.emit(cc_tool_export_ExportNames.COMBINE,data);
+	}
+	,deleteFolder: function() {
+		var data = { name : "" + this._name, clear : this._isClear, folder : "" + this._folder};
+		this._socket.emit(cc_tool_export_ExportNames.RENDER_CLEAR,data);
+	}
+	,initSocket: function() {
+		var _gthis = this;
+		if(this._isDebug) {
+			haxe_Log.trace("" + this.toString() + " Init Socket",{ fileName : "ExportNodeServer.hx", lineNumber : 109, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+		}
+		this._socket = io();
+		this._socket.on("connect_error",function(err) {
+			window.console.group("Connection error export server");
+			window.console.warn("" + _gthis.toString() + " Error connecting to server \"" + err + "\", closing connection");
+			window.console.info("this probably means that cc-export project isn't running");
+			window.console.groupEnd();
+			_gthis._socket.close();
+			_gthis._isRecording = false;
+			_gthis._isExportServerReady = false;
+		});
+		this._socket.on("connect",function(err1) {
+			if(err1 == "undefined") {
+				haxe_Log.trace("" + _gthis.toString() + " connect: " + err1,{ fileName : "ExportNodeServer.hx", lineNumber : 125, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			} else {
+				haxe_Log.trace("" + _gthis.toString() + " connect",{ fileName : "ExportNodeServer.hx", lineNumber : 127, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			}
+			if(err1 == null) {
+				_gthis._isSocketReady = true;
+			}
+		});
+		this._socket.on("disconnect",function(err2) {
+			haxe_Log.trace("" + _gthis.toString() + " disconnect: " + err2,{ fileName : "ExportNodeServer.hx", lineNumber : 134, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+		});
+		this._socket.on("connect_failed",function(err3) {
+			haxe_Log.trace("" + _gthis.toString() + " connect_failed: " + err3,{ fileName : "ExportNodeServer.hx", lineNumber : 139, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+		});
+		this._socket.on("error",function(err4) {
+			haxe_Log.trace("" + _gthis.toString() + " error: " + err4,{ fileName : "ExportNodeServer.hx", lineNumber : 142, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+		});
+		this._socket.on("message",function(data) {
+			if(data.message != null) {
+				haxe_Log.trace("" + _gthis.toString() + " message: " + data.message,{ fileName : "ExportNodeServer.hx", lineNumber : 148, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			} else {
+				haxe_Log.trace("" + _gthis.toString() + " There is a problem: " + Std.string(data),{ fileName : "ExportNodeServer.hx", lineNumber : 150, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			}
+		});
+		this._socket.emit(cc_tool_export_ExportNames.CHECKIN);
+		this._socket.on(cc_tool_export_ExportNames.SERVER_CHECKIN,function(data1) {
+			if(data1.checkin != null && data1.checkin == true) {
+				_gthis._isExportServerReady = true;
+				haxe_Log.trace("" + _gthis.toString() + " data:  + " + Std.string(data1) + ", & _isExportServerReady: " + (_gthis._isExportServerReady == null ? "null" : "" + _gthis._isExportServerReady),{ fileName : "ExportNodeServer.hx", lineNumber : 157, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			} else {
+				haxe_Log.trace("" + _gthis.toString() + " There is a problem: " + Std.string(data1),{ fileName : "ExportNodeServer.hx", lineNumber : 159, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			}
+		});
+		this._socket.on(cc_tool_export_ExportNames.RENDER_DONE,function(data2) {
+			haxe_Log.trace(data2,{ fileName : "ExportNodeServer.hx", lineNumber : 163, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+		});
+		this._socket.on(cc_tool_export_ExportNames.RENDER_CLEAR_DONE,function(data3) {
+			if(_gthis._isDebug) {
+				haxe_Log.trace(data3.message,{ fileName : "ExportNodeServer.hx", lineNumber : 167, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			}
+			_gthis.startExport();
+		});
+		this._socket.on(cc_tool_export_ExportNames.SEQUENCE_NEXT,function(data4) {
+			if(_gthis._isDebug) {
+				haxe_Log.trace("SEQUENCE_NEXT: " + data4.message,{ fileName : "ExportNodeServer.hx", lineNumber : 172, className : "cc.tool.export.ExportNodeServer", methodName : "initSocket"});
+			}
+			_gthis._exportCounter++;
+			_gthis.startExport();
+		});
+	}
+	,onEmbedComplete: function(value) {
+		if(this._isDebug) {
+			window.console.log("" + this.toString() + " " + value);
+		}
+		this.initSocket();
+	}
+	,embedScripts: function(callback,callbackArray) {
+		cc_tool_Embed.script("embedSocketIO","https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js",$bind(this,this.onEmbedComplete),["socket.io is embedded and loaded"]);
+	}
+	,toString: function() {
+		return "[Export via Node]";
+	}
+	,__class__: cc_tool_export_ExportNodeServer
+});
+var cc_tool_export_ExportNone = function() {
+	cc_tool_export_ExportWrapperBase.call(this);
+	haxe_Log.trace(this.toString(),{ fileName : "ExportNone.hx", lineNumber : 8, className : "cc.tool.export.ExportNone", methodName : "new"});
+};
+$hxClasses["cc.tool.export.ExportNone"] = cc_tool_export_ExportNone;
+cc_tool_export_ExportNone.__name__ = ["cc","tool","export","ExportNone"];
+cc_tool_export_ExportNone.__interfaces__ = [cc_tool_export_IExport];
+cc_tool_export_ExportNone.__super__ = cc_tool_export_ExportWrapperBase;
+cc_tool_export_ExportNone.prototype = $extend(cc_tool_export_ExportWrapperBase.prototype,{
+	'export': function(obj) {
+		var _gthis = this;
+		haxe_Timer.delay(function() {
+			_gthis._progress(25);
+		},250);
+		haxe_Timer.delay(function() {
+			_gthis._progress(50);
+		},500);
+		haxe_Timer.delay(function() {
+			_gthis._progress(75);
+		},750);
+		haxe_Timer.delay(function() {
+			_gthis._progress(100);
+		},1000);
+		haxe_Timer.delay(function() {
+			_gthis._complete(100);
+		},1000);
+	}
+	,_progress: function(value) {
+		if(Reflect.isFunction(this._onProgressHandler)) {
+			haxe_Log.trace("onProgressHandler (" + value + ")",{ fileName : "ExportNone.hx", lineNumber : 34, className : "cc.tool.export.ExportNone", methodName : "_progress"});
+			this._onProgressHandler.apply(this._onProgressHandler,[value]);
+		}
+	}
+	,_complete: function(value) {
+		if(Reflect.isFunction(this._onExportComplete)) {
+			haxe_Log.trace("onExportComplete (" + value + ")",{ fileName : "ExportNone.hx", lineNumber : 41, className : "cc.tool.export.ExportNone", methodName : "_complete"});
+			this._onExportComplete.apply(this._onExportComplete,[]);
+		}
+	}
+	,toString: function() {
+		return "[Export via TEST/NONE]";
+	}
+	,__class__: cc_tool_export_ExportNone
+});
+var cc_tool_export_ExportWrapper = function(ctx,fileName) {
+	this.imageStringArray = [];
+	this._type = cc_tool_export_ExportType.NONE;
+	this._isMenu = true;
+	this._record = 600;
+	this._delay = 120;
+	this.description = "";
+	this._progressBarHeight = 3;
+	this._recordCounter = 0;
+	this._delayCounter = 0;
+	this.isExportActive = false;
+	this.fps = 60;
+	this.createQuickSettings();
+	this.create_ProgressBar();
+	if(ctx == null) {
+		window.console.warn("This is not acceptable, I need a context!");
+		return;
+	}
+	this._filename = fileName == null ? this.toString() : fileName;
+	this.set__ctx(ctx);
+	this.out("ExportWrapper ready");
+};
+$hxClasses["cc.tool.export.ExportWrapper"] = cc_tool_export_ExportWrapper;
+cc_tool_export_ExportWrapper.__name__ = ["cc","tool","export","ExportWrapper"];
+cc_tool_export_ExportWrapper.prototype = {
+	startExport: function() {
+		this._startT = new Date().getTime();
+		this.isExportActive = true;
+		this.imageStringArray = [];
+		this._delayCounter = 0;
+		this._recordCounter = 0;
+		this.out("" + this.toString() + " - start export - 0ms");
+		if(this.get__isDebug()) {
+			haxe_Log.trace(this.toString() + " - start export - 0ms",{ fileName : "ExportWrapper.hx", lineNumber : 84, className : "cc.tool.export.ExportWrapper", methodName : "startExport"});
+			haxe_Log.trace(this.settings(),{ fileName : "ExportWrapper.hx", lineNumber : 85, className : "cc.tool.export.ExportWrapper", methodName : "startExport"});
+		}
+	}
+	,stopExport: function() {
+		this._endT = new Date().getTime();
+		this.isExportActive = false;
+		this.out(this.toString() + (" - stop export - " + (this._endT - this._startT) / 1000 + "sec"));
+		if(this.get__isDebug()) {
+			haxe_Log.trace(this.toString() + (" - stop export - " + (this._endT - this._startT) / 1000 + "sec"),{ fileName : "ExportWrapper.hx", lineNumber : 94, className : "cc.tool.export.ExportWrapper", methodName : "stopExport"});
+			haxe_Log.trace(this.settings(),{ fileName : "ExportWrapper.hx", lineNumber : 95, className : "cc.tool.export.ExportWrapper", methodName : "stopExport"});
+		}
+		if(Reflect.isFunction(this._onComplete)) {
+			var arr = this._onCompleteParams != null ? this._onCompleteParams : [];
+			this._onComplete.apply(this._onComplete,arr);
+		}
+		if(Reflect.isFunction(this._onRecordComplete)) {
+			var arr1 = this._onRecordCompleteParams != null ? this._onRecordCompleteParams : [];
+			this._onRecordComplete.apply(this._onRecordComplete,arr1);
+		}
+		var timeStamp = this._endT;
+		haxe_Log.trace(this.exportType.toString(),{ fileName : "ExportWrapper.hx", lineNumber : 111, className : "cc.tool.export.ExportWrapper", methodName : "stopExport"});
+		this.exportType.progress($bind(this,this.progressGeneration));
+		this.exportType.complete(this._onExportComplete);
+		this.exportType.debug(this.get__isDebug());
+		this.exportType["export"](this.settings());
+	}
+	,init: function() {
+		if($bind(this,this.pulse) == null) {
+			window.console.warn("no pulse detected, hook into the animation");
+			return;
+		}
+		this.startExport();
+	}
+	,start: function() {
+		this.set__delay(0);
+		this.init();
+	}
+	,stop: function() {
+		this.stopExport();
+	}
+	,debug: function(isDebug) {
+		if(isDebug == null) {
+			isDebug = true;
+		}
+		this.set__isDebug(isDebug);
+	}
+	,onComplete: function(func,arr) {
+		this._onComplete = func;
+		this._onCompleteParams = arr;
+	}
+	,onRecordStart: function(func,arr) {
+		this._onRecordStart = func;
+		this._onRecordStartParams = arr;
+	}
+	,onRecordComplete: function(func,arr) {
+		this._onRecordComplete = func;
+		this._onRecordCompleteParams = arr;
+	}
+	,onExportComplete: function(func,arr) {
+		this._onExportComplete = func;
+		this._onExportCompleteParams = arr;
+	}
+	,menu: function(isVisible) {
+		if(isVisible == null) {
+			isVisible = false;
+		}
+		this.set__isMenu(isVisible);
+		if(!this.get__isMenu()) {
+			this.panel1.hide();
+		}
+	}
+	,type: function(type) {
+		this.set__type(type);
+		var _g = this.get__type();
+		switch(_g[1]) {
+		case 0:
+			this.exportType = new cc_tool_export_ExportZip();
+			break;
+		case 1:
+			this.exportType = new cc_tool_export_ExportNodeServer();
+			break;
+		case 2:case 3:
+			this.exportType = new cc_tool_export_ExportNone();
+			break;
+		}
+	}
+	,exporttype: function(type) {
+		this.type(type);
+	}
+	,delay: function(frames) {
+		this.set__delay(frames);
+	}
+	,delayInSeconds: function(sec) {
+		this.set__delay(Math.round(sec * this.fps));
+		this.panel1.setValue("delay in seconds",sec);
+	}
+	,record: function(frames) {
+		this.set__record(frames);
+	}
+	,recordInSeconds: function(sec) {
+		this.set__record(Math.round(sec * this.fps));
+		this.panel1.setValue("record in seconds",sec);
+	}
+	,settings: function() {
+		var obj = { filename : this._filename, export_type : this.get__type(), delay : this.get__delay(), record : this.get__record(), delay_in_seconds : this.get__delay() / 60, record_in_seconds : this.get__record() / 60, imageStringArray : this.imageStringArray, timestamp : new Date().getTime(), description : ""};
+		return obj;
+	}
+	,isDebug: function(isDebug) {
+		if(isDebug == null) {
+			isDebug = true;
+		}
+		this.set__isDebug(isDebug);
+	}
+	,pulse: function() {
+		if(this.isExportActive) {
+			if(this._delayCounter < this.get__delay()) {
+				if(this.get__isDebug()) {
+					window.console.log("" + this.toString() + " delay: " + this._delayCounter + " < " + this.get__delay());
+				}
+			}
+			if(this._delayCounter == this.get__delay()) {
+				if(this.get__isDebug()) {
+					window.console.log("" + this.toString() + " onRecordStart: " + this._delayCounter + " == " + this.get__delay());
+				}
+				if(Reflect.isFunction(this._onRecordStart)) {
+					var arr = this._onRecordStartParams != null ? this._onRecordStartParams : [];
+					this._onRecordStart.apply(this._onRecordStart,arr);
+				}
+			}
+			if(this._delayCounter >= this.get__delay()) {
+				if(this._recordCounter < this.get__record()) {
+					if(this.get__isDebug()) {
+						window.console.log("" + this.toString() + " recording: " + this._recordCounter + " < " + this.get__record());
+					}
+					this.imageStringArray.push(this.get__ctx().canvas.toDataURL("image/png").split("base64,")[1]);
+					this.progressRecording(this._recordCounter / this.get__record() * 100);
+					this._recordCounter++;
+				} else {
+					this.stopExport();
+				}
+			}
+		}
+		this._delayCounter++;
+	}
+	,createQuickSettings: function() {
+		var _gthis = this;
+		this.panel1 = QuickSettings.create(10,10,"ExportWrapper settings").addRange("delay in seconds",0.0,5.0,2.0,0.5,function(e) {
+			_gthis.setDelay(e);
+		}).addRange("record in seconds",0.0,60.0,2.0,0.5,function(e1) {
+			_gthis.setRecord(e1);
+		}).addButton("recording",function(e2) {
+			_gthis.onClickHandler(e2);
+		}).addText("feedback","x",function(e3) {
+		});
+	}
+	,out: function(str) {
+		if(this.panel1 == null) {
+			return;
+		}
+		this.panel1.setValue("feedback",str);
+	}
+	,setDelay: function(e) {
+		this.out("delay in seconds: " + (e == null ? "null" : "" + e));
+		this.set__delay(Math.round(this.fps * e));
+	}
+	,setRecord: function(e) {
+		this.out("recording in seconds: " + (e == null ? "null" : "" + e));
+		this.set__record(Math.round(this.fps * e));
+	}
+	,onClickHandler: function(e) {
+		var input = e;
+		var _g = input.value;
+		switch(_g) {
+		case "init recording":
+			haxe_Log.trace("init recording",{ fileName : "ExportWrapper.hx", lineNumber : 367, className : "cc.tool.export.ExportWrapper", methodName : "onClickHandler"});
+			this.setDelay(this.panel1.getValue("delay in seconds"));
+			this.setRecord(this.panel1.getValue("record in seconds"));
+			this.start();
+			haxe_Log.trace(JSON.parse(JSON.stringify(this)),{ fileName : "ExportWrapper.hx", lineNumber : 371, className : "cc.tool.export.ExportWrapper", methodName : "onClickHandler"});
+			break;
+		case "recording":
+			break;
+		case "start recording":
+			break;
+		case "stop recording":
+			haxe_Log.trace("stop recording",{ fileName : "ExportWrapper.hx", lineNumber : 373, className : "cc.tool.export.ExportWrapper", methodName : "onClickHandler"});
+			this.stop();
+			break;
+		default:
+			haxe_Log.trace("case '" + input.value + "': trace ('" + input.value + "');",{ fileName : "ExportWrapper.hx", lineNumber : 376, className : "cc.tool.export.ExportWrapper", methodName : "onClickHandler"});
+		}
+	}
+	,create_ProgressBar: function(percentage) {
+		if(percentage == null) {
+			percentage = 10;
+		}
+		var body = window.document.querySelector("body");
+		var div = window.document.createElement("div");
+		div.setAttribute("id","zip-progress");
+		div.innerHTML = "<span style=\"display:none\">" + percentage + "%</span>";
+		div.style.position = "absolute";
+		div.style.left = "0px";
+		div.style.top = "0px";
+		div.style.width = "100%";
+		div.style.height = "" + this._progressBarHeight + "px";
+		div.style.backgroundColor = "silver";
+		body.appendChild(div);
+		this._progressBar = div;
+	}
+	,progressGeneration: function(percent) {
+		this._progressBar.style.width = "" + percent + "%";
+		this._progressBar.style.backgroundColor = "navy";
+	}
+	,progressRecording: function(percent) {
+		this._progressBar.style.width = "" + percent + "%";
+		this._progressBar.style.backgroundColor = "red";
+	}
+	,get__isDebug: function() {
+		return this._isDebug;
+	}
+	,set__isDebug: function(value) {
+		return this._isDebug = value;
+	}
+	,get__ctx: function() {
+		return this._ctx;
+	}
+	,set__ctx: function(value) {
+		return this._ctx = value;
+	}
+	,get__delay: function() {
+		return this._delay;
+	}
+	,set__delay: function(value) {
+		return this._delay = value;
+	}
+	,get__record: function() {
+		return this._record;
+	}
+	,set__record: function(value) {
+		return this._record = value;
+	}
+	,get_description: function() {
+		return this.description;
+	}
+	,set_description: function(value) {
+		return this.description = value;
+	}
+	,get__isMenu: function() {
+		return this._isMenu;
+	}
+	,set__isMenu: function(value) {
+		return this._isMenu = value;
+	}
+	,get__type: function() {
+		return this._type;
+	}
+	,set__type: function(value) {
+		return this._type = value;
+	}
+	,toString: function() {
+		return "[ExportWrapper]";
+	}
+	,__class__: cc_tool_export_ExportWrapper
+	,__properties__: {set__type:"set__type",get__type:"get__type",set__isDebug:"set__isDebug",get__isDebug:"get__isDebug",set__isMenu:"set__isMenu",get__isMenu:"get__isMenu",set__ctx:"set__ctx",get__ctx:"get__ctx",set__record:"set__record",get__record:"get__record",set__delay:"set__delay",get__delay:"get__delay",set_description:"set_description",get_description:"get_description"}
+};
+var cc_tool_export_ExportType = { __ename__ : true, __constructs__ : ["ZIP","NODE","NONE","TEST"] };
+cc_tool_export_ExportType.ZIP = ["ZIP",0];
+cc_tool_export_ExportType.ZIP.toString = $estr;
+cc_tool_export_ExportType.ZIP.__enum__ = cc_tool_export_ExportType;
+cc_tool_export_ExportType.NODE = ["NODE",1];
+cc_tool_export_ExportType.NODE.toString = $estr;
+cc_tool_export_ExportType.NODE.__enum__ = cc_tool_export_ExportType;
+cc_tool_export_ExportType.NONE = ["NONE",2];
+cc_tool_export_ExportType.NONE.toString = $estr;
+cc_tool_export_ExportType.NONE.__enum__ = cc_tool_export_ExportType;
+cc_tool_export_ExportType.TEST = ["TEST",3];
+cc_tool_export_ExportType.TEST.toString = $estr;
+cc_tool_export_ExportType.TEST.__enum__ = cc_tool_export_ExportType;
+var cc_tool_export_ExportZip = function() {
+	cc_tool_export_ExportWrapperBase.call(this);
+	this.embedScripts($bind(this,this.onEmbedComplete));
+};
+$hxClasses["cc.tool.export.ExportZip"] = cc_tool_export_ExportZip;
+cc_tool_export_ExportZip.__name__ = ["cc","tool","export","ExportZip"];
+cc_tool_export_ExportZip.__interfaces__ = [cc_tool_export_IExport];
+cc_tool_export_ExportZip.__super__ = cc_tool_export_ExportWrapperBase;
+cc_tool_export_ExportZip.prototype = $extend(cc_tool_export_ExportWrapperBase.prototype,{
+	'export': function(obj) {
+		var _gthis = this;
+		var startT = new Date().getTime();
+		haxe_Log.trace("Start creation zip file - " + (new Date().getTime() - startT) / 1000 + "sec",{ fileName : "ExportZip.hx", lineNumber : 25, className : "cc.tool.export.ExportZip", methodName : "export"});
+		var zip = new JSZip();
+		zip.file("_" + obj.filename + "/README.MD",this.getMarkdown(obj));
+		zip.file("_" + obj.filename + "/convert.sh",this.getBashConvert(obj));
+		zip.file("_" + obj.filename + "/png.sh",this.getBashConvertPng(obj));
+		var _g1 = 0;
+		var _g = obj.imageStringArray.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			if(this._isDebug) {
+				haxe_Log.trace("/" + obj.imageStringArray.length + ". add image to file",{ fileName : "ExportZip.hx", lineNumber : 32, className : "cc.tool.export.ExportZip", methodName : "export"});
+			}
+			var img = obj.imageStringArray[i];
+			zip.file("_" + obj.filename + "/sequence/image_" + StringTools.lpad(i == null ? "null" : "" + i,"0",4) + ".png",img,{ base64 : true});
+		}
+		haxe_Log.trace("Generate zip file - " + (new Date().getTime() - startT) / 1000 + "sec",{ fileName : "ExportZip.hx", lineNumber : 36, className : "cc.tool.export.ExportZip", methodName : "export"});
+		var updateCallback = function(metadata) {
+			if(_gthis._isDebug) {
+				window.console.log("progression: " + metadata.percent.toFixed(2) + " %");
+			}
+			if(Reflect.isFunction(_gthis._onProgressHandler)) {
+				var o = _gthis._onProgressHandler;
+				var func = _gthis._onProgressHandler;
+				var args = [parseFloat(metadata.percent.toFixed(2))];
+				func.apply(o,args);
+			}
+		};
+		zip.generateAsync({ type : "blob"},updateCallback).then(function(blob) {
+			window.console.log("Save zip file complete - " + (new Date().getTime() - startT) / 1000 + "sec");
+			saveAs(blob,"_" + obj.filename + "_" + obj.timestamp + ".zip");
+			if(Reflect.isFunction(_gthis._onExportComplete)) {
+				_gthis._onExportComplete.apply(_gthis._onExportComplete,[]);
+			}
+		},function(err) {
+			window.console.log(err);
+		});
+	}
+	,embedScripts: function(callback,callbackArray) {
+		cc_tool_Embed.script("jszip","https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.0/jszip.min.js",$bind(this,this.onLoadComplete),["jszip",callback,callbackArray]);
+		cc_tool_Embed.script("jsfilesaver","https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js",$bind(this,this.onLoadComplete),["jsfilesaver",callback,callbackArray]);
+	}
+	,onLoadComplete: function(str,callback,callbackArray) {
+		switch(str) {
+		case "jsfilesaver":
+			cc_tool_export_ExportZip.isFileLoaded = true;
+			break;
+		case "jszip":
+			cc_tool_export_ExportZip.isZipLoaded = true;
+			break;
+		default:
+			haxe_Log.trace("case '" + str + "': trace ('" + str + "');",{ fileName : "ExportZip.hx", lineNumber : 90, className : "cc.tool.export.ExportZip", methodName : "onLoadComplete"});
+		}
+		if(cc_tool_export_ExportZip.isFileLoaded && cc_tool_export_ExportZip.isZipLoaded) {
+			callback.apply(callback,["JsZip and jsFilesaver are embedded and loaded"]);
+		}
+	}
+	,onEmbedComplete: function(value) {
+		window.console.log("" + this.toString() + " - " + value);
+	}
+	,toString: function() {
+		return "[Export via Zip]";
+	}
+	,__class__: cc_tool_export_ExportZip
+});
+var cc_tool_export_IExportWrapper = function() { };
+$hxClasses["cc.tool.export.IExportWrapper"] = cc_tool_export_IExportWrapper;
+cc_tool_export_IExportWrapper.__name__ = ["cc","tool","export","IExportWrapper"];
+cc_tool_export_IExportWrapper.prototype = {
+	__class__: cc_tool_export_IExportWrapper
+	,__properties__: {set__isDebug:"set__isDebug",get__isDebug:"get__isDebug"}
 };
 var cc_util_AnimateUtil = function() {
 };
@@ -16416,6 +17233,22 @@ cc_noise_OpenSimplexNoise.gradients3D = [-11,4,4,-4,11,4,-4,4,11,11,4,4,4,11,4,4
 cc_noise_OpenSimplexNoise.gradients4D = [3,1,1,1,1,3,1,1,1,1,3,1,1,1,1,3,-3,1,1,1,-1,3,1,1,-1,1,3,1,-1,1,1,3,3,-1,1,1,1,-3,1,1,1,-1,3,1,1,-1,1,3,-3,-1,1,1,-1,-3,1,1,-1,-1,3,1,-1,-1,1,3,3,1,-1,1,1,3,-1,1,1,1,-3,1,1,1,-1,3,-3,1,-1,1,-1,3,-1,1,-1,1,-3,1,-1,1,-1,3,3,-1,-1,1,1,-3,-1,1,1,-1,-3,1,1,-1,-1,3,-3,-1,-1,1,-1,-3,-1,1,-1,-1,-3,1,-1,-1,-1,3,3,1,1,-1,1,3,1,-1,1,1,3,-1,1,1,1,-3,-3,1,1,-1,-1,3,1,-1,-1,1,3,-1,-1,1,1,-3,3,-1,1,-1,1,-3,1,-1,1,-1,3,-1,1,-1,1,-3,-3,-1,1,-1,-1,-3,1,-1,-1,-1,3,-1,-1,-1,1,-3,3,1,-1,-1,1,3,-1,-1,1,1,-3,-1,1,1,-1,-3,-3,1,-1,-1,-1,3,-1,-1,-1,1,-3,-1,-1,1,-1,-3,3,-1,-1,-1,1,-3,-1,-1,1,-1,-3,-1,1,-1,-1,-3,-3,-1,-1,-1,-1,-3,-1,-1,-1,-1,-3,-1,-1,-1,-1,-3];
 cc_noise_Perlin.GRAD3 = [new cc_noise_Gradient(1,1,0),new cc_noise_Gradient(-1,1,0),new cc_noise_Gradient(1,-1,0),new cc_noise_Gradient(-1,-1,0),new cc_noise_Gradient(1,0,1),new cc_noise_Gradient(-1,0,1),new cc_noise_Gradient(1,0,-1),new cc_noise_Gradient(-1,0,-1),new cc_noise_Gradient(0,1,1),new cc_noise_Gradient(0,-1,1),new cc_noise_Gradient(0,1,-1),new cc_noise_Gradient(0,-1,-1)];
 cc_noise_Perlin.P = [151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208,89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180];
+cc_tool_export_ExportNames.SEND = "send";
+cc_tool_export_ExportNames.MESSAGE = "message";
+cc_tool_export_ExportNames.IMAGE = "image";
+cc_tool_export_ExportNames.SEQUENCE = "sequence";
+cc_tool_export_ExportNames.SEQUENCE_NEXT = "sequence_next";
+cc_tool_export_ExportNames.COMBINE = "combine";
+cc_tool_export_ExportNames.MARKDOWN = "md";
+cc_tool_export_ExportNames.CHECKIN = "checkin";
+cc_tool_export_ExportNames.SERVER_CHECKIN = "server-checkin";
+cc_tool_export_ExportNames.RENDER_CLEAR = "render-clear";
+cc_tool_export_ExportNames.RENDER_CLEAR_DONE = "render-clear-done";
+cc_tool_export_ExportNames.RENDER_FRAME = "render-frame";
+cc_tool_export_ExportNames.RENDER_DONE = "render-done";
+cc_tool_export_ExportNames.TEST = "test";
+cc_tool_export_ExportZip.isZipLoaded = false;
+cc_tool_export_ExportZip.isFileLoaded = false;
 cc_util_ColorUtil.NAVY = { r : Math.round(0), g : Math.round(31), b : Math.round(63)};
 cc_util_ColorUtil.BLUE = { r : Math.round(0), g : Math.round(116), b : Math.round(217)};
 cc_util_ColorUtil.AQUA = { r : Math.round(127), g : Math.round(219), b : Math.round(255)};
@@ -16474,7 +17307,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-04 21:46:29";
+lib_model_constants_App.BUILD = "2019-04-05 13:15:51";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
