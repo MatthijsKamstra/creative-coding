@@ -4,9 +4,11 @@ import js.html.CanvasRenderingContext2D;
 import js.Browser.window;
 import js.Browser.document;
 import Sketch.Global.*;
+// import cc.tool.export.ExportWrapperFake;
+import cc.tool.export.IExportWrapper;
 
 class CCBase extends Sketch.SketchBase implements ICCBase {
-	// var zip:Dynamic; // hack my own system?
+	// public var export:IExportWrapper; // just a dummy class so I don't have to delete the export
 
 	/**
 	 * set types for sketch
