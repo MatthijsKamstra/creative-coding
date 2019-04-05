@@ -3,7 +3,8 @@ package art;
 /**
  * short description what this does
  */
-class CC063 extends CCBase implements ICCBase {
+class CC063 extends CCBase // ExportBase
+implements ICCBase {
 	var shapeArray:Array<CircleExtra> = [];
 	var shapeArray2:Array<CircleExtra> = [];
 	var shapeMax:Int = 15;
@@ -12,11 +13,16 @@ class CC063 extends CCBase implements ICCBase {
 	var maxCircleSize = 30;
 	var strokeWidth = 5;
 	var minDistance:Float;
+	var _startT:Float;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'Circles in a circle, connected';
 		type = [CCType.ANIMATION];
 		super(ctx);
+
+		// export.recordInSeconds(100);
+		// export.type(ZIP);
+		// // export.start();
 	}
 
 	function createShape(i:Int, radius:Float, speed:Float) {
@@ -70,9 +76,13 @@ class CC063 extends CCBase implements ICCBase {
 			if (minDistance == null) {
 				minDistance = MathUtil.distance(sh1.x, sh1.y, sh2.x, sh2.y);
 				trace('start export');
+				_startT = Date.now().getTime();
+				// export.start();
 			} else {
 				if (minDistance == MathUtil.distance(sh1.x, sh1.y, sh2.x, sh2.y)) {
 					trace('stop export');
+					trace((Date.now().getTime() - _startT) / 1000 + '.sec');
+					// export.stop();
 				}
 			}
 
