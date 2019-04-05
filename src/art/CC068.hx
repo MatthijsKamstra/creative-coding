@@ -10,6 +10,8 @@ class CC068 extends CCBase implements ICCBase {
 	// sizes
 	var _radius = 150;
 	var _cellsize = 150;
+	var aniCounter:Int;
+	var aniMax = 0;
 
 	public function new(ctx:CanvasRenderingContext2D) {
 		description = 'Bigger as a group, then when you are single';
@@ -29,8 +31,21 @@ class CC068 extends CCBase implements ICCBase {
 		return shape;
 	}
 
+	var startT:Float;
+	var endT:Float;
+
 	function onAnimateHandler(sh:Square, i:Int) {
+		if (aniCounter == null) {
+			trace('export start');
+			startT = Date.now().getTime();
+			aniCounter = 0;
+		}
+		if (aniCounter == (aniMax * 1)) {
+			endT = Date.now().getTime();
+			trace('export stop (${(endT - startT) / 1000} sec)');
+		}
 		var sh2 = grid2.array[i];
+		aniCounter++;
 		Go.to(sh, 5)
 			.delay(1.5)
 			.pos(sh2.x, sh2.y)
@@ -52,8 +67,7 @@ class CC068 extends CCBase implements ICCBase {
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 			ctx.fillColourRGB(_color);
-			ctx.shadowColorRGB(BLACK, 0.2);
-			ctx.shadowBlur = 15;
+			ctx.shadowSet(BLACK, 0.2, 15);
 			ctx.centreFillRect(sh.x, sh.y, grid.cellWidth, grid.cellHeight);
 		}
 		// real square
@@ -77,7 +91,9 @@ class CC068 extends CCBase implements ICCBase {
 		grid2.setDimension(w, h);
 		grid2.setNumbered(3, 3);
 		grid2.setIsCenterPoint(true);
-
+		//
+		aniMax = grid.array.length;
+		//
 		shapeArray = [];
 		for (i in 0...grid.array.length) {
 			shapeArray.push(createShape(i, grid.array[i]));
