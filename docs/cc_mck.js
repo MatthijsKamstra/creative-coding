@@ -157,7 +157,7 @@ _$List_ListIterator.prototype = {
 	,__class__: _$List_ListIterator
 };
 var Main = function() {
-	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066,art_CC067,art_CC068];
+	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066,art_CC067,art_CC068,art_CC069];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
 		window.console.log("" + lib_model_constants_App.NAME + " :: build: " + lib_model_constants_App.BUILD);
@@ -9023,6 +9023,109 @@ art_CC068.prototype = $extend(art_CCBase.prototype,{
 	}
 	,__class__: art_CC068
 });
+var art_CC069 = function(ctx) {
+	this._cellsize = 150;
+	this._radius = 150;
+	this.grid = new cc_util_GridUtil();
+	this.shapeArray = [];
+	this.set_description("");
+	this.set_type(["Animation","Image"]);
+	art_CCBase.call(this,ctx);
+};
+$hxClasses["art.CC069"] = art_CC069;
+art_CC069.__name__ = ["art","CC069"];
+art_CC069.__interfaces__ = [art_ICCBase];
+art_CC069.__super__ = art_CCBase;
+art_CC069.prototype = $extend(art_CCBase.prototype,{
+	createShape: function(i,point) {
+		var shape = { _id : "" + i, _type : "circle", x : point.x, y : point.y, radius : this._radius};
+		this.onAnimateHandler(shape);
+		return shape;
+	}
+	,onAnimateHandler: function(circle) {
+	}
+	,drawShape: function() {
+		var padding = 70;
+		this.ctx.clearRect(0,0,Global.w,Global.h);
+		cc_CanvasTools.backgroundObj(this.ctx,cc_util_ColorUtil.WHITE);
+		var maskWidth = 200;
+		var maskHeight = Global.h - padding * 2;
+		var total = 50;
+		var offset = Math.round(maskHeight / total);
+		haxe_Log.trace(maskHeight,{ fileName : "CC069.hx", lineNumber : 46, className : "art.CC069", methodName : "drawShape", customParams : [total,offset]});
+		var _g1 = 0;
+		var _g = total - 2;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var xpos1 = this.get_w2() - maskWidth / 2;
+			var xpos2 = this.get_w2() + maskWidth / 2;
+			var ypos1 = padding + (i + 1) * offset + cc_util_MathUtil.random(-offset / 2,offset / 2);
+			var ypos2 = padding + (i + 1) * offset + cc_util_MathUtil.random(-offset / 2,offset / 2);
+			cc_CanvasTools.strokeColourRGB(this.ctx,cc_util_ColorUtil.BLACK,0.4);
+			cc_CanvasTools.strokeWeight(this.ctx,2);
+			cc_CanvasTools.line(this.ctx,xpos1,ypos1,xpos2,ypos2);
+		}
+		cc_CanvasTools.shadowSet(this.ctx,cc_util_ColorUtil.BLACK,0.2,15);
+		var mask = new cc_draw_Mask(this.ctx);
+		var _this = mask;
+		_this.set__x(0);
+		_this.set__y(0);
+		var _this1 = _this;
+		var height = Global.h;
+		_this1.set__outerWidth(Global.w);
+		_this1.set__outerHeight(height);
+		var _this2 = _this1;
+		_this2.set__innerWidth(maskWidth);
+		_this2.set__innerHeight(maskHeight);
+		var _this3 = _this2;
+		_this3._color = cc_util_ColorUtil.WHITE;
+		var _this4 = _this3;
+		_this4._ctx.beginPath();
+		var _centerx = _this4.get__outerWidth() / 2;
+		var _centery = _this4.get__outerHeight() / 2;
+		var _outerW2 = _this4.get__outerWidth() / 2;
+		var _outerH2 = _this4.get__outerHeight() / 2;
+		var _innerW2 = _this4.get__innerWidth() / 2;
+		var _innerH2 = _this4.get__innerHeight() / 2;
+		_this4._ctx.moveTo(_this4.get__x(),_this4.get__y());
+		_this4._ctx.lineTo(_this4.get__x() + _this4.get__outerWidth(),_this4.get__y());
+		_this4._ctx.lineTo(_this4.get__x() + _this4.get__outerWidth(),_this4.get__y() + _this4.get__outerHeight());
+		_this4._ctx.lineTo(_this4.get__x(),_this4.get__y() + _this4.get__outerHeight());
+		_this4._ctx.lineTo(_this4.get__x(),_this4.get__y());
+		_this4._ctx.closePath();
+		_this4._ctx.moveTo(_centerx - _innerW2,_centery - _innerH2);
+		_this4._ctx.lineTo(_centerx - _innerW2,_centery + _innerH2);
+		_this4._ctx.lineTo(_centerx + _innerW2,_centery + _innerH2);
+		_this4._ctx.lineTo(_centerx + _innerW2,_centery - _innerH2);
+		_this4._ctx.lineTo(_centerx - _innerW2,_centery - _innerH2);
+		_this4._ctx.closePath();
+		if(_this4._color != null) {
+			cc_CanvasTools.fillColourRGB(_this4._ctx,_this4._color,_this4.get__alpha());
+			_this4._ctx.fill();
+		}
+		if(_this4._colorstoke != null) {
+			cc_CanvasTools.strokeColourRGB(_this4._ctx,_this4._colorstoke);
+			_this4._ctx.lineWidth = 1;
+			_this4._ctx.stroke();
+		}
+	}
+	,setup: function() {
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC069.hx", lineNumber : 70, className : "art.CC069", methodName : "setup"});
+		this.shapeArray = [];
+		var _g1 = 0;
+		var _g = this.grid.array.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.shapeArray.push(this.createShape(i,this.grid.array[i]));
+		}
+	}
+	,draw: function() {
+		haxe_Log.trace("draw: " + this.toString(),{ fileName : "CC069.hx", lineNumber : 79, className : "art.CC069", methodName : "draw"});
+		this.drawShape();
+		this.stop();
+	}
+	,__class__: art_CC069
+});
 var cc_AST = function() { };
 $hxClasses["cc.AST"] = cc_AST;
 cc_AST.__name__ = ["cc","AST"];
@@ -9625,6 +9728,151 @@ cc_draw_Gradient.prototype = {
 	}
 	,__class__: cc_draw_Gradient
 	,__properties__: {get_ypos:"get_ypos",get_xpos:"get_xpos",get_get:"get_get",set_height:"set_height",get_height:"get_height",set_width:"set_width",get_width:"get_width",set__radial:"set__radial",get__radial:"get__radial",set__linear:"set__linear",get__linear:"get__linear"}
+};
+var cc_draw_Mask = function(ctx) {
+	this._centered = true;
+	this._alpha = 1;
+	this._y = 0;
+	this._x = 0;
+	this._ctx = ctx;
+};
+$hxClasses["cc.draw.Mask"] = cc_draw_Mask;
+cc_draw_Mask.__name__ = ["cc","draw","Mask"];
+cc_draw_Mask.create = function(ctx) {
+	var mask = new cc_draw_Mask(ctx);
+	return mask;
+};
+cc_draw_Mask.prototype = {
+	x: function(x) {
+		this.set__x(x);
+		return this;
+	}
+	,y: function(y) {
+		this.set__y(y);
+		return this;
+	}
+	,pos: function(x,y) {
+		this.set__x(x);
+		this.set__y(y);
+		return this;
+	}
+	,outerSquare: function(width,height) {
+		this.set__outerWidth(width);
+		this.set__outerHeight(height);
+		return this;
+	}
+	,innerSquare: function(width,height) {
+		this.set__innerWidth(width);
+		this.set__innerHeight(height);
+		return this;
+	}
+	,centered: function(isCentered) {
+		if(isCentered == null) {
+			isCentered = true;
+		}
+		this.set__centered(isCentered);
+		return this;
+	}
+	,color: function(value) {
+		this._color = value;
+		return this;
+	}
+	,fill: function(value) {
+		this._color = value;
+		return this;
+	}
+	,stroke: function(value) {
+		this._colorstoke = value;
+		return this;
+	}
+	,alpha: function(value) {
+		this.set__alpha(value);
+		return this;
+	}
+	,draw: function() {
+		this._ctx.beginPath();
+		var _centerx = this.get__outerWidth() / 2;
+		var _centery = this.get__outerHeight() / 2;
+		var _outerW2 = this.get__outerWidth() / 2;
+		var _outerH2 = this.get__outerHeight() / 2;
+		var _innerW2 = this.get__innerWidth() / 2;
+		var _innerH2 = this.get__innerHeight() / 2;
+		this._ctx.moveTo(this.get__x(),this.get__y());
+		this._ctx.lineTo(this.get__x() + this.get__outerWidth(),this.get__y());
+		this._ctx.lineTo(this.get__x() + this.get__outerWidth(),this.get__y() + this.get__outerHeight());
+		this._ctx.lineTo(this.get__x(),this.get__y() + this.get__outerHeight());
+		this._ctx.lineTo(this.get__x(),this.get__y());
+		this._ctx.closePath();
+		this._ctx.moveTo(_centerx - _innerW2,_centery - _innerH2);
+		this._ctx.lineTo(_centerx - _innerW2,_centery + _innerH2);
+		this._ctx.lineTo(_centerx + _innerW2,_centery + _innerH2);
+		this._ctx.lineTo(_centerx + _innerW2,_centery - _innerH2);
+		this._ctx.lineTo(_centerx - _innerW2,_centery - _innerH2);
+		this._ctx.closePath();
+		if(this._color != null) {
+			cc_CanvasTools.fillColourRGB(this._ctx,this._color,this.get__alpha());
+			this._ctx.fill();
+		}
+		if(this._colorstoke != null) {
+			cc_CanvasTools.strokeColourRGB(this._ctx,this._colorstoke);
+			this._ctx.lineWidth = 1;
+			this._ctx.stroke();
+		}
+		return this;
+	}
+	,get__x: function() {
+		return this._x;
+	}
+	,set__x: function(value) {
+		return this._x = value;
+	}
+	,get__y: function() {
+		return this._y;
+	}
+	,set__y: function(value) {
+		return this._y = value;
+	}
+	,get__outerWidth: function() {
+		return this._outerWidth;
+	}
+	,set__outerWidth: function(value) {
+		return this._outerWidth = value;
+	}
+	,get__outerHeight: function() {
+		return this._outerHeight;
+	}
+	,set__outerHeight: function(value) {
+		return this._outerHeight = value;
+	}
+	,get__innerWidth: function() {
+		return this._innerWidth;
+	}
+	,set__innerWidth: function(value) {
+		return this._innerWidth = value;
+	}
+	,get__innerHeight: function() {
+		return this._innerHeight;
+	}
+	,set__innerHeight: function(value) {
+		return this._innerHeight = value;
+	}
+	,get__centered: function() {
+		return this._centered;
+	}
+	,set__centered: function(value) {
+		return this._centered = value;
+	}
+	,get__alpha: function() {
+		return this._alpha;
+	}
+	,set__alpha: function(value) {
+		return this._alpha = value;
+	}
+	,toString: function() {
+		return "Masks: " + Std.string(JSON.parse(JSON.stringify(this)));
+	}
+	,__class__: cc_draw_Mask
+	,__properties__: {set__centered:"set__centered",get__centered:"get__centered",set__alpha:"set__alpha",get__alpha:"get__alpha",set__innerHeight:"set__innerHeight",get__innerHeight:"get__innerHeight",set__innerWidth:"set__innerWidth",get__innerWidth:"get__innerWidth",set__outerHeight:"set__outerHeight",get__outerHeight:"get__outerHeight",set__outerWidth:"set__outerWidth",get__outerWidth:"get__outerWidth",set__y:"set__y",get__y:"get__y",set__x:"set__x",get__x:"get__x"}
 };
 var cc_draw_Spritesheet = function(ctx,img) {
 	this._delay = 0;
@@ -17434,7 +17682,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-05 14:50:50";
+lib_model_constants_App.BUILD = "2019-04-07 13:04:37";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
