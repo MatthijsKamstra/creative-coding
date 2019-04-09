@@ -6,9 +6,17 @@ import js.Browser.document;
 import Sketch.Global.*;
 // import cc.tool.export.ExportWrapperFake;
 import cc.tool.export.IExportWrapper;
+import cc.tool.export.ExportWrapper.ExportType.ZIP;
 
 class CCBase extends Sketch.SketchBase implements ICCBase {
-	// public var export:IExportWrapper; // just a dummy class so I don't have to delete the export
+	public var export:IExportWrapper; // just a dummy class so I don't have to delete the export
+
+	// use for export
+	public static var _startT:Float;
+	public static var _endT:Float;
+
+	public var startT:Float;
+	public var endT:Float;
 
 	/**
 	 * set types for sketch
@@ -38,6 +46,7 @@ class CCBase extends Sketch.SketchBase implements ICCBase {
 	 * @param ctx
 	 */
 	public function new(ctx:CanvasRenderingContext2D) {
+		// export = new cc.tool.export.ExportNone();
 		super(ctx);
 	}
 
@@ -67,6 +76,26 @@ class CCBase extends Sketch.SketchBase implements ICCBase {
 
 	function set_type(value:Array<CCType>):Array<CCType> {
 		return _type = value;
+	}
+}
+
+class CCExport extends cc.tool.export.ExportWrapper {
+	override public function new(ctx:CanvasRenderingContext2D, ?fileName:String) {
+		super(ctx, fileName);
+	}
+
+	override public function type(val:cc.tool.export.ExportWrapper.ExportType) {}
+
+	override public function recordInSeconds(val:Float) {}
+
+	override public function stop() {
+		CCBase._endT = Date.now().getTime();
+		trace('[Export] stop ${(CCBase._endT - CCBase._startT) / 1000}.sec');
+	}
+
+	override public function start() {
+		CCBase._startT = Date.now().getTime();
+		trace('[Export] start');
 	}
 }
 

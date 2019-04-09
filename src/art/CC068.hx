@@ -31,8 +31,8 @@ class CC068 extends CCBase implements ICCBase {
 		return shape;
 	}
 
-	var startT:Float;
-	var endT:Float;
+	// var startT:Float;
+	// var endT:Float;
 
 	function onAnimateHandler(sh:Square, i:Int) {
 		if (aniCounter == null) {
