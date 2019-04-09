@@ -25,10 +25,6 @@ implements ICCBase {
 		ctx = Sketch.create("creative_code_mck", option);
 
 		super(ctx);
-
-		// export.recordInSeconds(100);
-		// export.type(ZIP);
-		// export.start();
 	}
 
 	function createShape(i:Int, ?point:Point) {
@@ -44,23 +40,29 @@ implements ICCBase {
 		haxe.Timer.delay(function() {
 			onAnimationContinue(shape, i, 1);
 		}, i * 100);
+
 		return shape;
 	}
 
-	// function onAnimateHandler(sh:Square, id:Int, count:Int) {
-	// 	Go.to(sh, 3)
-	// 		.delay(id * 0.1)
-	// 		.prop('angle', -(180 / 2) * count)
-	// 		.ease(Elastic.easeInOut)
-	// 		.onComplete(onAnimationContinue, [sh, id, ++count]);
-	// }
+	var runCounter = 0;
 
 	function onAnimationContinue(sh:Square, id:Int, count:Int) {
+		// trace('$runCounter == ${(shapeArray.length - 1) * 2}');
+		// if (runCounter == (shapeArray.length - 1) * 2) {
+		// 	// stop export
+		// 	export.stop();
+		// 	// stop();
+		// 	runCounter++;
+		// 	return;
+		// }
+
 		Go.to(sh, 3)
 			.delay(2)
 			.prop('angle', -(180 / 2) * count)
 			.ease(Elastic.easeInOut)
 			.onComplete(onAnimationContinue, [sh, id, ++count]);
+
+		runCounter++;
 	}
 
 	function drawShape() {
@@ -89,7 +91,15 @@ implements ICCBase {
 			shapeArray.push(createShape(i));
 		}
 
-		// console.table(shapeArray);
+		// start export
+		// export.type(ZIP);
+		// export.start();
+
+		var delayMS = (shapeArray.length * 100) + 5000;
+		Go.timer(Math.round(delayMS / 1000))
+			.onComplete(function() {
+				// export.stop();
+			});
 	}
 
 	override function draw() {
