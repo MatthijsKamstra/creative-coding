@@ -2,7 +2,7 @@ package art;
 
 import cc.tool.export.ExportWrapper;
 
-class ExportBase extends CCBase {
+class CCExportBase extends CCBase {
 	// public var export:ExportWrapper; // in CCBASE
 	var imageStringArray:Array<String> = [];
 	var _isDebug:Bool = false;
