@@ -3,7 +3,8 @@ package art;
 /**
  * short description what this does
  */
-class CC066 extends CCBase implements ICCBase {
+class CC066 extends // CCBase
+CCExportBase implements ICCBase {
 	var shapeArray:Array<Line> = [];
 	var shapeArray2:Array<{}> = [];
 	var shapeMax:Int = 7;
@@ -74,6 +75,12 @@ class CC066 extends CCBase implements ICCBase {
 		for (i in 0...shapeMax) {
 			shapeArray.push(createShape(i));
 		}
+		// export.setting({
+		// 	export_type: ZIP,
+		// 	delay: Math.round(0.5 * 60),
+		// 	record: Math.round(30 * 60),
+		// 	// isDebug: true
+		// });
 	}
 
 	override function draw() {

@@ -3,7 +3,8 @@ package art;
 /**
  * short description what this does
  */
-class CC067 extends CCBase implements ICCBase {
+class CC067 extends CCExportBase // CCBase
+implements ICCBase {
 	var shapeArray:Array<Circle> = [];
 	// sizes
 	var _minR = 20;
@@ -12,7 +13,7 @@ class CC067 extends CCBase implements ICCBase {
 	var max = 20;
 
 	public function new(ctx:CanvasRenderingContext2D) {
-		description = '';
+		description = 'Blobs wiggling';
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		super(ctx);
@@ -39,12 +40,7 @@ class CC067 extends CCBase implements ICCBase {
 		ctx.clearRect(0, 0, w, h);
 		ctx.backgroundObj(WHITE);
 
-		// ctx.fillStyle = getColourObj(_color4);
-		// Text.centerFillText(ctx, 'text', w / 2, h / 2, "'Oswald', sans-serif;", 160);
-
-		// if (isDebug) {
-		// 	ShapeUtil.gridField(ctx, grid);
-		// }
+		// black outlines circles
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 			ctx.fillColourRGB(BLACK);
@@ -52,15 +48,12 @@ class CC067 extends CCBase implements ICCBase {
 			ctx.strokeWeight(strokeW);
 			ctx.circleFillStroke(sh.x, sh.y, sh.radius);
 		}
+		// total white circles
 		for (i in 0...shapeArray.length) {
 			var sh = shapeArray[i];
 			ctx.fillColourRGB(WHITE);
 			ctx.fillCircle(sh.x, sh.y, sh.radius);
 		}
-
-		// var rgb = randomColourObject();
-		// ctx.strokeColour(rgb.r, rgb.g, rgb.b);
-		// ctx.xcross(w / 2, h / 2, 200);
 	}
 
 	override function setup() {
@@ -72,6 +65,12 @@ class CC067 extends CCBase implements ICCBase {
 		for (i in 0...max) {
 			shapeArray.push(createShape(i));
 		}
+		// export.setting({
+		// 	export_type: ZIP,
+		// 	delay: Math.round(0.5 * 60),
+		// 	record: Math.round(30 * 60),
+		// 	// isDebug: true
+		// });
 	}
 
 	override function draw() {
