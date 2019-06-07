@@ -8983,13 +8983,13 @@ art_CC068.prototype = $extend(art_CCBase.prototype,{
 	}
 	,onAnimateHandler: function(sh,i) {
 		if(this.aniCounter == null) {
-			haxe_Log.trace("export start",{ fileName : "CC068.hx", lineNumber : 39, className : "art.CC068", methodName : "onAnimateHandler"});
+			haxe_Log.trace("export start",{ fileName : "CC068.hx", lineNumber : 48, className : "art.CC068", methodName : "onAnimateHandler"});
 			this.startT = new Date().getTime();
 			this.aniCounter = 0;
 		}
 		if(this.aniCounter == this.aniMax) {
 			this.endT = new Date().getTime();
-			haxe_Log.trace("export stop (" + (this.endT - this.startT) / 1000 + " sec)",{ fileName : "CC068.hx", lineNumber : 45, className : "art.CC068", methodName : "onAnimateHandler"});
+			haxe_Log.trace("export stop (" + (this.endT - this.startT) / 1000 + " sec)",{ fileName : "CC068.hx", lineNumber : 56, className : "art.CC068", methodName : "onAnimateHandler"});
 		}
 		var sh2 = this.grid2.array[i];
 		this.aniCounter++;
@@ -9054,7 +9054,7 @@ art_CC068.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC068.hx", lineNumber : 83, className : "art.CC068", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "CC068.hx", lineNumber : 94, className : "art.CC068", methodName : "setup"});
 		var padding = Global.w * .3;
 		this.grid.setDimension(Global.w - padding,Global.h - padding);
 		this.grid.setNumbered(3,3);
@@ -18096,7 +18096,7 @@ hxColorToolkit_ColorToolkit.rybWheel = [[0,0],[15,8],[30,17],[45,26],[60,34],[75
 js_Boot.__toStr = ({ }).toString;
 js_html_compat_Uint8Array.BYTES_PER_ELEMENT = 1;
 lib_model_constants_App.NAME = "Creative Code [mck]";
-lib_model_constants_App.BUILD = "2019-04-15 20:43:56";
+lib_model_constants_App.BUILD = "2019-04-16 17:01:33";
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
