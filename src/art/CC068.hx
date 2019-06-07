@@ -3,7 +3,8 @@ package art;
 /**
  * short description what this does
  */
-class CC068 extends CCBase implements ICCBase {
+class CC068 extends CCBase // CCExportBase
+implements ICCBase {
 	var shapeArray:Array<Square> = [];
 	var grid:GridUtil = new GridUtil();
 	var grid2:GridUtil = new GridUtil();
@@ -18,6 +19,14 @@ class CC068 extends CCBase implements ICCBase {
 		type = [CCType.ANIMATION, CCType.IMAGE];
 
 		super(ctx);
+
+		// export settings
+		// export.setting(cast {
+		// 	delay: 0,
+		// 	record: 60 * 60,
+		// 	debug: true,
+		// 	type: ZIP
+		// });
 	}
 
 	function createShape(i:Int, ?point:Point) {
@@ -37,11 +46,13 @@ class CC068 extends CCBase implements ICCBase {
 	function onAnimateHandler(sh:Square, i:Int) {
 		if (aniCounter == null) {
 			trace('export start');
+			// export.start();
 			startT = Date.now().getTime();
 			aniCounter = 0;
 		}
 		if (aniCounter == (aniMax * 1)) {
 			endT = Date.now().getTime();
+			// export.stop();
 			trace('export stop (${(endT - startT) / 1000} sec)');
 		}
 		var sh2 = grid2.array[i];

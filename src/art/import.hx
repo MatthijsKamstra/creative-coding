@@ -32,3 +32,4 @@ import AST;
 import quicksettings.QuickSettings;
 // sketch settings
 import Sketch;
+import cc.tool.export.ExportWrapper.ExportType;
