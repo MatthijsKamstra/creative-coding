@@ -54,6 +54,7 @@
 - [ ] trottle the framerate
 - [ ] create a `log` function that will hide when isDebug is false
 
+
 ### Miso Regular  replacement
 
 
