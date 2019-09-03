@@ -30,7 +30,7 @@ It's good to set some goals when working on something
 - [ ] have a talk about my experience
 - [ ] get better at it (daily goal)
 
-check my (todo)[TODO.MD] from some indepth todo's about this experiment
+check my [todo](TODO.MD) from some indepth todo's about this experiment
 
 ## Inspiration
 
