@@ -124,7 +124,7 @@ class CC031a extends CCBase implements ICCBase {
 		for (j in 0...shapeArray.length) {
 			var b2 = shapeArray[j];
 			var originalpoint = grid.array[j];
-			if (point == b2)
+			if (point.x == b2.x && point.y == b2.y)
 				continue;
 			var currentDistance = distance(point.x, point.y, b2.x, b2.y);
 			// trace('-----\n ${line} / ${b2} -- ${currentDistance}');

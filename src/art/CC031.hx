@@ -83,12 +83,11 @@ class CC031 extends CCBase implements ICCBase {
 		}
 		for (j in 0...shapeArray.length) {
 			var b2 = shapeArray[j];
-			if (point == b2)
+			if (point.x == b2.x && point.y == b2.y)
 				continue;
 			var currentDistance = distance(point.x, point.y, b2.x, b2.y);
 			// trace('-----\n ${line} / ${b2} -- ${currentDistance}');
 			if (currentDistance < maxDistance) {
-
 				console.log('minRadius: $minRadius');
 				console.log('maxRadius: $maxRadius');
 				console.log('(maxRadius / minRadius): ($maxRadius / $minRadius) -> ${(maxRadius / minRadius)}');
@@ -98,7 +97,7 @@ class CC031 extends CCBase implements ICCBase {
 				// b2.radius = alpha;
 				// b2.radius = minRadius + ((maxRadius / minRadius) * (maxDistance / currentDistance));
 				// b2.radius = maxRadius - (minRadius + ((currentDistance/maxDistance) * (maxRadius-minRadius))) ;
-				b2.radius = maxRadius - ((currentDistance/maxDistance) * (maxRadius-minRadius)) ;
+				b2.radius = maxRadius - ((currentDistance / maxDistance) * (maxRadius - minRadius));
 			} else {
 				b2.radius = minRadius;
 			}

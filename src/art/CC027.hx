@@ -4,7 +4,6 @@ package art;
  * short description what this does
  */
 class CC027 extends CCBase implements ICCBase {
-
 	var shapeArray:Array<Circle> = [];
 	var shapeMax = 5000;
 	var ctxHidden:CanvasRenderingContext2D;
@@ -73,8 +72,7 @@ class CC027 extends CCBase implements ICCBase {
 	}
 
 	function buildGrid() {
-
-		grid.setPosition(0,0);
+		grid.setPosition(0, 0);
 		grid.setCellSize(_cellsize);
 		grid.setDimension(ctxHidden.canvas.width, ctxHidden.canvas.height);
 		trace('canvas (width,height): ${ctxHidden.canvas.width},${ctxHidden.canvas.height}');
@@ -104,7 +102,7 @@ class CC027 extends CCBase implements ICCBase {
 				_type: 'circle',
 				x: xstart + xpos,
 				y: ystart + ypos,
-				radius: _cellsize/2,
+				radius: _cellsize / 2,
 				colour: rgba,
 			}
 			shapeArray.push(circle);
@@ -117,7 +115,6 @@ class CC027 extends CCBase implements ICCBase {
 			onAnimateHandler(_shapeArray);
 		}
 	}
-
 
 	// ____________________________________ override  ____________________________________
 
@@ -150,7 +147,7 @@ class CC027 extends CCBase implements ICCBase {
 
 	// ____________________________________ helpers ____________________________________
 
-	function pixelData2RGBA(data:Uint8ClampedArray):RGBA {
+	function pixelData2RGBA(data:js.lib.Uint8ClampedArray):RGBA {
 		return {
 			r: data[0],
 			g: data[1],
@@ -159,7 +156,7 @@ class CC027 extends CCBase implements ICCBase {
 		}
 	}
 
-	function pixelData2RGB(data:Uint8ClampedArray):RGB {
+	function pixelData2RGB(data:js.lib.Uint8ClampedArray):RGB {
 		return {
 			r: data[0],
 			g: data[1],

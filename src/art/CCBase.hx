@@ -21,7 +21,7 @@ class CCBase extends Sketch.SketchBase implements ICCBase {
 	/**
 	 * set types for sketch
 	 */
-	public var type(get_type, set_type):Array<CCType>;
+	public var type(get, set):Array<CCType>;
 
 	private var _type:Array<CCType> = [BASE];
 
@@ -30,14 +30,14 @@ class CCBase extends Sketch.SketchBase implements ICCBase {
 	 * @example:
 	 * 		trace(title); // "art.CCBase"
 	 */
-	public var title(get_title, set_title):String;
+	public var title(get, set):String;
 
 	private var _title:String = '';
 
 	/**
 	 * description of sketch (default: '')
 	 */
-	public var description(get_description, set_description):String;
+	public var description(get, set):String;
 
 	private var _description:String = '';
 
