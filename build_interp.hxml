@@ -1,0 +1,20 @@
+-lib cc-sketch
+-lib hxquicksettings
+-lib thx.color
+-lib hxColorToolkit
+-lib msignal
+-lib mloader
+# -lib uglifyjs
+# -lib minifier
+# -lib mconsole
+-cp src
+-main Main
+-js docs/cc_mck.js
+# -D source-map-content
+# -D state=debug
+# -debug
+# -dce full
+# -dce no
+
+
+
