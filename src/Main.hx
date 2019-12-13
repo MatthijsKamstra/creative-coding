@@ -25,7 +25,7 @@ class Main {
 	public function new() {
 		document.addEventListener("DOMContentLoaded", function(event) {
 			// DOM ready
-			// console.log('${App.NAME} :: build: ${App.BUILD}');
+			console.log('${App.NAME} :: build: ${App.getBuildDate()}');
 			setupCC();
 			setupNav();
 		});
