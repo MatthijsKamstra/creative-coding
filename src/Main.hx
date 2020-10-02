@@ -66,6 +66,8 @@ class Main {
 		ldiv.onclick = function() {
 			trace('left');
 			count--;
+			if (count < 0)
+				count = 0;
 			changeHash();
 		};
 		var right = new lib.html.Nav();
@@ -73,6 +75,9 @@ class Main {
 		rdiv.onclick = function() {
 			trace('right');
 			count++;
+			if (count > ccTypeArray.length - 1) {
+				count = ccTypeArray.length - 1;
+			}
 			changeHash();
 		};
 
@@ -86,8 +91,13 @@ class Main {
 			switch (e.key) {
 				case 'ArrowRight':
 					count++;
+					if (count > ccTypeArray.length - 1) {
+						count = ccTypeArray.length - 1;
+					}
 				case 'ArrowLeft':
 					count--;
+					if (count < 0)
+						count = 0;
 				case 'ArrowUp':
 					count = ccTypeArray.length - 1;
 				case 'ArrowDown':
