@@ -20,7 +20,8 @@ class CC055 extends CCBase implements ICCBase {
 	var isFontLoaded:Bool = false;
 	var isImageLoaded:Bool = false;
 	var spritesheet:Spritesheet; // hmm doesn't work like expected
-	var src = '/assets/img/spritesheet/web_heart_animation_edge.png';
+	// var src = '/assets/img/spritesheet/web_heart_animation_edge.png';
+	var src = 'assets/img/spritesheet/web_heart_animation_edge.png';
 	var _img:Image;
 
 	public function new(ctx:CanvasRenderingContext2D) {
