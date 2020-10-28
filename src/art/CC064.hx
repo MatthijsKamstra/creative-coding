@@ -24,19 +24,20 @@ implements ICCBase {
 		option.scale = true;
 		ctx = Sketch.create("creative_code_mck", option);
 
+		console.warn("Firefox and this sketch are not a good idea");
+
 		super(ctx);
 	}
 
-	function createShape(i:Int, ?point:Point) {
+	function createShape(i:Int) {
 		var shape:Square = {
 			_id: '$i',
 			_type: 'square',
 			x: w2,
 			y: h2,
-			size: _maxSize - (i * _offsetSize)
-			// degree: 180 / 6
+			size: _maxSize - (i * _offsetSize) // degree: 180 / 6
 		}
-		// onAnimateHandler(shape, i, 1);
+		// onAnimationContinue(shape, i, 1);
 		haxe.Timer.delay(function() {
 			onAnimationContinue(shape, i, 1);
 		}, i * 100);

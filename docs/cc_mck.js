@@ -91,7 +91,7 @@ var Main = function() {
 	this.ccTypeArray = [art_CC000,art_CC001,art_CC002,art_CC003,art_CC004,art_CC005,art_CC006,art_CC007,art_CC008,art_CC009,art_CC010,art_CC011,art_CC012,art_CC013,art_CC014,art_CC015,art_CC016,art_CC017,art_CC018,art_CC019,art_CC020,art_CC021,art_CC022,art_CC023,art_CC024,art_CC025,art_CC026,art_CC027,art_CC028,art_CC029,art_CC030,art_CC031,art_CC031a,art_CC032,art_CC033,art_CC034,art_CC035,art_CC036,art_CC037,art_CC038,art_CC039,art_CC040,art_CC041,art_CC042,art_CC043,art_CC044,art_CC045,art_CC046,art_CC047,art_CC048,art_CC049,art_CC050,art_CC051,art_CC051a,art_CC052,art_CC052a,art_CC053,art_CC054,art_CC054a,art_CC055,art_CC055a,art_CC056,art_CC057,art_CC058,art_CC059,art_CC059a,art_CC059b,art_CC060,art_CC061,art_CC062,art_CC063,art_CC064,art_CC065,art_CC066,art_CC067,art_CC068,art_CC069,art_CC070,art_CC071];
 	var _gthis = this;
 	window.document.addEventListener("DOMContentLoaded",function(event) {
-		$global.console.log("" + lib_model_constants_App.NAME + " :: build: " + "2020-10-02 16:04:43");
+		$global.console.log("" + lib_model_constants_App.NAME + " :: build: " + "2020-10-02 16:51:33");
 		_gthis.setupCC();
 		_gthis.setupNav();
 	});
@@ -9487,6 +9487,7 @@ var art_CC064 = function(ctx) {
 	option.set_padding(10);
 	option.set_scale(true);
 	ctx = Sketch.create("creative_code_mck",option);
+	$global.console.warn("Firefox and this sketch are not a good idea");
 	art_CCBase.call(this,ctx);
 };
 $hxClasses["art.CC064"] = art_CC064;
@@ -9494,7 +9495,7 @@ art_CC064.__name__ = "art.CC064";
 art_CC064.__interfaces__ = [art_ICCBase];
 art_CC064.__super__ = art_CCBase;
 art_CC064.prototype = $extend(art_CCBase.prototype,{
-	createShape: function(i,point) {
+	createShape: function(i) {
 		var _gthis = this;
 		var shape = { _id : "" + i, _type : "square", x : this.get_w2(), y : this.get_h2(), size : this._maxSize - i * this._offsetSize};
 		haxe_Timer.delay(function() {
@@ -9543,7 +9544,7 @@ art_CC064.prototype = $extend(art_CCBase.prototype,{
 		}
 	}
 	,setup: function() {
-		haxe_Log.trace("setup: " + this.toString(),{ fileName : "src/art/CC064.hx", lineNumber : 87, className : "art.CC064", methodName : "setup"});
+		haxe_Log.trace("setup: " + this.toString(),{ fileName : "src/art/CC064.hx", lineNumber : 88, className : "art.CC064", methodName : "setup"});
 		this.shapeArray = [];
 		var _g = 0;
 		var _g1 = this.max;

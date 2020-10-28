@@ -25,3 +25,38 @@ option.padding = 10;
 option.scale = true;
 var ctx = Sketch.create("creative_code_mck", option);
 ```
+
+## motion
+
+```haxe
+Go.to(sh, 3)
+    .delay(2)
+    .prop('angle', -(180 / 2) * count)
+    .ease(Elastic.easeInOut)
+    .onComplete(onAnimationContinue, [sh, id, ++count]);
+
+
+```
+
+```haxe
+Go.to(arc, random)
+    .x(w/2)
+    .y(h/2)
+    .ease(Sine.easeInOut)
+    .onComplete(onAnimateHandler, [arc]);
+```
+
+```haxe
+Go.to(_shape, 2)
+    .x(_shape.x + (w - _shape.x*2))
+    .delay(.7)
+    .rotation(360)
+    .yoyo();
+```
+
+```haxe
+Go.to(line, random(2, 4))
+    .prop('radius', random(radius0, radius1))
+    .ease(Sine.easeInOut)
+    .onComplete(onCompleteHandler, [line]);
+```
